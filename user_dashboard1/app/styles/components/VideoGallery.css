@@ -1,0 +1,114 @@
+.video-gallery-section {
+  padding: 100px 0;
+  margin-top: 60px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.video-gallery-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.video-gallery-header h2 {
+  font-family: var(--font-display, serif);
+  font-size: clamp(32px, 4vw, 48px);
+  margin: 16px 0;
+  color: #fff;
+}
+
+.video-gallery-header p {
+  color: #8a8f98;
+  font-size: 18px;
+  max-width: 650px;
+  margin: 0 auto;
+}
+
+.video-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}
+
+.video-card {
+  background: rgba(20, 20, 20, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  overflow: hidden;
+  transition: all 0.4s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.video-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.video-wrapper {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+  height: 0;
+  overflow: hidden;
+  background: #000;
+}
+
+.video-wrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.video-info {
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(180deg, rgba(20,20,20,0) 0%, rgba(10,10,10,0.8) 100%);
+}
+
+.video-info h4 {
+  color: #fff;
+  font-size: 18px;
+  font-weight: 500;
+  margin: 0;
+  font-family: var(--font-display, serif);
+}
+
+.play-icon-overlay {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #FFE032;
+  font-size: 14px;
+  font-weight: 600;
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+}
+
+.video-card:hover .play-icon-overlay {
+  opacity: 1;
+}
+
+@media (max-width: 1024px) {
+  .video-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .video-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .video-info {
+    padding: 16px;
+  }
+  
+  .video-info h4 {
+    font-size: 16px;
+  }
+}

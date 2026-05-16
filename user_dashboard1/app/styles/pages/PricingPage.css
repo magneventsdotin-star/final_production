@@ -1,0 +1,221 @@
+/* ── Pricing Page — Premium Dark Luxury Theme ─────────────────────────── */
+.pricing-pg {
+  min-height: 100vh;
+  background: transparent;
+  color: #fff;
+  padding: 60px 24px 80px;
+  position: relative;
+  overflow: hidden;
+}
+
+.pricing-pg::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 600px;
+  background: radial-gradient(circle at 50% -20%, var(--glow-red) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.pricing-shell {
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.pricing-header {
+  text-align: center;
+  margin-bottom: 80px;
+}
+
+.pricing-title {
+  font-family: var(--font-display, serif);
+  font-size: clamp(36px, 5vw, 64px);
+  line-height: 1.1;
+  font-weight: 500;
+  margin-bottom: 24px;
+}
+
+.pricing-title .accent-text {
+  background: linear-gradient(90deg, #FFE032, #EECE3B);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-style: normal;
+}
+
+.pricing-subtitle {
+  color: #8a8f98;
+  font-size: clamp(16px, 1.2vw, 20px);
+  line-height: 1.6;
+}
+
+/* ── Pricing Grid ───────────────────────────────────────────────────── */
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  margin-bottom: 100px;
+}
+
+.pricing-card {
+  position: relative;
+  background: var(--bg-card);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+  padding: 48px 32px;
+  display: flex;
+  flex-direction: column;
+  transition: var(--trans-normal);
+  box-shadow: var(--shadow-premium);
+}
+
+.pricing-card:hover {
+  transform: translateY(-12px);
+  background: var(--bg-raised);
+  border-color: var(--brand-ruby);
+  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.8), 0 0 20px var(--glow-red);
+}
+
+.pricing-card.is-popular {
+  border-color: rgba(255, 224, 50, 0.5);
+  background: rgba(255, 224, 50, 0.05);
+  box-shadow: 0 20px 50px rgba(255, 224, 50, 0.1);
+}
+
+.popular-badge {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: linear-gradient(90deg, #FFE032, #EECE3B);
+  color: #000;
+  padding: 8px 20px;
+  border-radius: 99px;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+}
+
+.card-head h3 {
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.plan-tagline {
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  color: #8a8f98;
+  font-weight: 600;
+  margin-bottom: 32px;
+}
+
+.card-price {
+  margin-bottom: 40px;
+  display: flex;
+  flex-direction: column;
+}
+
+.price-val {
+  font-size: 48px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.price-label {
+  font-size: 14px;
+  color: #5b626d;
+  margin-top: 4px;
+}
+
+.card-features {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.card-features li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 15px;
+  color: #efe6d4;
+}
+
+.check-icon {
+  color: #FFE032;
+  font-weight: 700;
+}
+
+.card-btn {
+  margin-top: auto;
+  display: block;
+  text-align: center;
+  padding: 16px;
+  border-radius: 12px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 300ms ease;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--brand-ruby) 0%, #8b2d2d 100%);
+  color: #fff;
+  box-shadow: 0 10px 20px var(--glow-red);
+}
+
+.btn-primary:hover {
+  transform: scale(1.05);
+  box-shadow: 0 15px 30px var(--glow-red), 0 0 15px var(--brand-ruby);
+}
+
+.btn-outline {
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+
+.btn-outline:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: #fff;
+}
+
+/* ── Footer ──────────────────────────────────────────────────────────── */
+.pricing-footer {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  padding-top: 60px;
+}
+
+.pricing-footer p {
+  font-size: 14px;
+  line-height: 1.8;
+  color: #5b626d;
+}
+
+/* ── Responsive ──────────────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .pricing-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .pricing-pg {
+    padding-top: 100px;
+  }
+  .pricing-grid {
+    grid-template-columns: 1fr;
+  }
+  .pricing-card {
+    padding: 40px 24px;
+  }
+}

@@ -1,0 +1,131 @@
+.lux-footer {
+  background-color: #0a0a0a;
+  color: var(--text-primary);
+  padding: 80px 0 40px;
+  position: relative;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  font-family: var(--font-sans, sans-serif);
+}
+
+.lux-footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.lux-footer-grid {
+  display: grid;
+  grid-template-columns: 1.5fr repeat(3, 1fr);
+  gap: 60px;
+  margin-bottom: 60px;
+}
+
+.lux-footer-brand {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.lux-footer-desc {
+  line-height: 1.6;
+  font-size: 15px;
+  max-width: 320px;
+}
+
+.lux-footer-socials {
+  display: flex;
+  gap: 16px;
+  margin-top: 10px;
+}
+
+.lux-footer-social-link {
+  color: #fff;
+  opacity: 0.6;
+  transition: all 0.3s ease;
+}
+
+.lux-footer-social-link:hover {
+  opacity: 1;
+  color: #FFE032;
+  transform: translateY(-2px);
+}
+
+.lux-footer-col h4 {
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 24px;
+  letter-spacing: 0.02em;
+}
+
+.lux-footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.lux-footer-link {
+  text-decoration: none;
+  color: inherit;
+  font-size: 14px;
+  transition: color 0.2s ease;
+}
+
+.lux-footer-link:hover {
+  color: #FFE032;
+}
+
+.lux-footer-bottom {
+  padding-top: 40px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.lux-footer-copyright {
+  font-size: 13px;
+  opacity: 0.6;
+}
+
+.lux-footer-legal {
+  display: flex;
+  gap: 24px;
+}
+
+.lux-footer-legal a {
+  text-decoration: none;
+  color: inherit;
+  font-size: 13px;
+  opacity: 0.6;
+  transition: opacity 0.2s ease;
+}
+
+.lux-footer-legal a:hover {
+  opacity: 1;
+}
+
+@media (max-width: 1024px) {
+  .lux-footer-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+  }
+}
+
+@media (max-width: 640px) {
+  .lux-footer {
+    padding: 60px 0 30px;
+  }
+  .lux-footer-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  .lux-footer-bottom {
+    flex-direction: column;
+    gap: 20px;
+    text-align: center;
+  }
+}

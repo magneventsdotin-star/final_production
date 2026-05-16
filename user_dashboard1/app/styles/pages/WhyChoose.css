@@ -1,0 +1,95 @@
+.why-choose-page {
+  padding: 60px 0;
+  background: #0a0a0a;
+  color: #fff;
+  min-height: 100vh;
+}
+
+.why-choose-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.accent-tag {
+  color: #00ff41; /* Matrix Green */
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  margin-bottom: 16px;
+  display: block;
+}
+
+.text-gradient {
+  background: linear-gradient(90deg, #00ff41, #ff8da1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.why-choose-header h1 {
+  font-family: var(--font-display, serif);
+  font-size: clamp(40px, 6vw, 64px);
+  margin-bottom: 20px;
+}
+
+.why-choose-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 32px;
+}
+
+.why-card {
+  background: rgba(255, 255, 255, 0.03);
+  padding: 48px;
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all 0.4s ease;
+}
+
+.why-card.matrix-border:hover {
+  border-color: #00ff41;
+  box-shadow: 0 0 30px rgba(0, 255, 65, 0.1);
+  transform: translateY(-10px);
+}
+
+.why-card.pink-border:hover {
+  border-color: #ff8da1;
+  box-shadow: 0 0 30px rgba(255, 141, 161, 0.1);
+  transform: translateY(-10px);
+}
+
+.card-icon {
+  font-size: 40px;
+  margin-bottom: 24px;
+}
+
+.why-card h3 {
+  font-size: 24px;
+  margin-bottom: 16px;
+}
+
+.why-card p {
+  color: #8a8f98;
+  line-height: 1.6;
+}
+
+.why-cta-section {
+  margin-top: 100px;
+  text-align: center;
+}
+
+.matrix-btn {
+  margin-top: 32px;
+  background: #00ff41;
+  color: #000;
+  border: none;
+  padding: 16px 40px;
+  border-radius: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.matrix-btn:hover {
+  background: #ff8da1;
+  transform: scale(1.05);
+}

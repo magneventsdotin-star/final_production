@@ -1,0 +1,216 @@
+.services-page-layout {
+  padding-top: 140px;
+  padding-bottom: 100px;
+  background: #0a0a0a;
+  min-height: 100vh;
+}
+
+.services-header {
+  text-align: center;
+  margin-bottom: 80px;
+}
+
+.services-header h1 {
+  font-family: var(--font-display, serif);
+  font-size: clamp(36px, 5vw, 64px);
+  margin: 16px 0;
+  color: #fff;
+}
+
+.services-header p {
+  color: #8a8f98;
+  font-size: 18px;
+  max-width: 650px;
+  margin: 0 auto;
+}
+
+.services-category-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 80px;
+}
+
+.service-category-section {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.service-category-title {
+  font-family: var(--font-display, serif);
+  font-size: 32px;
+  color: #fff;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 16px;
+  margin: 0;
+}
+
+.hover-video-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}
+
+.hover-video-card {
+  background: rgba(20, 20, 20, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: all 0.4s ease;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.hover-video-card:hover {
+  border-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  transform: translateY(-5px);
+}
+
+.video-aspect-ratio {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%; /* 16:9 ratio */
+  background: #000;
+  overflow: hidden;
+}
+
+.video-thumbnail {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.3s ease;
+}
+
+.auto-playing-iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  animation: fadeIn 0.3s ease forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.book-now-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4); /* subtle dark overlay over the playing video */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 10;
+}
+
+.book-now-overlay.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.book-now-btn {
+  background: #FFE032;
+  color: #000;
+  padding: 12px 32px;
+  border-radius: 30px;
+  font-weight: 700;
+  font-size: 16px;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 8px 20px rgba(255, 224, 50, 0.3);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.book-now-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 25px rgba(255, 224, 50, 0.5);
+}
+
+/* Premium Video Card Interaction Styles */
+.premium-video-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  border-color: rgba(255, 224, 50, 0.4) !important;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7), 0 0 30px rgba(255, 224, 50, 0.15) !important;
+}
+
+.premium-video-card:hover .card-poster {
+  transform: scale(1.08);
+}
+
+.premium-video-card:hover .lux-play-ring {
+  background: #ffe032 !important;
+  border-color: #ffe032 !important;
+  transform: scale(1.12);
+  box-shadow: 0 0 30px rgba(255, 224, 50, 0.6) !important;
+}
+
+.premium-video-card:hover .lux-play-ring svg path {
+  fill: #000 !important;
+}
+
+/* Modal Booking Button Shimmer */
+.services-page-layout button:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 12px 30px rgba(255, 224, 50, 0.5) !important;
+}
+
+.services-page-layout button:active {
+  transform: translateY(0) scale(1.0);
+}
+
+@media (max-width: 1024px) {
+  .hover-video-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 24px;
+  }
+}
+
+@media (max-width: 768px) {
+  .services-page-layout {
+    padding-top: 100px;
+    padding-bottom: 60px;
+  }
+  .services-category-rows {
+    gap: 48px;
+  }
+  .hover-video-grid {
+    gap: 20px;
+  }
+}
+
+@media (max-width: 640px) {
+  .services-page-layout {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  .hover-video-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .service-category-title {
+    font-size: 24px !important;
+    padding-bottom: 12px;
+  }
+  .services-header {
+    margin-bottom: 40px;
+  }
+  .services-header h1 {
+    font-size: 32px !important;
+    margin: 10px 0;
+  }
+  .services-header p {
+    font-size: 15px;
+    line-height: 1.6;
+  }
+}

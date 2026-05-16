@@ -1,0 +1,120 @@
+.contact-page {
+  padding: 120px 0;
+  background: #0a0a0a;
+  color: #fff;
+}
+
+.contact-header {
+  text-align: center;
+  margin-bottom: 80px;
+}
+
+.contact-main-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 40px;
+  align-items: start;
+}
+
+.contact-details-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 48px;
+  border-radius: 24px;
+}
+
+.contact-details-card h3 {
+  font-size: 24px;
+  margin-bottom: 32px;
+}
+
+.channel-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.channel-item span {
+  font-size: 20px;
+}
+
+.channel-item a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 18px;
+  transition: color 0.3s;
+}
+
+.channel-item a:hover {
+  color: #00ff41;
+}
+
+.whatsapp-wrap {
+  margin-top: 40px;
+  padding-top: 40px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.whatsapp-wrap p {
+  color: #8a8f98;
+  margin-bottom: 16px;
+}
+
+.whatsapp-btn {
+  display: inline-block;
+  background: #25d366;
+  color: #fff;
+  padding: 12px 24px;
+  border-radius: 99px;
+  text-decoration: none;
+  font-weight: 700;
+  transition: all 0.3s;
+}
+
+.whatsapp-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(37, 211, 102, 0.3);
+}
+
+.booking-form {
+  background: rgba(255, 255, 255, 0.03);
+  padding: 48px;
+  border-radius: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-row input, .form-row select {
+  width: 100%;
+  background: #0a0a0a;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 16px;
+  border-radius: 12px;
+  color: #fff;
+  outline: none;
+  transition: all 0.3s;
+}
+
+.form-row input:focus, .form-row select:focus {
+  border-color: #ff8da1;
+  box-shadow: 0 0 15px rgba(255, 141, 161, 0.1);
+}
+
+.submit-btn {
+  background: linear-gradient(90deg, #00ff41, #ff8da1);
+  color: #000;
+  border: none;
+  padding: 18px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+@media (max-width: 900px) {
+  .contact-main-grid {
+    grid-template-columns: 1fr;
+  }
+}

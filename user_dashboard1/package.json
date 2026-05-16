@@ -1,0 +1,26 @@
+{
+  "name": "haat-nextjs",
+  "version": "1.0.0",
+  "description": "Haat — Next.js Implementation",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@fontsource/inter": "^5.2.8",
+    "@supabase/supabase-js": "^2.100.0",
+    "@tanstack/react-query": "^5.29.0",
+    "axios": "^1.6.8",
+    "framer-motion": "^12.38.0",
+    "next": "^14.2.0",
+    "nodemailer": "^8.0.7",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "eslint": "^8.57.0",
+    "eslint-config-next": "14.2.0"
+  }
+}

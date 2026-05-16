@@ -1,0 +1,213 @@
+.lux-footer {
+  background-color: #000000;
+  color: var(--text-main);
+  padding: var(--spacing-5) 0 var(--spacing-4);
+  position: relative;
+  overflow: hidden;
+  font-family: var(--font-body);
+  border-top: 1px solid var(--border-light);
+}
+
+.lux-footer-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-4);
+  position: relative;
+  z-index: 1;
+}
+
+.lux-footer-grid {
+  display: grid;
+  grid-template-columns: 1.5fr repeat(3, 1fr);
+  gap: var(--spacing-6);
+  margin-bottom: var(--spacing-6);
+}
+
+.lux-footer-brand {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3);
+}
+
+.lux-footer-brand-wrap {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+}
+
+.lux-footer-desc {
+  line-height: 1.7;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  max-width: 340px;
+  font-weight: 500;
+}
+
+.lux-footer-socials {
+  display: flex;
+  gap: var(--spacing-2);
+  margin-top: var(--spacing-2);
+}
+
+.lux-footer-social-link {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border-light);
+  background: var(--bg-main);
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.lux-footer-social-link:hover {
+  background: var(--brand-primary);
+  border-color: var(--brand-primary);
+  color: var(--bg-main);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-glow);
+}
+
+.lux-footer-col h4 {
+  color: var(--text-main);
+  font-size: 0.875rem;
+  font-weight: 700;
+  margin-bottom: var(--spacing-4);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.lux-footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+}
+
+.lux-footer-link {
+  text-decoration: none;
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  width: fit-content;
+}
+
+.lux-footer-link:hover {
+  color: var(--brand-primary);
+  transform: translateX(4px);
+}
+
+.lux-footer-bottom {
+  padding-top: var(--spacing-5);
+  border-top: 1px solid var(--border-light);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.lux-footer-copyright {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.lux-footer-legal {
+  display: flex;
+  gap: var(--spacing-4);
+}
+
+.lux-footer-legal a {
+  text-decoration: none;
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.lux-footer-legal a:hover {
+  color: var(--brand-primary);
+}
+
+.lux-footer-chevron {
+  display: none;
+}
+
+@media (max-width: 1024px) {
+  .lux-footer-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-5);
+  }
+}
+
+@media (max-width: 768px) {
+  .lux-footer-mobile-trigger {
+    display: flex !important;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    margin-bottom: 0 !important;
+    user-select: none;
+  }
+
+  .lux-footer-chevron {
+    display: inline-flex !important;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    color: var(--text-muted);
+  }
+
+  .lux-footer-col.is-open .lux-footer-chevron {
+    transform: rotate(180deg);
+    color: var(--brand-primary) !important;
+  }
+
+  .lux-footer-links {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease, padding 0.3s ease;
+    opacity: 0;
+    padding-top: 0;
+    pointer-events: none;
+  }
+
+  .lux-footer-col.is-open .lux-footer-links {
+    max-height: 250px;
+    opacity: 1;
+    padding-top: var(--spacing-3);
+    padding-bottom: var(--spacing-3);
+    pointer-events: auto;
+  }
+}
+
+@media (max-width: 640px) {
+  .lux-footer {
+    padding: var(--spacing-6) 0 var(--spacing-5);
+  }
+  .lux-footer-grid {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-4);
+  }
+  .lux-footer-brand {
+    align-items: center;
+    text-align: center;
+    margin-bottom: var(--spacing-4);
+  }
+  .lux-footer-desc {
+    max-width: 100%;
+  }
+  .lux-footer-bottom {
+    flex-direction: column-reverse;
+    gap: var(--spacing-4);
+    text-align: center;
+    padding-top: var(--spacing-4);
+  }
+  .lux-footer-legal {
+    justify-content: center;
+  }
+}
