@@ -3457,13 +3457,17 @@
   }
   .hp-cat-card-v2 {
     width: 100% !important;
-    max-width: 290px !important;
+    max-width: 320px !important; /* Suitable, balanced width */
     margin: 0 auto !important;
-    min-height: auto !important;
+    min-height: 380px !important; /* Increased 30% height for premium vertical card format */
     height: auto !important;
-    padding: 32px 24px !important;
-    border-radius: 36px !important;
-    gap: 20px !important;
+    padding: 36px 24px !important;
+    border-radius: 40px !important;
+    gap: 24px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
   }
   .hp-cat-avatar-ring {
     width: 140px !important;
@@ -3490,11 +3494,17 @@
     gap: 16px !important;
   }
   .hp-cat-card-v2 {
-    padding: 28px 20px !important;
-    border-radius: 32px !important;
-    max-width: 280px !important;
+    width: 100% !important;
+    padding: 32px 20px !important;
+    border-radius: 36px !important;
+    max-width: 300px !important; /* Suitable, balanced mobile width */
     margin: 0 auto !important;
-    gap: 16px !important;
+    min-height: 350px !important; /* Increased 30% height for mobile vertical card format */
+    gap: 20px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
   }
   .hp-cat-avatar-ring {
     width: 130px !important;
