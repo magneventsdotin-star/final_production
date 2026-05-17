@@ -3451,68 +3451,75 @@
 }
 
 @media (max-width: 768px) {
+  .hp-cat-grid {
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+  }
   .hp-cat-card-v2 {
     width: 100% !important;
-    max-width: 100% !important;
+    max-width: 290px !important;
+    margin: 0 auto !important;
     min-height: auto !important;
     height: auto !important;
-    padding: 24px 12px !important;
-    border-radius: 28px !important;
-    gap: 16px !important;
+    padding: 32px 24px !important;
+    border-radius: 36px !important;
+    gap: 20px !important;
   }
   .hp-cat-avatar-ring {
-    width: 100px !important;
-    height: 100px !important;
+    width: 140px !important;
+    height: 140px !important;
   }
   .hp-cat-label-v2 {
-    font-size: 13px !important;
+    font-size: 17px !important;
     letter-spacing: 0.1em !important;
   }
   .hp-cat-card-v2::before {
-    height: 60px !important;
+    height: 70px !important;
   }
   .hp-cat-card-v2::after {
-    height: 60px !important;
+    height: 70px !important;
   }
 }
 
 @media (max-width: 480px) {
   .hp-cat-grid {
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 10px !important;
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
   }
   .hp-cat-card-v2 {
-    padding: 16px 8px !important;
-    border-radius: 20px !important;
-    gap: 10px !important;
+    padding: 28px 20px !important;
+    border-radius: 32px !important;
+    max-width: 280px !important;
+    margin: 0 auto !important;
+    gap: 16px !important;
   }
   .hp-cat-avatar-ring {
-    width: 80px !important;
-    height: 80px !important;
+    width: 130px !important;
+    height: 130px !important;
   }
   .hp-cat-note-badge {
-    width: 24px !important;
-    height: 24px !important;
+    width: 30px !important;
+    height: 30px !important;
     bottom: 2px !important;
     right: 2px !important;
     border-width: 2px !important;
   }
   .hp-cat-note-badge svg {
-    width: 10px !important;
-    height: 10px !important;
+    width: 12px !important;
+    height: 12px !important;
   }
   .hp-cat-label-v2 {
-    font-size: 11px !important;
-    letter-spacing: 0.05em !important;
+    font-size: 16px !important;
+    letter-spacing: 0.08em !important;
   }
   .hp-cat-sub-label {
-    font-size: 9px !important;
+    font-size: 10px !important;
   }
   .hp-cat-card-v2::before {
-    height: 40px !important;
+    height: 60px !important;
   }
   .hp-cat-card-v2::after {
-    height: 40px !important;
+    height: 60px !important;
   }
 }
 

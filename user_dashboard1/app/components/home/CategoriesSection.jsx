@@ -14,7 +14,7 @@ export default function CategoriesSection() {
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth <= 768) {
-        setCatPerPage(2)
+        setCatPerPage(1)
       } else {
         setCatPerPage(4)
       }
