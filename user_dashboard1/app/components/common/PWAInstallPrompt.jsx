@@ -9,6 +9,7 @@ export default function PWAInstallPrompt() {
   const [showPrompt, setShowPrompt] = useState(false);
   const [isIOS, setIsIOS] = useState(false);
   const [showIOSGuide, setShowIOSGuide] = useState(false);
+  const [showAndroidGuide, setShowAndroidGuide] = useState(false);
 
   useEffect(() => {
     // Safety check for server rendering environment
@@ -26,33 +27,20 @@ export default function PWAInstallPrompt() {
       return;
     }
 
-    // 3. Identify iOS Safari users
+    // 3. Identify iOS users
     const userAgent = window.navigator.userAgent.toLowerCase();
     const isAppleDevice = /iphone|ipad|ipod/.test(userAgent);
     
     if (isAppleDevice) {
       setIsIOS(true);
-      // Wait 3 seconds to show the premium iOS install hint elegantly on load
-      const timer = setTimeout(() => {
-        setShowPrompt(true);
-      }, 3000);
-      return () => clearTimeout(timer);
     }
 
-    // 4. Android/Desktop: Show the card ONLY if native beforeinstallprompt is captured
-    const handleInstallable = () => {
+    // 4. Always show the gorgeous banner automatically 2 seconds after the user visits the page!
+    const timer = setTimeout(() => {
       setShowPrompt(true);
-    };
+    }, 2000);
 
-    // If deferredPrompt is already populated globally by our early script
-    if (window.deferredPrompt) {
-      setShowPrompt(true);
-    }
-
-    window.addEventListener('pwa-installable', handleInstallable);
-    return () => {
-      window.removeEventListener('pwa-installable', handleInstallable);
-    };
+    return () => clearTimeout(timer);
   }, []);
 
   const handleInstallClick = async () => {
@@ -61,23 +49,35 @@ export default function PWAInstallPrompt() {
       return;
     }
 
-    const promptEvent = window.deferredPrompt;
-    if (!promptEvent) return;
+    // Try to retrieve the native install prompt
+    let promptEvent = window.deferredPrompt;
 
-    try {
-      // Show native installer popup immediately
-      promptEvent.prompt();
-      
-      // Wait for the user to resolve the prompt
-      const { outcome } = await promptEvent.userChoice;
-      
-      if (outcome === 'accepted') {
-        localStorage.setItem('magnevents-pwa-dismissed', 'true');
-        window.deferredPrompt = null;
-        setShowPrompt(false);
+    if (!promptEvent) {
+      // Small delay to capture event if hydration triggered it
+      await new Promise(resolve => setTimeout(resolve, 100));
+      promptEvent = window.deferredPrompt;
+    }
+
+    if (promptEvent) {
+      try {
+        // Trigger Chrome/Android native installation automatically!
+        promptEvent.prompt();
+        
+        // Wait for the user to resolve the prompt
+        const { outcome } = await promptEvent.userChoice;
+        
+        if (outcome === 'accepted') {
+          localStorage.setItem('magnevents-pwa-dismissed', 'true');
+          window.deferredPrompt = null;
+          setShowPrompt(false);
+        }
+      } catch (err) {
+        console.error("Error launching native PWA install prompt:", err);
+        setShowAndroidGuide(true);
       }
-    } catch (err) {
-      console.error("Error launching native PWA install prompt:", err);
+    } else {
+      // Streamlined backup guidance with brand logo if native engine is still caching
+      setShowAndroidGuide(true);
     }
   };
 
@@ -89,7 +89,7 @@ export default function PWAInstallPrompt() {
   return (
     <>
       <AnimatePresence>
-        {showPrompt && !showIOSGuide && (
+        {showPrompt && !showIOSGuide && !showAndroidGuide && (
           <motion.div 
             className="pwa-floating-card"
             initial={{ opacity: 0, y: 100, scale: 0.9 }}
@@ -145,9 +145,21 @@ export default function PWAInstallPrompt() {
               onClick={(e) => e.stopPropagation()}
             >
               <div className="ios-modal-indicator" />
-              <div className="ios-modal-header">
-                <h3>📲 Install App on iPhone</h3>
-                <p>Run Magnevents as a native full-screen app in 3 quick steps:</p>
+              
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px' }}>
+                <div style={{ width: '64px', height: '64px', borderRadius: '16px', overflow: 'hidden', position: 'relative', boxShadow: '0 8px 20px rgba(214, 80, 80, 0.3)' }}>
+                  <Image 
+                    src="/assets/magnevents-logo.jpg" 
+                    alt="Magnevents Logo" 
+                    fill
+                    sizes="64px"
+                    style={{ objectFit: 'cover' }}
+                  />
+                </div>
+                <h3 style={{ margin: '8px 0 0', color: '#fff', fontSize: '20px', fontWeight: '700' }}>Install Magnevents App</h3>
+                <p style={{ margin: 0, color: 'rgba(255,255,255,0.5)', fontSize: '13.5px', textAlign: 'center' }}>
+                  Run Magnevents as a native full-screen app in 3 quick steps:
+                </p>
               </div>
 
               <div className="ios-steps-list">
@@ -167,6 +179,52 @@ export default function PWAInstallPrompt() {
 
               <button className="ios-modal-btn-close" onClick={() => { setShowIOSGuide(false); setShowPrompt(false); localStorage.setItem('magnevents-pwa-dismissed', 'true'); }}>
                 Got It, Thanks!
+              </button>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Android/Desktop Streamlined Instruction Modal */}
+      <AnimatePresence>
+        {showAndroidGuide && (
+          <motion.div 
+            className="pwa-ios-modal-overlay"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setShowAndroidGuide(false)}
+          >
+            <motion.div 
+              className="pwa-ios-modal-card"
+              initial={{ y: '100%' }}
+              animate={{ y: 0 }}
+              exit={{ y: '100%' }}
+              transition={{ type: 'spring', damping: 30, stiffness: 250 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="ios-modal-indicator" />
+              
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px', padding: '12px 0' }}>
+                <div style={{ width: '64px', height: '64px', borderRadius: '16px', overflow: 'hidden', position: 'relative', boxShadow: '0 8px 20px rgba(214, 80, 80, 0.3)' }}>
+                  <Image 
+                    src="/assets/magnevents-logo.jpg" 
+                    alt="Magnevents Logo" 
+                    fill
+                    sizes="64px"
+                    style={{ objectFit: 'cover' }}
+                  />
+                </div>
+                
+                <h3 style={{ margin: '8px 0 0', color: '#fff', fontSize: '20px', fontWeight: '700' }}>Install Magnevents App</h3>
+                
+                <p style={{ margin: 0, color: '#eee', fontSize: '14.5px', textAlign: 'center', lineHeight: '1.6', maxWidth: '380px' }}>
+                  Tap the browser menu icon <code>⋮</code> or look at your address bar, then select <strong>"Install app"</strong> or <strong>"Add to Home Screen"</strong> to enjoy the full offline-booking premium experience!
+                </p>
+              </div>
+
+              <button className="ios-modal-btn-close" onClick={() => { setShowAndroidGuide(false); setShowPrompt(false); localStorage.setItem('magnevents-pwa-dismissed', 'true'); }}>
+                Got It, Let's Do It!
               </button>
             </motion.div>
           </motion.div>
