@@ -46,19 +46,19 @@ export default function CategoriesSection() {
           </button>
 
           <div className="hp-cat-carousel">
-            <AnimatePresence mode="wait">
+            <AnimatePresence mode="popLayout">
               <motion.div
                 key={catPage}
                 className="hp-cat-grid"
-                initial={{ opacity: 0, x: 60 }}
+                initial={{ opacity: 0, x: 80 }}
                 animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -60 }}
-                transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                exit={{ opacity: 0, x: -80 }}
+                transition={{ duration: 0.22, ease: "easeOut" }}
                 drag="x"
                 dragConstraints={{ left: 0, right: 0 }}
                 dragElastic={0.2}
                 onDragEnd={(event, info) => {
-                  const swipeThreshold = 50;
+                  const swipeThreshold = 30;
                   if (info.offset.x < -swipeThreshold) {
                     moveCat(1);
                   } else if (info.offset.x > swipeThreshold) {
