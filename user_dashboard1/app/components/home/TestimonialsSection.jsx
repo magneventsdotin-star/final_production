@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import FadeSection from '@/app/components/common/FadeSection'
 import { TESTIMONIALS } from '@/app/constants'
@@ -26,7 +26,22 @@ const EXTENDED_TESTIMONIALS = [
 
 export default function TestimonialsSection() {
   const [index, setIndex] = useState(0)
-  const itemsPerPage = 3 // Show 3 on desktop
+  const [itemsPerPage, setItemsPerPage] = useState(3)
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 768) {
+        setItemsPerPage(1)
+      } else if (window.innerWidth <= 1024) {
+        setItemsPerPage(2)
+      } else {
+        setItemsPerPage(3)
+      }
+    }
+    handleResize()
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
 
   const next = () => setIndex((prev) => (prev + 1) % (EXTENDED_TESTIMONIALS.length - itemsPerPage + 1))
   const prev = () => setIndex((prev) => (prev - 1 + (EXTENDED_TESTIMONIALS.length - itemsPerPage + 1)) % (EXTENDED_TESTIMONIALS.length - itemsPerPage + 1))
@@ -167,3 +182,6 @@ export default function TestimonialsSection() {
     </FadeSection>
   )
 }
+
+// Next HMR Cache Invalidation Trigger: Testimonials Carousel Squish Bug Resolved 2026-05-17
+

@@ -9,12 +9,14 @@ import '@fontsource/inter/700.css';
 
 import ContactModal from '@/app/components/common/ContactModal'
 import RegisterModal from '@/app/components/common/RegisterModal'
+import FloatingWhatsApp from '@/app/components/common/FloatingWhatsApp'
 import { Providers } from '@/app/layouts/Providers';
 import { AppShellWrapper } from '@/app/layouts/AppShellWrapper';
 
 export const metadata = {
   title: 'Magnevents — Premium Live Artist Booking',
   description: 'Artist-first booking for weddings, corporate nights, and concerts.',
+  manifest: '/manifest.json',
 };
 
 export default function RootLayout({ children }) {
@@ -27,6 +29,7 @@ export default function RootLayout({ children }) {
           </AppShellWrapper>
           <ContactModal />
           <RegisterModal />
+          <FloatingWhatsApp />
         </Providers>
       </body>
     </html>

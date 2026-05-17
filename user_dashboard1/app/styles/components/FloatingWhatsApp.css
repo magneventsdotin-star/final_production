@@ -1,0 +1,135 @@
+/* ============================================================
+   PREMIUM FLOATING WHATSAPP CHAT WIDGET
+   ============================================================ */
+.lux-floating-whatsapp-root {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.whatsapp-icon-wrapper {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 30px rgba(37, 211, 102, 0.4), 
+              0 0 0 1px rgba(255, 255, 255, 0.15) inset;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 2;
+}
+
+.whatsapp-pulse-glow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: rgba(37, 211, 102, 0.4);
+  z-index: 1;
+  animation: whatsappPulse 2s infinite;
+  pointer-events: none;
+}
+
+@keyframes whatsappPulse {
+  0% {
+    transform: scale(0.95);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.4);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+}
+
+/* Tooltip badge text */
+.whatsapp-tooltip-glow {
+  position: absolute;
+  right: 76px;
+  background: rgba(10, 10, 10, 0.85);
+  border: 1px solid rgba(37, 211, 102, 0.25);
+  border-radius: 12px;
+  padding: 8px 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+  transform: translateX(15px);
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  white-space: nowrap;
+}
+
+.tooltip-badge {
+  background: #25D366;
+  color: #000;
+  font-size: 8px;
+  font-weight: 900;
+  padding: 2px 5px;
+  border-radius: 4px;
+  letter-spacing: 0.05em;
+}
+
+.tooltip-text {
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+/* Hover States */
+.lux-floating-whatsapp-root:hover .whatsapp-icon-wrapper {
+  transform: translateY(-4px) rotate(-8deg);
+  box-shadow: 0 15px 35px rgba(37, 211, 102, 0.55), 
+              0 0 20px rgba(37, 211, 102, 0.3);
+}
+
+.lux-floating-whatsapp-root:hover .whatsapp-tooltip-glow {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+/* Mobile responsive positioning adjustment: Float safely above bottom tab menu */
+@media (max-width: 768px) {
+  .lux-floating-whatsapp-root {
+    bottom: 90px !important; /* Offset by 90px so it sits beautifully above the bottom tab navigation */
+    right: 18px !important;
+  }
+  
+  .whatsapp-icon-wrapper {
+    width: 52px;
+    height: 52px;
+  }
+  
+  .whatsapp-icon-wrapper svg {
+    width: 24px;
+    height: 24px;
+  }
+  
+  .whatsapp-pulse-glow {
+    width: 52px;
+    height: 52px;
+  }
+
+  /* Automatically show pulsing tooltip on mobile briefly */
+  .whatsapp-tooltip-glow {
+    display: none !important; /* Tooltips are hidden on small touch screens to save layout space */
+  }
+}
