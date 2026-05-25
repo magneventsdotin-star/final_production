@@ -1,26 +1,29 @@
 "use client";
 
-import { useState, useEffect, useRef } from 'react'
-import { useInView, useMotionValue, useSpring } from 'framer-motion'
+import { useEffect, useRef } from 'react'
+import { animate, useInView } from 'framer-motion'
 
 export default function AnimatedCounter({ to, suffix = '' }) {
   const ref = useRef(null)
   const inView = useInView(ref, { once: true, margin: '-40px' })
-  const motionVal = useMotionValue(0)
-  const spring = useSpring(motionVal, { stiffness: 60, damping: 18 })
-  const [display, setDisplay] = useState(0)
 
   useEffect(() => {
-    if (inView) motionVal.set(to)
-  }, [inView, to, motionVal])
+    if (!inView || !ref.current) return;
+    
+    const node = ref.current;
+    
+    const controls = animate(0, to, {
+      duration: 2.5,
+      ease: 'easeOut',
+      onUpdate(value) {
+        node.textContent = Math.round(value).toLocaleString('en-IN') + suffix;
+      }
+    });
 
-  useEffect(() => {
-    return spring.on('change', v => setDisplay(Math.round(v)))
-  }, [spring])
+    return () => controls.stop();
+  }, [inView, to, suffix]);
 
   return (
-    <span ref={ref}>
-      {display.toLocaleString('en-IN')}{suffix}
-    </span>
+    <span ref={ref}>0{suffix}</span>
   )
 }

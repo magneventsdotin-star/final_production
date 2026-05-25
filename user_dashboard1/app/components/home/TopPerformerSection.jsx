@@ -130,26 +130,27 @@ function TopPerformerSection() {
                     detail: { type: 'booking', artist: artist }
                   }))}
                   className="hp-btn hp-aom-btn"
-                  style={{ flex: 1 }}
+                  style={{ flex: 1, whiteSpace: 'nowrap', padding: '12px 10px' }}
                 >
-                  Book This Artist
+                  Book Now
                 </button>
                 <button
                   onClick={() => setShowDetails(true)}
                   className="hp-btn"
                   style={{ 
                     flex: 1, 
-                    background: 'transparent', 
-                    border: '1px solid rgba(255,255,255,0.2)', 
-                    color: 'white' 
+                    background: '#fff', 
+                    border: 'none', 
+                    color: '#000',
+                    fontWeight: '600',
+                    whiteSpace: 'nowrap',
+                    padding: '12px 10px'
                   }}
                   onMouseEnter={(e) => {
-                    e.target.style.background = 'rgba(255,255,255,0.05)';
-                    e.target.style.borderColor = 'rgba(255,255,255,0.5)';
+                    e.target.style.background = '#e0e0e0';
                   }}
                   onMouseLeave={(e) => {
-                    e.target.style.background = 'transparent';
-                    e.target.style.borderColor = 'rgba(255,255,255,0.2)';
+                    e.target.style.background = '#fff';
                   }}
                 >
                   View Profile

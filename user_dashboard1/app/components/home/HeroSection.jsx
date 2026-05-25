@@ -17,7 +17,7 @@ export default function HeroSection() {
 
     const id = window.setInterval(() => {
       setHeroSlide(prev => (prev + 1) % HERO_SPOTLIGHT_SLIDES.length)
-    }, 2800)
+    }, 8000)
 
     return () => window.clearInterval(id)
   }, [])
@@ -61,7 +61,7 @@ export default function HeroSection() {
               initial="hidden"
               animate="visible"
               variants={{
-                hidden: { opacity: 1 },
+                hidden: { opacity: 0 },
                 visible: {
                   opacity: 1,
                   transition: { staggerChildren: 0.05, delayChildren: 0.0 }
@@ -69,7 +69,7 @@ export default function HeroSection() {
               }}
             >
               {"Book A".split(" ").map((word, i) => (
-                <motion.span key={`w1-${i}`} style={{ display: 'inline-block', marginRight: '16px' }} variants={{ hidden: { opacity: 0, y: 15, filter: 'blur(8px)' }, visible: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } } }}>
+                <motion.span key={`w1-${i}`} style={{ display: 'inline-block', marginRight: '0.15em' }} variants={{ hidden: { opacity: 0, y: 15, filter: 'blur(8px)' }, visible: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } } }}>
                   {word}
                 </motion.span>
               ))}
@@ -82,13 +82,13 @@ export default function HeroSection() {
               </motion.span>
               <br />
               {"For Your".split(" ").map((word, i) => (
-                <motion.span key={`w2-${i}`} style={{ display: 'inline-block', marginRight: '16px' }} variants={{ hidden: { opacity: 0, y: 15, filter: 'blur(8px)' }, visible: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } } }}>
+                <motion.span key={`w2-${i}`} style={{ display: 'inline-block', marginRight: '0.15em' }} variants={{ hidden: { opacity: 0, y: 15, filter: 'blur(8px)' }, visible: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } } }}>
                   {word}
                 </motion.span>
               ))}
               <motion.span 
                 className="hp-gradient-text accent-text" 
-                style={{ display: 'inline-block', marginRight: '16px' }}
+                style={{ display: 'inline-block', marginRight: '0.15em' }}
                 variants={{ hidden: { opacity: 0, y: 15, filter: 'blur(8px)' }, visible: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } } }}
               >
                 Grand

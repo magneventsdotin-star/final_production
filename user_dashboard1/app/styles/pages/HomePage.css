@@ -117,7 +117,7 @@
 }
 
 .hp-hero-contact-wrap {
-  margin-bottom: var(--spacing-4);
+  margin-bottom: 20px;
 }
 
 .hp-hero-contact-pill {
@@ -133,7 +133,17 @@
   text-decoration: none;
   font-size: 16px;
   font-weight: 600;
+  white-space: nowrap; /* Prevent wrapping to a second line */
   transition: all 0.3s ease;
+  max-width: 100%;
+}
+
+@media (max-width: 480px) {
+  .hp-hero-contact-pill {
+    padding: 10px 16px;
+    font-size: 13px;
+    gap: 6px;
+  }
 }
 
 .hp-hero-contact-pill:hover {
@@ -225,17 +235,20 @@
 }
 
 .hp-hero-h1 {
-  margin: 0;
+  margin: 0 0 10px 0; /* Decreased bottom margin */
   font-family: var(--font-display);
   font-size: clamp(36px, 5.6vw, 74px);
-  line-height: 0.95;
-  letter-spacing: -0.05em;
-  max-width: 620px;
+  line-height: 1.05; /* Decreased text line spacing */
+  letter-spacing: -0.02em;
+  max-width: 800px;
+  text-align: center; /* PERFECTLY CENTER TEXT LINES */
+  color: #fff; /* Reverted to white */
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.4); /* Reverted to standard dark shadow */
 }
 
 .hp-gradient-text.accent-text {
-  color: var(--brand-primary);
-  text-shadow: 0 0 20px rgba(255, 224, 50, 0.4);
+  color: #FFD700; /* Yellow */
+  text-shadow: 0 0 25px rgba(255, 215, 0, 0.5); /* Glowing yellow effect */
   padding: 0 4px;
   font-style: normal;
 }
@@ -245,6 +258,7 @@
   margin: 18px 0 0;
   font-size: clamp(17px, 1.4vw, 22px);
   color: #f3e5cf;
+  text-align: center;
   text-shadow: 0 1px 10px rgba(9, 6, 4, 0.34);
 }
 
@@ -279,8 +293,9 @@
 }
 
 .hp-hero-actions {
-  margin-top: 18px;
+  margin-top: 0;
   display: flex;
+  justify-content: center; /* CENTER BUTTONS */
   gap: 10px;
   flex-wrap: wrap;
 }
@@ -340,7 +355,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&display=swap');
 
 .hp-stats {
-  margin-top: 30px; /* Reduced empty space */
+  margin-top: 20px; /* Reduced empty space */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -351,7 +366,7 @@
   
   /* Make the wrapper the single card */
   background: rgba(20, 10, 10, 0.6);
-  backdrop-filter: blur(40px);
+  backdrop-filter: blur(16px);
   border: 1px solid rgba(214, 80, 80, 0.2);
   border-radius: 24px;
   padding: 30px 20px; /* Decreased box height/padding */
@@ -360,14 +375,6 @@
     inset 0 0 30px rgba(214, 80, 80, 0.05);
   position: relative;
   overflow: hidden;
-  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
-}
-
-.hp-stats:hover {
-  transform: translateY(-5px);
-  box-shadow:
-    0 40px 80px rgba(0, 0, 0, 0.6),
-    inset 0 0 40px rgba(214, 80, 80, 0.1);
 }
 
 .hp-stats::before {
@@ -388,7 +395,8 @@
   content: '';
   position: absolute;
   top: 0;
-  left: -100%;
+  left: 0;
+  transform: translateX(-100%);
   width: 50%;
   height: 100%;
   background: linear-gradient(
@@ -402,9 +410,9 @@
 }
 
 @keyframes stats-shimmer {
-  0% { left: -100%; }
-  50% { left: 200%; }
-  100% { left: 200%; }
+  0% { transform: translateX(-100%); }
+  50% { transform: translateX(400%); }
+  100% { transform: translateX(400%); }
 }
 
 .hp-stat-card {
@@ -415,11 +423,6 @@
   flex-direction: column;
   justify-content: center;
   padding: 0 20px;
-  transition: transform 0.3s ease;
-}
-
-.hp-stat-card:hover {
-  transform: scale(1.05);
 }
 
 /* Add dividers between items */
@@ -435,7 +438,8 @@
 
 .hp-stat-card strong {
   display: block;
-  font-family: 'Playfair Display', serif; /* Fancy Font */
+  font-family: 'Inter', sans-serif; /* Changed to a clean, simple font */
+  font-variant-numeric: tabular-nums; /* STOPS HORIZONTAL JITTER */
   color: rgba(214, 80, 80, 0.85); /* Slightly darker/less bright red */
   font-size: clamp(2.58rem, 5.17vw, 3.9rem); /* Increased by 25% */
   font-weight: 700; /* Decreased boldness */
@@ -464,11 +468,6 @@
   letter-spacing: 0.2em;
   opacity: 0.9;
   position: relative;
-  transition: color 0.3s ease;
-}
-
-.hp-stat-card:hover > span {
-  color: var(--brand-ruby);
 }
 
 .hp-stat-card > span::before {
@@ -479,12 +478,6 @@
   background: var(--brand-ruby);
   margin: 0 auto 10px;
   opacity: 0.6;
-  transition: width 0.3s ease;
-}
-
-.hp-stat-card:hover > span::before {
-  width: 50px;
-  background: #fff;
 }
 
 @media (max-width: 1024px) {
@@ -1914,8 +1907,9 @@
   }
 
   .hp-hero-h1 {
+    margin-bottom: 10px; /* Ensure bottom margin applies on mobile */
     font-size: clamp(32px, 11vw, 52px);
-    line-height: 0.96;
+    line-height: 1.05; /* Fix words crashing vertically on mobile */
   }
 
   .hp-hero-spotlight {

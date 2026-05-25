@@ -1,12 +1,12 @@
 "use client";
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, forwardRef } from 'react'
 import { createPortal } from 'react-dom'
 import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import ArtistDetailsModal from './ArtistDetailsModal'
 
-export default function ArtistCard({ artist, onBook }) {
+const ArtistCard = forwardRef(({ artist, onBook }, ref) => {
   const [imageError, setImageError] = useState(false)
   const [showDetails, setShowDetails] = useState(false)
   const [mounted, setMounted] = useState(false)
@@ -34,6 +34,7 @@ export default function ArtistCard({ artist, onBook }) {
   return (
     <>
       <motion.div
+        ref={ref}
         layout
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -97,4 +98,8 @@ export default function ArtistCard({ artist, onBook }) {
       />
     </>
   )
-}
+})
+
+ArtistCard.displayName = 'ArtistCard';
+
+export default ArtistCard;
