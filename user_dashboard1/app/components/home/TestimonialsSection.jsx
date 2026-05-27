@@ -96,10 +96,16 @@ export default function TestimonialsSection() {
                 <div className="hp-action-icon">📍</div>
                 <span>Directions</span>
               </button>
-              <button className="hp-biz-action-btn">
+              <a 
+                href="https://www.google.com/search?sca_esv=f59e2138defda713&rlz=1C1UEAD_enIN1054IN1054&sxsrf=AE3TifMtKsB_tO8pWDNSh2wm2xvmNjLJuQ:1755770963622&si=AMgyJEtREmoPL4P1I5IDCfuA8gybfVI2d5Uj7QMwYCZHKDZ-E8r66DdIpf2IvdtbvMXF2xWJ9PVM8-D80185NIilsgXFDanywI73wQOVQ_VgJantEqGDGxPBRdfCMXHweSGk8q7uyf5y&q=Magnevents+Reviews&sa=X&ved=2ahUKEwiC19_E1JuPAxVJT2wGHd2tN54Q0bkNegQIHRAE"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hp-biz-action-btn"
+                style={{ textDecoration: 'none' }}
+              >
                 <div className="hp-action-icon">⭐</div>
                 <span>Reviews</span>
-              </button>
+              </a>
               <button className="hp-biz-action-btn">
                 <div className="hp-action-icon">🔖</div>
                 <span>Save</span>
@@ -107,7 +113,17 @@ export default function TestimonialsSection() {
             </div>
           </div>
           <div className="hp-biz-footer">
-            <div className="hp-biz-detail">
+            <div className="hp-biz-detail" style={{ paddingBottom: '10px' }}>
+              <a 
+                href="https://www.google.com/search?sca_esv=f59e2138defda713&rlz=1C1UEAD_enIN1054IN1054&sxsrf=AE3TifMtKsB_tO8pWDNSh2wm2xvmNjLJuQ:1755770963622&si=AMgyJEtREmoPL4P1I5IDCfuA8gybfVI2d5Uj7QMwYCZHKDZ-E8r66DdIpf2IvdtbvMXF2xWJ9PVM8-D80185NIilsgXFDanywI73wQOVQ_VgJantEqGDGxPBRdfCMXHweSGk8q7uyf5y&q=Magnevents+Reviews&sa=X&ved=2ahUKEwiC19_E1JuPAxVJT2wGHd2tN54Q0bkNegQIHRAE"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hp-btn hp-btn-primary"
+                style={{ backgroundColor: '#EA4335', borderColor: '#EA4335', color: '#FFF', width: '100%', padding: '10px 0', fontSize: '14px', minHeight: '40px' }}
+              >
+                <span>See all Google Reviews</span>
+                <span className="hp-btn-shine" aria-hidden="true"></span>
+              </a>
             </div>
             <div className="hp-biz-detail">
               <strong>Phone:</strong> 080765 15257
