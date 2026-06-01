@@ -1,8 +1,8 @@
 
 "use client"
 
-import { useState, useEffect, useMemo } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { useState, useEffect, useMemo, useRef } from 'react'
+import { motion, AnimatePresence, useInView } from 'framer-motion'
 import { supabase } from '@/app/lib/supabase'
 import '@/app/styles/pages/ServicesPage.css'
 import '@/app/styles/components/ReelsSection.css'
@@ -166,10 +166,13 @@ const sanitizeVideoData = (video) => {
 const VideoCard = ({ video, onPlay }) => {
   const poster = getCategoryPoster(video.category, video.topic, video.video_url);
   const isYoutube = !!getYoutubeId(video.video_url);
+  const cardRef = useRef(null);
+  const isInView = useInView(cardRef, { margin: "0px", amount: 0.5 }); // Play when at least 50% visible
 
   return (
     <motion.div 
       layout
+      ref={cardRef}
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: 20 }}
@@ -187,18 +190,40 @@ const VideoCard = ({ video, onPlay }) => {
         boxShadow: '0 12px 30px rgba(0, 0, 0, 0.4)',
       }}
     >
-      {/* Background Poster Image */}
+      {/* Background Poster Image / Autoplaying Video */}
       <div 
         className="card-poster"
         style={{
           position: 'absolute',
           inset: 0,
-          backgroundImage: `url(${poster})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
-          transition: 'transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)'
+          transition: 'transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)',
+          backgroundColor: '#000'
         }}
-      />
+      >
+        {!isInView ? (
+          <div style={{ position: 'absolute', inset: 0, backgroundImage: `url(${poster})`, backgroundSize: 'cover', backgroundPosition: 'center' }} />
+        ) : (
+          isYoutube ? (
+            <iframe
+              src={`https://www.youtube.com/embed/${getYoutubeId(video.video_url)}?autoplay=1&mute=1&loop=1&playlist=${getYoutubeId(video.video_url)}&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1`}
+              style={{ width: '100%', height: '100%', border: 'none', objectFit: 'cover', transform: 'scale(1.35)', pointerEvents: 'none' }}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              title={video.user_name}
+            />
+          ) : (
+            <video
+              src={video.video_url}
+              autoPlay
+              muted
+              loop
+              playsInline
+              style={{ width: '100%', height: '100%', objectFit: 'cover', pointerEvents: 'none' }}
+            />
+          )
+        )}
+      </div>
       
       {/* Premium Dark Gradient Overlay */}
       <div 
@@ -297,38 +322,7 @@ const VideoCard = ({ video, onPlay }) => {
         </div>
       </div>
 
-      {/* Bottom Information */}
-      <div 
-        className="card-details"
-        style={{
-          position: 'absolute',
-          bottom: 0,
-          left: 0,
-          right: 0,
-          padding: '24px',
-          zIndex: 2,
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '6px'
-        }}
-      >
-        <h4 
-          className="card-title"
-          style={{
-            margin: 0,
-            fontSize: '18px',
-            fontWeight: '700',
-            color: '#fff',
-            fontFamily: 'Outfit, var(--font-display), sans-serif',
-            letterSpacing: '-0.01em'
-          }}
-        >
-          {video.user_name}
-        </h4>
-        <span style={{ color: '#a1a1aa', fontSize: '13px', fontWeight: '400' }}>
-          {video.topic}
-        </span>
-      </div>
+
     </motion.div>
   );
 };

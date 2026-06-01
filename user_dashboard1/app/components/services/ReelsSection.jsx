@@ -274,14 +274,7 @@ export default function ReelsSection() {
                       style={{ objectFit: 'cover', width: '100%', height: '100%' }}
                     />
                   )}
-                  <div style={{ position: 'absolute', bottom: '24px', left: '24px', right: '24px', display: 'flex', flexDirection: 'column', gap: '8px', zIndex: 5 }}>
-                    <h3 style={{ margin: 0, color: '#fff', fontSize: '18px', fontWeight: '800' }}>
-                      {vid.user_name && vid.user_name.startsWith('{') ? (JSON.parse(vid.user_name).name || vid.user_name) : vid.user_name}
-                    </h3>
-                    <p style={{ margin: 0, color: 'rgba(255,255,255,0.7)', fontSize: '13px' }}>
-                      {vid.topic}
-                    </p>
-                  </div>
+
                   {/* Category Logo Icon */}
                   <div 
                     className="reel-overlay-icon"
