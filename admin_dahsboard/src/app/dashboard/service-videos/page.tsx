@@ -207,8 +207,7 @@ export default function ServiceVideos() {
       const payloadUserName = JSON.stringify({
         name: userName || 'Featured Artist',
         type: artistType || '',
-        bio: artistBio || '',
-        is_featured: isMainHeading
+        bio: artistBio || ''
       });
 
       const { error } = await (supabase.from('service_videos') as any).insert([
@@ -216,7 +215,8 @@ export default function ServiceVideos() {
           topic, 
           category: category || topic, 
           user_name: payloadUserName, 
-          video_url: finalVideoUrl 
+          video_url: finalVideoUrl,
+          main_headingvideo: isMainHeading
         }
       ]);
 
@@ -256,35 +256,19 @@ export default function ServiceVideos() {
   };
 
   const handleToggleFeature = async (video: any) => {
-    const newValue = !video._is_featured;
+    const newValue = !video.main_headingvideo;
     
     // Optimistic UI Update for instant feedback
     setVideos(prev => prev.map(v => {
       if (v.id === video.id) {
-        let p: any = { name: v.user_name };
-        try { if (v.user_name && v.user_name.startsWith('{')) p = JSON.parse(v.user_name); } catch(e){}
-        p.is_featured = newValue;
-        return { ...v, user_name: JSON.stringify(p), _is_featured: newValue };
+        return { ...v, main_headingvideo: newValue };
       }
       return v;
     }));
 
     try {
-      let parsed: any = {};
-      try {
-        if (video.user_name && video.user_name.startsWith('{')) {
-          parsed = JSON.parse(video.user_name);
-        } else {
-          parsed = { name: video.user_name };
-        }
-      } catch (e) {
-        parsed = { name: video.user_name };
-      }
-
-      parsed.is_featured = newValue;
-
       const { error } = await (supabase.from('service_videos') as any)
-        .update({ user_name: JSON.stringify(parsed) })
+        .update({ main_headingvideo: newValue })
         .eq('id', video.id);
 
       if (error) throw error;

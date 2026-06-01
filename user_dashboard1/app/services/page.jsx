@@ -106,7 +106,7 @@ const sanitizeVideoData = (video) => {
   let userName = video.user_name;
   let artistType = '';
   let artistBio = '';
-  let isFeatured = false;
+  let isFeatured = video.main_headingvideo || false;
 
   try {
     if (video.user_name && video.user_name.startsWith('{')) {
@@ -114,7 +114,6 @@ const sanitizeVideoData = (video) => {
       userName = parsed.name || '';
       artistType = parsed.type || '';
       artistBio = parsed.bio || '';
-      isFeatured = parsed.is_featured || false;
     }
   } catch (e) {}
 

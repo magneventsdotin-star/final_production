@@ -195,14 +195,7 @@ export default function ReelsSection() {
       
       {Object.entries(finalGroups).map(([category, videos]) => {
         // Filter videos to only show those that are explicitly featured (toggled ON)
-        const visibleVideos = [...videos].filter((vid) => {
-          try {
-            if (vid.user_name && vid.user_name.startsWith('{')) {
-              return JSON.parse(vid.user_name).is_featured === true;
-            }
-          } catch(e) {}
-          return false;
-        });
+        const visibleVideos = [...videos].filter((vid) => vid.main_headingvideo === true);
 
         if (visibleVideos.length === 0) return null; // Don't show category if no videos are toggled ON
 
