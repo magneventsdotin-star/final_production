@@ -102,7 +102,7 @@
   white-space: nowrap;
   pointer-events: none;
   z-index: 1;
-  padding: 12px 0;
+  padding: 6px 0;
   background: rgba(0,0,0,0.2);
   border-bottom: 1px solid rgba(255,255,255,0.03);
 }
@@ -111,8 +111,8 @@
   display: inline-block;
   white-space: nowrap;
   font-family: 'Outfit', sans-serif;
-  font-size: 24px;
-  font-weight: 900;
+  font-size: 14px;
+  font-weight: 800;
   color: rgba(184, 134, 11, 0.7); /* Dark Goldenrod */
   letter-spacing: 0.15em;
   animation: marquee-run 40s linear infinite;

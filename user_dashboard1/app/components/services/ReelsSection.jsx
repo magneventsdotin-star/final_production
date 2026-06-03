@@ -317,10 +317,22 @@ export default function ReelsSection() {
         };
         
         return Object.entries(finalGroups).map(([category, videos]) => {
-          // Filter videos to only show those that are explicitly featured (toggled ON)
           const visibleVideos = [...videos].filter((vid) => vid.main_headingvideo === true);
 
           if (visibleVideos.length === 0) return null; // Don't show category if no videos are toggled ON
+
+          let customMainHeading = null;
+          let customSubHeading = null;
+          try {
+             if (visibleVideos[0]?.user_name && visibleVideos[0].user_name.startsWith('{')) {
+                const parsed = JSON.parse(visibleVideos[0].user_name);
+                if (parsed.mainHeading) customMainHeading = parsed.mainHeading;
+                if (parsed.subHeading) customSubHeading = parsed.subHeading;
+             }
+          } catch(e) {}
+          
+          const displayHeading = customMainHeading || category;
+          const displaySubHeading = customSubHeading || categoryDescriptions[category];
 
           return (
           <div className="reels-container" key={category} style={{ marginBottom: '80px' }}>
@@ -333,8 +345,10 @@ export default function ReelsSection() {
             </div>
 
             {/* Second Row: Main Heading, Badge, and Button */}
-            <div className="reels-header-content">
-              <div className="reels-header-left" style={{ position: 'relative', zIndex: 2, display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '8px' }}>
+            <div className="reels-header-content" style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '70px', padding: '12px 40px' }}>
+              
+              {/* Centered Heading & Badge */}
+              <div className="reels-header-center" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '16px', zIndex: 2 }}>
                 <div style={{
                   background: 'linear-gradient(135deg, #E7286A, #ff8aab)',
                   color: '#fff',
@@ -348,27 +362,55 @@ export default function ReelsSection() {
                 }}>
                   ★ Trending
                 </div>
-                <h2 className="reels-title" style={{ margin: 0, fontSize: 'clamp(24px, 4vw, 36px)', lineHeight: '1.2', fontWeight: '900' }}>{category}</h2>
-                {categoryDescriptions[category] && (
-                  <p style={{ margin: '4px 0 0 0', fontSize: '14px', color: 'rgba(255,255,255,0.6)', maxWidth: '600px', lineHeight: '1.6' }}>
-                    {categoryDescriptions[category]}
-                  </p>
-                )}
+                <h2 className="reels-title" style={{ margin: 0, fontSize: 'clamp(24px, 4vw, 40px)', lineHeight: '1.2', fontWeight: '900' }}>{displayHeading}</h2>
               </div>
               
-              <button 
-                className="quick-book-btn"
-                style={{ position: 'relative', zIndex: 2 }}
-                onClick={() => {
-                  window.dispatchEvent(new CustomEvent('open-contact-modal', { 
-                    detail: { type: 'booking', artist: { name: `Performer from ${category}` } } 
-                  }));
-                }}
-              >
-                Quick Book
-              </button>
+              {/* Right Aligned Button */}
+              <div style={{ position: 'absolute', right: '40px', zIndex: 2 }}>
+                <button 
+                  className="quick-book-btn"
+                  onClick={() => {
+                    window.dispatchEvent(new CustomEvent('open-contact-modal', { 
+                      detail: { type: 'booking', artist: { name: `Performer from ${category}` } } 
+                    }));
+                  }}
+                >
+                  Quick Book
+                </button>
+              </div>
             </div>
           </div>
+
+          {/* Subheading in a separate centered box */}
+          {displaySubHeading && (
+            <div style={{
+              background: 'rgba(20, 20, 25, 0.5)',
+              border: '1px solid rgba(255, 255, 255, 0.08)',
+              borderRadius: '16px',
+              padding: '12px 30px',
+              margin: '0 auto 30px auto',
+              maxWidth: '900px',
+              textAlign: 'center',
+              boxShadow: '0 10px 30px rgba(0,0,0,0.3)',
+              backdropFilter: 'blur(20px)',
+              position: 'relative',
+              zIndex: 2
+            }}>
+              <p style={{ 
+                margin: 0, 
+                fontSize: '18px', 
+                lineHeight: '1.6', 
+                fontWeight: '700',
+                background: 'linear-gradient(135deg, #ffffff, #ff8aab)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                letterSpacing: '0.02em'
+              }}>
+                {displaySubHeading}
+              </p>
+            </div>
+          )}
+
           <div className="reels-grid">
             {visibleVideos.slice(0, 4).map((vid) => {
               const ytId = getYoutubeId(vid.video_url);
