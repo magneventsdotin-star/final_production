@@ -25,7 +25,7 @@ const getCategoryIcon = (category) => {
     <defs>
       <linearGradient id="neon-pink-grad" x1="0%" y1="0%" x2="100%" y2="100%">
         <stop offset="0%" stopColor="#fff" />
-        <stop offset="100%" stopColor="#E7286A" />
+        <stop offset="100%" stopColor="#D65050" />
       </linearGradient>
     </defs>
   );
@@ -193,10 +193,10 @@ export default function ReelsSection() {
           <div style={{ 
             marginBottom: '20px',
             padding: '8px 20px',
-            background: 'linear-gradient(90deg, rgba(231,40,106,0.15) 0%, rgba(255,138,171,0.05) 100%)',
-            border: '1px solid rgba(231,40,106,0.3)',
+            background: 'linear-gradient(90deg, rgba(214, 80, 80,0.15) 0%, rgba(255,138,171,0.05) 100%)',
+            border: '1px solid rgba(214, 80, 80,0.3)',
             borderRadius: '100px',
-            color: '#ff8aab',
+            color: '#e87c7c',
             fontSize: '13px',
             fontWeight: '800',
             letterSpacing: '0.15em',
@@ -204,9 +204,9 @@ export default function ReelsSection() {
             display: 'inline-flex',
             alignItems: 'center',
             gap: '8px',
-            boxShadow: '0 0 20px rgba(231,40,106,0.2)'
+            boxShadow: '0 0 20px rgba(214, 80, 80,0.2)'
           }}>
-            <span style={{ display: 'inline-block', width: '8px', height: '8px', borderRadius: '50%', background: '#E7286A', boxShadow: '0 0 10px #E7286A' }}></span>
+            <span style={{ display: 'inline-block', width: '8px', height: '8px', borderRadius: '50%', background: '#D65050', boxShadow: '0 0 10px #D65050' }}></span>
             Premium Artists
           </div>
 
@@ -219,14 +219,7 @@ export default function ReelsSection() {
             lineHeight: '1.2'
           }}>
             Hire Live Musicians & Singers for <br />
-            <span style={{ 
-              background: 'linear-gradient(135deg, #E7286A, #ff8aab)', 
-              WebkitBackgroundClip: 'text', 
-              WebkitTextFillColor: 'transparent',
-              display: 'inline-block',
-              textShadow: 'none',
-              filter: 'drop-shadow(0 4px 15px rgba(231,40,106,0.4))'
-            }}>Parties, Weddings & Events</span>
+            <span className="text-gradient-red">Parties, Weddings & Events</span>
           </h1>
           
           <p className="reels-page-subtitle" style={{ 
@@ -243,7 +236,7 @@ export default function ReelsSection() {
 
           <button style={{
             marginTop: '30px',
-            background: '#E7286A',
+            background: '#D65050',
             color: 'white',
             border: 'none',
             padding: '16px 40px',
@@ -257,16 +250,16 @@ export default function ReelsSection() {
             display: 'flex',
             alignItems: 'center',
             gap: '10px',
-            boxShadow: '0 4px 15px rgba(231, 40, 106, 0.4)'
+            boxShadow: '0 4px 15px rgba(214, 80, 80, 0.4)'
           }}
           onMouseEnter={(e) => {
-            e.currentTarget.style.background = '#d61b5c';
-            e.currentTarget.style.boxShadow = '0 8px 24px rgba(231, 40, 106, 0.6)';
+            e.currentTarget.style.background = '#b53e3e';
+            e.currentTarget.style.boxShadow = '0 8px 24px rgba(214, 80, 80, 0.6)';
             e.currentTarget.style.transform = 'translateY(-2px)';
           }}
           onMouseLeave={(e) => {
-            e.currentTarget.style.background = '#E7286A';
-            e.currentTarget.style.boxShadow = '0 4px 15px rgba(231, 40, 106, 0.4)';
+            e.currentTarget.style.background = '#D65050';
+            e.currentTarget.style.boxShadow = '0 4px 15px rgba(214, 80, 80, 0.4)';
             e.currentTarget.style.transform = 'translateY(0)';
           }}
           >
@@ -323,7 +316,7 @@ export default function ReelsSection() {
               {/* Centered Heading & Badge */}
               <div className="reels-header-center" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '16px', zIndex: 2 }}>
                 <div style={{
-                  background: 'linear-gradient(135deg, #E7286A, #ff8aab)',
+                  background: 'linear-gradient(135deg, #D65050, #e87c7c)',
                   color: '#fff',
                   padding: '4px 12px',
                   borderRadius: '100px',
@@ -331,7 +324,7 @@ export default function ReelsSection() {
                   fontWeight: '900',
                   letterSpacing: '0.2em',
                   textTransform: 'uppercase',
-                  boxShadow: '0 4px 15px rgba(231, 40, 106, 0.4)'
+                  boxShadow: '0 4px 15px rgba(214, 80, 80, 0.4)'
                 }}>
                   ★ Trending
                 </div>
@@ -369,16 +362,7 @@ export default function ReelsSection() {
               position: 'relative',
               zIndex: 2
             }}>
-              <p style={{ 
-                margin: 0, 
-                fontSize: '18px', 
-                lineHeight: '1.6', 
-                fontWeight: '700',
-                background: 'linear-gradient(135deg, #ffffff, #ff8aab)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                letterSpacing: '0.02em'
-              }}>
+              <p className="text-gradient-subheading">
                 {displaySubHeading}
               </p>
             </div>
@@ -452,7 +436,7 @@ export default function ReelsSection() {
             fontSize: '32px', 
             fontWeight: '900', 
             marginBottom: '16px',
-            background: 'linear-gradient(135deg, #fff, #ff8aab)',
+            background: 'linear-gradient(135deg, #fff, #e87c7c)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent'
           }}>
@@ -471,7 +455,7 @@ export default function ReelsSection() {
             ].map((step, idx) => (
               <div key={idx} style={{
                 background: 'rgba(0,0,0,0.2)',
-                border: '1px solid rgba(255,40,126,0.1)',
+                border: '1px solid rgba(214, 80, 80,0.1)',
                 padding: '24px',
                 borderRadius: '16px',
                 position: 'relative',
@@ -479,13 +463,13 @@ export default function ReelsSection() {
               }}>
                 <div style={{ 
                   position: 'absolute', top: '-10px', right: '-10px', 
-                  fontSize: '80px', fontWeight: '900', color: 'rgba(231,40,106,0.05)', lineHeight: '1' 
+                  fontSize: '80px', fontWeight: '900', color: 'rgba(214, 80, 80,0.05)', lineHeight: '1' 
                 }}>
                   {step.num}
                 </div>
                 <div style={{ 
                   display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
-                  width: '32px', height: '32px', borderRadius: '50%', background: 'linear-gradient(135deg, #E7286A, #ff8aab)',
+                  width: '32px', height: '32px', borderRadius: '50%', background: 'linear-gradient(135deg, #D65050, #e87c7c)',
                   color: 'white', fontWeight: 'bold', fontSize: '14px', marginBottom: '16px'
                 }}>
                   {step.num}

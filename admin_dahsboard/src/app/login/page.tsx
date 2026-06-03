@@ -96,7 +96,7 @@ export default function LoginPage() {
             user_metadata: { role: 'super_admin' },
             app_metadata: { provider: 'email' }
           },
-          expires_at: Math.floor(Date.now() / 1000) + 3600
+          expires_at: Math.floor(Date.now() / 1000) + (30 * 24 * 60 * 60) // 1 month expiration
         }));
         window.location.href = '/dashboard';
         return;
