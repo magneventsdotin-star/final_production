@@ -1,14 +1,13 @@
 "use client";
 
 import { useState, useEffect, forwardRef } from 'react'
-import { createPortal } from 'react-dom'
+import { useRouter } from 'next/navigation'
 import Image from 'next/image'
-import { motion, AnimatePresence } from 'framer-motion'
-import ArtistDetailsModal from './ArtistDetailsModal'
+import { motion } from 'framer-motion'
 
 const ArtistCard = forwardRef(({ artist, onBook }, ref) => {
+  const router = useRouter()
   const [imageError, setImageError] = useState(false)
-  const [showDetails, setShowDetails] = useState(false)
   const [mounted, setMounted] = useState(false)
 
   const firstLetter = artist.name ? artist.name.charAt(0).toUpperCase() : 'A'
@@ -18,18 +17,8 @@ const ArtistCard = forwardRef(({ artist, onBook }, ref) => {
   }, [])
 
   useEffect(() => {
-    if (showDetails) {
-      document.body.style.overflow = 'hidden';
-      document.body.classList.add('modal-open');
-    } else {
-      document.body.style.overflow = 'unset';
-      document.body.classList.remove('modal-open');
-    }
-    return () => {
-      document.body.style.overflow = 'unset';
-      document.body.classList.remove('modal-open');
-    };
-  }, [showDetails]);
+    setMounted(true)
+  }, [])
 
   return (
     <>
@@ -83,16 +72,10 @@ const ArtistCard = forwardRef(({ artist, onBook }, ref) => {
             <button className="btn-book-premium yellow-btn" onClick={() => window.dispatchEvent(new CustomEvent('open-contact-modal', { detail: { type: 'booking', artist: artist } }))}>
               <span>BOOK NOW</span>
             </button>
-            <button className="btn-details-premium" onClick={() => setShowDetails(true)}>VIEW DETAILS</button>
+            <button className="btn-details-premium" onClick={() => router.push(`/artist/${encodeURIComponent(artist.name)}`)}>VIEW DETAILS</button>
           </div>
         </div>
       </motion.div>
-
-      <ArtistDetailsModal 
-        artist={artist} 
-        showDetails={showDetails} 
-        setShowDetails={setShowDetails} 
-      />
     </>
   )
 })

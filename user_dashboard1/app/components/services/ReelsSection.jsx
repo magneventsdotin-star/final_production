@@ -2,6 +2,7 @@
 
 /* eslint-disable */
 import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { supabase } from '@/app/lib/supabase';
 
 // Parse YouTube video ID cleanly
@@ -66,6 +67,7 @@ const getCategoryIcon = (category) => {
 };
 
 export default function ReelsSection() {
+  const router = useRouter();
   const [groupedVideos, setGroupedVideos] = useState({});
   const [backgroundVideo, setBackgroundVideo] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -235,13 +237,14 @@ export default function ReelsSection() {
           </div>
 
           <h1 className="reels-page-title" style={{ 
-            fontSize: 'clamp(44px, 7vw, 84px)', 
+            fontSize: 'clamp(32px, 5vw, 56px)', 
             marginBottom: '20px', 
             letterSpacing: '-0.02em', 
             fontWeight: '900',
-            textShadow: '0 10px 30px rgba(0,0,0,0.8), 0 2px 10px rgba(0,0,0,0.5)'
+            textShadow: '0 10px 30px rgba(0,0,0,0.8), 0 2px 10px rgba(0,0,0,0.5)',
+            lineHeight: '1.2'
           }}>
-            Live Performance <br />
+            Hire Live Musicians & Singers for <br />
             <span style={{ 
               background: 'linear-gradient(135deg, #E7286A, #ff8aab)', 
               WebkitBackgroundClip: 'text', 
@@ -249,39 +252,52 @@ export default function ReelsSection() {
               display: 'inline-block',
               textShadow: 'none',
               filter: 'drop-shadow(0 4px 15px rgba(231,40,106,0.4))'
-            }}>Showcase</span>
+            }}>Parties, Weddings & Events</span>
           </h1>
           
           <p className="reels-page-subtitle" style={{ 
-            fontSize: 'clamp(16px, 2vw, 22px)', 
+            fontSize: 'clamp(16px, 1.5vw, 20px)', 
             color: 'rgba(255,255,255,0.95)', 
             lineHeight: '1.6', 
-            maxWidth: '700px',
+            maxWidth: '800px',
             margin: '0 auto',
             fontWeight: '400',
             textShadow: '0 4px 15px rgba(0,0,0,0.9), 0 1px 3px rgba(0,0,0,1)' 
           }}>
-            Discover the incredible talent available to book for your next event. Browse live performances, exclusive reels, and instantly book the perfect artist for your occasion.
+            At Magnevents, we make it easy to hire live musicians for parties, weddings, and special events. From solo singers for hire near you to full bands and soulful Sufi acts, we have the perfect artist to match your vibe.
           </p>
 
           <button style={{
             marginTop: '30px',
-            background: 'linear-gradient(135deg, #E7286A 0%, #ff8aab 100%)',
-            color: '#fff',
+            background: 'rgba(255, 255, 255, 0.05)',
+            color: 'white',
+            border: '1px solid rgba(255, 255, 255, 0.1)',
+            backdropFilter: 'blur(10px)',
             padding: '16px 40px',
             borderRadius: '100px',
             fontSize: '15px',
             fontWeight: '900',
             letterSpacing: '0.1em',
             textTransform: 'uppercase',
-            border: 'none',
             cursor: 'pointer',
-            boxShadow: '0 10px 25px rgba(231,40,106,0.4)',
             transition: 'all 0.3s ease',
             display: 'flex',
             alignItems: 'center',
             gap: '10px'
-          }}>
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.background = 'rgba(231, 40, 106, 0.15)';
+            e.currentTarget.style.borderColor = 'rgba(231, 40, 106, 0.5)';
+            e.currentTarget.style.boxShadow = '0 8px 24px rgba(231, 40, 106, 0.2)';
+            e.currentTarget.style.transform = 'translateY(-2px)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)';
+            e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+            e.currentTarget.style.boxShadow = 'none';
+            e.currentTarget.style.transform = 'translateY(0)';
+          }}
+          >
             Book Now
             <span style={{ fontSize: '18px' }}>→</span>
           </button>
@@ -290,14 +306,24 @@ export default function ReelsSection() {
 
       <section className="reels-content-section" style={{ padding: '60px 0', background: '#050505' }}>
       
-      {Object.entries(finalGroups).map(([category, videos]) => {
-        // Filter videos to only show those that are explicitly featured (toggled ON)
-        const visibleVideos = [...videos].filter((vid) => vid.main_headingvideo === true);
+      {(() => {
+        const categoryDescriptions = {
+          'Singers & Vocalists': 'Looking to hire a singer for a party or wedding? Our solo singers for hire are handpicked for their talent, stage presence, and ability to light up any event. Whether you need an acoustic guitarist singer for hire or a powerhouse vocalist, we’ve got you covered.',
+          'Live Bands': 'Turn your party or corporate gathering into an unforgettable experience. Hire a band for your party and enjoy a full, energetic live sound that gets every guest on their feet. Our live musicians for hire know how to read the crowd and keep the vibes just right.',
+          'Sufi Bands': 'Add a spiritual touch to your event with our authentic Sufi bands. Hire live musicians for soulful evenings, cultural nights, or traditional gatherings that create unforgettable memories.',
+          'Club DJs': 'Looking to hire a DJ for an unforgettable night? Our club DJs bring high-energy beats and keep the dance floor packed.',
+          'Anchors & Talents': 'Hire professional anchors, emcees, and talents to host your event and keep your audience fully engaged.',
+          'Featured Showcases': 'Discover our premium selection of top-tier talent and exclusive performances curated just for you.'
+        };
+        
+        return Object.entries(finalGroups).map(([category, videos]) => {
+          // Filter videos to only show those that are explicitly featured (toggled ON)
+          const visibleVideos = [...videos].filter((vid) => vid.main_headingvideo === true);
 
-        if (visibleVideos.length === 0) return null; // Don't show category if no videos are toggled ON
+          if (visibleVideos.length === 0) return null; // Don't show category if no videos are toggled ON
 
-        return (
-        <div className="reels-container" key={category} style={{ marginBottom: '80px' }}>
+          return (
+          <div className="reels-container" key={category} style={{ marginBottom: '80px' }}>
           <div className="reels-header">
             {/* First Row: Scrolling Text (Marquee) */}
             <div className="marquee-container">
@@ -323,6 +349,11 @@ export default function ReelsSection() {
                   ★ Trending
                 </div>
                 <h2 className="reels-title" style={{ margin: 0, fontSize: 'clamp(24px, 4vw, 36px)', lineHeight: '1.2', fontWeight: '900' }}>{category}</h2>
+                {categoryDescriptions[category] && (
+                  <p style={{ margin: '4px 0 0 0', fontSize: '14px', color: 'rgba(255,255,255,0.6)', maxWidth: '600px', lineHeight: '1.6' }}>
+                    {categoryDescriptions[category]}
+                  </p>
+                )}
               </div>
               
               <button 
@@ -347,8 +378,9 @@ export default function ReelsSection() {
                   className="reel-card"
                   style={{ cursor: 'pointer' }}
                   onClick={() => {
+                    const artistName = vid.userName || vid.artistName || `Performer from ${category}`;
                     window.dispatchEvent(new CustomEvent('open-contact-modal', { 
-                      detail: { type: 'booking', artist: { name: `Performer from ${category}` } } 
+                      detail: { type: 'booking', artist: { name: artistName } } 
                     }));
                   }}
                 >
@@ -388,8 +420,80 @@ export default function ReelsSection() {
             })}
           </div>
         </div>
-        );
-      })}
+          );
+        });
+      })()}
+
+      {/* SEO / How to Book Section */}
+      <div className="reels-container" style={{ marginTop: '40px', marginBottom: '80px' }}>
+        <div style={{
+          background: 'rgba(20, 20, 25, 0.4)',
+          border: '1px solid rgba(255, 255, 255, 0.05)',
+          borderRadius: '24px',
+          padding: '40px 40px',
+          backdropFilter: 'blur(24px)',
+          WebkitBackdropFilter: 'blur(24px)',
+          boxShadow: '0 8px 32px rgba(0,0,0,0.4)',
+        }}>
+          <h2 style={{ 
+            fontSize: '32px', 
+            fontWeight: '900', 
+            marginBottom: '16px',
+            background: 'linear-gradient(135deg, #fff, #ff8aab)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent'
+          }}>
+            How to book a singer or a live band?
+          </h2>
+          <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '16px', lineHeight: '1.6', maxWidth: '800px', marginBottom: '40px' }}>
+            If you are still wondering how to book a singer or a live band and hire live musicians near you with zero hassle. Our team is here to help you find the perfect match, so your party, wedding, or event is nothing short of amazing. You can do this in four simple steps:
+          </p>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '24px' }}>
+            {[
+              { num: '1', title: 'Click Book Now', desc: 'Select your favorite artist and hit the book button.' },
+              { num: '2', title: 'Fill the Form', desc: 'Provide us with your event details and dates.' },
+              { num: '3', title: 'Speak to Expert', desc: 'Our artist expert will help finalize the perfect match.' },
+              { num: '4', title: 'Enjoy the Show', desc: 'Pay the booking amount, sit back, and relax!' }
+            ].map((step, idx) => (
+              <div key={idx} style={{
+                background: 'rgba(0,0,0,0.2)',
+                border: '1px solid rgba(255,40,126,0.1)',
+                padding: '24px',
+                borderRadius: '16px',
+                position: 'relative',
+                overflow: 'hidden'
+              }}>
+                <div style={{ 
+                  position: 'absolute', top: '-10px', right: '-10px', 
+                  fontSize: '80px', fontWeight: '900', color: 'rgba(231,40,106,0.05)', lineHeight: '1' 
+                }}>
+                  {step.num}
+                </div>
+                <div style={{ 
+                  display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+                  width: '32px', height: '32px', borderRadius: '50%', background: 'linear-gradient(135deg, #E7286A, #ff8aab)',
+                  color: 'white', fontWeight: 'bold', fontSize: '14px', marginBottom: '16px'
+                }}>
+                  {step.num}
+                </div>
+                <h3 style={{ fontSize: '18px', fontWeight: 'bold', margin: '0 0 8px 0', color: '#fff' }}>{step.title}</h3>
+                <p style={{ fontSize: '14px', color: 'rgba(255,255,255,0.6)', margin: 0, lineHeight: '1.5' }}>{step.desc}</p>
+              </div>
+            ))}
+          </div>
+
+          <div style={{ marginTop: '40px', paddingTop: '40px', borderTop: '1px solid rgba(255,255,255,0.05)', textAlign: 'center' }}>
+            <p style={{ color: 'rgba(255,255,255,0.8)', fontSize: '18px', fontWeight: '600' }}>
+              Are you ready for our musicians?
+            </p>
+            <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '14px', maxWidth: '600px', margin: '8px auto 0' }}>
+              Discover the best live musicians for hire near you. Book solo singers for hire, hire a band for your party, or bring in soulful Sufi musicians for weddings and events.
+            </p>
+          </div>
+        </div>
+      </div>
+
       </section>
     </div>
   );

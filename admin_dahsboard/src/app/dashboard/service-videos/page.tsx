@@ -50,12 +50,16 @@ export default function ServiceVideos() {
   const [youtubeUrl, setYoutubeUrl] = useState('');
   const [isDragging, setIsDragging] = useState(false);
   const [isMainHeading, setIsMainHeading] = useState(false);
+  const [mainHeading, setMainHeading] = useState('');
+  const [subHeading, setSubHeading] = useState('');
 
-  const predefinedTopics = [
-    'Singers',
-    'Live Bands',
-    'Club DJs',
-    'Anchors & Talents'
+  const predefinedTopicsData = [
+    { id: 'Singers', label: 'Singers', mainHeading: '', subHeading: '' },
+    { id: 'Live Bands', label: 'Live Bands', mainHeading: 'Live Bands', subHeading: 'Hire a Band for Your Party or Event' },
+    { id: 'Club DJs', label: 'Club DJs', mainHeading: '', subHeading: '' },
+    { id: 'Anchors & Talents', label: 'Anchors & Talents', mainHeading: '', subHeading: '' },
+    { id: 'Live Solo Singers', label: 'Live Solo Singers', mainHeading: 'Live Solo Singers', subHeading: 'Book Solo Singers for Hire Near You' },
+    { id: 'Sufi Bands', label: 'Sufi Bands', mainHeading: 'Sufi Bands', subHeading: 'Book Soulful Sufi Bands & Live Musicians for Events' }
   ];
   
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -207,7 +211,9 @@ export default function ServiceVideos() {
       const payloadUserName = JSON.stringify({
         name: userName || 'Featured Artist',
         type: artistType || '',
-        bio: artistBio || ''
+        bio: artistBio || '',
+        mainHeading: mainHeading || '',
+        subHeading: subHeading || ''
       });
 
       const { error } = await (supabase.from('service_videos') as any).insert([
@@ -234,6 +240,8 @@ export default function ServiceVideos() {
       setVideoFile(null);
       setYoutubeUrl('');
       setIsMainHeading(false);
+      setMainHeading('');
+      setSubHeading('');
       setIsModalOpen(false);
       fetchVideos();
     } catch (error: any) {
@@ -643,9 +651,16 @@ export default function ServiceVideos() {
                     if (val === 'custom') {
                       setIsCustomTopic(true);
                       setTopic('');
+                      setMainHeading('');
+                      setSubHeading('');
                     } else {
                       setIsCustomTopic(false);
                       setTopic(val);
+                      const found = predefinedTopicsData.find(t => t.id === val);
+                      if (found) {
+                        if (found.mainHeading) setMainHeading(found.mainHeading);
+                        if (found.subHeading) setSubHeading(found.subHeading);
+                      }
                     }
                   }}
                 >
@@ -653,8 +668,8 @@ export default function ServiceVideos() {
                     <SelectValue placeholder="Select a main category..." />
                   </SelectTrigger>
                   <SelectContent className="bg-[#0b0f19] border border-white/[0.08] text-white rounded-2xl p-1 relative z-50">
-                    {predefinedTopics.map((t) => (
-                      <SelectItem key={t} value={t} className="!focus:bg-white/[0.08] !focus:text-white !data-[highlighted]:bg-white/[0.08] !data-[highlighted]:text-white !hover:bg-white/[0.08] !hover:text-white rounded-xl py-2 transition-colors cursor-pointer text-xs">{t}</SelectItem>
+                    {predefinedTopicsData.map((t) => (
+                      <SelectItem key={t.id} value={t.id} className="!focus:bg-white/[0.08] !focus:text-white !data-[highlighted]:bg-white/[0.08] !data-[highlighted]:text-white !hover:bg-white/[0.08] !hover:text-white rounded-xl py-2 transition-colors cursor-pointer text-xs">{t.label}</SelectItem>
                     ))}
                     <SelectItem value="custom" className="font-bold text-rose-400 !focus:bg-rose-500/10 !focus:text-rose-300 !data-[highlighted]:bg-rose-500/10 !data-[highlighted]:text-rose-300 rounded-xl py-2 transition-colors cursor-pointer text-xs">
                       + Add Custom Category Group
@@ -680,9 +695,19 @@ export default function ServiceVideos() {
                   <Input 
                     value={category} 
                     onChange={(e) => setCategory(e.target.value)} 
-                    placeholder="e.g. Singer for House Parties, Live Band for Weddings" 
+                    placeholder="e.g. Singer for House Parties" 
                     className="h-12 bg-slate-950/60 border-white/[0.08] text-white placeholder-slate-600 rounded-2xl focus-visible:ring-rose-500/20 focus-visible:border-rose-500/30 transition-all"
+                    list="sub-category-options"
                   />
+                  <datalist id="sub-category-options">
+                    <option value="Singer for House Parties" />
+                    <option value="Live Band for Weddings" />
+                    <option value="Club DJ for Parties" />
+                    <option value="Corporate Event Anchor" />
+                    <option value="Sufi Night Singer" />
+                    <option value="Acoustic Soloist" />
+                    <option value="Bollywood Live Singer" />
+                  </datalist>
                 </div>
                 <div className="space-y-2">
                   <Label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">User / Artist Name</Label>
@@ -714,6 +739,28 @@ export default function ServiceVideos() {
                     placeholder="e.g. Staging globally for premium events..." 
                     rows={1}
                     className="w-full h-12 py-3 px-4 bg-slate-950/60 border border-white/[0.08] text-white placeholder-slate-600 rounded-2xl focus:outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500/30 transition-all text-sm resize-none"
+                  />
+                </div>
+              </div>
+
+              {/* Main Heading and Sub Heading Fields */}
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Main Heading</Label>
+                  <Input 
+                    value={mainHeading} 
+                    onChange={(e) => setMainHeading(e.target.value)} 
+                    placeholder="e.g. Live Solo Singers" 
+                    className="h-12 bg-slate-950/60 border-white/[0.08] text-white placeholder-slate-600 rounded-2xl focus-visible:ring-rose-500/20 focus-visible:border-rose-500/30 transition-all"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Sub Heading</Label>
+                  <Input 
+                    value={subHeading} 
+                    onChange={(e) => setSubHeading(e.target.value)} 
+                    placeholder="e.g. Book Solo Singers for Hire Near You" 
+                    className="h-12 bg-slate-950/60 border-white/[0.08] text-white placeholder-slate-600 rounded-2xl focus-visible:ring-rose-500/20 focus-visible:border-rose-500/30 transition-all"
                   />
                 </div>
               </div>

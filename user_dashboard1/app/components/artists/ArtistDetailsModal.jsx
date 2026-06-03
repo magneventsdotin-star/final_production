@@ -43,14 +43,14 @@ export default function ArtistDetailsModal({ artist, showDetails, setShowDetails
           >
             <button className="proper-close-btn" onClick={() => setShowDetails(false)}>&times;</button>
 
-            <div className="proper-modal-header" style={{ position: 'relative', width: '100%', height: '280px', overflow: 'hidden' }}>
+            <div className="proper-modal-header" style={{ position: 'relative', width: '100%', height: '380px', overflow: 'hidden' }}>
               {(!artist.img && !artist.image) || imageError ? (
                 <Image
                   src={`https://ui-avatars.com/api/?name=${encodeURIComponent(artist.name || 'A')}&background=111111&color=D65050&size=800&font-size=0.33&bold=true`}
                   alt={artist.name}
                   fill
                   sizes="1000px"
-                  style={{ objectFit: 'cover', objectPosition: 'center 15%' }}
+                  style={{ objectFit: 'cover', objectPosition: 'top center' }}
                   unoptimized
                 />
               ) : (
@@ -59,7 +59,7 @@ export default function ArtistDetailsModal({ artist, showDetails, setShowDetails
                   alt={artist.name}
                   fill
                   sizes="1000px"
-                  style={{ objectFit: 'cover', objectPosition: 'center 15%' }}
+                  style={{ objectFit: 'cover', objectPosition: 'top center' }}
                   unoptimized
                   onError={() => setImageError(true)}
                 />
