@@ -72,6 +72,18 @@ const VideoCard = ({ video, onSelect }) => {
       )}
       
       <div className="v4-video-overlay">
+        {video.user_name && (
+          <div className="v4-video-artist-name">
+            {(() => {
+              try {
+                const parsed = JSON.parse(video.user_name);
+                return parsed.name || 'Featured Artist';
+              } catch (e) {
+                return video.user_name;
+              }
+            })()}
+          </div>
+        )}
         <div className="v4-video-card-footer" style={{ justifyContent: 'center' }}>
           <button className="v4-btn-book-sm">Book Now</button>
         </div>
