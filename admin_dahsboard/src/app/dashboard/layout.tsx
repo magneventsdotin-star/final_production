@@ -140,7 +140,7 @@ export default function DashboardLayout({
           <div className="flex items-center gap-2.5">
             <div className="h-8 w-auto flex-shrink-0">
                <NextImage
-                src="/logo.png"
+                src="/logo.webp"
                 alt="Logo"
                 width={64}
                 height={40}

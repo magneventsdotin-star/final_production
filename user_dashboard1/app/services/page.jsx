@@ -1,14 +1,30 @@
+"use client";
 
-"use client"
+import React, { useEffect, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { supabase } from '../lib/supabase';
+import '../styles/pages/ServicesPage.css';
 
-import { useState, useEffect, useMemo, useRef } from 'react'
-import { motion, AnimatePresence, useInView } from 'framer-motion'
-import { supabase } from '@/app/lib/supabase'
-import '@/app/styles/pages/ServicesPage.css'
-import '@/app/styles/components/ReelsSection.css'
-import ReelsSection from '@/app/components/services/ReelsSection'
+// SVG Icons
+const PlayIcon = () => (
+  <svg width="32" height="32" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+    <path d="M8 5v14l11-7z" />
+  </svg>
+);
 
-// Parse YouTube video ID cleanly
+const ScrollIcon = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M12 5v14M19 12l-7 7-7-7" />
+  </svg>
+);
+
+const StarIcon = () => (
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="#FFD166" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+  </svg>
+);
+
+// Helper for YouTube
 const getYoutubeId = (url) => {
   if (!url) return null;
   const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
@@ -16,1035 +32,292 @@ const getYoutubeId = (url) => {
   return (match && match[2].length === 11) ? match[2] : null;
 };
 
-// Premium luxury SVG Icons to replace cheap standard emojis
-const SparklesIcon = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lux-svg-icon">
-    <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275Z"/>
-    <path d="m5 3 1 2.5L8.5 6 6 7 5 9.5 4 7 1.5 6 4 5Z"/>
-    <path d="m19 17 1 2.5 2.5.5-2.5 1-1 2.5-1-2.5-2.5-1 2.5-1Z"/>
-  </svg>
-);
-
-const MicIcon = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lux-svg-icon">
-    <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/>
-    <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
-    <line x1="12" x2="12" y1="19" y2="22"/>
-  </svg>
-);
-
-const GuitarIcon = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lux-svg-icon">
-    <path d="M18.8 6c.4-.4.4-1 0-1.4l-1.4-1.4c-.4-.4-1-.4-1.4 0l-5.6 5.6a4 4 0 1 0 5.6 5.6l5.6-5.6Z"/>
-    <path d="m14 6-2 2"/>
-    <path d="M2 22s5.5-1.5 8-4"/>
-  </svg>
-);
-
-const DJIcon = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lux-svg-icon">
-    <circle cx="12" cy="12" r="10"/>
-    <circle cx="12" cy="12" r="4"/>
-    <path d="M12 2a10 10 0 0 1 8 4"/>
-    <circle cx="12" cy="12" r="1"/>
-  </svg>
-);
-
-const MaskIcon = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lux-svg-icon">
-    <path d="M2 10s3-3 10-3 10 3 10 3v4c0 3.8-3.1 7-7 7H9c-3.9 0-7-3.2-7-7v-4Z"/>
-    <path d="M6 12a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z"/>
-    <path d="M18 12a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z"/>
-  </svg>
-);
-
-const StarIcon = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lux-svg-icon">
-    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-  </svg>
-);
-
-const DEFAULT_CATEGORIES = [
-  { id: 'all', label: 'All Services', icon: <SparklesIcon /> },
-  { id: 'singer', label: 'Singers', icon: <MicIcon /> },
-  { id: 'band', label: 'Live Bands', icon: <GuitarIcon /> },
-  { id: 'dj', label: 'Club DJs', icon: <DJIcon /> },
-  { id: 'anchor', label: 'Anchors & Talents', icon: <MaskIcon /> }
-];
-
-// Map stages dynamically based on subcategories and titles
-const getCategoryPoster = (category, topic, videoUrl) => {
-  const ytId = getYoutubeId(videoUrl);
-  if (ytId) {
-    return `https://img.youtube.com/vi/${ytId}/maxresdefault.jpg`;
-  }
-  
-  const text = (category || topic || '').toLowerCase();
-  if (text.includes('sing') || text.includes('voice') || text.includes('vocalist')) {
-    return '/assets/lux-singer-session.webp';
-  }
-  if (text.includes('band') || text.includes('wedding') || text.includes('symphony') || text.includes('collective')) {
-    return '/assets/lux-live-band-concert.webp';
-  }
-  if (text.includes('dj') || text.includes('music') || text.includes('percussion')) {
-    return '/assets/lux-percussion-dj-thumb.webp';
-  }
-  if (text.includes('anchor') || text.includes('magician') || text.includes('emcee') || text.includes('stage')) {
-    return '/assets/wedding-anchor-stage.webp';
-  }
-  return '/assets/lux-hero-artist.webp';
-};
-
-// Clean dummy/test data entered via Admin dashboard (e.g. "asdf", "N;LSDFA") to keep page beautiful
-const sanitizeVideoData = (video) => {
-  const isDummy = (str) => {
-    if (!str) return true;
-    const s = str.toLowerCase().trim();
-    return s === 'test' || s === 'qwerty' || s === 'asdf' || s.length < 2;
-  };
-
-  let userName = video.user_name;
-  let artistType = '';
-  let artistBio = '';
-  let isFeatured = video.main_headingvideo || false;
-
-  try {
-    if (video.user_name && video.user_name.startsWith('{')) {
-      const parsed = JSON.parse(video.user_name);
-      userName = parsed.name || '';
-      artistType = parsed.type || '';
-      artistBio = parsed.bio || '';
-    }
-  } catch (e) {}
-
-  if (isDummy(userName)) {
-    const cat = (video.category || '').toLowerCase();
-    if (cat.includes('sing')) {
-      userName = 'Swaresh & The Sufi Kings';
-      artistType = 'Sufi-Rock Band';
-      artistBio = 'An award-winning Sufi performance band delivering high-energy devotional and Bollywood rock orchestrations globally.';
-    } else if (cat.includes('band')) {
-      userName = 'Premium Symphony Orchestra';
-      artistType = 'Cinematic Wedding Orchestra';
-      artistBio = 'Breathtaking full-stage symphony orchestrations specialized in high-end luxury weddings and grand corporate stage entries.';
-    } else if (cat.includes('dj')) {
-      userName = 'DJ Roy & The Neon Beats';
-      artistType = 'Celebrity Festival DJ';
-      artistBio = 'High-energy electronic dance music and celebrity sound mixing featuring custom festival lighting and staging audio.';
-    } else {
-      userName = 'Anchor Rohit Kapoor';
-      artistType = 'Celebrity Host & Emcee';
-      artistBio = 'A highly charismatic celebrity anchor and television host who brings supreme crowd engagement and professional styling to elite events.';
-    }
-  }
-
-  let category = video.category;
-  if (isDummy(category) || category === 'Other' || category === 'N;LSDFA') {
-    const topic = (video.topic || '').toLowerCase();
-    if (topic.includes('sing') || topic.includes('voice')) category = 'Singers';
-    else if (topic.includes('band') || topic.includes('wedding')) category = 'Live Bands';
-    else if (topic.includes('dj') || topic.includes('music')) category = 'Club DJs';
-    else category = 'Anchors & Talents';
-  }
-
-  let topic = video.topic;
-  if (isDummy(topic)) {
-    topic = `Live Luxury Performance`;
-  }
-
-  return {
-    ...video,
-    user_name: userName, // Now it's a plain string
-    artist_type: artistType,
-    artist_bio: artistBio,
-    category: category,
-    topic: topic,
-    is_featured: isFeatured // Pass the boolean flag explicitly!
-  };
-};
-
-const VideoCard = ({ video, onPlay }) => {
-  const poster = getCategoryPoster(video.category, video.topic, video.video_url);
-  const isYoutube = !!getYoutubeId(video.video_url);
-  const cardRef = useRef(null);
-  const isInView = useInView(cardRef, { margin: "0px", amount: 0.5 }); // Play when at least 50% visible
+// Reusable Video Card Component
+const VideoCard = ({ video, onSelect }) => {
+  const ytId = getYoutubeId(video.video_url);
 
   return (
-    <motion.div 
-      layout
-      ref={cardRef}
-      initial={{ opacity: 0, y: 30 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: 20 }}
-      transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-      className="premium-video-card"
-      onClick={() => onPlay(video)}
-      style={{
-        position: 'relative',
-        borderRadius: '24px',
-        overflow: 'hidden',
-        background: '#0d0d0f',
-        border: '1px solid rgba(255, 255, 255, 0.05)',
-        cursor: 'pointer',
-        aspectRatio: '16/10',
-        boxShadow: '0 12px 30px rgba(0, 0, 0, 0.4)',
+    <div 
+      className="v4-video-card group" 
+      onClick={() => onSelect && onSelect(video)}
+      onMouseEnter={(e) => {
+        const vid = e.currentTarget.querySelector('video');
+        if (vid) {
+          try { vid.play(); } catch (err) {}
+        }
+      }}
+      onMouseLeave={(e) => {
+        const vid = e.currentTarget.querySelector('video');
+        if (vid) {
+          try { 
+            vid.pause(); 
+            vid.currentTime = 0; 
+          } catch (err) {}
+        }
       }}
     >
-      {/* Background Poster Image / Autoplaying Video */}
-      <div 
-        className="card-poster"
-        style={{
-          position: 'absolute',
-          inset: 0,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          transition: 'transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)',
-          backgroundColor: '#000'
-        }}
-      >
-        {!isInView ? (
-          <div style={{ position: 'absolute', inset: 0, backgroundImage: `url(${poster})`, backgroundSize: 'cover', backgroundPosition: 'center' }} />
-        ) : (
-          isYoutube ? (
-            <iframe
-              src={`https://www.youtube.com/embed/${getYoutubeId(video.video_url)}?autoplay=1&mute=1&loop=1&playlist=${getYoutubeId(video.video_url)}&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1`}
-              style={{ width: '100%', height: '100%', border: 'none', objectFit: 'cover', transform: 'scale(1.35)', pointerEvents: 'none' }}
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              title={video.user_name}
-            />
-          ) : (
-            <video
-              src={video.video_url}
-              autoPlay
-              muted
-              loop
-              playsInline
-              style={{ width: '100%', height: '100%', objectFit: 'cover', pointerEvents: 'none' }}
-            />
-          )
-        )}
-      </div>
+      {ytId ? (
+        <img src={`https://img.youtube.com/vi/${ytId}/maxresdefault.jpg`} className="v4-video-media" alt="Video thumbnail" />
+      ) : (
+        <video 
+          src={video.video_url} 
+          className="v4-video-media" 
+          muted 
+          loop 
+          playsInline
+          controls
+          onClick={(e) => e.stopPropagation()}
+        />
+      )}
       
-      {/* Premium Dark Gradient Overlay */}
-      <div 
-        className="card-gradient"
-        style={{
-          position: 'absolute',
-          inset: 0,
-          background: 'linear-gradient(to top, rgba(6, 6, 8, 0.95) 0%, rgba(6, 6, 8, 0.3) 60%, rgba(6, 6, 8, 0.1) 100%)',
-          zIndex: 1
-        }}
-      />
-
-      {/* Floating Category Tag */}
-      <div 
-        style={{
-          position: 'absolute',
-          top: '20px',
-          left: '20px',
-          zIndex: 2,
-          display: 'flex',
-          gap: '8px'
-        }}
-      >
-        <span 
-          style={{
-            fontSize: '10px',
-            fontWeight: '900',
-            textTransform: 'uppercase',
-            letterSpacing: '0.12em',
-            background: 'rgba(6, 6, 8, 0.75)',
-            backdropFilter: 'blur(10px)',
-            color: '#fff',
-            padding: '5px 14px',
-            borderRadius: '100px',
-            border: '1px solid rgba(255, 255, 255, 0.12)'
-          }}
-        >
-          {video.category}
-        </span>
-        {isYoutube && (
-          <span 
-            style={{
-              fontSize: '10px',
-              fontWeight: '900',
-              textTransform: 'uppercase',
-              letterSpacing: '0.12em',
-              background: 'rgba(239, 68, 68, 0.85)',
-              backdropFilter: 'blur(10px)',
-              color: '#fff',
-              padding: '5px 14px',
-              borderRadius: '100px',
-              border: '1px solid rgba(255, 255, 255, 0.12)'
-            }}
-          >
-            YouTube
-          </span>
-        )}
-      </div>
-
-      {/* Pulsing Play Button */}
-      <div 
-        className="play-btn-wrapper"
-        style={{
-          position: 'absolute',
-          inset: 0,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          zIndex: 2
-        }}
-      >
-        <div 
-          className="lux-play-ring"
-          style={{
-            width: '60px',
-            height: '60px',
-            borderRadius: '50%',
-            background: 'rgba(214, 80, 80, 0.15)',
-            backdropFilter: 'blur(10px)',
-            border: '1.5px solid rgba(214, 80, 80, 0.45)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            boxShadow: '0 8px 32px rgba(214, 80, 80, 0.2)',
-          }}
-        >
-          <svg 
-            width="18" 
-            height="20" 
-            viewBox="0 0 20 22" 
-            fill="none" 
-            style={{ marginLeft: '3px', filter: 'drop-shadow(0 2px 6px rgba(0,0,0,0.3))' }}
-          >
-            <path d="M18.6667 11L1.99999 20.6667L1.99999 1.33334L18.6667 11Z" fill="#D65050" />
-          </svg>
+      <div className="v4-video-overlay">
+        <div className="v4-video-card-footer" style={{ justifyContent: 'center' }}>
+          <button className="v4-btn-book-sm">Book Now</button>
         </div>
       </div>
 
-
-    </motion.div>
+      <div className="v4-video-play-btn">
+        <PlayIcon />
+      </div>
+    </div>
   );
 };
 
-// Clean static helpers for dynamic category headings and copy descriptions
-const getCategoryHeading = (tabId) => {
-  if (!tabId) return 'Live Showreels';
-  switch (tabId.toLowerCase()) {
-    case 'all':
-      return 'All Live Showreels';
-    case 'singer':
-    case 'singers':
-      return 'Elite Singers & Solo Vocalists';
-    case 'band':
-    case 'live bands':
-    case 'liveband':
-      return 'High-End Live Staging Bands';
-    case 'dj':
-    case 'club djs':
-    case 'djs':
-      return 'Elite Club & Corporate DJs';
-    case 'anchor':
-    case 'anchors & talents':
-    case 'anchors':
-      return 'Celebrity Anchors & Star Talents';
-    default:
-      return `${tabId.charAt(0).toUpperCase() + tabId.slice(1)} Performance Showcases`;
-  }
-};
-
-const getCategoryDescription = (tabId) => {
-  if (!tabId) return 'Exclusive live showcase sessions for premium events.';
-  switch (tabId.toLowerCase()) {
-    case 'all':
-      return 'Explore our comprehensive portfolio of premium live performances, artist showcases, and exclusive event staging showreels.';
-    case 'singer':
-    case 'singers':
-      return 'Experience the mesmerizing vocal staging of our award-winning singers, solo vocalists, and acoustic duos curated for elite events.';
-    case 'band':
-    case 'live bands':
-    case 'liveband':
-      return 'Breathtaking live wedding orchestrations, luxury corporate bands, and elite concert ensembles staged with immersive Dolby staging audio.';
-    case 'dj':
-    case 'club djs':
-    case 'djs':
-      return 'High-energy live showreels of celebrity festival DJs and corporate sound mixers delivering premium club staging experiences.';
-    case 'anchor':
-    case 'anchors & talents':
-    case 'anchors':
-      return 'Discover charismatic event anchors, emcees, and star stage performers curated to elevate wedding functions and high-profile corporate galas.';
-    default:
-      return `Custom-curated stage performances and luxury artist showreels dynamically configured for this high-end category showcase.`;
-  }
-};
-
 export default function ServicesPage() {
-  const [videos, setVideos] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [activeVideo, setActiveVideo] = useState(null);
-  const [selectedTab, setSelectedTab] = useState('all');
-  const [isMobile, setIsMobile] = useState(false);
-  const [visibleCount, setVisibleCount] = useState(12);
+  const [selectedVideo, setSelectedVideo] = useState(null);
+  
+  const [pageSettings, setPageSettings] = useState(null);
+  const [categories, setCategories] = useState([]);
+  const [videos, setVideos] = useState([]);
 
   useEffect(() => {
-    setVisibleCount(isMobile ? 4 : 12);
-  }, [isMobile, selectedTab]);
+    const fetchData = async () => {
+      try {
+        const { data: settingsData } = await supabase
+          .from('service_page_settings')
+          .select('*')
+          .limit(1)
+          .single();
+        if (settingsData) setPageSettings(settingsData);
 
-  // DYNAMIC CATEGORY RESOLUTION: Dynamically fetch custom main categories (topics) from Admin Panel, excluding subcategories
-  const categoriesList = useMemo(() => {
-    const list = [...DEFAULT_CATEGORIES];
-    const seenCategories = new Set(DEFAULT_CATEGORIES.map(c => c.label.toLowerCase()));
-    
-    videos.forEach(video => {
-      const top = video.topic;
-      if (top && typeof top === 'string') {
-        const trimmedTop = top.trim();
-        const lowerTop = trimmedTop.toLowerCase();
-        
-        // Clean out subcategories, specific event targets, or dummy items
-        const isEventOrDummy = 
-          lowerTop.includes('test') || lowerTop.includes('qwerty') || 
-          lowerTop.includes('house party') || lowerTop.includes('wedding') || 
-          lowerTop.includes('corporate');
-          
-        if (isEventOrDummy) return;
+        const { data: catData } = await supabase
+          .from('service_categories')
+          .select('*')
+          .order('displayOrder', { ascending: true });
+        if (catData) setCategories(catData.filter(c => c.status));
 
-        // Verify if it maps to default categories
-        const isDefault = 
-          lowerTop === 'singers' || lowerTop === 'singer' || 
-          lowerTop === 'live bands' || lowerTop === 'live band' || lowerTop === 'band' || 
-          lowerTop === 'club djs' || lowerTop === 'club dj' || lowerTop === 'dj' || 
-          lowerTop === 'anchors & talents' || lowerTop === 'anchors and talents' || lowerTop === 'anchor';
-          
-        if (!isDefault && !seenCategories.has(lowerTop) && trimmedTop.length > 2) {
-          seenCategories.add(lowerTop);
-          list.push({
-            id: lowerTop,
-            label: trimmedTop,
-            icon: null
-          });
-        }
+        const { data: vidData } = await supabase
+          .from('service_videos')
+          .select('*')
+          .order('created_at', { ascending: false });
+        if (vidData) setVideos(vidData);
+      } catch (err) {
+        console.error("Error fetching data:", err);
+      } finally {
+        setLoading(false);
       }
-    });
-    
-    return list;
-  }, [videos]);
-
-  // CATEGORY VIDEO QUANTITY EVALUATOR: Calculates video counts for badges dynamically!
-  const getCategoryCount = (tabId) => {
-    const list = videos.length > 0 ? videos : [
-      { category: 'Singers' },
-      { category: 'Live Bands' },
-      { category: 'Club DJs' },
-      { category: 'Anchors & Talents' }
-    ];
-    
-    if (tabId === 'all') return list.length;
-    
-    return list.filter(v => {
-      const catField = (v.category || '').toLowerCase();
-      const topicField = (v.topic || '').toLowerCase();
-      
-      if (tabId === 'singer') {
-        return catField.includes('sing') || catField.includes('voice') || catField.includes('vocal') || 
-               topicField.includes('sing') || topicField.includes('voice');
-      }
-      if (tabId === 'band') {
-        return catField.includes('band') || catField.includes('collective') || catField.includes('symphony') || 
-               topicField.includes('band') || topicField.includes('collective');
-      }
-      if (tabId === 'dj') {
-        return catField.includes('dj') || catField.includes('music') || 
-               topicField.includes('dj') || topicField.includes('music');
-      }
-      if (tabId === 'anchor') {
-        return catField.includes('anchor') || catField.includes('emcee') || catField.includes('magician') || catField.includes('talent') || 
-               topicField.includes('anchor') || topicField.includes('emcee');
-      }
-      
-      return catField === tabId || topicField.includes(tabId);
-    }).length;
-  };
-
-  // Lock body scroll when lightbox modal is open to prevent double scrollbar issues
-  useEffect(() => {
-    if (activeVideo) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
-    // Cleanup on unmount
-    return () => {
-      document.body.style.overflow = 'unset';
     };
-  }, [activeVideo]);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 640);
-    };
-    handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    fetchData();
   }, []);
 
-  const fetchVideos = async () => {
-    try {
-      const { data, error } = await supabase
-        .from('service_videos')
-        .select('id, topic, video_url, category, user_name')
-        .order('created_at', { ascending: false });
+  // Determine Hero Video
+  let heroVideo = "https://assets.mixkit.co/videos/preview/mixkit-band-performing-on-stage-at-a-concert-34371-large.mp4";
+  
+  const legacyBgObj = videos.find(v => v.topic === 'Live Performance Background' || v.category === 'Background Video');
+  
+  if (pageSettings?.hero_bg_video?.trim()) {
+    heroVideo = pageSettings.hero_bg_video;
+  } else if (legacyBgObj?.video_url) {
+    heroVideo = legacyBgObj.video_url;
+  }
 
-      if (error) {
-        if (error.code === '42P01' || error.message?.includes('find the table') || error.code?.startsWith('PGRST')) {
-          setVideos([]);
-          return;
-        }
-        throw error;
-      }
-
-      // Map and sanitize the videos list
-      const cleanData = (data || []).map(sanitizeVideoData);
-      setVideos(cleanData);
-    } catch (error) {
-      console.error("Error fetching videos:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchVideos();
-
-    // BACKGROUND SYNC PROPER: Subscribe to Supabase Realtime changes!
-    const channel = supabase
-      .channel('schema-db-changes')
-      .on(
-        'postgres_changes',
-        { event: '*', schema: 'public', table: 'service_videos' },
-        (payload) => {
-          console.log('Realtime sync event received:', payload);
-          fetchVideos(); // Reload background automatically!
-        }
-      )
-      .subscribe();
-
-    return () => {
-      supabase.removeChannel(channel);
-    };
-  }, []);
-
-  const getFilteredVideos = () => {
-    let list = [...videos];
-    
-    // Add default fallbacks if database is empty or has only dummy items
-    if (list.length === 0) {
-      list = [
-        {
-          id: 'backup-1',
-          video_url: 'https://assets.mixkit.co/videos/preview/mixkit-singer-performing-on-stage-with-microphone-34374-large.mp4',
-          user_name: 'Swaresh & The Sufi Kings',
-          category: 'Singers',
-          topic: 'Live Sufi Sessions for House Parties'
-        },
-        {
-          id: 'backup-2',
-          video_url: 'https://assets.mixkit.co/videos/preview/mixkit-band-performing-on-stage-at-a-concert-34371-large.mp4',
-          user_name: 'Premium Symphony Collective',
-          category: 'Live Bands',
-          topic: 'Luxury Wedding Live Orchestra'
-        },
-        {
-          id: 'backup-3',
-          video_url: 'https://assets.mixkit.co/videos/preview/mixkit-dj-playing-music-at-a-club-34384-large.mp4',
-          user_name: 'DJ Roy & The Neon Beats',
-          category: 'Club DJs',
-          topic: 'High-Energy DJ Sets for Events'
-        },
-        {
-          id: 'backup-4',
-          video_url: 'https://assets.mixkit.co/videos/preview/mixkit-singer-performing-on-stage-with-microphone-34374-large.mp4',
-          user_name: 'Anchor Rohit Kapoor',
-          category: 'Anchors & Talents',
-          topic: 'Elite Host and Celebrity Emcee'
-        }
-      ];
-    }
-
-    if (selectedTab === 'all') return list;
-    
-    return list.filter(v => {
-      const catField = (v.category || '').toLowerCase();
-      const topicField = (v.topic || '').toLowerCase();
-      
-      // Standard filter mappings for robust matching:
-      if (selectedTab === 'singer') {
-        return catField.includes('sing') || catField.includes('voice') || catField.includes('vocal') || 
-               topicField.includes('sing') || topicField.includes('voice');
-      }
-      if (selectedTab === 'band') {
-        return catField.includes('band') || catField.includes('collective') || catField.includes('symphony') || 
-               topicField.includes('band') || topicField.includes('collective');
-      }
-      if (selectedTab === 'dj') {
-        return catField.includes('dj') || catField.includes('music') || 
-               topicField.includes('dj') || topicField.includes('music');
-      }
-      if (selectedTab === 'anchor') {
-        return catField.includes('anchor') || catField.includes('emcee') || catField.includes('magician') || catField.includes('talent') || 
-               topicField.includes('anchor') || topicField.includes('emcee');
-      }
-      
-      // Custom dynamic category match check:
-      return catField === selectedTab || topicField.includes(selectedTab);
-    });
-  };
-
-  const currentVideos = getFilteredVideos();
-  const displayedVideos = currentVideos.slice(0, visibleCount);
-  // Safe extraction of spotlight video
-  const spotlightVideo = currentVideos[0] || {
-    video_url: 'https://assets.mixkit.co/videos/preview/mixkit-singer-performing-on-stage-with-microphone-34374-large.mp4',
-    user_name: 'Featured VIP Performance',
-    category: 'Featured',
-    topic: 'Live Music Session Showcase'
-  };
-
-  const spotlightYoutubeId = getYoutubeId(spotlightVideo.video_url);
-  const activeYoutubeId = activeVideo ? getYoutubeId(activeVideo.video_url) : null;
+  // Remove loading block, render immediately
 
   return (
-    <main className="services-page-layout" style={{ background: '#050507', color: '#fff', overflow: 'hidden', position: 'relative', minHeight: '100vh' }}>
+    <div className="v4-services-wrapper">
       
-      <ReelsSection />
-
-      {/* Dynamic Cinematic Blur Wrapper */}
-      <div 
-        style={{
-          filter: activeVideo ? 'blur(15px)' : 'none',
-          transition: 'filter 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
-          pointerEvents: activeVideo ? 'none' : 'auto',
-          width: '100%',
-          minHeight: '100vh'
-        }}
-      >
-        {/* Sleek Cinematic Background Ambient Radial Orbs */}
-      <div style={{ position: 'absolute', top: '0', left: '15%', width: isMobile ? '300px' : '600px', height: isMobile ? '300px' : '600px', borderRadius: '50%', background: 'radial-gradient(circle, rgba(214, 80, 80, 0.05) 0%, transparent 70%)', filter: 'blur(120px)', pointerEvents: 'none', zIndex: 0 }} />
-      <div style={{ position: 'absolute', bottom: '15%', right: '5%', width: isMobile ? '350px' : '700px', height: isMobile ? '350px' : '700px', borderRadius: '50%', background: 'radial-gradient(circle, rgba(225, 29, 72, 0.03) 0%, transparent 70%)', filter: 'blur(140px)', pointerEvents: 'none', zIndex: 0 }} />
-
-      <div className="lux-container" style={{ position: 'relative', zIndex: 1, maxWidth: '1200px', margin: '0 auto', padding: isMobile ? '15px 16px' : '15px 24px' }}>
-        
-
-
-        {/* HIGH-END INTERACTIVE OPTION GRID (FULLY WRAPPING FOR ULTIMATE VISIBILITY) */}
-        <section 
-          className="lux-filter-section"
-          style={{ 
-            marginBottom: isMobile ? '30px' : '50px'
-          }}
-        >
-          {/* Elegant header instruction for high usability */}
-          <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '8px',
-            marginBottom: '20px',
-            fontSize: '11px',
-            fontWeight: '800',
-            color: 'rgba(255, 255, 255, 0.4)',
-            letterSpacing: '0.15em',
-            textTransform: 'uppercase'
-          }}>
-            <span style={{ width: '12px', height: '1px', background: '#D65050' }}></span>
-            FILTER LIVE SHOWREELS BY CATEGORY
-            <span style={{ width: '12px', height: '1px', background: '#D65050' }}></span>
-          </div>
-
-          <div className="lux-tab-bar">
-            {categoriesList.map((tab) => (
-              <button
-                key={tab.id}
-                onClick={() => setSelectedTab(tab.id)}
-                className={`lux-tab-btn ${selectedTab === tab.id ? 'active' : 'inactive'}`}
-              >
-                {tab.label}
-              </button>
-            ))}
-          </div>
-        </section>
-
-        {/* DYNAMIC CATEGORY DETAILS TEXT PANEL */}
-        <div 
-          style={{
-            width: '100%',
-            textAlign: 'center',
-            marginBottom: '35px',
-            marginTop: '25px',
-            animation: 'fadeIn 0.6s ease'
-          }}
-        >
-          <h2 style={{ fontFamily: 'Outfit, sans-serif', fontSize: isMobile ? '20px' : '26px', fontWeight: '800', color: '#fff', letterSpacing: '-0.02em', marginBottom: '8px' }}>
-            {getCategoryHeading(selectedTab)}
-          </h2>
-          <p style={{ color: '#8a8f98', fontSize: isMobile ? '13px' : '14px', maxWidth: '600px', margin: '0 auto', lineHeight: '1.5' }}>
-            {getCategoryDescription(selectedTab)}
-          </p>
-        </div>
-
-        {/* DENSE GRID PANEL (FULLY RESPONSIVE LAYOUT COLUMNS TO PREVENT COMPRESSION) */}
-        {loading ? (
-          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fill, minmax(340px, 1fr))', gap: isMobile ? '20px' : '28px', paddingBottom: '20px' }}>
-            {Array.from({ length: isMobile ? 4 : 8 }).map((_, i) => (
-              <div key={`skel-${i}`} style={{ aspectRatio: '16/10', borderRadius: '24px', background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)', position: 'relative', overflow: 'hidden' }}>
-                <div className="skeleton-pulse" style={{ position: 'absolute', inset: 0, background: 'rgba(255,255,255,0.03)' }}></div>
-                <div style={{ position: 'absolute', bottom: '24px', left: '24px', right: '24px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                  <div className="skeleton-pulse" style={{ height: '20px', width: '60%', background: 'rgba(255,255,255,0.05)', borderRadius: '4px' }}></div>
-                  <div className="skeleton-pulse" style={{ height: '14px', width: '40%', background: 'rgba(255,255,255,0.05)', borderRadius: '4px' }}></div>
-                </div>
-                <div style={{ position: 'absolute', top: '20px', left: '20px' }}>
-                  <div className="skeleton-pulse" style={{ height: '22px', width: '80px', background: 'rgba(255,255,255,0.05)', borderRadius: '100px' }}></div>
-                </div>
-              </div>
-            ))}
-          </div>
+      {/* =========================================
+          SECTION 1: FULL SCREEN HERO
+          ========================================= */}
+      <section className="v4-hero-section">
+        {!heroVideo?.includes('youtube') ? (
+          <video src={heroVideo} autoPlay muted loop playsInline className="v4-hero-media" />
         ) : (
-          <>
-            <motion.div 
-              layout
-              className="hover-video-grid" 
-              style={{ 
-                display: 'grid', 
-                gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fill, minmax(340px, 1fr))', 
-                gap: isMobile ? '20px' : '28px',
-                minHeight: '200px',
-                paddingBottom: '20px'
-              }}
-            >
-              <AnimatePresence mode="popLayout">
-                {displayedVideos.map((vid, index) => (
-                  <VideoCard 
-                    key={vid.id || index} 
-                    video={vid} 
-                    onPlay={setActiveVideo}
-                  />
-                ))}
-              </AnimatePresence>
-            </motion.div>
-
-            {/* HIGH-END INTERACTIVE LOAD MORE TRIGGER */}
-            {currentVideos.length > visibleCount && (
-              <div 
-                style={{ 
-                  display: 'flex', 
-                  justifyContent: 'center', 
-                  marginTop: '30px', 
-                  marginBottom: '20px',
-                  animation: 'fadeIn 0.5s ease'
-                }}
-              >
-                <button 
-                  onClick={() => setVisibleCount(prev => prev + (isMobile ? 4 : 12))}
-                  style={{
-                    background: 'rgba(255, 255, 255, 0.03)',
-                    border: '1px solid rgba(255, 255, 255, 0.08)',
-                    color: '#fff',
-                    padding: '14px 36px',
-                    borderRadius: '100px',
-                    fontSize: '11px',
-                    fontWeight: '900',
-                    letterSpacing: '0.12em',
-                    textTransform: 'uppercase',
-                    cursor: 'pointer',
-                    transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
-                    boxShadow: '0 8px 32px rgba(0, 0, 0, 0.4)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '10px'
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.background = 'rgba(214, 80, 80, 0.12)';
-                    e.currentTarget.style.borderColor = 'rgba(214, 80, 80, 0.4)';
-                    e.currentTarget.style.boxShadow = '0 12px 40px rgba(214, 80, 80, 0.2)';
-                    e.currentTarget.style.transform = 'translateY(-2px) scale(1.02)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.03)';
-                    e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.08)';
-                    e.currentTarget.style.boxShadow = '0 8px 32px rgba(0, 0, 0, 0.4)';
-                    e.currentTarget.style.transform = 'translateY(0) scale(1)';
-                  }}
-                >
-                  ✦ Load More Performances
-                </button>
-              </div>
-            )}
-
-            {/* COMPACT TALENT CURATION CTA (SHOWN WHEN VIDEO COUNT IS LOW) */}
-            {currentVideos.length < 3 && (
-              <div 
-                style={{
-                  marginTop: '45px',
-                  padding: isMobile ? '20px 24px' : '30px 40px',
-                  background: 'linear-gradient(135deg, rgba(214, 80, 80, 0.05) 0%, rgba(10, 10, 12, 0.95) 100%)',
-                  borderRadius: '20px',
-                  border: '1px solid rgba(214, 80, 80, 0.15)',
-                  display: 'flex',
-                  flexDirection: isMobile ? 'column' : 'row',
-                  justifyContent: 'space-between',
-                  alignItems: isMobile ? 'flex-start' : 'center',
-                  gap: '20px',
-                  maxWidth: '850px',
-                  margin: '40px auto 0 auto',
-                  boxShadow: '0 15px 35px rgba(0,0,0,0.4)',
-                  animation: 'fadeIn 0.8s ease'
-                }}
-              >
-                <div style={{ flex: 1, textAlign: 'left' }}>
-                  <span style={{ fontSize: '8px', fontWeight: '900', color: '#D65050', textTransform: 'uppercase', letterSpacing: '0.12em', display: 'inline-block', marginBottom: '6px' }}>
-                    ✦ Premium Curation Service
-                  </span>
-                  <h3 style={{ fontFamily: 'Outfit, sans-serif', fontSize: isMobile ? '16px' : '20px', fontWeight: '800', color: '#fff', margin: '0 0 6px 0', letterSpacing: '-0.01em' }}>
-                    Need More Options for {getCategoryHeading(selectedTab).replace('Elite ', '').replace('High-End ', '')}?
-                  </h3>
-                  <p style={{ color: '#a1a1aa', fontSize: isMobile ? '12px' : '13px', margin: 0, lineHeight: '1.5' }}>
-                    Our talent acquisition team has a private catalog of 200+ elite artists. Let us handpick and curate a custom talent roster for your luxury celebration.
-                  </p>
-                </div>
-                <button 
-                  onClick={() => {
-                    const btn = document.querySelector('.contact-btn') || document.querySelector('[href*="contact"]');
-                    if (btn) btn.click();
-                    else alert('Our curators will assist you instantly! Click "Contact Us" at the top.');
-                  }}
-                  style={{
-                    background: '#fff',
-                    color: '#050507',
-                    padding: '12px 24px',
-                    borderRadius: '100px',
-                    fontWeight: '800',
-                    fontSize: '12px',
-                    border: 'none',
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.06em',
-                    cursor: 'pointer',
-                    transition: 'all 0.3s ease',
-                    flexShrink: 0,
-                    boxShadow: '0 4px 15px rgba(255, 255, 255, 0.2)'
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.background = '#D65050';
-                    e.currentTarget.style.color = '#fff';
-                    e.currentTarget.style.boxShadow = '0 6px 20px rgba(214, 80, 80, 0.4)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.background = '#fff';
-                    e.currentTarget.style.color = '#050507';
-                    e.currentTarget.style.boxShadow = '0 4px 15px rgba(255, 255, 255, 0.2)';
-                  }}
-                >
-                  Get Custom Roster
-                </button>
-              </div>
-            )}
-          </>
+          <iframe
+            src={`https://www.youtube.com/embed/${getYoutubeId(heroVideo)}?autoplay=1&mute=1&loop=1&playlist=${getYoutubeId(heroVideo)}&controls=0`}
+            className="v4-hero-media"
+            style={{ pointerEvents: 'none', transform: 'scale(1.35)' }}
+          />
         )}
-      </div>
-      </div>
+        <div className="v4-hero-overlay" />
+        <div className="v4-hero-glow" />
+        
+        <motion.div 
+          className="v4-hero-content"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+        >
+          <div className="v4-badge">
+            <StarIcon /> PREMIUM LIVE ENTERTAINMENT
+          </div>
+          <h1 className="v4-hero-title">
+            Book Premium Artists<br/>For Every Event
+          </h1>
+          <p className="v4-hero-subtitle">
+            Live Singers • DJs • Bands • Anchors
+          </p>
+          <button className="v4-btn-primary">
+            Book Now
+          </button>
+        </motion.div>
+      </section>
 
-      {/* Cinematic Lightbox Modal (DYNAMICALLY SCALED FOR MOBILE PHONE SCREENPORTS) */}
+      {/* =========================================
+          SECTION 3: CATEGORY VIDEOS
+          ========================================= */}
+      <section className="v4-videos-section">
+        {categories.map((cat, idx) => {
+          const catVideos = videos.filter(v => v.category_id === cat.id);
+          if (catVideos.length === 0) return null;
+
+          return (
+            <motion.div 
+              key={cat.id} 
+              id={`cat-${cat.id}`} 
+              className="v4-category-row"
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.8 }}
+            >
+              <div className="v4-row-header">
+                <h2 className="v4-row-title">🎤 {cat.title}</h2>
+                <p className="v4-row-subtitle">Watch Top Performances</p>
+              </div>
+              <div className="v4-videos-scroll">
+                {catVideos.map(video => (
+                  <VideoCard key={video.id} video={video} onSelect={setSelectedVideo} />
+                ))}
+              </div>
+            </motion.div>
+          );
+        })}
+      </section>
+
+      {/* =========================================
+          SECTION 4: ALL VIDEOS (MASONRY)
+          ========================================= */}
+      <section className="v4-all-videos-section">
+        <motion.div 
+          className="v4-row-header"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+        >
+          <h2 className="v4-row-title">📺 ALL VIDEOS</h2>
+          <p className="v4-row-subtitle">Explore our full library of premium entertainment.</p>
+        </motion.div>
+        
+        <div className="v4-masonry-grid">
+          {videos.map((video, idx) => (
+            <motion.div 
+              key={video.id} 
+              className="v4-masonry-item"
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.5, delay: (idx % 3) * 0.1 }}
+            >
+              <VideoCard video={video} onSelect={setSelectedVideo} />
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
+      {/* =========================================
+          VIDEO PREVIEW MODAL
+          ========================================= */}
       <AnimatePresence>
-        {activeVideo && (
+        {selectedVideo && (
           <motion.div 
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-md p-4"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={() => setActiveVideo(null)}
-            style={{
-              position: 'fixed',
-              inset: 0,
-              zIndex: 9999,
-              background: 'rgba(3, 3, 5, 0.97)',
-              backdropFilter: 'blur(20px)',
-              WebkitBackdropFilter: 'blur(20px)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              padding: isMobile ? '12px' : '20px'
-            }}
           >
             <motion.div 
-              initial={{ scale: 0.96, y: 20 }}
+              className="relative w-full max-w-5xl bg-[#0F1117] rounded-3xl overflow-hidden shadow-2xl border border-white/10"
+              initial={{ scale: 0.9, y: 50 }}
               animate={{ scale: 1, y: 0 }}
-              exit={{ scale: 0.96, y: 20 }}
-              transition={{ type: 'spring', damping: 28, stiffness: 300 }}
-              onClick={(e) => e.stopPropagation()}
-              style={{
-                width: '100%',
-                maxWidth: '920px',
-                borderRadius: isMobile ? '20px' : '28px',
-                overflow: 'hidden',
-                background: '#09090b',
-                border: '1px solid rgba(255, 255, 255, 0.08)',
-                boxShadow: '0 30px 60px rgba(0, 0, 0, 0.9)'
-              }}
+              exit={{ scale: 0.9, y: 50 }}
             >
-              {/* Cinematic Video Player Container */}
-              <div style={{ position: 'relative', width: '100%', paddingBottom: '56.25%', background: '#000' }}>
-                {activeYoutubeId ? (
-                  <iframe
-                    src={`https://www.youtube.com/embed/${activeYoutubeId}?autoplay=1&rel=0&modestbranding=1`}
-                    style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 'none' }}
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
+              <button 
+                className="absolute top-4 right-4 z-10 w-10 h-10 bg-black/50 hover:bg-[#FF3D5E] rounded-full flex items-center justify-center text-white transition-colors text-xl font-bold"
+                onClick={() => setSelectedVideo(null)}
+              >
+                ✕
+              </button>
+              
+              <div className="aspect-video w-full bg-black">
+                {getYoutubeId(selectedVideo.video_url) ? (
+                  <iframe 
+                    src={`https://www.youtube.com/embed/${getYoutubeId(selectedVideo.video_url)}?autoplay=1`} 
+                    className="w-full h-full"
+                    allow="autoplay; fullscreen"
                   />
                 ) : (
-                  <video 
-                    src={activeVideo.video_url} 
-                    autoPlay
-                    controls 
-                    controlsList="nodownload"
-                    style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'contain' }}
-                  />
+                  <video src={selectedVideo.video_url} controls autoPlay className="w-full h-full object-contain" />
                 )}
-                
-                {/* Close Button */}
-                <button 
-                  onClick={() => setActiveVideo(null)}
-                  style={{
-                    position: 'absolute',
-                    top: isMobile ? '12px' : '20px',
-                    right: isMobile ? '12px' : '20px',
-                    width: '36px',
-                    height: '36px',
-                    borderRadius: '50%',
-                    background: 'rgba(0, 0, 0, 0.75)',
-                    backdropFilter: 'blur(10px)',
-                    border: '1px solid rgba(255, 255, 255, 0.15)',
-                    color: '#fff',
-                    fontSize: '14px',
-                    cursor: 'pointer',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    transition: 'all 0.2s',
-                    zIndex: 10
-                  }}
-                >
-                  ✕
-                </button>
               </div>
 
-              {/* Lightbox Details Panel */}
-              <div 
-                style={{ 
-                  padding: isMobile ? '20px 24px' : '30px 36px', 
-                  background: 'linear-gradient(to bottom, #0b0b0d 0%, #050507 100%)', 
-                  display: 'flex', 
-                  alignItems: isMobile ? 'stretch' : 'center', 
-                  justifyContent: 'space-between',
-                  flexDirection: isMobile ? 'column' : 'row',
-                  gap: isMobile ? '16px' : '24px'
-                }}
-              >
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                  <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                    <span style={{ fontSize: '9px', fontWeight: '900', textTransform: 'uppercase', letterSpacing: '0.1em', background: 'rgba(214, 80, 80, 0.15)', color: '#D65050', padding: '4px 10px', borderRadius: '100px', border: '1px solid rgba(214, 80, 80, 0.2)' }}>
-                      {activeVideo.category}
-                    </span>
-                    <span style={{ color: '#52525b', fontSize: '12px' }}>•</span>
-                    <span style={{ color: '#a1a1aa', fontSize: '12px', fontWeight: '500' }}>
-                      {activeVideo.topic}
-                    </span>
-                  </div>
-                  <h3 style={{ margin: 0, fontSize: isMobile ? '20px' : '24px', fontWeight: '800', color: '#fff', fontFamily: 'Outfit, sans-serif', letterSpacing: '-0.01em' }}>
-                    {activeVideo.user_name}
-                  </h3>
-                  
-                  {activeVideo.artist_type && (
-                    <span style={{ 
-                      fontSize: '13px', 
-                      fontWeight: '700', 
-                      fontFamily: 'Outfit, sans-serif',
-                      marginTop: '4px',
-                      display: 'block',
-                      background: 'linear-gradient(90deg, #D65050 0%, #c084fc 100%)',
-                      WebkitBackgroundClip: 'text',
-                      WebkitTextFillColor: 'transparent'
-                    }}>
-                      ✦ {activeVideo.artist_type}
-                    </span>
-                  )}
-                  
-                  {activeVideo.artist_bio && (
-                    <p style={{ 
-                      margin: '12px 0 0 0', 
-                      fontSize: '13px', 
-                      lineHeight: '1.6', 
-                      color: '#a1a1aa', 
-                      maxWidth: '540px',
-                      fontFamily: 'sans-serif',
-                      borderLeft: '2px solid rgba(214, 80, 80, 0.4)',
-                      paddingLeft: '12px',
-                      fontStyle: 'italic'
-                    }}>
-                      &ldquo;{activeVideo.artist_bio}&rdquo;
-                    </p>
-                  )}
+              <div className="p-6 sm:p-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-gradient-to-t from-black to-[#0F1117]">
+                <div>
+                  <h2 className="text-2xl sm:text-3xl font-bold text-white mb-1">{
+                    (() => {
+                      try {
+                        const parsed = JSON.parse(selectedVideo.user_name);
+                        return parsed.name || selectedVideo.user_name;
+                      } catch (e) {
+                        return selectedVideo.user_name || "Featured Performance";
+                      }
+                    })()
+                  }</h2>
+                  {(() => {
+                    let typeText = "";
+                    try {
+                      if (selectedVideo.user_name && selectedVideo.user_name.startsWith('{')) {
+                        const parsed = JSON.parse(selectedVideo.user_name);
+                        if (parsed.type) typeText = parsed.type;
+                      }
+                    } catch (e) {}
+                    
+                    return typeText ? (
+                      <div className="text-[#FFD166] text-[11px] sm:text-xs uppercase tracking-[0.2em] font-extrabold bg-[#FFD166]/10 inline-block px-3 py-1.5 rounded-md border border-[#FFD166]/20 mt-2">
+                        {typeText}
+                      </div>
+                    ) : (
+                      <p className="text-[#B9B9C8] text-xs uppercase tracking-widest font-bold mt-2">Premium Live Entertainment</p>
+                    );
+                  })()}
                 </div>
-
-                <button 
-                  onClick={() => {
-                    setActiveVideo(null);
-                    window.dispatchEvent(new CustomEvent('open-contact-modal', { 
-                      detail: { type: 'booking', artist: { name: activeVideo.user_name } } 
-                    }));
-                  }}
-                  style={{
-                    background: 'linear-gradient(135deg, #D65050 0%, #9F122B 100%)',
-                    color: '#fff',
-                    padding: isMobile ? '12px 24px' : '14px 34px',
-                    borderRadius: '100px',
-                    fontWeight: '900',
-                    fontSize: '13px',
-                    border: 'none',
-                    cursor: 'pointer',
-                    boxShadow: '0 8px 24px rgba(214, 80, 80, 0.3)',
-                    transition: 'all 0.2s',
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.05em',
-                    width: isMobile ? '100%' : 'auto'
-                  }}
-                >
-                  Book This Performer
-                </button>
+                <div className="flex gap-4">
+                  <button className="h-12 px-8 bg-rose-600 hover:bg-rose-700 text-white font-bold rounded-full transition-colors flex items-center gap-2">
+                    Book {JSON.parse(selectedVideo.user_name || '{}').name || 'Featured Artist'} Now
+                  </button>
+                  <Link href={`/artist/${encodeURIComponent(JSON.parse(selectedVideo.user_name || '{}').name || 'Artist')}`}>
+                    <button className="h-12 px-8 bg-white/5 hover:bg-white/10 text-white font-bold rounded-full transition-colors">
+                      View Full Profile
+                    </button>
+                  </Link>
+                </div>
               </div>
-
             </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
-      
-      <style jsx global>{`
-        @keyframes spin {
-          to { transform: rotate(360deg); }
-        }
-        .spotlight-banner-wrap:hover video {
-          opacity: 0.45 !important;
-          transform: scale(1.01);
-        }
-        .spotlight-banner-wrap:hover button {
-          background: #fff !important;
-          color: #000 !important;
-          box-shadow: 0 12px 30px rgba(255,255,255,0.2) !important;
-        }
-        .hide-scrollbar::-webkit-scrollbar {
-          display: none;
-        }
-        .hide-scrollbar {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
-        }
-      `}</style>
-    </main>
-  )
+
+    </div>
+  );
 }

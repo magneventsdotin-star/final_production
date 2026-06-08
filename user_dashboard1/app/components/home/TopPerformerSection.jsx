@@ -8,9 +8,10 @@ import Stars from '@/app/components/common/Stars'
 import { ARTIST_OF_MONTH } from '@/app/constants'
 import { formatINR } from '@/app/utils/formatters'
 import { supabase } from '@/app/lib/supabase'
-import ArtistDetailsModal from '@/app/components/artists/ArtistDetailsModal'
+import { useRouter } from 'next/navigation'
 
 function TopPerformerSection() {
+  const router = useRouter();
   const [artist, setArtist] = useState(ARTIST_OF_MONTH);
   const [loading, setLoading] = useState(true);
   const [showDetails, setShowDetails] = useState(false);
@@ -135,7 +136,7 @@ function TopPerformerSection() {
                   Book Now
                 </button>
                 <button
-                  onClick={() => setShowDetails(true)}
+                  onClick={() => router.push(`/artist/${encodeURIComponent(artist.name)}`)}
                   className="hp-btn"
                   style={{ 
                     flex: 1, 
@@ -156,12 +157,6 @@ function TopPerformerSection() {
                   View Profile
                 </button>
               </div>
-
-              <ArtistDetailsModal 
-                artist={artist} 
-                showDetails={showDetails} 
-                setShowDetails={setShowDetails} 
-              />
             </div>
           </>
         )}

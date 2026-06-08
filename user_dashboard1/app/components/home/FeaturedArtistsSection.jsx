@@ -9,9 +9,10 @@ import TiltCard from '@/app/components/common/TiltCard'
 import Stars from '@/app/components/common/Stars'
 import { FEATURED_ARTISTS } from '@/app/constants'
 import { supabase } from '@/app/lib/supabase'
-import ArtistDetailsModal from '@/app/components/artists/ArtistDetailsModal'
+import { useRouter } from 'next/navigation'
 
 function FeaturedArtistsSection() {
+  const router = useRouter();
   const [featuredArtists, setFeaturedArtists] = useState(FEATURED_ARTISTS)
   const [loading, setLoading] = useState(true)
   const [pauseFeatured, setPauseFeatured] = useState(false)
@@ -195,10 +196,7 @@ function FeaturedArtistsSection() {
               <TiltCard className="hp-feat-card-v2">
                 <div 
                   className="hp-feat-img-wrap-v2" 
-                  onClick={() => {
-                    setSelectedArtist(artist);
-                    setShowDetails(true);
-                  }}
+                  onClick={() => router.push(`/artist/${encodeURIComponent(artist.name)}`)}
                   style={{ cursor: 'pointer' }}
                 >
                   <Image
@@ -233,10 +231,7 @@ function FeaturedArtistsSection() {
                       BOOK THIS ARTIST
                     </button>
                     <button 
-                      onClick={() => {
-                        setSelectedArtist(artist);
-                        setShowDetails(true);
-                      }} 
+                      onClick={() => router.push(`/artist/${encodeURIComponent(artist.name)}`)} 
                       className="hp-btn-view-v2"
                     >
                       VIEW PROFILE
@@ -248,14 +243,6 @@ function FeaturedArtistsSection() {
           ))
         )}
       </div>
-
-      {selectedArtist && (
-        <ArtistDetailsModal 
-          artist={selectedArtist} 
-          showDetails={showDetails} 
-          setShowDetails={setShowDetails} 
-        />
-      )}
 
     </FadeSection>
   )

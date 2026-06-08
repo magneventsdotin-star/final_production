@@ -120,27 +120,31 @@ export default function ArtistProfilePage({ params }) {
         
         {/* HERO SECTION */}
         <section className="artist-hero-card">
-          <img src={coverImage} alt={name} className="hero-banner-image" />
+          <div className="hero-bg-image" style={{ backgroundImage: `url(${coverImage})` }} />
           <div className="hero-gradient-overlay" />
           
           <div className="hero-content">
             <div className="hero-text-area">
               <div className="artist-badges">
-                <span className="badge-item">★ Emerging Artist</span>
-                {artist.category && <span className="badge-item" style={{ background: 'rgba(255,255,255,0.1)', color: 'white', borderColor: 'transparent' }}>{artist.category}</span>}
+                <span className="badge-item glass-badge">★ Premium Artist</span>
+                {artist.category && <span className="badge-item glass-badge">{artist.category}</span>}
               </div>
               
               <h1 className="artist-name">{name}</h1>
               
-              <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '14px', textTransform: 'uppercase', letterSpacing: '0.15em', fontWeight: '700', margin: '0' }}>
-                {categories || 'Live Performer'}
-              </p>
+              <div className="artist-genres">
+                {categories ? categories.split(',').map((cat, i) => (
+                  <span key={i} className="genre-pill">{cat.trim()}</span>
+                )) : (
+                  <span className="genre-pill">Live Performer</span>
+                )}
+              </div>
 
               <div className="hero-actions">
-                <button className="btn-primary" onClick={() => window.dispatchEvent(new CustomEvent('open-contact-modal', { detail: { type: 'booking', artist: { name } } }))}>
+                <button className="btn-primary-elegant" onClick={() => window.dispatchEvent(new CustomEvent('open-contact-modal', { detail: { type: 'booking', artist: { name } } }))}>
                   Book Performance
                 </button>
-                <button className="btn-secondary" onClick={() => window.dispatchEvent(new CustomEvent('open-contact-modal', { detail: { type: 'booking', artist: { name } } }))}>
+                <button className="btn-secondary-elegant" onClick={() => window.dispatchEvent(new CustomEvent('open-contact-modal', { detail: { type: 'booking', artist: { name } } }))}>
                   Contact Now
                 </button>
               </div>
@@ -148,14 +152,15 @@ export default function ArtistProfilePage({ params }) {
 
             <div className="hero-stats">
               <div className="stat-item">
-                <div className="stat-value">5</div>
-                <StarRating rating={5} />
-                <div className="stat-label">Rating</div>
+                <div className="stat-value">5.0</div>
+                <div className="stat-label">★ ★ ★ ★ ★</div>
+                <div className="stat-sublabel">Rating</div>
               </div>
+              <div className="stat-divider" />
               <div className="stat-item">
                 <div className="stat-value">{videos.length * 10 + 23}</div>
-                <div style={{ height: '16px' }} /> {/* Spacer */}
-                <div className="stat-label">Shows</div>
+                <div style={{ height: '14px' }} />
+                <div className="stat-sublabel">Total Shows</div>
               </div>
             </div>
           </div>

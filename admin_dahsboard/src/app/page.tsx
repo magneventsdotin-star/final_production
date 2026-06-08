@@ -37,7 +37,7 @@ export default function Home() {
     <div className="min-h-screen flex items-center justify-center bg-white">
       <div className="flex flex-col items-center gap-6">
         <div className="w-24 h-24 flex items-center justify-center p-2 animate-pulse">
-          <Image src="/logo.png" alt="Magnevents" width={96} height={96} className="object-contain" priority />
+          <Image src="/logo.webp" alt="Magnevents" width={96} height={96} className="object-contain" priority />
         </div>
         <div className="flex flex-col items-center gap-3">
           <h1 className="text-5xl font-black font-display tracking-tight text-slate-900 leading-none">

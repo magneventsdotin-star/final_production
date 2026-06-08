@@ -48,7 +48,7 @@ export default function LoginPage() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#F8FAFC]">
         <div className="flex flex-col items-center gap-4">
-            <NextImage src="/logo.png" alt="Magnevents" width={64} height={64} className="object-contain" />
+            <NextImage src="/logo.webp" alt="Magnevents" width={64} height={64} className="object-contain" />
           <p className="text-sm font-bold text-slate-400 uppercase tracking-widest animate-pulse">Verifying Session...</p>
         </div>
       </div>
@@ -130,7 +130,7 @@ export default function LoginPage() {
       <div className="w-full max-w-[500px] relative z-10 animate-fadeInUp">
         <div className="flex flex-col items-center mb-12">
           <div className="w-24 h-24 flex items-center justify-center p-2 group hover:scale-110 transition-all duration-500">
-            <NextImage src="/logo.png" alt="Magnevents Logo" width={96} height={96} className="object-contain" priority />
+            <NextImage src="/logo.webp" alt="Magnevents Logo" width={96} height={96} className="object-contain" priority />
           </div>
           <h1 className="text-5xl font-black font-display tracking-tight text-slate-900 leading-none">
             Magne<span className="bg-gradient-to-r from-indigo-600 to-violet-600 bg-clip-text text-transparent">vents</span>

@@ -130,7 +130,7 @@ export function Sidebar({ onClose, userRole = 'admin' }: { onClose?: () => void;
           <div className="flex items-center gap-3">
             <div className="flex-shrink-0 h-9 rounded-lg overflow-hidden">
                <NextImage
-                  src="/logo.png"
+                  src="/logo.webp"
                   alt="Logo"
                   width={56}
                   height={36}

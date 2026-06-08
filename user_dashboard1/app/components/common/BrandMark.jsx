@@ -13,28 +13,26 @@ export default function BrandMark({ size = 'md', showTag = false, light = false,
       <span
         aria-hidden="true"
         style={{
-          width: `${markSize}px`,
-          height: `${markSize}px`,
-          borderRadius: '6px',
-          overflow: 'hidden',
+          width: `${markSize * 1.5}px`, /* Adjusted to fix the large gap */
+          height: `${markSize * 1.5}px`,
           display: 'inline-flex',
           alignItems: 'center',
           justifyContent: 'center',
-          boxShadow: '0 2px 8px rgba(0,0,0,0.5)',
           position: 'relative',
         }}
       >
         <Image
-          src="/assets/magnevents-logo.webp"
+          src="/assets/logo.webp"
           alt="Magnevents"
-          width={markSize}
-          height={markSize}
+          fill
           style={{
-            objectFit: 'cover'
+            objectFit: 'contain',
+            filter: 'invert(1) brightness(2)' /* Make black logo white for dark theme */
           }}
         />
       </span>
 
+      {/* Show the text as requested by the user */}
       {!hideText && (
         <span style={{ display: 'flex', flexDirection: 'column', lineHeight: 1 }}>
           <span

@@ -255,7 +255,7 @@ export default function ArtistSharePage() {
                 <div className="h-[1px] flex-1 bg-slate-100" />
               </div>
               <div className="flex items-center justify-center opacity-40 hover:opacity-100 transition-opacity">
-                 <img src="/logo.png" alt="Magnevents Logo" className="h-6 grayscale" />
+                 <img src="/logo.webp" alt="Magnevents Logo" className="h-6 grayscale" />
               </div>
             </div>
           </CardContent>

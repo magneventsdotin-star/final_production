@@ -21,14 +21,6 @@ export default function PricingCard({ plan, index }) {
       <div className="card-price-container" style={{ margin: '10px 0 20px 0', padding: '16px 16px 16px 20px', background: 'linear-gradient(145deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%)', borderRadius: '16px', border: '1px solid rgba(255,255,255,0.08)', position: 'relative', overflow: 'hidden' }}>
         <div style={{ position: 'absolute', top: 0, left: 0, width: '4px', height: '100%', background: plan.popular ? '#FFE032' : '#D65050' }} />
         
-        {plan.originalPrice && (
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px', borderBottom: '1px solid rgba(255,255,255,0.05)', paddingBottom: '12px' }}>
-            <span style={{ fontSize: '10px', color: 'rgba(255,255,255,0.5)', textTransform: 'uppercase', letterSpacing: '0.15em', fontWeight: '800' }}>Standard Rate</span>
-            <span style={{ textDecoration: 'line-through', color: '#38bdf8', fontSize: '14px', fontWeight: '700' }}>
-              {plan.originalPrice}
-            </span>
-          </div>
-        )}
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', alignItems: 'flex-start' }}>
           <span style={{ fontSize: '10px', color: plan.popular ? '#FFE032' : '#D65050', textTransform: 'uppercase', letterSpacing: '0.2em', fontWeight: '900', background: plan.popular ? 'rgba(255, 224, 50, 0.1)' : 'rgba(214, 80, 80, 0.1)', padding: '4px 10px', borderRadius: '100px' }}>Magnevents Exclusive</span>

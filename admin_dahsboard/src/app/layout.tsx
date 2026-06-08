@@ -12,8 +12,8 @@ export const metadata: Metadata = {
   title: 'Magnevents Admin | Internal Event Management',
   description: 'Internal admin dashboard for managing artist profiles and bookings.',
   icons: {
-    icon: '/logo.png',
-    apple: '/logo.png',
+    icon: '/logo.webp',
+    apple: '/logo.webp',
   }
 };
 

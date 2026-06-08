@@ -37,72 +37,117 @@
   border-radius: 24px 24px 0 0;
   overflow: hidden;
   margin-top: 20px;
-  background: transparent;
+  background: #0F1117;
 }
 
-.hero-banner-image {
+.hero-bg-image {
   width: 100%;
-  height: 500px;
-  object-fit: cover;
+  height: 600px;
+  background-size: cover;
+  background-position: center top;
   position: absolute;
   top: 0;
   left: 0;
   z-index: 1;
-  /* Removed opacity so the image is sharp and clear */
 }
 
 .hero-gradient-overlay {
   position: absolute;
   inset: 0;
-  /* Stronger gradient that fades perfectly into the dark background */
-  background: linear-gradient(180deg, rgba(3,3,5,0) 0%, rgba(3,3,5,0.4) 40%, #030305 100%);
+  background: linear-gradient(180deg, rgba(15,17,23,0) 0%, rgba(15,17,23,0.6) 40%, #0F1117 100%);
   z-index: 2;
 }
 
 .hero-content {
   position: relative;
   z-index: 3;
-  padding: 300px 40px 20px 40px;
+  padding: 300px 60px 50px 60px;
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
+  gap: 40px;
 }
 
 .hero-text-area {
-  max-width: 700px;
-}
-
-.artist-name {
-  font-family: 'Outfit', sans-serif;
-  font-size: clamp(48px, 6vw, 72px);
-  font-weight: 900;
-  margin: 0 0 16px 0;
-  letter-spacing: -0.02em;
-  text-shadow: 0 10px 30px rgba(0,0,0,0.8);
+  display: flex;
+  flex-direction: column;
+  max-width: 800px;
 }
 
 .artist-badges {
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
-  margin-bottom: 8px;
+  margin-bottom: 16px;
 }
 
-.badge-item {
-  background: rgba(231, 40, 106, 0.15);
-  border: 1px solid rgba(231, 40, 106, 0.3);
-  color: #ff8aab;
+.glass-badge {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  color: #fff;
   padding: 6px 16px;
   border-radius: 100px;
   font-size: 11px;
   font-weight: 700;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
+}
+
+.artist-name {
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(48px, 6vw, 84px);
+  font-weight: 900;
+  color: #fff;
+  margin: 0 0 12px 0;
+  letter-spacing: -0.02em;
+  text-shadow: 0 4px 20px rgba(0,0,0,0.5);
+  line-height: 1.1;
+}
+
+.artist-genres {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 0 0 32px 0;
+}
+
+.genre-pill {
+  font-size: 11px;
+  color: #FFD166; /* Brand Gold */
+  background: rgba(255, 209, 102, 0.08); /* Soft Gold Background */
+  border: 1px solid rgba(255, 209, 102, 0.25); /* Subtle Gold Border */
+  padding: 6px 14px;
+  border-radius: 100px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-weight: 700;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.genre-pill:hover {
+  background: rgba(255, 209, 102, 0.15);
+  border-color: rgba(255, 209, 102, 0.5);
+  transform: translateY(-1px);
 }
 
 .hero-stats {
   display: flex;
-  gap: 40px;
+  gap: 32px;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 24px 40px;
+  border-radius: 24px;
+  backdrop-filter: blur(20px);
+}
+
+.stat-divider {
+  width: 1px;
+  height: 60px;
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .stat-item {
@@ -112,11 +157,27 @@
 }
 
 .stat-value {
-  font-size: 42px;
+  font-size: 48px;
   font-weight: 900;
-  color: #FFE032;
+  color: #fff;
   line-height: 1;
-  margin-bottom: 4px;
+  margin-bottom: 8px;
+  font-family: 'Outfit', sans-serif;
+}
+
+.stat-label {
+  font-size: 16px;
+  color: #FFD166 !important;
+  letter-spacing: 0.2em;
+  text-shadow: 0 0 10px rgba(255, 209, 102, 0.4);
+}
+
+.stat-sublabel {
+  font-size: 11px;
+  color: rgba(255,255,255,0.4);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-top: 4px;
 }
 
 .stat-label {
@@ -250,55 +311,66 @@
   margin-top: 24px;
 }
 
-.btn-primary {
-  background: #E7286A;
-  color: #fff;
-  padding: 14px 28px;
+.btn-primary-elegant {
+  background: #fff;
+  color: #000;
+  padding: 16px 36px;
   border-radius: 100px;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 800;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   border: none;
   cursor: pointer;
-  box-shadow: 0 10px 25px rgba(231,40,106,0.3);
   transition: all 0.3s ease;
 }
 
-.btn-primary:hover {
+.btn-primary-elegant:hover {
   transform: translateY(-4px);
-  box-shadow: 0 15px 35px rgba(231,40,106,0.5);
+  background: #e0e0e0;
+  box-shadow: 0 15px 30px rgba(255,255,255,0.2);
 }
 
-.btn-secondary {
-  background: transparent;
+.btn-secondary-elegant {
+  background: rgba(255, 255, 255, 0.05);
   color: white;
   border: 1px solid rgba(255, 255, 255, 0.2);
-  padding: 14px 28px;
+  padding: 16px 36px;
   border-radius: 100px;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 800;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   cursor: pointer;
+  backdrop-filter: blur(10px);
   transition: all 0.3s ease;
 }
 
-.btn-secondary:hover {
-  background: rgba(255, 255, 255, 0.05);
+.btn-secondary-elegant:hover {
+  background: rgba(255, 255, 255, 0.1);
   border-color: rgba(255, 255, 255, 0.4);
 }
 
-/* Responsive */
-@media (max-width: 768px) {
+@media (max-width: 900px) {
   .hero-content {
     flex-direction: column;
     align-items: flex-start;
-    padding: 180px 24px 32px 24px;
+    padding: 240px 30px 40px 30px;
+    gap: 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-content {
+    padding: 180px 20px 30px 20px;
+  }
+  
+  .artist-name {
+    font-size: 40px;
   }
   
   .hero-stats {
-    margin-top: 32px;
-    gap: 24px;
+    width: 100%;
+    justify-content: space-around;
   }
 }
