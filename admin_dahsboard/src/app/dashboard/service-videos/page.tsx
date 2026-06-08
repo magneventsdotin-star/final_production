@@ -121,11 +121,29 @@ export default function ServiceVideos() {
       let finalVideoUrl = '';
 
       if (uploadTab === 'file' && videoFile) {
-        const formData = new FormData();
-        formData.append('file', videoFile);
-        const res = await fetch('/api/upload', { method: 'POST', body: formData });
+        // Step 1: Get presigned URL
+        const res = await fetch('/api/upload-url', { 
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ 
+            filename: videoFile.name, 
+            contentType: videoFile.type 
+          }) 
+        });
         const result = await res.json();
-        if (!res.ok) throw new Error(result.error || 'Upload failed');
+        if (!res.ok) throw new Error(result.error || 'Failed to get upload URL');
+
+        // Step 2: Upload directly to S3/R2 using the signed URL
+        const uploadRes = await fetch(result.signedUrl, {
+          method: 'PUT',
+          body: videoFile,
+          headers: {
+            'Content-Type': videoFile.type,
+          },
+        });
+
+        if (!uploadRes.ok) throw new Error('Direct file upload to storage failed');
+        
         finalVideoUrl = result.url;
       } else {
         const ytId = getYoutubeId(youtubeUrl);
@@ -239,11 +257,28 @@ export default function ServiceVideos() {
   const uploadHeroVideo = async (file: File) => {
     setIsUploadingHero(true);
     try {
-      const formData = new FormData();
-      formData.append('file', file);
-      const res = await fetch('/api/upload', { method: 'POST', body: formData });
+      // Step 1: Get presigned URL
+      const res = await fetch('/api/upload-url', { 
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          filename: file.name, 
+          contentType: file.type 
+        }) 
+      });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Upload failed');
+      if (!res.ok) throw new Error(data.error || 'Failed to get upload URL');
+      
+      // Step 2: Upload directly to S3/R2 using the signed URL
+      const uploadRes = await fetch(data.signedUrl, {
+        method: 'PUT',
+        body: file,
+        headers: {
+          'Content-Type': file.type,
+        },
+      });
+
+      if (!uploadRes.ok) throw new Error('Direct hero video upload failed');
       
       const newUrl = data.url;
       setHeroBgVideo(newUrl);
