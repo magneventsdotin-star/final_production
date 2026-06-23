@@ -4,79 +4,69 @@ import { useState, useEffect, forwardRef } from 'react'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
+import TiltCard from '@/app/components/common/TiltCard'
+import Stars from '@/app/components/common/Stars'
+import '@/app/styles/pages/HomePage.css'
 
 const ArtistCard = forwardRef(({ artist, onBook }, ref) => {
   const router = useRouter()
   const [imageError, setImageError] = useState(false)
   const [mounted, setMounted] = useState(false)
 
-  const firstLetter = artist.name ? artist.name.charAt(0).toUpperCase() : 'A'
-
   useEffect(() => {
     setMounted(true)
   }, [])
 
-  useEffect(() => {
-    setMounted(true)
-  }, [])
+  // Provide defaults similar to featured section
+  const genre = artist.subCategory || artist.category || 'Performer'
+  const location = [artist.city, artist.state].filter(Boolean).join(', ') || 'Jaipur'
+  const rating = artist.rating || '4.9'
+  const bookings = artist.successful_bookings || Math.floor(Math.random() * 50) + 50
+  
+  const imgSrc = (!artist.img || imageError) 
+    ? `https://ui-avatars.com/api/?name=${encodeURIComponent(artist.name || 'A')}&background=111111&color=D65050&size=400&font-size=0.33&bold=true`
+    : artist.img
 
   return (
-    <>
-      <motion.div
-        ref={ref}
-        layout
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        whileHover={{ y: -8 }}
-        className="artist-card-v2"
+    <motion.div
+      ref={ref}
+      layout
+      initial={{ opacity: 0, scale: 0.98 }}
+      animate={{ opacity: 1, scale: 1 }}
+      whileHover={{ scale: 1.02 }}
+      transition={{ duration: 0.3 }}
+      style={{ display: 'flex', width: '100%', height: '100%' }}
+    >
+      <TiltCard 
+        className="hp-feat-card-v2"
+        onClick={() => router.push(`/artist/${encodeURIComponent(artist.name)}`)}
+        style={{ cursor: 'pointer', width: '100%', height: '100%', display: 'flex', flexDirection: 'column' }}
       >
-        <div className="artist-cover-image">
-           {(!artist.img || imageError) ? (
-             <Image
-               src={`https://ui-avatars.com/api/?name=${encodeURIComponent(artist.name || 'A')}&background=111111&color=D65050&size=400&font-size=0.33&bold=true`}
-               alt={artist.name}
-               fill
-               sizes="(max-width: 768px) 300px, 400px"
-               style={{ objectFit: 'cover' }}
-               unoptimized
-             />
-           ) : (
-             <Image
-               src={artist.img}
-               alt={artist.name}
-               fill
-               sizes="(max-width: 768px) 300px, 400px"
-               style={{ objectFit: 'cover' }}
-               unoptimized
-               onError={() => setImageError(true)}
-             />
-           )}
-           <div className="image-overlay-gradient"></div>
+        <div className="hp-feat-img-wrap-v2" style={{ flex: 1, minHeight: '300px', position: 'relative' }}>
+          <Image
+            src={imgSrc}
+            alt={artist.name}
+            fill
+            sizes="(max-width: 768px) 300px, 400px"
+            style={{ objectFit: 'cover' }}
+            unoptimized
+            onError={() => setImageError(true)}
+          />
         </div>
+        <div className="hp-feat-info-v2" style={{ flexShrink: 0 }}>
+          <span className="hp-feat-genre-v2">{genre}</span>
+          <h3 className="hp-feat-name-v2">{artist.name}</h3>
+          <span className="hp-feat-loc-v2">{location}</span>
 
-        <div className="card-inner-content">
-          <div className="artist-info-v2" style={{ width: '100%' }}>
-            <h3 className="artist-name-v2">{artist.name}</h3>
-            <div className="category-badge-v2">{artist.subCategory || artist.category || 'PERFORMER'}</div>
-            <div className="artist-details-row">
-              {(artist.city || artist.state) && (
-                <div className="detail-item">
-                  <svg className="detail-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                  <span>{[artist.city, artist.state].filter(Boolean).join(', ')}</span>
-                </div>
-              )}
-            </div>
+          <div className="hp-feat-rating-v2">
+            <Stars count={Math.round(Number(rating))} />
+            <span className="hp-feat-score-v2">{rating} · {bookings} bookings</span>
           </div>
 
-          <div className="artist-dual-actions">
-            <button className="btn-book-premium yellow-btn" onClick={() => window.dispatchEvent(new CustomEvent('open-contact-modal', { detail: { type: 'booking', artist: artist } }))}>
-              <span>BOOK NOW</span>
-            </button>
-            <button className="btn-details-premium" onClick={() => router.push(`/artist/${encodeURIComponent(artist.name)}`)}>VIEW DETAILS</button>
-          </div>
+
         </div>
-      </motion.div>
-    </>
+      </TiltCard>
+    </motion.div>
   )
 })
 

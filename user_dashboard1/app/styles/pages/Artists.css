@@ -60,7 +60,7 @@
 
 .artists-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(5, 1fr);
   gap: 30px;
 }
 
@@ -388,4 +388,114 @@ body.modal-open .booking-bottom-nav-spacer {
   font-size: 14px;
   padding: 0 12px;
   letter-spacing: 0.05em;
+}
+
+/* Card Styles */
+.hp-feat-card-v2 {
+  background: #111;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 32px;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+  display: flex;
+  flex-direction: column;
+  height: 440px;
+}
+
+.hp-feat-card-v2:hover {
+  border-color: #FFE032;
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+}
+
+.hp-feat-img-wrap-v2 {
+  position: relative;
+  height: 60%;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.hp-live-badge {
+  background: linear-gradient(135deg, #a855f7 0%, #7e22ce 100%);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 6px 12px;
+  border-radius: 99px;
+  box-shadow: 0 4px 12px rgba(168, 85, 247, 0.3);
+}
+
+.hp-feat-overlay-v2 {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  z-index: 10;
+}
+
+.hp-feat-info-v2 {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+  justify-content: space-between;
+}
+
+.hp-feat-genre-v2 {
+  font-size: 11px;
+  color: #FFE032;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.hp-feat-name-v2 {
+  font-size: 18px;
+  font-weight: 800;
+  color: #fff;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.hp-feat-loc-v2 {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.hp-feat-rating-v2 {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.hp-feat-score-v2 {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.hp-feat-btn-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.hp-btn-book-v2 {
+  background: #D65050;
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  padding: 12px;
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.hp-btn-book-v2:hover {
+  filter: brightness(1.1);
+  transform: scale(1.02);
 }

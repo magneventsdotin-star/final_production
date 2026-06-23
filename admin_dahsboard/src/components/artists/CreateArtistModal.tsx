@@ -52,6 +52,7 @@ import {
 import { supabase } from '@/lib/supabase';
 import { Switch } from '@/components/ui/switch';
 import { ImageUploader } from './ImageUploader';
+import { CoverPhotoUploader } from './CoverPhotoUploader';
 import { CATEGORIES, INDIAN_LANGUAGES } from '@/lib/constants';
 
 const artistSchema = z.object({
@@ -1088,6 +1089,22 @@ export function CreateArtistModal({ open, onOpenChange, onSuccess, initialData }
                   <div className="grid grid-cols-1 gap-y-10 p-7 rounded-[28px] bg-white border border-slate-100 shadow-luxe-soft">
                     <FormField
                       control={form.control}
+                      name="cover_image_url"
+                      render={({ field }) => (
+                        <FormItem className="space-y-4 pb-8 border-b border-slate-50">
+                          <FormLabel className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Cover Photo</FormLabel>
+                          <FormControl>
+                            <CoverPhotoUploader
+                              value={field.value || ''}
+                              onChange={field.onChange}
+                            />
+                          </FormControl>
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={form.control}
                       name="images"
                       render={({ field }) => (
                         <FormItem className="space-y-4">
@@ -1107,31 +1124,6 @@ export function CreateArtistModal({ open, onOpenChange, onSuccess, initialData }
                               maxImages={15}
                             />
                           </FormControl>
-
-                          {(field.value || []).length > 0 && (
-                            <div className="space-y-4 pt-4 border-t border-slate-50">
-                              <FormLabel className="text-[10px] text-slate-400 font-black uppercase tracking-widest">Select Profile Cover Image</FormLabel>
-                              <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-3">
-                                {field.value?.map((url, i) => (
-                                  <div
-                                    key={i}
-                                    onClick={() => form.setValue('cover_image_url', url)}
-                                    className={cn(
-                                      "aspect-square rounded-xl overflow-hidden border-2 cursor-pointer transition-all relative group",
-                                      form.watch('cover_image_url') === url ? "border-sky-500 shadow-md scale-105" : "border-slate-100 opacity-60 hover:opacity-100 hover:scale-105"
-                                    )}
-                                  >
-                                    <img src={url} alt="" className="w-full h-full object-cover" />
-                                    {form.watch('cover_image_url') === url && (
-                                      <div className="absolute inset-0 bg-sky-500/10 flex items-center justify-center">
-                                        <div className="bg-sky-500 text-white text-[8px] font-black px-1.5 py-0.5 rounded-full shadow-lg">COVER</div>
-                                      </div>
-                                    )}
-                                  </div>
-                                ))}
-                              </div>
-                            </div>
-                          )}
                         </FormItem>
                       )}
                     />

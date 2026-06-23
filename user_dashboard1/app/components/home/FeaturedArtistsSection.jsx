@@ -218,9 +218,6 @@ function FeaturedArtistsSection() {
                     style={{ objectFit: 'cover' }}
                     quality={100}
                   />
-                  <div className="hp-feat-overlay-v2">
-                    <span className="hp-live-badge">VIEW PROFILE</span>
-                  </div>
                 </div>
                 <div className="hp-feat-info-v2">
                   <span className="hp-feat-genre-v2">{artist.genre}</span>
@@ -232,20 +229,7 @@ function FeaturedArtistsSection() {
                     <span className="hp-feat-score-v2">{artist.rating} · 146 bookings</span>
                   </div>
 
-                  <div className="hp-feat-btn-grid">
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        window.dispatchEvent(new CustomEvent('open-contact-modal', {
-                          detail: { type: 'booking', artist: artist }
-                        }));
-                      }}
-                      className="hp-btn-book-v2"
-                      style={{ gridColumn: '1 / -1' }}
-                    >
-                      BOOK THIS ARTIST
-                    </button>
-                  </div>
+
                 </div>
               </TiltCard>
             </motion.div>
