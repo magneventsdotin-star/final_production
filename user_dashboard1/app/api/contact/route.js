@@ -189,17 +189,17 @@ ${artistDetailsString}${planDetailsString}${serviceDetailsString}
       const adminUrl = process.env.NEXT_PUBLIC_ADMIN_URL || 'https://admin.magnevents.in';
       const btnBase = "display: inline-block; color: #ffffff; padding: 10px 16px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 13px; margin-right: 8px; margin-bottom: 8px;";
       
-      const confirmLink = `${adminUrl}/dashboard/requests?reply=${bookingId}&action=confirm`;
-      const moreInfoLink = `${adminUrl}/dashboard/requests?reply=${bookingId}&action=more_info`;
-      const unavailableLink = `${adminUrl}/dashboard/requests?reply=${bookingId}&action=unavailable`;
-      const rejectLink = `${adminUrl}/dashboard/requests?reply=${bookingId}&action=reject`;
+      const confirmLink = `${adminUrl}/api/action-request?id=${bookingId}&type=client_request&action=confirm`;
+      const moreInfoLink = `${adminUrl}/api/action-request?id=${bookingId}&type=client_request&action=more_info`;
+      const unavailableLink = `${adminUrl}/api/action-request?id=${bookingId}&type=client_request&action=unavailable`;
+      const rejectLink = `${adminUrl}/api/action-request?id=${bookingId}&type=client_request&action=reject`;
       const customReplyLink = `${adminUrl}/dashboard/requests?reply=${bookingId}&action=custom`;
       const previewLink = `${adminUrl}/dashboard/requests`;
 
       htmlBody += `
         <div style="margin-top: 24px; font-family: sans-serif; border-top: 1px solid #e2e8f0; padding-top: 16px;">
           <h3 style="margin-top: 0; color: #334155; font-size: 16px;">Quick Replies</h3>
-          <p style="font-size: 13px; color: #64748b; margin-bottom: 12px;">Click a button below to open the dashboard and review your email response before sending.</p>
+          <p style="font-size: 13px; color: #64748b; margin-bottom: 12px;">Clicking these buttons will <b>instantly</b> send a standard email to the client. Use Custom Reply to write your own message.</p>
           <div style="display: flex; flex-wrap: wrap;">
             <a href="${confirmLink}" style="${btnBase} background-color: #10b981;">✅ Confirm Booking</a>
             <a href="${moreInfoLink}" style="${btnBase} background-color: #3b82f6;">📞 Request More Info</a>
