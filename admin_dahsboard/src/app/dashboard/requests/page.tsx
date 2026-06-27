@@ -227,7 +227,10 @@ function ClientRequestsContent() {
         })
       });
 
-      if (!res.ok) throw new Error('Failed to send email');
+      if (!res.ok) {
+        const errText = await res.text();
+        throw new Error(errText || 'Failed to send email');
+      }
 
       toast({ title: 'Email Sent!', description: 'Your custom reply has been dispatched to the client.' });
       setEmailModalOpen(false);

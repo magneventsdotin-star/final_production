@@ -139,6 +139,6 @@ export async function POST(req: Request) {
     return NextResponse.json({ success: true });
   } catch (err: any) {
     console.error("Custom email error:", err);
-    return new NextResponse('Failed to send email', { status: 500 });
+    return new NextResponse(err.message || 'Failed to send email', { status: 500 });
   }
 }
