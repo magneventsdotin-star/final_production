@@ -14,9 +14,10 @@ interface PricingModalProps {
   onOpenChange: (open: boolean) => void;
   onSuccess: () => void;
   initialData?: any;
+  userRole?: string;
 }
 
-export function CreatePricingModal({ open, onOpenChange, onSuccess, initialData }: PricingModalProps) {
+export function CreatePricingModal({ open, onOpenChange, onSuccess, initialData, userRole }: PricingModalProps) {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
@@ -57,13 +58,22 @@ export function CreatePricingModal({ open, onOpenChange, onSuccess, initialData 
     }
     setLoading(true);
 
+    let finalIsLive = isLive;
+    let pendingApproval = false;
+
+    if (isLive && userRole !== 'super_admin') {
+      finalIsLive = false;
+      pendingApproval = true;
+    }
+
     const payload = {
       name: formData.name,
       price: formData.price,
       original_price: formData.originalPrice,
       copy: formData.copy,
       featured: formData.featured,
-      is_live: isLive,
+      is_live: finalIsLive,
+      pending_approval: pendingApproval,
       points: formData.points.split(',').map(p => p.trim()).filter(p => p !== "")
     };
 
@@ -73,12 +83,12 @@ export function CreatePricingModal({ open, onOpenChange, onSuccess, initialData 
           .update(payload)
           .eq('id', initialData.id);
         if (error) throw error;
-        toast({ title: "Updated", description: "Pricing plan updated." });
+        toast({ title: pendingApproval ? "Submitted" : "Updated", description: pendingApproval ? "Changes sent for approval." : "Pricing plan updated." });
       } else {
         const { error } = await (supabase.from('pricing_plans') as any)
           .insert([payload]);
         if (error) throw error;
-        toast({ title: "Created", description: "New pricing plan added." });
+        toast({ title: pendingApproval ? "Submitted" : "Created", description: pendingApproval ? "Sent for super admin approval." : "New pricing plan added." });
       }
       onSuccess();
       onOpenChange(false);
