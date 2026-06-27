@@ -22,105 +22,86 @@ export async function POST(req) {
     if (isRegister) subjectPrefix = "Artist Registration";
     else if (isCallRequest) subjectPrefix = "Call Request";
 
-    let emailBody = '';
+        let emailBody = '';
+    const row = (label, value, isLink = false, href = '') => {
+      if (!value || value === 'N/A') return '';
+      const displayValue = isLink ? `<a href="${href}" style="color: #3b82f6; text-decoration: none; font-weight: 600;">${value}</a>` : `<strong style="color: #0f172a;">${value}</strong>`;
+      return `<tr><td style="padding: 8px 0; width: 140px; color: #64748b; font-weight: 500;">${label}</td><td style="padding: 8px 0;">${displayValue}</td></tr>`;
+    };
+
+    const buildSection = (title, contentHTML) => {
+      if (!contentHTML || contentHTML.trim() === '') return '';
+      return `
+        <div style="margin-bottom: 32px;">
+          <h4 style="font-size: 13px; font-weight: 800; color: #94a3b8; text-transform: uppercase; letter-spacing: 1.5px; margin: 0 0 12px 0; border-bottom: 2px solid #e2e8f0; padding-bottom: 12px;">${title}</h4>
+          <table width="100%" cellpadding="0" cellspacing="0" style="font-size: 15px; color: #334155; line-height: 1.6;">
+            ${contentHTML}
+          </table>
+        </div>
+      `;
+    };
+
+    let contentSections = '';
 
     if (isRegister) {
-      emailBody = `
-You have received a new Artist Registration from Magnevents!
-
-========================================
-👤 ARTIST DETAILS
-========================================
-Name:           ${data.name || 'N/A'}
-Email:          ${data.email || 'N/A'}
-Phone:          ${data.phone || 'N/A'}
-Category:       ${data.category || 'N/A'}
-
-========================================
-🔗 PORTFOLIO & SOCIALS
-========================================
-Link:           ${data.portfolio || 'N/A'}
-
-========================================
-📝 BIO & EXPERIENCE
-========================================
-${data.bio || 'No bio provided.'}
-      `;
+      emailBody = `New Artist Registration from ${data.name || 'Unknown'}\nPhone: ${data.phone || 'N/A'}\nEmail: ${data.email || 'N/A'}`;
+      contentSections += buildSection('👤 Artist Details', 
+        row('Name', data.name) +
+        row('Email', data.email, true, `mailto:${data.email}`) +
+        row('Phone', data.phone, true, `tel:${data.phone}`) +
+        row('Category', data.category)
+      );
+      contentSections += buildSection('🔗 Portfolio & Socials', row('Link', data.portfolio, true, data.portfolio));
+      contentSections += buildSection('📝 Bio & Experience', `<tr><td style="padding: 8px 0; color: #0f172a;">${data.bio || 'No bio provided.'}</td></tr>`);
     } else {
-      let artistDetailsString = '';
+      emailBody = `New Inquiry from ${data.name || 'Unknown'}\nPhone: ${data.phone || 'N/A'}\nEmail: ${data.email || 'N/A'}`;
+      contentSections += buildSection('👤 User & Contact Details', 
+        row('Name', data.name) +
+        row('Email', data.email, true, `mailto:${data.email}`) +
+        row('Phone', data.phone, true, `tel:${data.phone}`)
+      );
+
+      contentSections += buildSection('📅 Event Details', 
+        row('Event Type', data.eventType) +
+        row('Event Date', data.date) +
+        row('Location', data.location) +
+        row('Requested Type', data.artistType && data.artistType.length > 0 ? data.artistType.join(', ') : '') +
+        row('Budget', data.budget)
+      );
+
+      contentSections += buildSection('📝 Additional Message', `<tr><td style="padding: 16px; background-color: #f8fafc; border-radius: 8px; font-style: italic; color: #475569; border: 1px solid #e2e8f0;">"${data.message || 'No additional message provided.'}"</td></tr>`);
+
       if (data.selectedArtist && typeof data.selectedArtist === 'object') {
         const a = data.selectedArtist;
-        artistDetailsString = `
-========================================
-✨ REQUESTED ARTIST DETAILS
-========================================
-Artist Name:    ${a.name || 'N/A'}
-Category:       ${a.subCategory || a.category || 'N/A'}
-Location:       ${[a.city, a.state].filter(Boolean).join(', ') || a.location || 'N/A'}
-Languages:      ${a.languages || 'N/A'}
-Price Range:    ${a.priceMin && a.priceMax ? `₹${a.priceMin} - ₹${a.priceMax}` : (a.priceMin ? `Starting at ₹${a.priceMin}` : 'N/A')}
-`;
+        const price = a.priceMin && a.priceMax ? `₹${a.priceMin} - ₹${a.priceMax}` : (a.priceMin ? `Starting at ₹${a.priceMin}` : '');
+        contentSections += buildSection('✨ Requested Artist Details', 
+          row('Artist Name', a.name) +
+          row('Category', a.subCategory || a.category) +
+          row('Location', [a.city, a.state].filter(Boolean).join(', ') || a.location) +
+          row('Languages', a.languages) +
+          row('Price Range', price)
+        );
       } else if (artistName) {
-        artistDetailsString = `
-========================================
-✨ REQUESTED ARTIST DETAILS
-========================================
-Artist Name:    ${artistName}
-`;
+        contentSections += buildSection('✨ Requested Artist Details', row('Artist Name', artistName));
       }
 
-      let planDetailsString = '';
       if (data.selectedPlan && typeof data.selectedPlan === 'object') {
         const p = data.selectedPlan;
-        planDetailsString = `
-========================================
-📦 SELECTED PRICING PACKAGE
-========================================
-Package Name:   ${p.name || 'N/A'}
-Starts From:    ${p.price || 'N/A'}
-Tagline:        ${p.tagline || 'N/A'}
-Features:       ${p.features && p.features.length > 0 ? p.features.join(', ') : 'N/A'}
-`;
+        contentSections += buildSection('📦 Selected Pricing Package', 
+          row('Package Name', p.name) +
+          row('Starts From', p.price) +
+          row('Tagline', p.tagline) +
+          row('Features', p.features && p.features.length > 0 ? p.features.join(', ') : '')
+        );
       }
-      let serviceDetailsString = '';
       if (data.selectedService && typeof data.selectedService === 'object') {
         const s = data.selectedService;
-        serviceDetailsString = `
-========================================
-🛠️ SELECTED SERVICE DETAILS
-========================================
-Service Title:  ${s.title || 'N/A'}
-Description:    ${s.desc || 'N/A'}
-`;
+        contentSections += buildSection('🛠️ Selected Service Details', 
+          row('Service Title', s.title) +
+          row('Description', s.desc)
+        );
       }
-
-      emailBody = `
-You have received a new inquiry from Magnevents!
-
-========================================
-👤 USER & CONTACT DETAILS
-========================================
-Name:           ${data.name || 'N/A'}
-Email:          ${data.email || 'N/A'}
-Phone:          ${data.phone || 'N/A'}
-
-========================================
-📅 EVENT DETAILS
-========================================
-Event Type:     ${data.eventType || 'N/A'}
-Event Date:     ${data.date || 'N/A'}
-Location:       ${data.location || 'N/A'}
-Requested Type: ${data.artistType && data.artistType.length > 0 ? data.artistType.join(', ') : 'N/A'}
-Budget:         ${data.budget || 'N/A'}
-
-========================================
-📝 ADDITIONAL MESSAGE
-========================================
-${data.message || 'No additional message provided.'}
-${artistDetailsString}${planDetailsString}${serviceDetailsString}
-      `;
     }
-
 
     let bookingId = null;
 
@@ -184,7 +165,26 @@ ${artistDetailsString}${planDetailsString}${serviceDetailsString}
     }
 
     // 2. Prepare HTML Email body with action buttons if bookingId exists
-    let htmlBody = `<div style="font-family: sans-serif; white-space: pre-wrap;">${emailBody}</div>`;
+        let htmlBody = `
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <meta charset="utf-8">
+      </head>
+      <body style="background-color: #f1f5f9; font-family: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif; margin: 0; padding: 40px 20px; -webkit-font-smoothing: antialiased;">
+        <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);">
+          
+          <div style="background-color: #0f172a; padding: 32px; text-align: center;">
+            <h1 style="color: #ffffff; font-size: 24px; font-weight: 900; margin: 0; letter-spacing: -0.5px;">MAGNEVENTS</h1>
+            <p style="color: #94a3b8; font-size: 13px; margin: 8px 0 0 0; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;">${subjectPrefix}</p>
+          </div>
+
+          <div style="padding: 40px;">
+            <h2 style="margin-top: 0; font-size: 20px; color: #0f172a; font-weight: 800; margin-bottom: 32px;">You have received a new inquiry!</h2>
+            ${contentSections}
+          </div>
+    `;
+
     if (bookingId) {
       const adminUrl = process.env.NEXT_PUBLIC_ADMIN_URL || 'https://admin.magnevents.in';
       const btnBase = "display: inline-block; color: #ffffff; padding: 10px 16px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 13px; margin-right: 8px; margin-bottom: 8px;";
@@ -198,9 +198,9 @@ ${artistDetailsString}${planDetailsString}${serviceDetailsString}
       const previewLink = `${adminUrl}/dashboard/requests`;
 
       htmlBody += `
-        <div style="margin-top: 24px; font-family: sans-serif; border-top: 1px solid #e2e8f0; padding-top: 16px;">
+        <div style="background-color: #f8fafc; padding: 32px 40px; border-top: 1px solid #e2e8f0;">
           <h3 style="margin-top: 0; color: #334155; font-size: 16px;">Quick Replies</h3>
-          <p style="font-size: 13px; color: #64748b; margin-bottom: 12px;">Clicking these buttons will <b>instantly</b> send a standard email to the client. Use Custom Reply to write your own message.</p>
+          <p style="font-size: 13px; color: #64748b; margin-bottom: 16px;">Clicking these buttons will <b>instantly</b> send a standard email to the client. Use Custom Reply to write your own message.</p>
           <div style="display: flex; flex-wrap: wrap;">
             <a href="${confirmLink}" style="${btnBase} background-color: #10b981;">✅ Confirm Booking</a>
             <a href="${approveLink}" style="${btnBase} background-color: #059669;">👍 Approve Booking</a>
@@ -209,12 +209,19 @@ ${artistDetailsString}${planDetailsString}${serviceDetailsString}
             <a href="${unavailableLink}" style="${btnBase} background-color: #f59e0b;">🗓️ Artist Unavailable</a>
             <a href="${rejectLink}" style="${btnBase} background-color: #ef4444;">❌ Reject / Not Possible</a>
           </div>
-          <div style="margin-top: 12px;">
-            <a href="${previewLink}" style="display: inline-block; background-color: #f1f5f9; color: #475569; padding: 8px 16px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 13px; border: 1px solid #cbd5e1;">Preview in Dashboard</a>
+          <div style="margin-top: 16px;">
+            <a href="${previewLink}" style="display: inline-block; background-color: #e2e8f0; color: #334155; padding: 10px 16px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 13px;">Preview in Dashboard</a>
           </div>
         </div>
       `;
     }
+
+    htmlBody += `
+        </div>
+      </body>
+      </html>
+    `;
+    
 
     const mailOptions = {
       from: process.env.EMAIL_USER,
