@@ -100,8 +100,26 @@ export async function POST(req: Request) {
           ${contextHtml}
 
           <!-- Footer -->
-          <div style="background-color: #f8fafc; padding: 32px 40px; text-align: center; border-top: 1px solid #e2e8f0;">
-            <p style="font-size: 13px; color: #94a3b8; margin: 0; font-weight: 500;">© ${new Date().getFullYear()} Magnevents. All rights reserved.</p>
+          <div style="background-color: #f8fafc; padding: 40px; text-align: center; border-top: 1px solid #e2e8f0;">
+            <p style="font-size: 14px; color: #475569; margin: 0 0 16px 0; font-weight: 600;">Connect with Magnevents</p>
+            <div style="margin-bottom: 24px;">
+              <a href="https://instagram.com/magnevents" style="display: inline-block; margin: 0 8px; text-decoration: none;">
+                <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram" width="24" height="24" style="opacity: 0.6;">
+              </a>
+              <a href="https://facebook.com/magnevents" style="display: inline-block; margin: 0 8px; text-decoration: none;">
+                <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook" width="24" height="24" style="opacity: 0.6;">
+              </a>
+              <a href="https://linkedin.com/company/magnevents" style="display: inline-block; margin: 0 8px; text-decoration: none;">
+                <img src="https://cdn-icons-png.flaticon.com/512/3536/3536505.png" alt="LinkedIn" width="24" height="24" style="opacity: 0.6;">
+              </a>
+              <a href="https://magnevents.in" style="display: inline-block; margin: 0 8px; text-decoration: none;">
+                <img src="https://cdn-icons-png.flaticon.com/512/1006/1006771.png" alt="Website" width="24" height="24" style="opacity: 0.6;">
+              </a>
+            </div>
+            <p style="font-size: 12px; color: #94a3b8; margin: 0 0 8px 0;">This email was sent by Magnevents Artist Booking Agency.</p>
+            <p style="font-size: 12px; color: #94a3b8; margin: 0; font-weight: 500;">
+              © ${new Date().getFullYear()} Magnevents. All rights reserved. &nbsp;|&nbsp; <a href="https://magnevents.in/privacy" style="color: #94a3b8; text-decoration: underline;">Privacy</a> &nbsp;|&nbsp; <a href="https://magnevents.in/terms" style="color: #94a3b8; text-decoration: underline;">Terms</a>
+            </p>
           </div>
         </div>
       </body>
