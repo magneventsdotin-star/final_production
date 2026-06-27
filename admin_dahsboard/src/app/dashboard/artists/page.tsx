@@ -26,6 +26,24 @@ export default function ArtistManagement() {
   const { toast } = useToast();
   const router = useRouter();
 
+  const [currentUser, setCurrentUser] = useState<{ id: string, canViewAll: boolean } | null>(null);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (session?.user) {
+          const { data } = await supabase.from('profiles').select('role, can_view_all_artists').eq('id', session.user.id).single();
+          const isSuperAdmin = data?.role === 'super_admin' || session.user.email?.toLowerCase() === process.env.NEXT_PUBLIC_SUPER_ADMIN_EMAIL?.toLowerCase();
+          setCurrentUser({ id: session.user.id, canViewAll: !!(isSuperAdmin || data?.can_view_all_artists) });
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    };
+    fetchUser();
+  }, []);
+
   const { originalArtists, duplicateGroups } = useMemo(() => {
     const groups = new Map<string, any[]>();
     const original: any[] = [];
@@ -56,11 +74,17 @@ export default function ArtistManagement() {
   const totalPages = Math.max(1, Math.ceil(currentList.length / ITEMS_PER_PAGE));
 
   const fetchArtists = useCallback(async (showLoading = true) => {
+    if (!currentUser) return;
     if (showLoading) setLoading(true);
     try {
       let query = (supabase
         .from('artists') as any)
         .select('*, artist_images!fk_artist_id(image_url)', { count: 'exact' });
+        
+      if (!currentUser.canViewAll) {
+        query = query.eq('created_by', currentUser.id);
+      }
+
       if (filters.search) {
         query = query.or(`name.ilike.%${filters.search}%,alias.ilike.%${filters.search}%,category.ilike.%${filters.search}%,sub_category.ilike.%${filters.search}%,city.ilike.%${filters.search}%`);
       }
@@ -108,7 +132,7 @@ export default function ArtistManagement() {
     } finally {
       setLoading(false);
     }
-  }, [filters]);
+  }, [filters, currentUser]);
 
   useEffect(() => {
     setCurrentPage(1);

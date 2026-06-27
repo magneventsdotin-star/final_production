@@ -22,7 +22,6 @@ const categoriesToInsert = [
 ];
 
 async function seed() {
-  // Check if categories exist
   const { data: existing } = await supabase.from('service_categories').select('id').limit(1);
   if (existing && existing.length > 0) {
     console.log("Categories already exist. Exiting.");

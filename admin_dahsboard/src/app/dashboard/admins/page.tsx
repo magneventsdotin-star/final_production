@@ -90,6 +90,33 @@ export default function AdminManagement() {
     fetchAdmins();
   }, [fetchAdmins]);
 
+  const handleToggleViewAll = async (id: string, currentValue: boolean) => {
+    if (currentUserRole !== 'super_admin') return;
+    try {
+      const newValue = !currentValue;
+      setAdmins(prev => prev.map(a => a.id === id ? { ...a, can_view_all_artists: newValue } : a));
+      
+      const { error } = await supabase
+        .from('profiles')
+        .update({ can_view_all_artists: newValue })
+        .eq('id', id);
+        
+      if (error) throw error;
+      
+      toast({
+        title: "Updated Permission",
+        description: `Admin can now ${newValue ? 'view all artists' : 'only view their own uploads'}.`,
+      });
+    } catch (err: any) {
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: err.message || "Failed to update permission",
+      });
+      fetchAdmins(); // Revert on error
+    }
+  };
+
   const handleDelete = async (id: string, email: string) => {
     if (!confirm(`Are you sure you want to fully delete ${email}? This will remove them from the system entirely.`)) return;
 
@@ -162,6 +189,7 @@ export default function AdminManagement() {
                     <TableHead className="pl-8 h-14 text-[11px] font-bold uppercase tracking-widest text-slate-500">Administrator</TableHead>
                     <TableHead className="h-14 text-[11px] font-bold uppercase tracking-widest text-slate-500">Access Level</TableHead>
                     <TableHead className="h-14 text-[11px] font-bold uppercase tracking-widest text-slate-500">Email Address</TableHead>
+                    <TableHead className="h-14 text-[11px] font-bold uppercase tracking-widest text-slate-500">View All Artists</TableHead>
                     <TableHead className="h-14 text-[11px] font-bold uppercase tracking-widest text-slate-500">Joined Date</TableHead>
                     <TableHead className="h-14 pr-8 text-center text-[11px] font-bold uppercase tracking-widest text-slate-500">Actions</TableHead>
                   </TableRow>
@@ -228,6 +256,25 @@ export default function AdminManagement() {
                             <Mail size={14} className="text-slate-300" strokeWidth={2.5} />
                             {admin.email}
                           </div>
+                        </TableCell>
+                        <TableCell onClick={(e) => e.stopPropagation()}>
+                          <button
+                            onClick={() => handleToggleViewAll(admin.id, admin.can_view_all_artists || false)}
+                            disabled={currentUserRole !== 'super_admin'}
+                            className={cn(
+                              "relative inline-flex h-5 w-9 shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2",
+                              admin.can_view_all_artists ? "bg-indigo-600" : "bg-slate-200",
+                              currentUserRole !== 'super_admin' && "opacity-50 cursor-not-allowed"
+                            )}
+                          >
+                            <span className="sr-only">Toggle view all artists</span>
+                            <span
+                              className={cn(
+                                "pointer-events-none inline-block h-4 w-4 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out",
+                                admin.can_view_all_artists ? "translate-x-4" : "translate-x-0"
+                              )}
+                            />
+                          </button>
                         </TableCell>
                         <TableCell className="text-[13px] font-bold text-slate-500 font-display">
                           {admin.created_at ? format(new Date(admin.created_at), 'MMM dd, yyyy') : '—'}

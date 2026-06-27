@@ -1,4 +1,3 @@
--- Migration script to create tables for Dynamic Services Page
 
 CREATE TABLE IF NOT EXISTS public.service_categories (
   id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
@@ -21,7 +20,6 @@ CREATE TABLE IF NOT EXISTS public.service_page_settings (
   created_at timestamp with time zone DEFAULT timezone('utc'::text, now()) NOT NULL
 );
 
--- Alter service_videos to add category_id
 DO $$
 BEGIN
     IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='service_videos' AND column_name='category_id') THEN
@@ -29,7 +27,6 @@ BEGIN
     END IF;
 END $$;
 
--- Insert default page settings
 INSERT INTO public.service_page_settings (hero_title, hero_subtitle, hero_bg_image, hero_bg_video)
 VALUES (
   'Book Premium Artists For Every Occasion', 
@@ -38,7 +35,6 @@ VALUES (
   'https://assets.mixkit.co/videos/preview/mixkit-band-performing-on-stage-at-a-concert-34371-large.mp4'
 ) ON CONFLICT DO NOTHING;
 
--- Insert default categories
 INSERT INTO public.service_categories (title, slug, "displayOrder") VALUES
 ('Book a Singer for House Parties', 'singer-house-parties', 1),
 ('Book a Live Band for Wedding', 'live-band-wedding', 2),

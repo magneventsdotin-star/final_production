@@ -51,9 +51,10 @@ export default function AdminProfileDashboard() {
   useEffect(() => {
     const fetchAdminProfile = async () => {
       try {
-        const [profileRes, artistsRes] = await Promise.all([
+        const [profileRes, artistsRes, allArtistsRes] = await Promise.all([
           supabase.from('profiles').select('*').eq('id', id).single(),
-          supabase.from('artists').select('*, artist_images(image_url)').eq('created_by', id).order('created_at', { ascending: false })
+          supabase.from('artists').select('*, artist_images(image_url)').eq('created_by', id).order('created_at', { ascending: false }),
+          supabase.from('artists').select('phone_no')
         ]);
 
         if (profileRes.error) throw profileRes.error;
@@ -62,7 +63,22 @@ export default function AdminProfileDashboard() {
         }
 
         const adminData = profileRes.data;
-        const fetchedArtists = artistsRes.data || [];
+        
+        const phoneCounts = new Map<string, number>();
+        if (allArtistsRes.data) {
+          allArtistsRes.data.forEach((a: any) => {
+            if (a.phone_no) {
+               phoneCounts.set(a.phone_no, (phoneCounts.get(a.phone_no) || 0) + 1);
+            }
+          });
+        }
+
+        const fetchedArtists = (artistsRes.data || []).map((a: any) => {
+            if (a.phone_no && (phoneCounts.get(a.phone_no) || 0) > 1) {
+                return { ...a, is_duplicate_pending: true, duplicate_status: 'Live' };
+            }
+            return a;
+        });
         
         let pendingDuplicates: any[] = [];
         if (adminData?.email) {

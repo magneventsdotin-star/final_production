@@ -1,5 +1,5 @@
 const { S3Client, PutBucketCorsCommand } = require('@aws-sdk/client-s3');
-require('dotenv').config(); // Load .env file
+require('dotenv').config(); 
 
 const s3 = new S3Client({
   region: 'auto',
