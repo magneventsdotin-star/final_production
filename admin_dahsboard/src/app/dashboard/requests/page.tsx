@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, Suspense } from 'react';
+import { useSearchParams, useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
@@ -37,6 +38,11 @@ import {
   DialogDescription,
 } from '@/components/ui/dialog';
 
+function ClientRequestsContent() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const replyId = searchParams?.get('reply');
+
 const STATUS_OPTIONS = [
   { value: 'pending', label: 'Pending', color: 'bg-amber-50 text-amber-600' },
   { value: 'cancelled', label: 'Archived', color: 'bg-rose-50 text-rose-600' },
@@ -55,7 +61,17 @@ const getStatusBadge = (status: string) => {
   }
 };
 
+};
+
 export default function ClientRequestsPage() {
+  return (
+    <Suspense fallback={<div className="p-8 flex items-center justify-center"><Loader2 className="animate-spin text-sky-500" /></div>}>
+      <ClientRequestsContent />
+    </Suspense>
+  );
+}
+
+function ClientRequestsContent() {
   const [requests, setRequests] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
@@ -66,6 +82,13 @@ export default function ClientRequestsPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [sortBy, setSortBy] = useState('created_at');
   const [sortOrder, setSortOrder] = useState('desc');
+
+  // Custom Email State
+  const [emailModalOpen, setEmailModalOpen] = useState(false);
+  const [emailSubject, setEmailSubject] = useState('Update on your Magnevents Request');
+  const [emailMessage, setEmailMessage] = useState('');
+  const [sendingEmail, setSendingEmail] = useState(false);
+
   const ITEMS_PER_PAGE = 10;
   const { toast } = useToast();
 
@@ -112,6 +135,21 @@ export default function ClientRequestsPage() {
     return () => clearTimeout(timer);
   }, [fetchRequests]);
 
+  // Auto-open email modal if reply param is present
+  useEffect(() => {
+    if (replyId && requests.length > 0) {
+      const req = requests.find(r => r.id === replyId);
+      if (req) {
+        setSelectedRequest(req);
+        setEmailSubject('Update on your Magnevents Request');
+        setEmailMessage('');
+        setEmailModalOpen(true);
+        // Clean up the URL
+        router.replace('/dashboard/requests', { scroll: false });
+      }
+    }
+  }, [replyId, requests, router]);
+
   const totalPages = Math.max(1, Math.ceil(requests.length / ITEMS_PER_PAGE));
   const paginatedRequests = requests.slice(
     (currentPage - 1) * ITEMS_PER_PAGE,
@@ -141,6 +179,38 @@ export default function ClientRequestsPage() {
       fetchRequests();
     } catch (error: any) {
       toast({ variant: 'destructive', title: 'Error', description: error.message });
+    }
+  };
+
+  const handleSendCustomEmail = async () => {
+    if (!selectedRequest || !emailSubject || !emailMessage) {
+      toast({ variant: 'destructive', title: 'Missing Fields', description: 'Please fill in both subject and message.' });
+      return;
+    }
+    
+    setSendingEmail(true);
+    try {
+      const res = await fetch('/api/send-custom-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          bookingId: selectedRequest.id,
+          to: selectedRequest.client_email,
+          subject: emailSubject,
+          message: emailMessage,
+        })
+      });
+
+      if (!res.ok) throw new Error('Failed to send email');
+
+      toast({ title: 'Email Sent!', description: 'Your custom reply has been dispatched to the client.' });
+      setEmailModalOpen(false);
+      setDetailOpen(false);
+      fetchRequests();
+    } catch (err: any) {
+      toast({ variant: 'destructive', title: 'Send Failed', description: err.message });
+    } finally {
+      setSendingEmail(false);
     }
   };
 
@@ -372,6 +442,17 @@ export default function ClientRequestsPage() {
 
                  <div className="flex flex-wrap gap-2 pt-4 border-t border-slate-100">
                     <button
+                      onClick={() => {
+                        setEmailSubject('Update on your Magnevents Request');
+                        setEmailMessage('');
+                        setDetailOpen(false);
+                        setEmailModalOpen(true);
+                      }}
+                      className="px-6 h-11 rounded-xl bg-indigo-600 text-white font-bold text-xs uppercase tracking-widest hover:bg-indigo-700 transition-all flex items-center gap-2"
+                    >
+                      <Mail size={16} /> <span>Custom Reply</span>
+                    </button>
+                    <button
                       onClick={() => handleUpdateStatus(selectedRequest.id, 'confirmed')}
                       className="px-6 h-11 rounded-xl bg-sky-600 text-white font-bold text-xs uppercase tracking-widest hover:bg-sky-700 transition-all"
                     >
@@ -395,6 +476,43 @@ export default function ClientRequestsPage() {
           )}
         </DialogContent>
       </Dialog>
+
+      <Dialog open={emailModalOpen} onOpenChange={setEmailModalOpen}>
+        <DialogContent className="max-w-2xl rounded-[32px] border-none shadow-2xl p-0 overflow-hidden">
+          {selectedRequest && (
+            <>
+              <div className="bg-indigo-900 p-8 text-white relative">
+                 <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-500/30 rounded-full -translate-y-1/2 translate-x-1/2 blur-2xl" />
+                 <DialogTitle className="text-2xl font-black mb-1">Custom Reply</DialogTitle>
+                 <DialogDescription className="text-indigo-200 font-medium font-display">Send a custom email directly to {selectedRequest.client_name}.</DialogDescription>
+              </div>
+              <div className="p-8 space-y-6">
+                <div>
+                  <label className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-2 block">To</label>
+                  <input type="text" disabled value={selectedRequest.client_email} className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-500 font-medium" />
+                </div>
+                <div>
+                  <label className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-2 block">Subject</label>
+                  <input type="text" value={emailSubject} onChange={e => setEmailSubject(e.target.value)} className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-900 font-medium focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all" />
+                </div>
+                <div>
+                  <label className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-2 block">Message</label>
+                  <textarea rows={6} value={emailMessage} onChange={e => setEmailMessage(e.target.value)} placeholder="Type your custom email here..." className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-900 font-medium focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all resize-none"></textarea>
+                </div>
+                <div className="flex justify-end gap-3 pt-4 border-t border-slate-100">
+                  <button onClick={() => setEmailModalOpen(false)} className="px-6 h-11 rounded-xl bg-white border border-slate-200 text-slate-500 font-bold text-xs uppercase tracking-widest hover:bg-slate-50 transition-all">
+                    Cancel
+                  </button>
+                  <button onClick={handleSendCustomEmail} disabled={sendingEmail} className="px-6 h-11 rounded-xl bg-indigo-600 text-white font-bold text-xs uppercase tracking-widest hover:bg-indigo-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2">
+                    {sendingEmail ? <><Loader2 size={16} className="animate-spin" /> Sending...</> : <><Mail size={16} /> Send Email</>}
+                  </button>
+                </div>
+              </div>
+            </>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
+
