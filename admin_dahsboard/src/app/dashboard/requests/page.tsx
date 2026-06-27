@@ -38,11 +38,6 @@ import {
   DialogDescription,
 } from '@/components/ui/dialog';
 
-function ClientRequestsContent() {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const replyId = searchParams?.get('reply');
-
 const STATUS_OPTIONS = [
   { value: 'pending', label: 'Pending', color: 'bg-amber-50 text-amber-600' },
   { value: 'cancelled', label: 'Archived', color: 'bg-rose-50 text-rose-600' },
@@ -61,8 +56,6 @@ const getStatusBadge = (status: string) => {
   }
 };
 
-};
-
 export default function ClientRequestsPage() {
   return (
     <Suspense fallback={<div className="p-8 flex items-center justify-center"><Loader2 className="animate-spin text-sky-500" /></div>}>
@@ -72,6 +65,9 @@ export default function ClientRequestsPage() {
 }
 
 function ClientRequestsContent() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const replyId = searchParams?.get('reply');
   const [requests, setRequests] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
