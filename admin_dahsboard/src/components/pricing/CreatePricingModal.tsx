@@ -50,8 +50,11 @@ export function CreatePricingModal({ open, onOpenChange, onSuccess, initialData 
     }
   }, [initialData, open]);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSave = async (isLive: boolean) => {
+    if (!formData.name || !formData.price) {
+      toast({ variant: "destructive", title: "Required", description: "Name and Price are required." });
+      return;
+    }
     setLoading(true);
 
     const payload = {
@@ -60,6 +63,7 @@ export function CreatePricingModal({ open, onOpenChange, onSuccess, initialData 
       original_price: formData.originalPrice,
       copy: formData.copy,
       featured: formData.featured,
+      is_live: isLive,
       points: formData.points.split(',').map(p => p.trim()).filter(p => p !== "")
     };
 
@@ -95,7 +99,7 @@ export function CreatePricingModal({ open, onOpenChange, onSuccess, initialData 
           <p className="text-sm font-medium text-slate-400 uppercase tracking-widest mt-1">Configure service packages</p>
         </DialogHeader>
 
-        <form onSubmit={handleSubmit} className="space-y-5 mt-6">
+        <form onSubmit={(e) => { e.preventDefault(); handleSave(true); }} className="space-y-5 mt-6">
           <div className="space-y-4">
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
@@ -171,18 +175,19 @@ export function CreatePricingModal({ open, onOpenChange, onSuccess, initialData 
           <div className="flex gap-3 pt-4">
             <Button
                type="button"
-               variant="ghost"
-               className="flex-1 rounded-2xl h-12 font-bold uppercase tracking-widest text-xs"
-               onClick={() => onOpenChange(false)}
+               variant="outline"
+               disabled={loading}
+               className="flex-1 rounded-2xl h-12 font-bold uppercase tracking-widest text-xs border-slate-200 text-slate-600 hover:bg-slate-50"
+               onClick={() => handleSave(false)}
             >
-              Cancel
+              Save Draft
             </Button>
             <Button
               type="submit"
               disabled={loading}
               className="flex-1 rounded-2xl h-12 bg-slate-900 hover:bg-slate-800 font-bold uppercase tracking-widest text-xs shadow-lg shadow-slate-200"
             >
-              {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : (initialData ? 'Save Changes' : 'Create Plan')}
+              {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Publish Live'}
             </Button>
           </div>
         </form>

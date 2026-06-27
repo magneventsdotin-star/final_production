@@ -130,13 +130,22 @@ export default function PricingManagement() {
                       </div>
                     </TableCell>
                     <TableCell className="text-center">
-                      {plan.featured ? (
-                         <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold bg-amber-50 text-amber-600 border border-amber-200 shadow-sm">
-                           Featured
-                         </span>
-                      ) : (
-                        <span className="text-[10px] font-bold text-slate-300">Standard</span>
-                      )}
+                      <div className="flex flex-col items-center gap-1">
+                        {plan.is_live ? (
+                          <span className="inline-flex items-center px-2 py-0.5 rounded text-[9px] font-bold bg-emerald-50 text-emerald-600 border border-emerald-200">
+                            Live
+                          </span>
+                        ) : (
+                          <span className="inline-flex items-center px-2 py-0.5 rounded text-[9px] font-bold bg-slate-100 text-slate-500 border border-slate-200">
+                            Draft
+                          </span>
+                        )}
+                        {plan.featured && (
+                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[9px] font-bold bg-amber-50 text-amber-600 border border-amber-200">
+                            Featured
+                          </span>
+                        )}
+                      </div>
                     </TableCell>
                     <TableCell className="pr-8">
                       <div className="flex items-center justify-center gap-2">
