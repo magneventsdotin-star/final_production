@@ -186,7 +186,7 @@ ${artistDetailsString}${planDetailsString}${serviceDetailsString}
     // 2. Prepare HTML Email body with action buttons if bookingId exists
     let htmlBody = `<div style="font-family: sans-serif; white-space: pre-wrap;">${emailBody}</div>`;
     if (bookingId) {
-      const adminUrl = process.env.NEXT_PUBLIC_ADMIN_URL || 'http://localhost:9002';
+      const adminUrl = process.env.NEXT_PUBLIC_ADMIN_URL || 'https://admin.magnevents.in';
       const btnBase = "display: inline-block; color: #ffffff; padding: 10px 16px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 13px; margin-right: 8px; margin-bottom: 8px;";
       
       const confirmLink = `${adminUrl}/dashboard/requests?reply=${bookingId}&action=confirm`;

@@ -8,7 +8,7 @@ export async function POST(req: Request) {
   try {
     const { id, type, title, description, submittedBy, previewLink } = await req.json();
 
-    const origin = req.headers.get('origin') || process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:9002';
+    const origin = req.headers.get('origin') || process.env.NEXT_PUBLIC_APP_URL || 'https://admin.magnevents.in';
     const approveLink = `${origin}/api/action-request?id=${id}&type=${type}&action=approve`;
     const rejectLink = `${origin}/api/action-request?id=${id}&type=${type}&action=reject`;
 
