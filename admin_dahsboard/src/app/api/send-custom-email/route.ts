@@ -165,14 +165,15 @@ export async function POST(req: Request) {
       else if (newStatus === 'cancelled') logType = 'reject';
       else if (newStatus === 'confirmed') logType = 'approve';
 
-      await serverSupabase.from('emails').insert([{
-        booking_id: bookingId,
-        recipient_email: to,
-        subject: subject,
-        body: htmlBody,
-        email_type: logType,
-        status: emailStatus
-      }]);
+      await serverSupabase.from('emails')
+        .update({
+          subject: subject,
+          body: htmlBody,
+          email_type: logType,
+          status: emailStatus,
+          sent_at: new Date().toISOString()
+        })
+        .eq('booking_id', bookingId);
     } catch (dbErr) {
       console.error("Failed to log email to database:", dbErr);
     }

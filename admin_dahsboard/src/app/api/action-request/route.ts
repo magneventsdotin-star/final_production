@@ -212,14 +212,15 @@ export async function GET(req: Request) {
             
             // Log email to database
             try {
-              await supabase.from('emails').insert([{
-                booking_id: booking.id,
-                recipient_email: booking.client_email,
-                subject: subject,
-                body: htmlBody,
-                email_type: action,
-                status: emailStatus
-              }]);
+              await supabase.from('emails')
+                .update({
+                  subject: subject,
+                  body: htmlBody,
+                  email_type: action,
+                  status: emailStatus,
+                  sent_at: new Date().toISOString()
+                })
+                .eq('booking_id', booking.id);
             } catch (dbErr) {
               console.error("Failed to log email to database:", dbErr);
             }
