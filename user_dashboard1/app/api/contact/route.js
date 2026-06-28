@@ -168,38 +168,7 @@ export async function POST(req) {
 
       contentSections += buildSection('📝 Additional Message', `<tr><td style="padding: 16px; background-color: #f8fafc; border-radius: 8px; font-style: italic; color: #475569; border: 1px solid #e2e8f0;">"${data.message || 'No additional message provided.'}"</td></tr>`);
 
-      const renderArtistDetails = (a) => {
-        const adminUrl = process.env.NEXT_PUBLIC_ADMIN_URL || 'https://admin.magnevents.in';
-        let profileLink = '';
-        if (a.id) {
-          profileLink = `${adminUrl}/dashboard/artists?id=${a.id}`;
-        }
-        
-        let details = '';
-        const keys = Object.keys(a);
-        for (const key of keys) {
-            if (['id', 'created_at', 'updated_at', 'artist_images', 'images', 'bio'].includes(key)) continue;
-            if (a[key] === null || a[key] === undefined || a[key] === '') continue;
-            
-            const label = key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
-            let valStr = String(a[key]);
-            if (valStr.length > 200) valStr = valStr.substring(0, 200) + '...';
-            details += row(label, valStr);
-        }
-        
-        if (profileLink) {
-           details += `<tr><td colspan="2" style="padding: 16px 0 10px 0; text-align: center;"><a href="${profileLink}" target="_blank" style="display: inline-block; background-color: #0284c7; color: #ffffff; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 14px; box-shadow: 0 4px 6px -1px rgba(2, 132, 199, 0.2);">Tap to Open Full Artist Profile</a></td></tr>`;
-        }
-        return buildSection('✨ Requested Artist Details', details);
-      };
-
-      if (dbArtistInfo) {
-        contentSections += renderArtistDetails(dbArtistInfo);
-      } else if (data.selectedArtist && typeof data.selectedArtist === 'object') {
-        contentSections += renderArtistDetails(data.selectedArtist);
-      } else if (artistName) {
-        contentSections += buildSection('✨ Requested Artist Details', row('Artist Name', artistName));
-      }
+      // Render Artist Details logic replaced by Premium Artist Card
 
       if (data.selectedPlan && typeof data.selectedPlan === 'object') {
         const p = data.selectedPlan;
@@ -225,9 +194,20 @@ export async function POST(req) {
     
     let coverPhotoHtml = '';
     if (dbArtistInfo && dbArtistInfo.cover_image_url) {
+      const adminUrl = process.env.NEXT_PUBLIC_ADMIN_URL || 'https://admin.magnevents.in';
+      const profileLink = dbArtistInfo.id ? `${adminUrl}/dashboard/artists?id=${dbArtistInfo.id}` : '#';
+      
       coverPhotoHtml = `
-        <div style="margin-bottom: 32px; border-radius: 16px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.3);">
-          <img src="${dbArtistInfo.cover_image_url}" alt="${dbArtistInfo.name || dbArtistInfo.alias}" style="width: 100%; height: auto; display: block;" />
+        <div style="margin-bottom: 32px; border-radius: 16px; overflow: hidden; background-color: #1e293b; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.3);">
+          <img src="${dbArtistInfo.cover_image_url}" alt="${dbArtistInfo.name || dbArtistInfo.alias}" style="width: 100%; max-height: 250px; object-fit: cover; display: block;" />
+          <div style="padding: 24px 20px; text-align: center;">
+            <h3 style="margin: 0 0 12px 0; color: #ffffff; font-size: 24px; font-weight: 800; letter-spacing: 0.5px;">${dbArtistInfo.name || dbArtistInfo.alias}</h3>
+            <div style="margin: 0 0 20px 0;">
+              <span style="display: inline-block; background: rgba(251, 191, 36, 0.1); color: #fbbf24; padding: 6px 12px; border-radius: 20px; font-weight: 700; font-size: 12px; margin: 4px;">${dbArtistInfo.category || 'Artist'}</span>
+              ${dbArtistInfo.city ? `<span style="display: inline-block; background: rgba(255, 255, 255, 0.1); color: #cbd5e1; padding: 6px 12px; border-radius: 20px; font-weight: 700; font-size: 12px; margin: 4px;">📍 ${dbArtistInfo.city}</span>` : ''}
+            </div>
+            <a href="${profileLink}" target="_blank" style="display: inline-block; background-color: #0284c7; color: #ffffff; padding: 10px 24px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 13px; box-shadow: 0 4px 6px -1px rgba(2, 132, 199, 0.2);">Open Full Artist Profile</a>
+          </div>
         </div>
       `;
     }
