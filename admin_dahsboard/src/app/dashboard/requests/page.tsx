@@ -86,6 +86,7 @@ function ClientRequestsContent() {
   const [emailMessage, setEmailMessage] = useState('');
   const [emailActionStatus, setEmailActionStatus] = useState('pending');
   const [sendingEmail, setSendingEmail] = useState(false);
+  const [confirmModalOpen, setConfirmModalOpen] = useState(false);
 
   const ITEMS_PER_PAGE = 10;
   const { toast } = useToast();
@@ -147,24 +148,12 @@ function ClientRequestsContent() {
           return;
         }
 
-        if (actionType === 'approve') {
-          // Button 2: Just confirm booking directly without email modal
-          supabase.from('bookings').update({ status: 'confirmed' }).eq('id', req.id).then(({error}) => {
-             if (!error) {
-               toast({ title: '✅ Confirmed!', description: 'Request confirmed instantly from email.' });
-               fetchRequests(false);
-             }
-          });
-          router.replace('/dashboard/requests', { scroll: false });
-          return;
-        }
-
         let subject = 'Update on your Magnevents Request';
         let msg = '';
         let newActionStatus = 'pending';
         const artistName = req.artists?.name ? ` for ${req.artists.name}` : '';
 
-        if (actionType === 'confirm') {
+        if (actionType === 'confirm' || actionType === 'approve') {
           subject = 'Your Magnevents Booking is Confirmed!';
           msg = `Great news! Your booking request${artistName} has been approved and confirmed by our team. We will reach out shortly with the final contract and next steps.`;
           newActionStatus = 'confirmed';
@@ -182,12 +171,21 @@ function ClientRequestsContent() {
           subject = 'Update regarding your Magnevents Request';
           msg = `Thank you for reaching out to Magnevents. Unfortunately, we are unable to fulfill your request at this time. We apologize for the inconvenience and wish you the best for your event.`;
           newActionStatus = 'cancelled';
+        } else if (actionType === 'custom') {
+          subject = '';
+          msg = '';
         }
 
         setEmailSubject(subject);
         setEmailMessage(msg);
         setEmailActionStatus(newActionStatus);
-        setEmailModalOpen(true);
+        
+        if (['approve', 'unavailable', 'reject'].includes(actionType)) {
+          setConfirmModalOpen(true);
+        } else {
+          setEmailModalOpen(true);
+        }
+
         // Clean up the URL
         router.replace('/dashboard/requests', { scroll: false });
       }
@@ -226,13 +224,19 @@ function ClientRequestsContent() {
     }
   };
 
-  const handleSendCustomEmail = async () => {
+  const handleInitiateSend = () => {
     if (!selectedRequest || !emailSubject || !emailMessage) {
       toast({ variant: 'destructive', title: 'Missing Fields', description: 'Please fill in both subject and message.' });
       return;
     }
+    setConfirmModalOpen(true);
+  };
+
+  const handleSendCustomEmail = async () => {
+    if (!selectedRequest || !emailSubject || !emailMessage) return;
     
     setSendingEmail(true);
+    setConfirmModalOpen(false);
     try {
       const res = await fetch('/api/send-custom-email', {
         method: 'POST',
@@ -551,13 +555,35 @@ function ClientRequestsContent() {
                   <button onClick={() => setEmailModalOpen(false)} className="px-6 h-11 rounded-xl bg-white border border-slate-200 text-slate-500 font-bold text-xs uppercase tracking-widest hover:bg-slate-50 transition-all">
                     Cancel
                   </button>
-                  <button onClick={handleSendCustomEmail} disabled={sendingEmail} className="px-6 h-11 rounded-xl bg-indigo-600 text-white font-bold text-xs uppercase tracking-widest hover:bg-indigo-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2">
+                  <button onClick={handleInitiateSend} disabled={sendingEmail} className="px-6 h-11 rounded-xl bg-indigo-600 text-white font-bold text-xs uppercase tracking-widest hover:bg-indigo-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2">
                     {sendingEmail ? <><Loader2 size={16} className="animate-spin" /> Sending...</> : <><Mail size={16} /> Send Email</>}
                   </button>
                 </div>
               </div>
             </>
           )}
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={confirmModalOpen} onOpenChange={setConfirmModalOpen}>
+        <DialogContent className="max-w-md rounded-[32px] border-none shadow-2xl p-0 overflow-hidden">
+          <div className="bg-slate-900 p-8 text-white relative text-center">
+            <div className="mx-auto w-16 h-16 bg-amber-500/20 rounded-full flex items-center justify-center mb-4">
+              <AlertCircle size={32} className="text-amber-500" />
+            </div>
+            <DialogTitle className="text-2xl font-black mb-2">Confirm Action</DialogTitle>
+            <DialogDescription className="text-slate-300 font-medium">
+              Are you sure you want to send this email to {selectedRequest?.client_email}?
+            </DialogDescription>
+          </div>
+          <div className="p-8 bg-slate-50 flex justify-center gap-4">
+            <button onClick={() => setConfirmModalOpen(false)} className="px-6 h-11 rounded-xl bg-white border border-slate-200 text-slate-500 font-bold text-xs uppercase tracking-widest hover:bg-slate-100 transition-all">
+              Cancel
+            </button>
+            <button onClick={handleSendCustomEmail} disabled={sendingEmail} className="px-6 h-11 rounded-xl bg-indigo-600 text-white font-bold text-xs uppercase tracking-widest hover:bg-indigo-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2">
+              {sendingEmail ? <><Loader2 size={16} className="animate-spin" /> Sending...</> : <><Mail size={16} /> Yes, Send Email</>}
+            </button>
+          </div>
         </DialogContent>
       </Dialog>
     </div>
