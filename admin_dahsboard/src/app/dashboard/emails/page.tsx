@@ -26,6 +26,7 @@ function EmailsContent() {
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [sortOrder, setSortOrder] = useState<'desc' | 'asc'>('desc');
+  const [filterType, setFilterType] = useState('all');
   const [selectedEmail, setSelectedEmail] = useState<any | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
@@ -38,6 +39,10 @@ function EmailsContent() {
         .from('emails')
         .select('*, bookings(client_name)')
         .order('sent_at', { ascending: sortOrder === 'asc' });
+
+      if (filterType !== 'all') {
+        query = query.eq('email_type', filterType);
+      }
 
       if (searchQuery) {
         query = query.or(`recipient_email.ilike.%${searchQuery}%,subject.ilike.%${searchQuery}%,email_type.ilike.%${searchQuery}%`);
@@ -56,7 +61,7 @@ function EmailsContent() {
     } finally {
       setLoading(false);
     }
-  }, [searchQuery, sortOrder, toast]);
+  }, [searchQuery, sortOrder, filterType, toast]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -112,6 +117,23 @@ function EmailsContent() {
           <p className="text-sm font-medium text-slate-500">View all automated and custom emails sent by the system.</p>
         </div>
         <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 px-3 py-1.5 bg-white border border-slate-200 rounded-xl shadow-sm">
+            <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Type:</span>
+            <select
+              value={filterType}
+              onChange={(e) => setFilterType(e.target.value)}
+              className="text-xs font-bold text-slate-700 bg-transparent border-none p-0 focus:ring-0 cursor-pointer outline-none"
+            >
+              <option value="all">All Types</option>
+              <option value="client_inquiry">Client Inquiry</option>
+              <option value="confirm">Confirmed</option>
+              <option value="approve">Approved</option>
+              <option value="reject">Rejected</option>
+              <option value="unavailable">Unavailable</option>
+              <option value="more_info">More Info</option>
+              <option value="custom">Custom</option>
+            </select>
+          </div>
           <div className="flex items-center gap-2 px-3 py-1.5 bg-white border border-slate-200 rounded-xl shadow-sm">
             <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Sort:</span>
             <select
