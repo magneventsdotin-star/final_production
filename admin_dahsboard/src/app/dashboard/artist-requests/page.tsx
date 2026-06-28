@@ -56,15 +56,15 @@ const getStatusBadge = (status: string) => {
   }
 };
 
-export default function ClientRequestsPage() {
+export default function ArtistRequestsPage() {
   return (
     <Suspense fallback={<div className="p-8 flex items-center justify-center"><Loader2 className="animate-spin text-sky-500" /></div>}>
-      <ClientRequestsContent />
+      <ArtistRequestsContent />
     </Suspense>
   );
 }
 
-function ClientRequestsContent() {
+function ArtistRequestsContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const replyId = searchParams?.get('reply');
@@ -99,7 +99,7 @@ function ClientRequestsContent() {
         .from('bookings') as any)
         .select('*, artists(id, name, alias, category, city, price_min, price_max, is_trending, is_artist_of_month, artist_images!fk_artist_id(image_url))')
         .eq('booking_source', 'client')
-        .not('event_type', 'eq', 'Artist Registration')
+        .eq('event_type', 'Artist Registration')
         .not('status', 'in', '("confirmed","completed")');
 
       if (searchQuery) {
@@ -283,8 +283,8 @@ function ClientRequestsContent() {
     <div className="space-y-6 pb-8">
       <div className="relative -mx-4 sm:-mx-6 lg:-mx-8 xl:-mx-10 -mt-4 sm:-mt-6 lg:-mt-8 xl:-mt-10 px-4 sm:px-6 lg:px-8 xl:px-10 pt-8 pb-8 bg-gradient-to-b from-slate-50 to-transparent border-b border-white mb-2 text-center sm:text-left">
           <div className="mb-6">
-            <h1 className="text-3xl font-black text-slate-900 tracking-tight mb-2">Client Inquiries</h1>
-            <p className="text-sm font-medium text-slate-500">Incoming requests from the client website. Acknowledge to move them to Bookings.</p>
+            <h1 className="text-3xl font-black text-slate-900 tracking-tight mb-2">Artist Requests</h1>
+            <p className="text-sm font-medium text-slate-500">Manage incoming artist registrations and onboarding requests.</p>
           </div>
 
         <div className="flex flex-col space-y-3">
@@ -383,49 +383,22 @@ function ClientRequestsContent() {
                     </div>
                   </div>
 
-                  <div className="flex flex-col sm:flex-row sm:items-center gap-6 sm:gap-10 sm:px-12 sm:border-x sm:border-slate-100">
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-6 sm:gap-10 sm:px-12 sm:border-x sm:border-slate-100 flex-1">
                     <div className="w-full sm:min-w-[220px]">
-                       <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2">Artist</p>
-                       <p className="text-[16px] font-black text-slate-900 truncate mb-1.5 tracking-tight">{request.artists?.name || 'Any Artist'}</p>
+                       <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2">Registration Info</p>
+                       <p className="text-[16px] font-black text-slate-900 truncate mb-1.5 tracking-tight">
+                         {request.notes ? request.notes.split('\n').find((l: string) => l.startsWith('Category:'))?.split(': ')[1] || 'General' : 'General'}
+                       </p>
                        <div className="flex items-center gap-2">
                           <span className="px-2.5 py-1 rounded-full bg-indigo-50 text-indigo-600 text-[10px] font-black uppercase tracking-wider">
-                            {request.artists?.category || 'General'}
+                            New Talent
                           </span>
-                          <div className="flex items-center gap-1.5">
-                            {request.artists?.is_artist_of_month && (
-                              <div className="w-6 h-6 rounded-full bg-rose-50 text-rose-600 border border-rose-100 flex items-center justify-center shadow-sm" title="Artist of the Month">
-                                <Music size={12} />
-                              </div>
-                            )}
-                            {request.artists?.is_trending ? (
-                              <div className="w-6 h-6 rounded-full bg-amber-50 text-amber-600 border border-amber-100 flex items-center justify-center shadow-sm" title="Popular Artist">
-                                <Star size={12} fill="currentColor" />
-                              </div>
-                            ) : (
-                              <div className="w-6 h-6 rounded-full bg-slate-50 text-slate-500 border border-slate-100 flex items-center justify-center shadow-sm" title="Standard Artist">
-                                <User size={12} />
-                              </div>
-                            )}
-                          </div>
                        </div>
                     </div>
                     <div className="w-full sm:min-w-[140px]">
-                       <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2">Budget Evaluation</p>
+                       <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2">Location</p>
                        <div className="flex flex-wrap sm:flex-nowrap items-center gap-3">
-                         <span className="text-[16px] font-black text-slate-900 tracking-tight">₹{request.budget?.toLocaleString()}</span>
-                         {request.artists && (
-                            (() => {
-                              const inRange = request.budget >= (request.artists.price_min || 0) && request.budget <= (request.artists.price_max || Infinity);
-                              return (
-                                <span className={cn(
-                                   "px-2 py-0.5 rounded-md text-[9px] font-black uppercase tracking-wider",
-                                   inRange ? "bg-emerald-50 text-emerald-600 border border-emerald-100" : "bg-rose-50 text-rose-600 border border-rose-100"
-                                )}>
-                                  {inRange ? "Fit" : "Low"}
-                                </span>
-                              );
-                            })()
-                         )}
+                         <span className="text-[14px] font-bold text-slate-700 flex items-center gap-2"><MapPin size={14} /> {request.venue || 'TBD'}</span>
                        </div>
                     </div>
                   </div>
@@ -448,73 +421,93 @@ function ClientRequestsContent() {
             <>
               <div className="bg-slate-900 p-8 text-white relative">
                  <div className="absolute top-0 right-0 w-32 h-32 bg-sky-500/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-2xl" />
-                 <DialogTitle className="text-2xl font-black mb-1">Inquiry Details</DialogTitle>
-                 <DialogDescription className="text-slate-400 font-medium font-display">Manage the client's direct booking request.</DialogDescription>
+                 <DialogTitle className="text-2xl font-black mb-1">Artist Application Details</DialogTitle>
+                 <DialogDescription className="text-slate-400 font-medium font-display">Review information submitted by the artist during registration.</DialogDescription>
               </div>
 
-              <div className="p-8 space-y-6">
+              <div className="p-8 space-y-6 max-h-[70vh] overflow-y-auto custom-scrollbar">
                  <div className="grid grid-cols-2 gap-6">
-                    <div className="p-4 rounded-2xl bg-slate-50 border border-slate-100">
-                       <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Client Contact</p>
-                       <p className="text-sm font-bold text-slate-900 mb-1">{selectedRequest.client_name}</p>
-                       <p className="text-xs text-slate-500 flex items-center gap-2 mb-1"><Mail size={12} /> {selectedRequest.client_email}</p>
-                       <p className="text-xs text-slate-500 flex items-center gap-2"><Phone size={12} /> {selectedRequest.client_phone || 'N/A'}</p>
+                    <div className="col-span-2 sm:col-span-1 p-5 rounded-2xl bg-white border border-slate-200 shadow-sm">
+                       <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4 flex items-center gap-2"><User size={14} /> Personal Information</p>
+                       <div className="flex items-center gap-4 mb-4">
+                         <div className="w-16 h-16 rounded-full bg-slate-100 flex items-center justify-center text-slate-400">
+                           <User size={24} />
+                         </div>
+                         <div>
+                           <p className="text-lg font-black text-slate-900">{selectedRequest.client_name}</p>
+                           <p className="text-xs font-bold text-sky-600 uppercase tracking-wider">
+                             {selectedRequest.notes ? selectedRequest.notes.split('\n').find((l: string) => l.startsWith('Category:'))?.split(': ')[1] || 'Artist' : 'Artist'}
+                           </p>
+                         </div>
+                       </div>
+                       <div className="space-y-2">
+                         <p className="text-xs text-slate-600 flex items-center gap-2"><Mail size={14} className="text-slate-400" /> {selectedRequest.client_email}</p>
+                         <p className="text-xs text-slate-600 flex items-center gap-2"><Phone size={14} className="text-slate-400" /> {selectedRequest.client_phone || 'N/A'}</p>
+                         <p className="text-xs text-slate-600 flex items-center gap-2"><MapPin size={14} className="text-slate-400" /> {selectedRequest.venue || 'N/A'}</p>
+                       </div>
                     </div>
-                    <div className="p-4 rounded-2xl bg-slate-50 border border-slate-100">
-                       <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Artist Selection</p>
-                       <p className="text-sm font-bold text-slate-900 mb-1">{selectedRequest.artists?.name || 'Any Available'}</p>
-                       <p className="text-xs text-sky-600 font-bold uppercase tracking-wider">{selectedRequest.artists?.category || 'General'}</p>
+                    
+                    <div className="col-span-2 sm:col-span-1 p-5 rounded-2xl bg-white border border-slate-200 shadow-sm">
+                       <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4 flex items-center gap-2"><Star size={14} /> Professional Information</p>
+                       <div className="space-y-4">
+                         <div>
+                           <p className="text-[10px] font-bold text-slate-400 uppercase mb-1">Portfolio / Website</p>
+                           <a href={selectedRequest.notes ? selectedRequest.notes.split('\n').find((l: string) => l.startsWith('Portfolio:'))?.split(': ')[1] || '#' : '#'} target="_blank" className="text-sm font-bold text-sky-600 hover:underline truncate block">
+                             {selectedRequest.notes ? selectedRequest.notes.split('\n').find((l: string) => l.startsWith('Portfolio:'))?.split(': ')[1] || 'Not Provided' : 'Not Provided'}
+                           </a>
+                         </div>
+                         <div>
+                           <p className="text-[10px] font-bold text-slate-400 uppercase mb-1">Bio / Experience</p>
+                           <p className="text-xs text-slate-600 line-clamp-3">
+                             {selectedRequest.notes ? selectedRequest.notes.split('\n').find((l: string) => l.startsWith('Bio:'))?.split(': ')[1] || 'No bio provided' : 'No bio provided'}
+                           </p>
+                         </div>
+                       </div>
                     </div>
                  </div>
 
-                 <div className="p-5 rounded-2xl border border-slate-100 bg-slate-50/50">
-                    <h3 className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4 flex items-center gap-2"><Calendar size={14} /> Event Info</h3>
-                    <div className="grid grid-cols-2 gap-y-4">
-                       <div>
-                          <p className="text-[10px] font-bold text-slate-400 uppercase mb-1">Type</p>
-                          <p className="text-sm font-bold text-slate-700">{selectedRequest.event_type || 'N/A'}</p>
-                       </div>
-                       <div>
-                          <p className="text-[10px] font-bold text-slate-400 uppercase mb-1">Date & Time</p>
-                          <p className="text-sm font-bold text-slate-700">{selectedRequest.event_date} {selectedRequest.event_time}</p>
-                       </div>
-                       <div className="col-span-2">
-                          <p className="text-[10px] font-bold text-slate-400 uppercase mb-1">Venue</p>
-                          <p className="text-xs font-medium text-slate-600 flex items-center gap-2"><MapPin size={12} /> {selectedRequest.venue || 'TBD'}</p>
-                       </div>
+                 <div className="grid grid-cols-2 gap-6">
+                    <div className="p-5 rounded-2xl bg-slate-50 border border-slate-100 border-dashed">
+                      <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Uploaded Documents</p>
+                      <p className="text-xs text-slate-500 italic">No documents uploaded with this request.</p>
+                    </div>
+                    <div className="p-5 rounded-2xl bg-slate-50 border border-slate-100 border-dashed">
+                      <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Pricing & Availability</p>
+                      <p className="text-xs text-slate-500 italic">Pricing details not provided during initial registration.</p>
                     </div>
                  </div>
 
-                 {selectedRequest.notes && (
-                    <div className="p-4 rounded-2xl bg-amber-50/50 border border-amber-100">
-                       <p className="text-[10px] font-black text-amber-600 uppercase mb-2">Client Message</p>
-                       <p className="text-[13px] text-slate-700 font-medium leading-relaxed italic">"{selectedRequest.notes}"</p>
-                    </div>
-                 )}
+                 <div className="p-5 rounded-2xl bg-amber-50/50 border border-amber-100">
+                    <p className="text-[10px] font-black text-amber-600 uppercase mb-2">Verification Section</p>
+                    <textarea 
+                      placeholder="Add internal notes about this artist verification..."
+                      className="w-full bg-white border border-amber-200 rounded-xl p-3 text-sm text-slate-700 resize-none h-24 focus:outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400"
+                    ></textarea>
+                 </div>
 
-                 <div className="flex flex-wrap gap-2 pt-4 border-t border-slate-100">
+                 <div className="flex flex-wrap justify-end gap-2 pt-4 border-t border-slate-100">
                     <button
                       onClick={() => {
-                        setEmailSubject('Update on your Magnevents Request');
-                        setEmailMessage('');
+                        setEmailSubject('Magnevents - Action Required for your Request');
+                        setEmailMessage('Thank you for reaching out to Magnevents! We are reviewing your registration, but we need a few more details to proceed.');
                         setDetailOpen(false);
                         setEmailModalOpen(true);
                       }}
                       className="px-6 h-11 rounded-xl bg-indigo-600 text-white font-bold text-xs uppercase tracking-widest hover:bg-indigo-700 transition-all flex items-center gap-2"
                     >
-                      <Mail size={16} /> <span>Custom Reply</span>
+                      <Mail size={16} /> <span>Request More Info</span>
                     </button>
                     <button
                       onClick={() => handleUpdateStatus(selectedRequest.id, 'confirmed')}
-                      className="px-6 h-11 rounded-xl bg-sky-600 text-white font-bold text-xs uppercase tracking-widest hover:bg-sky-700 transition-all"
+                      className="px-6 h-11 rounded-xl bg-emerald-600 text-white font-bold text-xs uppercase tracking-widest hover:bg-emerald-700 transition-all"
                     >
-                      ✅ Confirm &amp; Move to Bookings
+                      ✅ Approve Artist
                     </button>
                     <button
                       onClick={() => handleUpdateStatus(selectedRequest.id, 'cancelled')}
-                      className="px-6 h-11 rounded-xl bg-white border border-slate-200 text-slate-400 font-bold text-xs uppercase tracking-widest hover:text-rose-500 hover:border-rose-200 transition-all"
+                      className="px-6 h-11 rounded-xl bg-white border border-rose-200 text-rose-500 font-bold text-xs uppercase tracking-widest hover:bg-rose-50 transition-all"
                     >
-                      Archive / Cancel
+                      ❌ Reject
                     </button>
                     <button
                       onClick={() => handleDelete(selectedRequest.id)}

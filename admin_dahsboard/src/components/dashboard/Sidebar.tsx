@@ -43,6 +43,7 @@ export const navItems = [
     subItems: [
       { name: 'Client Requests', href: '/dashboard/requests' },
       { name: 'Admin Approvals', href: '/dashboard/team-requests' },
+      { name: 'Artist Requests', href: '/dashboard/artist-requests' },
     ]
   },
   { name: 'Bookings', href: '/dashboard/bookings', icon: CalendarCheck },
