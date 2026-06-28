@@ -340,6 +340,8 @@ export async function GET(req: Request) {
               font-size: 14px;
               transition: all 0.2s;
               border: 1px solid rgba(255, 255, 255, 0.1);
+              cursor: pointer;
+              font-family: inherit;
             }
             .button:hover {
               background-color: rgba(255, 255, 255, 0.1);
@@ -365,8 +367,16 @@ export async function GET(req: Request) {
             </div>
             <h1>${text}</h1>
             <p>Your action has been recorded in the database and confirmation emails have been dispatched.</p>
-            <a href="javascript:window.close();" class="button">Close Window</a>
+            <button onclick="closeOrRedirect()" class="button">Return to Dashboard</button>
           </div>
+          <script>
+            function closeOrRedirect() {
+              window.close();
+              setTimeout(function() {
+                window.location.href = '/dashboard';
+              }, 100);
+            }
+          </script>
         </body>
       </html>
     `, {
