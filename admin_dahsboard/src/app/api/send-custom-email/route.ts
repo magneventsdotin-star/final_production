@@ -21,7 +21,16 @@ export async function POST(req: Request) {
       .from('bookings')
       .select('*, artists(name)')
       .eq('id', bookingId)
-      .single();
+      .maybeSingle();
+
+    if (fetchErr) {
+      console.error("Fetch booking error:", fetchErr);
+      return new NextResponse('Database error', { status: 500 });
+    }
+    
+    if (!booking) {
+      return new NextResponse('Booking not found', { status: 404 });
+    }
 
     // Update booking status
     const { error: err } = await serverSupabase

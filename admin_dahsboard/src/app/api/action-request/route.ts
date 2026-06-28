@@ -43,10 +43,19 @@ export async function GET(req: Request) {
         .from('bookings')
         .select('*, artists(name)')
         .eq('id', id)
-        .single();
+        .maybeSingle();
       
       if (fetchErr) {
         error = fetchErr;
+      } else if (!booking) {
+        return new NextResponse(`
+          <html>
+            <body style="background-color: #0f172a; color: white; font-family: sans-serif; text-align: center; padding-top: 50px;">
+              <h2>Booking Not Found</h2>
+              <p>This request no longer exists in the system. It may have been deleted.</p>
+            </body>
+          </html>
+        `, { status: 404, headers: { 'Content-Type': 'text/html' } });
       } else {
         let newStatus = 'cancelled';
         if (action === 'confirm' || action === 'approve') newStatus = 'confirmed';
