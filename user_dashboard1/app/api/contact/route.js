@@ -200,11 +200,13 @@ export async function POST(req) {
         let details = '';
         const keys = Object.keys(a);
         for (const key of keys) {
-            if (['id', 'created_at', 'updated_at', 'artist_images', 'images'].includes(key)) continue;
+            if (['id', 'created_at', 'updated_at', 'artist_images', 'images', 'bio'].includes(key)) continue;
             if (a[key] === null || a[key] === undefined || a[key] === '') continue;
             
             const label = key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
-            details += row(label, String(a[key]));
+            let valStr = String(a[key]);
+            if (valStr.length > 200) valStr = valStr.substring(0, 200) + '...';
+            details += row(label, valStr);
         }
         
         if (profileLink) {
@@ -250,7 +252,7 @@ export async function POST(req) {
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
       </head>
       <body style="background-color: #f1f5f9; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 20px 10px; -webkit-font-smoothing: antialiased;">
-        <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05), 0 8px 10px -6px rgba(0,0,0,0.01); border: 1px solid #e2e8f0;">
+        <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 16px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05), 0 8px 10px -6px rgba(0,0,0,0.01); border: 1px solid #e2e8f0;">
           
           <div style="background-color: #020617; padding: 40px 20px; text-align: center;">
             <h1 style="color: #ffffff; font-size: 26px; font-weight: 900; margin: 0; letter-spacing: -0.5px;">MAGNEVENTS</h1>
