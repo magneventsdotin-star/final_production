@@ -48,9 +48,11 @@ export async function POST(req) {
       `;
     };
 
-    let bookingId = null;
-    let dbArtistInfo = null;
-    let dbUserProfile = null;
+    // Start background processing so we can return immediately
+    const processRequestInBackground = async () => {
+      let bookingId = null;
+      let dbArtistInfo = null;
+      let dbUserProfile = null;
     // 1. Insert ALL requests into Supabase to track them and enable buttons
     try {
       const { createClient } = require('@supabase/supabase-js');
@@ -298,6 +300,10 @@ export async function POST(req) {
     } catch (err) {
       console.error("Email sending error:", err);
     }
+    }; // End of processRequestInBackground
+
+    // Execute background process without awaiting it
+    processRequestInBackground().catch(console.error);
 
     return new Response(JSON.stringify({ success: true, message: 'Request processed successfully!' }), {
       status: 200,
