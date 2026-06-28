@@ -221,8 +221,8 @@ export async function POST(req) {
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
       </head>
-      <body style="background-color: #020617; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 40px 10px; -webkit-font-smoothing: antialiased;">
-        <div style="max-width: 600px; margin: 0 auto; background-color: #0f172a; border-radius: 24px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.1);">
+      <body style="background-color: #020617; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 20px 10px; -webkit-font-smoothing: antialiased;">
+        <div style="width: 100%; max-width: 600px; margin: 0 auto; background-color: #0f172a; border-radius: 20px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.1);">
           
           <div style="background: url('https://www.transparenttextures.com/patterns/stardust.png'), linear-gradient(135deg, #020617 0%, #0f172a 100%); padding: 50px 20px; text-align: center; border-top-left-radius: 24px; border-top-right-radius: 24px; border-bottom: 1px solid rgba(255,255,255,0.05);">
             <h1 style="color: #ffffff; font-size: 32px; font-weight: 900; margin: 0; letter-spacing: 2px;">MAGNEVENTS</h1>
@@ -249,36 +249,36 @@ export async function POST(req) {
 
       let buttonsHtml = '';
       
-      const premiumBtnBase = "display: block; width: 100%; box-sizing: border-box; color: #ffffff; padding: 16px 16px; border-radius: 12px; text-decoration: none; font-weight: 600; font-size: 14px; margin-bottom: 12px; text-align: center; letter-spacing: 0.5px; border: 1px solid rgba(255,255,255,0.1);";
+      const premiumBtnBase = "display: block; width: 100%; box-sizing: border-box; color: #ffffff; padding: 14px 16px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 15px; margin-bottom: 12px; text-align: center; border: 1px solid rgba(255,255,255,0.1);";
 
       if (isRegister) {
         buttonsHtml = `
-            <a href="${approveLink}" style="${premiumBtnBase} background: linear-gradient(135deg, #059669 0%, #047857 100%); box-shadow: 0 4px 15px rgba(5, 150, 105, 0.3);">Approve Registration</a>
+            <a href="${approveLink}" style="${premiumBtnBase} background-color: #10b981; box-shadow: 0 4px 6px -1px rgba(16, 185, 129, 0.2);">✅ Approve Registration</a>
             <div style="height: 1px; background-color: rgba(255,255,255,0.05); margin: 24px 0;"></div>
-            <a href="${moreInfoLink}" style="${premiumBtnBase} background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);">Request Portfolio</a>
-            <a href="${customReplyLink}" style="${premiumBtnBase} background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%); box-shadow: 0 4px 15px rgba(124, 58, 237, 0.3);">Custom Reply</a>
+            <a href="${moreInfoLink}" style="${premiumBtnBase} background-color: #2563eb; box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2);">📞 Request Portfolio / Info</a>
+            <a href="${customReplyLink}" style="${premiumBtnBase} background-color: #7c3aed; box-shadow: 0 4px 6px -1px rgba(124, 58, 237, 0.2);">✍️ Custom Reply</a>
             <div style="height: 1px; background-color: rgba(255,255,255,0.05); margin: 24px 0;"></div>
-            <a href="${rejectLink}" style="${premiumBtnBase} background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%); box-shadow: 0 4px 15px rgba(220, 38, 38, 0.3);">Reject Application</a>
+            <a href="${rejectLink}" style="${premiumBtnBase} background-color: #dc2626; box-shadow: 0 4px 6px -1px rgba(220, 38, 38, 0.2);">❌ Reject Application</a>
         `;
       } else if (isCallRequest) {
         buttonsHtml = `
-            <a href="${confirmLink}" style="${premiumBtnBase} background: linear-gradient(135deg, #10b981 0%, #059669 100%); box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);">Mark Call as Done</a>
-            <a href="${customReplyLink}" style="${premiumBtnBase} background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%); box-shadow: 0 4px 15px rgba(124, 58, 237, 0.3);">Send Email Reply</a>
+            <a href="${confirmLink}" style="${premiumBtnBase} background-color: #10b981; box-shadow: 0 4px 6px -1px rgba(16, 185, 129, 0.2);">📞 Mark Call as Done</a>
+            <a href="${customReplyLink}" style="${premiumBtnBase} background-color: #7c3aed; box-shadow: 0 4px 6px -1px rgba(124, 58, 237, 0.2);">✍️ Send Email Reply</a>
         `;
       } else {
         buttonsHtml = `
-            <a href="${confirmLink}" style="${premiumBtnBase} background: linear-gradient(135deg, #10b981 0%, #059669 100%); box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);">Confirm Booking</a>
-            <a href="${approveLink}" style="${premiumBtnBase} background: linear-gradient(135deg, #059669 0%, #047857 100%); box-shadow: 0 4px 15px rgba(5, 150, 105, 0.3);">Approve Booking</a>
+            <a href="${confirmLink}" style="${premiumBtnBase} background-color: #10b981; box-shadow: 0 4px 6px -1px rgba(16, 185, 129, 0.2);">✅ Confirm Booking</a>
+            <a href="${approveLink}" style="${premiumBtnBase} background-color: #059669; box-shadow: 0 4px 6px -1px rgba(5, 150, 105, 0.2);">👍 Approve Booking</a>
             
             <div style="height: 1px; background-color: rgba(255,255,255,0.05); margin: 24px 0;"></div>
             
-            <a href="${moreInfoLink}" style="${premiumBtnBase} background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);">Request More Info</a>
-            <a href="${customReplyLink}" style="${premiumBtnBase} background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%); box-shadow: 0 4px 15px rgba(124, 58, 237, 0.3);">Custom Reply</a>
+            <a href="${moreInfoLink}" style="${premiumBtnBase} background-color: #2563eb; box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2);">📞 Request More Info</a>
+            <a href="${customReplyLink}" style="${premiumBtnBase} background-color: #7c3aed; box-shadow: 0 4px 6px -1px rgba(124, 58, 237, 0.2);">✍️ Custom Reply</a>
             
             <div style="height: 1px; background-color: rgba(255,255,255,0.05); margin: 24px 0;"></div>
             
-            <a href="${unavailableLink}" style="${premiumBtnBase} background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%); box-shadow: 0 4px 15px rgba(234, 88, 12, 0.3);">Artist Unavailable</a>
-            <a href="${rejectLink}" style="${premiumBtnBase} background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%); box-shadow: 0 4px 15px rgba(220, 38, 38, 0.3);">Reject / Not Possible</a>
+            <a href="${unavailableLink}" style="${premiumBtnBase} background-color: #ea580c; box-shadow: 0 4px 6px -1px rgba(234, 88, 12, 0.2);">🗓️ Artist Unavailable</a>
+            <a href="${rejectLink}" style="${premiumBtnBase} background-color: #dc2626; box-shadow: 0 4px 6px -1px rgba(220, 38, 38, 0.2);">❌ Reject / Not Possible</a>
         `;
       }
 
