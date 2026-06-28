@@ -38,7 +38,7 @@ const ArtistCard = forwardRef(({ artist, onBook }, ref) => {
     >
       <TiltCard 
         className="hp-feat-card-v2"
-        onClick={() => router.push(`/artist/${encodeURIComponent(artist.name)}`)}
+        onClick={() => window.open(`/artist/${encodeURIComponent(artist.name)}`, '_blank')}
         style={{ cursor: 'pointer', width: '100%', height: '100%', display: 'flex', flexDirection: 'column' }}
       >
         <div className="hp-feat-img-wrap-v2" style={{ flex: 1, minHeight: '300px', position: 'relative' }}>

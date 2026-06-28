@@ -156,7 +156,7 @@ function TopPerformerSection() {
                   Book Now
                 </button>
                 <button
-                  onClick={() => router.push(`/artist/${encodeURIComponent(artist.name)}`)}
+                  onClick={() => window.open(`/artist/${encodeURIComponent(artist.name)}`, '_blank')}
                   className="hp-btn"
                   style={{ 
                     flex: 1, 

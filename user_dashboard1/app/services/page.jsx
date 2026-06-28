@@ -336,7 +336,7 @@ export default function ServicesPage() {
                         return selectedVideo.user_name || 'Artist';
                       }
                     })()
-                  )}`} className="w-full sm:w-auto">
+                  )}`} target="_blank" className="w-full sm:w-auto">
                     <button className="h-14 px-10 bg-white/5 hover:bg-white/10 border border-white/10 text-white font-bold rounded-full transition-all w-full sm:w-auto flex items-center justify-center whitespace-nowrap">
                       View Profile
                     </button>

@@ -208,7 +208,7 @@ function FeaturedArtistsSection() {
             >
               <TiltCard 
                 className="hp-feat-card-v2"
-                onClick={() => router.push(`/artist/${encodeURIComponent(artist.name)}`)}
+                onClick={() => window.open(`/artist/${encodeURIComponent(artist.name)}`, '_blank')}
                 style={{ cursor: 'pointer' }}
               >
                 <div className="hp-feat-img-wrap-v2">
