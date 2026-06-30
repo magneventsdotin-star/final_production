@@ -325,7 +325,10 @@ export function CreateArtistModal({ open, onOpenChange, onSuccess, initialData }
       } else {
         const { data: { session } } = await supabase.auth.getSession();
         if (session?.user?.id) {
-          artistData.created_by = session.user.id;
+          const { data: profile } = await supabase.from('profiles').select('id').eq('id', session.user.id).single();
+          if (profile) {
+            artistData.created_by = session.user.id;
+          }
         }
 
         const { data: artist, error: artistError } = await (supabase
