@@ -88,14 +88,34 @@ export default function ContactModal() {
 
   const onClose = () => setIsOpen(false);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault()
-    setIsSubmitting(true)
+
+    const phoneVal = phoneRef.current?.value || ''
+    const emailVal = emailRef.current?.value || ''
+
+    if (!phoneVal && !emailVal) {
+      alert('Please provide either a Phone number or an Email ID.')
+      return
+    }
+    
+    if (phoneVal) {
+      const digits = phoneVal.replace(/\D/g, '')
+      if (digits.length !== 10) {
+        alert('Phone number must be exactly 10 digits.')
+        return
+      }
+    }
+    
+    if (emailVal && !emailVal.includes('@')) {
+      alert('Please enter a valid email address containing @.')
+      return
+    }
 
     const submissionData = {
       name: nameRef.current?.value || '',
-      phone: phoneRef.current?.value || '',
-      email: emailRef.current?.value || '',
+      phone: phoneVal,
+      email: emailVal,
       eventType: selectedEventType,
       date: dateRef.current?.value || '',
       location: locationRef.current?.value || '',
@@ -106,26 +126,24 @@ export default function ContactModal() {
       selectedService: initialService
     }
 
-    try {
-      await bookingService.submitRequest({ ...submissionData, formType })
-      setIsSubmitting(false)
-      setSubmitted(true)
+    // Fast background submission - instantly show success
+    setSubmitted(true)
 
-      setTimeout(() => {
-        onClose()
-        if (nameRef.current) nameRef.current.value = ''
-        if (phoneRef.current) phoneRef.current.value = ''
-        if (emailRef.current) emailRef.current.value = ''
-        if (dateRef.current) dateRef.current.value = ''
-        if (locationRef.current) locationRef.current.value = ''
-        setSelectedEventType('')
-        setSelectedBudget('')
-        setSelectedArtistTypes([])
-      }, 1800)
-    } catch (error) {
+    bookingService.submitRequest({ ...submissionData, formType }).catch(error => {
       console.error("Booking error:", error)
-      setIsSubmitting(false)
-    }
+    })
+
+    setTimeout(() => {
+      onClose()
+      if (nameRef.current) nameRef.current.value = ''
+      if (phoneRef.current) phoneRef.current.value = ''
+      if (emailRef.current) emailRef.current.value = ''
+      if (dateRef.current) dateRef.current.value = ''
+      if (locationRef.current) locationRef.current.value = ''
+      setSelectedEventType('')
+      setSelectedBudget('')
+      setSelectedArtistTypes([])
+    }, 1800)
   }
 
   if (!isOpen) return null
@@ -220,7 +238,7 @@ export default function ContactModal() {
                   <label>Phone no.</label>
                   <input
                     ref={phoneRef}
-                    type="tel" required placeholder="+91 9XXX-XXXXXX"
+                    type="tel" placeholder="+91 9XXX-XXXXXX"
                     defaultValue=""
                   />
                 </div>
@@ -231,7 +249,7 @@ export default function ContactModal() {
                   <label>Email ID</label>
                   <input
                     ref={emailRef}
-                    type="email" required placeholder="name@email.com"
+                    type="email" placeholder="name@email.com"
                     defaultValue=""
                   />
                 </div>
