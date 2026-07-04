@@ -1,15 +1,18 @@
 "use client"
 
+import { useScrollDirection } from '@/app/hooks/useScrollDirection'
 import { motion } from 'framer-motion'
 import '@/app/styles/components/FloatingWhatsApp.css'
 
 export default function FloatingWhatsApp() {
+  const scrollDirection = useScrollDirection();
+
   return (
     <a
       href="https://wa.me/918076515257?text=Hi%20Magnevents,%20I'm%20interested%20in%20booking%20an%20artist!"
       target="_blank"
       rel="noopener noreferrer"
-      className="lux-floating-whatsapp-root"
+      className={`lux-floating-whatsapp-root ${scrollDirection === 'down' ? 'is-scrolled-down' : ''}`}
       aria-label="Chat on WhatsApp"
     >
       <div className="whatsapp-pulse-glow" />

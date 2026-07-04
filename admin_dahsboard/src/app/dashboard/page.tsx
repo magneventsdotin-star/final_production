@@ -32,6 +32,7 @@ import {
   PlayCircle,
   Eye,
   User,
+  PencilLine,
 } from 'lucide-react';
 import useEmblaCarousel from 'embla-carousel-react';
 import { CreateArtistModal } from '@/components/artists/CreateArtistModal';
@@ -113,6 +114,7 @@ export default function DashboardOverview() {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, duration: 30 });
   const [selectedArtist, setSelectedArtist] = useState<any | null>(null);
   const [detailOpen, setDetailOpen] = useState(false);
+  const [editingArtist, setEditingArtist] = useState<any>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const ITEMS_PER_PAGE = 6;
 
@@ -410,7 +412,16 @@ export default function DashboardOverview() {
 
   return (
     <div className="space-y-10 pb-12">
-      <CreateArtistModal open={isModalOpen} onOpenChange={setIsModalOpen} onSuccess={refreshAll} />
+      <CreateArtistModal 
+        key={editingArtist?.id || 'new'}
+        open={isModalOpen} 
+        onOpenChange={(open) => {
+          setIsModalOpen(open);
+          if (!open) setTimeout(() => setEditingArtist(null), 200);
+        }} 
+        onSuccess={refreshAll} 
+        initialData={editingArtist}
+      />
       <ManualBookingModal open={isBookingModalOpen} onOpenChange={setIsBookingModalOpen} />
       
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-6 sm:gap-0">

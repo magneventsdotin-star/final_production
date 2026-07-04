@@ -3,7 +3,7 @@ import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { ArtistFilters, ArtistFilterState, INITIAL_FILTER_STATE } from '@/components/artists/ArtistFilters';
 import { Button } from '@/components/ui/button';
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from '@/components/ui/table';
-import { Plus, Loader2, Mic2, Star, Info, ChevronLeft, ChevronRight, Pencil, Eye, Trash2, Image as ImageIcon, Share2, PlayCircle, MapPin, Music, User, ChevronDown, Layers } from 'lucide-react';
+import { Plus, Loader2, Mic2, Star, Info, ChevronLeft, ChevronRight, Pencil, Eye, EyeOff, Trash2, Image as ImageIcon, Share2, PlayCircle, MapPin, Music, User, ChevronDown, Layers } from 'lucide-react';
 import { CreateArtistModal } from '@/components/artists/CreateArtistModal';
 import { supabase } from '@/lib/supabase';
 import { cn } from '@/lib/utils';
@@ -19,7 +19,7 @@ export default function ArtistManagement() {
   const [totalCount, setTotalCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [filters, setFilters] = useState<ArtistFilterState>(INITIAL_FILTER_STATE);
-  const [activeTab, setActiveTab] = useState<'all' | 'original' | 'duplicate'>('all');
+  const [activeTab, setActiveTab] = useState<'all' | 'original' | 'duplicate' | 'live' | 'hidden'>('all');
   const [expandedGroupId, setExpandedGroupId] = useState<string | null>(null);
 
   const ITEMS_PER_PAGE = 10;
@@ -34,8 +34,9 @@ export default function ArtistManagement() {
         const { data: { session } } = await supabase.auth.getSession();
         if (session?.user) {
           const { data } = await supabase.from('profiles').select('role, can_view_all_artists').eq('id', session.user.id).single();
-          const isSuperAdmin = data?.role === 'super_admin' || session.user.email?.toLowerCase() === process.env.NEXT_PUBLIC_SUPER_ADMIN_EMAIL?.toLowerCase();
-          setCurrentUser({ id: session.user.id, canViewAll: !!(isSuperAdmin || data?.can_view_all_artists) });
+          const profileData = data as any;
+          const isSuperAdmin = profileData?.role === 'super_admin' || session.user.email?.toLowerCase() === process.env.NEXT_PUBLIC_SUPER_ADMIN_EMAIL?.toLowerCase();
+          setCurrentUser({ id: session.user.id, canViewAll: !!(isSuperAdmin || profileData?.can_view_all_artists) });
         }
       } catch (e) {
         console.error(e);
@@ -44,7 +45,7 @@ export default function ArtistManagement() {
     fetchUser();
   }, []);
 
-  const { originalArtists, duplicateGroups } = useMemo(() => {
+  const { originalArtists, duplicateGroups, liveArtists, hiddenArtists } = useMemo(() => {
     const groups = new Map<string, any[]>();
     const original: any[] = [];
     const duplicates: any[][] = [];
@@ -67,10 +68,13 @@ export default function ArtistManagement() {
       }
     });
 
-    return { originalArtists: original, duplicateGroups: duplicates };
+    const live = artists.filter(a => a.is_live);
+    const hidden = artists.filter(a => !a.is_live);
+
+    return { originalArtists: original, duplicateGroups: duplicates, liveArtists: live, hiddenArtists: hidden };
   }, [artists]);
 
-  const currentList = activeTab === 'all' ? artists : activeTab === 'original' ? originalArtists : duplicateGroups;
+  const currentList = activeTab === 'all' ? artists : activeTab === 'original' ? originalArtists : activeTab === 'duplicate' ? duplicateGroups : activeTab === 'live' ? liveArtists : hiddenArtists;
   const totalPages = Math.max(1, Math.ceil(currentList.length / ITEMS_PER_PAGE));
 
   const fetchArtists = useCallback(async (showLoading = true) => {
@@ -468,6 +472,22 @@ export default function ArtistManagement() {
             Duplicate Groups
             <span className={`ml-2 px-2 py-0.5 rounded-md text-[10px] ${activeTab === 'duplicate' ? 'bg-rose-50 text-rose-600' : 'bg-slate-200 text-slate-500'}`}>{duplicateGroups.length}</span>
           </button>
+          <button 
+            className={`px-8 py-3 rounded-xl text-[13px] font-black transition-all flex items-center gap-2 ${activeTab === 'live' ? 'bg-white text-emerald-600 shadow-md scale-[1.02]' : 'text-slate-500 hover:text-slate-700 hover:bg-white/50'}`}
+            onClick={() => { setActiveTab('live'); setCurrentPage(1); setExpandedGroupId(null); }}
+          >
+            <Eye size={16} />
+            Live Profiles
+            <span className={`ml-2 px-2 py-0.5 rounded-md text-[10px] ${activeTab === 'live' ? 'bg-emerald-50 text-emerald-600' : 'bg-slate-200 text-slate-500'}`}>{liveArtists.length}</span>
+          </button>
+          <button 
+            className={`px-8 py-3 rounded-xl text-[13px] font-black transition-all flex items-center gap-2 ${activeTab === 'hidden' ? 'bg-white text-amber-600 shadow-md scale-[1.02]' : 'text-slate-500 hover:text-slate-700 hover:bg-white/50'}`}
+            onClick={() => { setActiveTab('hidden'); setCurrentPage(1); setExpandedGroupId(null); }}
+          >
+            <EyeOff size={16} />
+            Hidden Profiles
+            <span className={`ml-2 px-2 py-0.5 rounded-md text-[10px] ${activeTab === 'hidden' ? 'bg-amber-50 text-amber-600' : 'bg-slate-200 text-slate-500'}`}>{hiddenArtists.length}</span>
+          </button>
         </div>
 
         <div className="luxe-card overflow-hidden">
@@ -508,11 +528,7 @@ export default function ArtistManagement() {
                       </div>
                     </TableCell>
                   </TableRow>
-                ) : activeTab === 'all' || activeTab === 'original' ? (
-                  currentList
-                    .slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE)
-                    .map((artist) => renderArtistRow(artist))
-                ) : (
+                ) : activeTab === 'duplicate' ? (
                   duplicateGroups
                     .slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE)
                     .map((group, idx) => {
@@ -551,6 +567,10 @@ export default function ArtistManagement() {
                         </React.Fragment>
                       );
                     })
+                ) : (
+                  (currentList as any[])
+                    .slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE)
+                    .map((artist) => renderArtistRow(artist))
                 )}
               </TableBody>
             </Table>
