@@ -19,39 +19,64 @@ import {
   X,
   Server,
   GitPullRequest,
-  Mail
+  Mail,
+  Activity,
+  Terminal
 } from 'lucide-react';
 import NextImage from 'next/image';
 
-export const navItems = [
-  { name: 'Overview', href: '/dashboard', icon: LayoutDashboard },
+export const navSections = [
   {
-    name: 'Edit',
-    icon: PencilLine,
-    isExpandable: true,
-    subItems: [
-      { name: 'Categories', href: '/dashboard/categories' },
-      { name: 'Pricing', href: '/dashboard/pricing' },
-      { name: 'Blog Editing', href: '/dashboard/slider' },
-      { name: 'Service Videos', href: '/dashboard/service-videos' },
+    title: 'Main Menu',
+    items: [
+      { name: 'Overview', href: '/dashboard', icon: LayoutDashboard },
+      { name: 'Artists', href: '/dashboard/artists', icon: Mic2 },
+      { name: 'Bookings', href: '/dashboard/bookings', icon: CalendarCheck },
+      {
+        name: 'Requests',
+        icon: GitPullRequest,
+        isExpandable: true,
+        subItems: [
+          { name: 'Client Requests', href: '/dashboard/requests' },
+          { name: 'Admin Approvals', href: '/dashboard/team-requests' },
+          { name: 'Artist Requests', href: '/dashboard/artist-requests' },
+        ]
+      },
+      { name: 'Emails', href: '/dashboard/emails', icon: Mail },
     ]
   },
-  { name: 'Artists', href: '/dashboard/artists', icon: Mic2 },
   {
-    name: 'Requests',
-    icon: GitPullRequest,
-    isExpandable: true,
-    subItems: [
-      { name: 'Client Requests', href: '/dashboard/requests' },
-      { name: 'Admin Approvals', href: '/dashboard/team-requests' },
-      { name: 'Artist Requests', href: '/dashboard/artist-requests' },
+    title: 'Content Management',
+    items: [
+      {
+        name: 'Edit',
+        icon: PencilLine,
+        isExpandable: true,
+        subItems: [
+          { name: 'Categories', href: '/dashboard/categories' },
+          { name: 'Pricing', href: '/dashboard/pricing' },
+          { name: 'Blog Editing', href: '/dashboard/slider' },
+          { name: 'Service Videos', href: '/dashboard/service-videos' },
+        ]
+      },
+      { name: 'Browse', href: '/dashboard/browse', icon: Eye },
     ]
   },
-  { name: 'Bookings', href: '/dashboard/bookings', icon: CalendarCheck },
-  { name: 'Emails', href: '/dashboard/emails', icon: Mail },
-  { name: 'API', href: '/dashboard/api', icon: Server },
-  { name: 'Browse', href: '/dashboard/browse', icon: Eye },
-  { name: 'Admins', href: '/dashboard/admins', icon: ShieldAlert },
+  {
+    title: 'System Administration',
+    items: [
+      { name: 'Admins', href: '/dashboard/admins', icon: ShieldAlert },
+      {
+        name: 'Developer Options',
+        icon: Terminal,
+        isExpandable: true,
+        subItems: [
+          { name: 'API', href: '/dashboard/api' },
+          { name: 'System Health', href: '/dashboard/health' },
+        ]
+      },
+    ]
+  }
 ];
 
 import { useState, useEffect } from 'react';
@@ -73,7 +98,9 @@ export function Sidebar({ onClose, userRole = 'admin' }: { onClose?: () => void;
               pathname.startsWith('/dashboard/slider') ||
               pathname.startsWith('/dashboard/service-videos'),
       'Requests': pathname.startsWith('/dashboard/requests') ||
-                  pathname.startsWith('/dashboard/team-requests')
+                  pathname.startsWith('/dashboard/team-requests'),
+      'Developer Options': pathname.startsWith('/dashboard/api') ||
+                           pathname.startsWith('/dashboard/health')
     }));
   }, [pathname]);
 
@@ -178,115 +205,125 @@ export function Sidebar({ onClose, userRole = 'admin' }: { onClose?: () => void;
         </div>
       </div>
 
-      <div className="px-6 mb-2">
-        <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/20">Navigation</span>
-      </div>
-      <nav className="px-3 space-y-1 flex-1">
-        {navItems
-          .filter(item => {
-            const restricted = ['Admins', 'API'];
+      <nav className="px-3 space-y-6 flex-1 pt-2 pb-6">
+        {navSections.map((section, idx) => {
+          const visibleItems = section.items.filter(item => {
+            const restricted = ['Admins', 'Developer Options'];
             if (restricted.includes(item.name)) {
               return userRole === 'super_admin';
             }
             return true;
-          })
-          .map((item) => {
-            if (item.isExpandable) {
-              const isOpen = expandedMenus[item.name];
-              return (
-                <div key={item.name} className="space-y-1">
-                  <button
-                    onClick={() => setExpandedMenus(prev => ({ ...prev, [item.name]: !isOpen }))}
-                    className={cn(
-                      "nav-item group w-full flex justify-between",
-                      isOpen && "bg-white/5"
-                    )}
-                  >
-                    <div className="flex items-center gap-3">
-                      <item.icon size={18} className="text-white/40 group-hover:text-white" />
-                      <span className="font-medium text-white/60 group-hover:text-white/80">
-                        {item.name}
-                      </span>
-                    </div>
-                    {item.name === 'Requests' && pendingRequestsCount > 0 && !isOpen && (
-                      <span className="bg-rose-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-lg border border-rose-400 animate-pulse mr-2">
-                        {pendingRequestsCount}
-                      </span>
-                    )}
-                    <ChevronDown
-                      size={14}
-                      className={cn("text-white/20 transition-transform", isOpen && "rotate-180")}
-                    />
-                  </button>
+          });
 
-                  {isOpen && (
-                    <div className="pl-4 space-y-1">
-                      {item.subItems?.map((sub: any) => {
-                        if (sub.restricted && userRole !== 'super_admin') return null;
-                        
-                        const isSubActive = pathname === sub.href;
-                        
-                        let displayName = sub.name;
-                        if (sub.name === 'Admin Approvals' && userRole !== 'super_admin') {
-                          displayName = 'Approved Requests';
-                        }
+          if (visibleItems.length === 0) return null;
 
-                        return (
-                          <Link
-                            key={sub.name}
-                            href={sub.href}
-                            onClick={onClose}
-                            className={cn(
-                              "flex items-center justify-between px-4 py-2.5 rounded-xl text-[13px] font-bold transition-all",
-                              isSubActive
-                                ? "bg-white/10 text-white shadow-lg"
-                                : "text-white/30 hover:text-white/60 hover:bg-white/5"
-                            )}
-                          >
-                            <div className="flex items-center gap-3">
-                              <span className={cn(
-                                "w-1.5 h-1.5 rounded-full transition-all",
-                                isSubActive ? "bg-indigo-400" : "bg-white/10"
-                              )} />
-                              {displayName}
-                            </div>
-                            {sub.name === 'Client Requests' && pendingRequestsCount > 0 && (
-                              <span className="bg-rose-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full shadow-lg border border-rose-400 animate-pulse">
-                                {pendingRequestsCount}
-                              </span>
-                            )}
-                          </Link>
-                        );
-                      })}
-                    </div>
-                  )}
-                </div>
-              );
-            }
+          return (
+            <div key={idx} className="space-y-1">
+              <div className="px-3 mb-2">
+                <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/20">{section.title}</span>
+              </div>
+              <div className="space-y-1">
+                {visibleItems.map((item) => {
+                  if (item.isExpandable) {
+                    const isOpen = expandedMenus[item.name];
+                    return (
+                      <div key={item.name} className="space-y-1">
+                        <button
+                          onClick={() => setExpandedMenus(prev => ({ ...prev, [item.name]: !isOpen }))}
+                          className={cn(
+                            "nav-item group w-full flex justify-between",
+                            isOpen && "bg-white/5"
+                          )}
+                        >
+                          <div className="flex items-center gap-3">
+                            <item.icon size={18} className="text-white/40 group-hover:text-white" />
+                            <span className="font-medium text-white/60 group-hover:text-white/80">
+                              {item.name}
+                            </span>
+                          </div>
+                          {item.name === 'Requests' && pendingRequestsCount > 0 && !isOpen && (
+                            <span className="bg-rose-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-lg border border-rose-400 animate-pulse mr-2">
+                              {pendingRequestsCount}
+                            </span>
+                          )}
+                          <ChevronDown
+                            size={14}
+                            className={cn("text-white/20 transition-transform", isOpen && "rotate-180")}
+                          />
+                        </button>
 
-            const isActive = pathname === item.href;
-            return (
-              <Link
-                key={item.href || item.name}
-                href={item.href || '#'}
-                onClick={onClose}
-                className={cn(
-                  "nav-item group relative flex items-center justify-between",
-                  isActive && "active"
-                )}
-              >
-                <div className="flex items-center gap-3">
-                  <item.icon size={18} strokeWidth={isActive ? 2.5 : 2} className={cn(
-                    "nav-icon transition-colors",
-                    isActive ? "text-white" : "text-white/40 group-hover:text-white/70"
-                  )} />
-                  <span className={cn(isActive ? "font-bold text-white" : "font-medium text-white/60 group-hover:text-white/80")}>
-                    {item.name}
-                  </span>
-                </div>
-              </Link>
-            );
-          })}
+                        {isOpen && (
+                          <div className="pl-4 space-y-1">
+                            {item.subItems?.map((sub: any) => {
+                              if (sub.restricted && userRole !== 'super_admin') return null;
+                              
+                              const isSubActive = pathname === sub.href;
+                              
+                              let displayName = sub.name;
+                              if (sub.name === 'Admin Approvals' && userRole !== 'super_admin') {
+                                displayName = 'Approved Requests';
+                              }
+
+                              return (
+                                <Link
+                                  key={sub.name}
+                                  href={sub.href}
+                                  onClick={onClose}
+                                  className={cn(
+                                    "flex items-center justify-between px-4 py-2.5 rounded-xl text-[13px] font-bold transition-all",
+                                    isSubActive
+                                      ? "bg-white/10 text-white shadow-lg"
+                                      : "text-white/30 hover:text-white/60 hover:bg-white/5"
+                                  )}
+                                >
+                                  <div className="flex items-center gap-3">
+                                    <span className={cn(
+                                      "w-1.5 h-1.5 rounded-full transition-all",
+                                      isSubActive ? "bg-indigo-400" : "bg-white/10"
+                                    )} />
+                                    {displayName}
+                                  </div>
+                                  {sub.name === 'Client Requests' && pendingRequestsCount > 0 && (
+                                    <span className="bg-rose-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full shadow-lg border border-rose-400 animate-pulse">
+                                      {pendingRequestsCount}
+                                    </span>
+                                  )}
+                                </Link>
+                              );
+                            })}
+                          </div>
+                        )}
+                      </div>
+                    );
+                  }
+
+                  const isActive = pathname === item.href;
+                  return (
+                    <Link
+                      key={item.href || item.name}
+                      href={item.href || '#'}
+                      onClick={onClose}
+                      className={cn(
+                        "nav-item group relative flex items-center justify-between",
+                        isActive && "active"
+                      )}
+                    >
+                      <div className="flex items-center gap-3">
+                        <item.icon size={18} strokeWidth={isActive ? 2.5 : 2} className={cn(
+                          "nav-icon transition-colors",
+                          isActive ? "text-white" : "text-white/40 group-hover:text-white/70"
+                        )} />
+                        <span className={cn(isActive ? "font-bold text-white" : "font-medium text-white/60 group-hover:text-white/80")}>
+                          {item.name}
+                        </span>
+                      </div>
+                    </Link>
+                  );
+                })}
+              </div>
+            </div>
+          );
+        })}
       </nav>
 
       <div className="p-4 mt-auto border-t border-white/5 bg-black/10">

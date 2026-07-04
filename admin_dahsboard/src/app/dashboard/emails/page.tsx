@@ -180,52 +180,61 @@ function EmailsContent() {
             <p className="text-lg font-bold text-slate-400">No emails found</p>
           </div>
         ) : (
-          <div className="divide-y divide-slate-100">
-            {emails.map((email) => (
-              <div
-                key={email.id}
-                onClick={() => { setSelectedEmail(email); setModalOpen(true); }}
-                className="flex items-center gap-4 px-6 py-4 hover:bg-slate-50 cursor-pointer transition-colors"
-              >
-                <div className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 flex-shrink-0">
-                  <Mail size={18} />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2 mb-1">
-                    <p className="text-sm font-bold text-slate-900 truncate">
-                      {email.subject}
-                    </p>
-                    <span className={cn("px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider border", getEmailTypeColor(email.email_type))}>
-                      {email.email_type}
-                    </span>
-                    <span className={cn("px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider border", 
-                      email.status === 'failed' ? "bg-red-50 text-red-600 border-red-200" : "bg-green-50 text-green-600 border-green-200"
-                    )}>
-                      {email.status || 'sent'}
-                    </span>
+          <div className="flex flex-col">
+            {emails.map((email, index) => {
+              const dateStr = format(new Date(email.sent_at), 'MMM d, yyyy');
+              const prevDateStr = index > 0 ? format(new Date(emails[index - 1].sent_at), 'MMM d, yyyy') : null;
+              const showHeader = dateStr !== prevDateStr;
+
+              return (
+                <div key={email.id} className="flex flex-col">
+                  {showHeader && (
+                    <div className="bg-slate-100/80 backdrop-blur-sm px-6 py-2 text-xs font-bold text-slate-600 uppercase tracking-widest sticky top-0 z-10 shadow-sm border-b border-slate-200 flex items-center gap-2">
+                      <Calendar size={14} className="text-slate-400" />
+                      {dateStr}
+                    </div>
+                  )}
+                  <div
+                    onClick={() => { setSelectedEmail(email); setModalOpen(true); }}
+                    className="flex items-center gap-4 px-6 py-4 hover:bg-slate-50 cursor-pointer transition-colors bg-white border-b border-slate-100 last:border-0"
+                  >
+                    <div className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 flex-shrink-0">
+                      <Mail size={18} />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 mb-1">
+                        <p className="text-sm font-bold text-slate-900 truncate">
+                          {email.subject}
+                        </p>
+                        <span className={cn("px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider border", getEmailTypeColor(email.email_type))}>
+                          {email.email_type}
+                        </span>
+                        <span className={cn("px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider border", 
+                          email.status === 'failed' ? "bg-red-50 text-red-600 border-red-200" : "bg-green-50 text-green-600 border-green-200"
+                        )}>
+                          {email.status || 'sent'}
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-3 text-xs font-medium text-slate-500">
+                        <span className="truncate">To: {email.recipient_email}</span>
+                        {email.bookings?.client_name && (
+                          <>
+                            <span className="w-1 h-1 rounded-full bg-slate-300" />
+                            <span className="truncate">Client: {email.bookings.client_name}</span>
+                          </>
+                        )}
+                      </div>
+                    </div>
+                    <div className="text-right flex-shrink-0">
+                      <p className="text-xs text-slate-500 flex items-center justify-end gap-1.5 font-medium">
+                        <Clock size={12} className="text-slate-400" />
+                        {format(new Date(email.sent_at), 'h:mm a')}
+                      </p>
+                    </div>
                   </div>
-                  <div className="flex items-center gap-3 text-xs font-medium text-slate-500">
-                    <span className="truncate">To: {email.recipient_email}</span>
-                    {email.bookings?.client_name && (
-                      <>
-                        <span className="w-1 h-1 rounded-full bg-slate-300" />
-                        <span className="truncate">Client: {email.bookings.client_name}</span>
-                      </>
-                    )}
-                  </div>
                 </div>
-                <div className="text-right flex-shrink-0">
-                  <p className="text-xs font-bold text-slate-900 mb-1 flex items-center justify-end gap-1.5">
-                    <Calendar size={12} className="text-slate-400" />
-                    {format(new Date(email.sent_at), 'MMM d, yyyy')}
-                  </p>
-                  <p className="text-xs text-slate-500 flex items-center justify-end gap-1.5">
-                    <Clock size={12} className="text-slate-400" />
-                    {format(new Date(email.sent_at), 'h:mm a')}
-                  </p>
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         )}
       </div>

@@ -3174,6 +3174,9 @@
   .hp-aom-card {
     grid-template-columns: 1fr;
   }
+  .hp-aom-img-wrap {
+    min-height: 350px;
+  }
   .hp-aom-content {
     padding: 30px;
   }

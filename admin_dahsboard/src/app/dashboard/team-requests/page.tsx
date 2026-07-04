@@ -436,47 +436,60 @@ export default function TeamRequestsPage() {
              <p className="text-lg font-bold text-slate-400">No requests found</p>
           </div>
         ) : (
-          displayRequests.map((req) => {
+          displayRequests.map((req, index) => {
+            const dateStr = req.createdAt ? format(new Date(req.createdAt), 'MMM d, yyyy') : 'Unknown Date';
+            const prevDateStr = index > 0 && displayRequests[index - 1].createdAt 
+              ? format(new Date(displayRequests[index - 1].createdAt), 'MMM d, yyyy') 
+              : null;
+            const showHeader = dateStr !== prevDateStr;
+
             const s = getStatusConfig(req.status);
             const Icon = s.icon;
             return (
-              <div 
-                key={req.id} 
-                onClick={async () => { 
-                  setSelectedRequest(req); 
-                  setIsDetailOpen(true); 
-                  setConflictingArtist(null);
-                  if (req.field_name && req.field_value) {
-                    const { data } = await supabase.from('artists').select('id, name, alias').eq(req.field_name, req.field_value).single();
-                    if (data) setConflictingArtist(data);
-                  }
-                }}
-                className="luxe-card p-6 flex flex-col md:flex-row md:items-center justify-between gap-6 hover:shadow-xl hover:border-indigo-100 transition-all duration-300 cursor-pointer group"
-              >
-                <div className="flex items-start gap-4">
-                  <div className={cn("w-12 h-12 rounded-2xl flex items-center justify-center border shadow-sm shrink-0", s.bg, s.text, s.border)}>
-                    <Icon size={20} strokeWidth={2.5} />
+              <div key={req.id} className="flex flex-col">
+                {showHeader && (
+                  <div className="bg-slate-100/80 backdrop-blur-sm px-6 py-2 text-xs font-bold text-slate-600 uppercase tracking-widest sticky top-0 z-10 shadow-sm border-b border-slate-200 flex items-center gap-2 mt-4 mb-2 first:mt-0 rounded-t-xl">
+                    <Clock size={14} className="text-slate-400" />
+                    Submitted: {dateStr}
                   </div>
-                  <div>
-                    <div className="flex flex-wrap items-center gap-2 mb-1">
-                      <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">{req.id.split('-')[0]}...</span>
-                      <h3 className="text-base font-black text-slate-900">{req.title}</h3>
-                      <span className={cn("px-2 py-0.5 rounded-md text-[9px] font-black uppercase tracking-widest border", s.bg, s.text, s.border)}>
-                        {s.label}
-                      </span>
-                      {req.priority === 'Critical' && (
-                        <span className="px-2 py-0.5 rounded-md text-[9px] font-black uppercase tracking-widest bg-rose-500 text-white border-rose-600 animate-pulse">
-                          Critical
-                        </span>
-                      )}
+                )}
+                <div 
+                  onClick={async () => { 
+                    setSelectedRequest(req); 
+                    setIsDetailOpen(true); 
+                    setConflictingArtist(null);
+                    if (req.field_name && req.field_value) {
+                      const { data } = await supabase.from('artists').select('id, name, alias').eq(req.field_name, req.field_value).single();
+                      if (data) setConflictingArtist(data);
+                    }
+                  }}
+                  className="luxe-card p-6 flex flex-col md:flex-row md:items-center justify-between gap-6 hover:shadow-xl hover:border-indigo-100 transition-all duration-300 cursor-pointer group mb-2 bg-white"
+                >
+                  <div className="flex items-start gap-4">
+                    <div className={cn("w-12 h-12 rounded-2xl flex items-center justify-center border shadow-sm shrink-0", s.bg, s.text, s.border)}>
+                      <Icon size={20} strokeWidth={2.5} />
                     </div>
-                    <p className="text-sm font-medium text-slate-500 line-clamp-1">{req.description}</p>
-                    <div className="flex items-center gap-4 mt-2 text-[11px] font-bold text-slate-400">
-                      <span>By {req.submittedBy.name}</span>
-                      <span>•</span>
-                      <span>{format(new Date(req.createdAt), 'MMM dd, yyyy HH:mm')}</span>
-                      <span>•</span>
-                      <span>{req.type}</span>
+                    <div>
+                      <div className="flex flex-wrap items-center gap-2 mb-1">
+                        <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">{req.id.split('-')[0]}...</span>
+                        <h3 className="text-base font-black text-slate-900">{req.title}</h3>
+                        <span className={cn("px-2 py-0.5 rounded-md text-[9px] font-black uppercase tracking-widest border", s.bg, s.text, s.border)}>
+                          {s.label}
+                        </span>
+                        {req.priority === 'Critical' && (
+                          <span className="px-2 py-0.5 rounded-md text-[9px] font-black uppercase tracking-widest bg-rose-500 text-white border-rose-600 animate-pulse">
+                            Critical
+                          </span>
+                        )}
+                      </div>
+                      <p className="text-sm font-medium text-slate-500 line-clamp-1">{req.description}</p>
+                      <div className="flex items-center gap-4 mt-2 text-[11px] font-bold text-slate-400">
+                        <span>By {req.submittedBy.name}</span>
+                        <span>•</span>
+                        <span>{format(new Date(req.createdAt), 'MMM dd, yyyy HH:mm')}</span>
+                        <span>•</span>
+                        <span>{req.type}</span>
+                      </div>
                     </div>
                   </div>
                 </div>

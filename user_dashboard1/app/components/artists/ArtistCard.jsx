@@ -13,15 +13,22 @@ const ArtistCard = forwardRef(({ artist, onBook }, ref) => {
   const router = useRouter()
   const [imageError, setImageError] = useState(false)
   const [mounted, setMounted] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
     setMounted(true)
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768)
+    }
+    handleResize()
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
   }, [])
 
   const rawGenre = artist.subCategory || artist.category || 'Performer'
   const genres = rawGenre.split(',').map(g => g.trim()).filter(Boolean)
-  const displayGenres = genres.slice(0, 2)
-  const hasMore = genres.length > 2
+  const displayGenres = genres.slice(0, 1)
+  const hasMore = genres.length > 1
 
   const location = [artist.city, artist.state].filter(Boolean).join(', ') || 'Jaipur'
   const rating = artist.rating || '4.9'
@@ -41,35 +48,35 @@ const ArtistCard = forwardRef(({ artist, onBook }, ref) => {
       transition={{ duration: 0.3 }}
       style={{ display: 'flex', width: '100%', height: '100%' }}
     >
-      <Link href={`/artist/${encodeURIComponent(artist.name)}`} target="_blank" style={{ textDecoration: 'none', display: 'flex', width: '100%', height: '100%' }}>
+      <Link href={`/artist/${encodeURIComponent(artist.name)}`} target={isMobile ? '_self' : '_blank'} style={{ textDecoration: 'none', display: 'flex', width: '100%', height: '100%' }}>
         <TiltCard 
-          className="hp-feat-card-v2"
-          style={{ cursor: 'pointer', width: '100%', height: '100%', display: 'flex', flexDirection: 'column' }}
+          className="modern-artist-card"
         >
-        <div className="hp-feat-img-wrap-v2" style={{ flex: 1, minHeight: '300px', position: 'relative' }}>
+        <div className="modern-img-wrap">
           <Image
             src={imgSrc}
             alt={artist.name}
             fill
-            sizes="(max-width: 768px) 300px, 400px"
+            sizes="(max-width: 768px) 100vw, 300px"
             style={{ objectFit: 'cover' }}
             unoptimized
             onError={() => setImageError(true)}
           />
+          <div className="modern-overlay-gradient"></div>
         </div>
-        <div className="hp-feat-info-v2" style={{ flexShrink: 0 }}>
-          <div className="hp-feat-genres-wrapper" style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
+        <div className="modern-info-overlay">
+          <div className="modern-genres-wrapper">
             {displayGenres.map((g, idx) => (
-              <span key={idx} className="hp-feat-genre-v2">{g}</span>
+              <span key={idx} className="modern-genre-badge">{g}</span>
             ))}
-            {hasMore && <span className="hp-feat-genre-v2" style={{ background: 'transparent', border: '1px solid rgba(255,255,255,0.2)', color: 'rgba(255,255,255,0.6)' }}>+{genres.length - 2}</span>}
+            {hasMore && <span className="modern-genre-badge outline">+{genres.length - 1}</span>}
           </div>
-          <h3 className="hp-feat-name-v2">{artist.name}</h3>
-          <span className="hp-feat-loc-v2">{location}</span>
+          <h3 className="modern-artist-name">{artist.name}</h3>
+          <span className="modern-artist-loc">{location}</span>
 
-          <div className="hp-feat-rating-v2">
+          <div className="modern-artist-rating">
             <Stars count={Math.round(Number(rating))} />
-            <span className="hp-feat-score-v2">{rating} · {bookings} bookings</span>
+            <span className="modern-score-text">{rating} · {bookings} bks</span>
           </div>
         </div>
       </TiltCard>

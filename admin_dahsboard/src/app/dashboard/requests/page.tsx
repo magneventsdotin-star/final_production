@@ -5,6 +5,7 @@ import { useSearchParams, useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
+import { format } from 'date-fns';
 import {
   CalendarCheck,
   Search,
@@ -372,84 +373,111 @@ function ClientRequestsContent() {
             <p className="text-lg font-bold text-slate-400">No inquiries found</p>
           </div>
         ) : (
-          <div className="divide-y divide-slate-100">
-            {paginatedRequests.map((request) => {
+          <div className="flex flex-col">
+            {paginatedRequests.map((request, index) => {
               const status = getStatusBadge(request.status);
               const SIcon = status.icon;
+
+              let showHeader = false;
+              let headerText = '';
+              
+              if (sortBy === 'created_at') {
+                const dateStr = request.created_at ? format(new Date(request.created_at), 'MMM d, yyyy') : 'Unknown Date';
+                const prevDateStr = index > 0 && paginatedRequests[index - 1].created_at 
+                  ? format(new Date(paginatedRequests[index - 1].created_at), 'MMM d, yyyy') 
+                  : null;
+                showHeader = dateStr !== prevDateStr;
+                headerText = dateStr;
+              } else if (sortBy === 'event_date') {
+                const dateStr = request.event_date ? format(new Date(request.event_date), 'MMM d, yyyy') : 'TBD';
+                const prevDateStr = index > 0 && paginatedRequests[index - 1].event_date 
+                  ? format(new Date(paginatedRequests[index - 1].event_date), 'MMM d, yyyy') 
+                  : null;
+                showHeader = dateStr !== prevDateStr;
+                headerText = dateStr;
+              }
+
               return (
-                <div
-                  key={request.id}
-                  className="flex flex-col sm:flex-row sm:items-center gap-4 px-6 py-5 hover:bg-white hover:shadow-2xl hover:scale-[1.01] transition-all duration-500 cursor-pointer group rounded-[20px] mb-2 border border-transparent hover:border-slate-100"
-                  onClick={() => { setSelectedRequest(request); setDetailOpen(true); }}
-                >
-                  <div className="flex items-center gap-4 flex-1 min-w-0">
-                    <div className="w-11 h-11 rounded-xl bg-sky-50 flex items-center justify-center text-sky-600 border border-sky-100 shadow-inner flex-shrink-0">
-                       <User size={18} strokeWidth={2.5} />
+                <div key={request.id} className="flex flex-col">
+                  {showHeader && (
+                    <div className="bg-slate-100/80 backdrop-blur-sm px-6 py-2 text-xs font-bold text-slate-600 uppercase tracking-widest sticky top-0 z-10 shadow-sm border-b border-slate-200 flex items-center gap-2 mt-4 mb-2 first:mt-0 rounded-t-xl">
+                      <Calendar size={14} className="text-slate-400" />
+                      {sortBy === 'event_date' ? 'Event Date: ' : 'Submitted: '}{headerText}
                     </div>
-                    <div className="flex-1 min-w-0">
-                       <div className="flex items-center gap-2 mb-0.5">
-                          <p className="font-black text-slate-900 text-[15px] truncate tracking-tight">{request.client_name}</p>
-                          <span className={cn("px-2 py-0.5 rounded-md text-[8px] font-black uppercase tracking-wider border", status.bg, status.text, status.border || "border-transparent")}>
-                            {request.status}
-                          </span>
-                       </div>
-                       <p className="text-[12px] font-bold text-slate-400 flex items-center gap-2 truncate">
-                         {request.client_email}
-                       </p>
+                  )}
+                  <div
+                    className="flex flex-col sm:flex-row sm:items-center gap-4 px-6 py-5 hover:bg-white hover:shadow-2xl hover:scale-[1.01] transition-all duration-500 cursor-pointer group rounded-[20px] mb-2 border border-transparent hover:border-slate-100 bg-white shadow-sm"
+                    onClick={() => { setSelectedRequest(request); setDetailOpen(true); }}
+                  >
+                    <div className="flex items-center gap-4 flex-1 min-w-0">
+                      <div className="w-11 h-11 rounded-xl bg-sky-50 flex items-center justify-center text-sky-600 border border-sky-100 shadow-inner flex-shrink-0">
+                         <User size={18} strokeWidth={2.5} />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                         <div className="flex items-center gap-2 mb-0.5">
+                            <p className="font-black text-slate-900 text-[15px] truncate tracking-tight">{request.client_name}</p>
+                            <span className={cn("px-2 py-0.5 rounded-md text-[8px] font-black uppercase tracking-wider border", status.bg, status.text, status.border || "border-transparent")}>
+                              {request.status}
+                            </span>
+                         </div>
+                         <p className="text-[12px] font-bold text-slate-400 flex items-center gap-2 truncate">
+                           {request.client_email}
+                         </p>
+                      </div>
                     </div>
-                  </div>
 
-                  <div className="flex flex-col sm:flex-row sm:items-center gap-6 sm:gap-10 sm:px-12 sm:border-x sm:border-slate-100">
-                    <div className="w-full sm:min-w-[220px]">
-                       <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2">Artist</p>
-                       <p className="text-[16px] font-black text-slate-900 truncate mb-1.5 tracking-tight">{request.artists?.name || 'Any Artist'}</p>
-                       <div className="flex items-center gap-2">
-                          <span className="px-2.5 py-1 rounded-full bg-indigo-50 text-indigo-600 text-[10px] font-black uppercase tracking-wider">
-                            {request.artists?.category || 'General'}
-                          </span>
-                          <div className="flex items-center gap-1.5">
-                            {request.artists?.is_artist_of_month && (
-                              <div className="w-6 h-6 rounded-full bg-rose-50 text-rose-600 border border-rose-100 flex items-center justify-center shadow-sm" title="Artist of the Month">
-                                <Music size={12} />
-                              </div>
-                            )}
-                            {request.artists?.is_trending ? (
-                              <div className="w-6 h-6 rounded-full bg-amber-50 text-amber-600 border border-amber-100 flex items-center justify-center shadow-sm" title="Popular Artist">
-                                <Star size={12} fill="currentColor" />
-                              </div>
-                            ) : (
-                              <div className="w-6 h-6 rounded-full bg-slate-50 text-slate-500 border border-slate-100 flex items-center justify-center shadow-sm" title="Standard Artist">
-                                <User size={12} />
-                              </div>
-                            )}
-                          </div>
-                       </div>
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-6 sm:gap-10 sm:px-12 sm:border-x sm:border-slate-100">
+                      <div className="w-full sm:min-w-[220px]">
+                         <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2">Artist</p>
+                         <p className="text-[16px] font-black text-slate-900 truncate mb-1.5 tracking-tight">{request.artists?.name || 'Any Artist'}</p>
+                         <div className="flex items-center gap-2">
+                            <span className="px-2.5 py-1 rounded-full bg-indigo-50 text-indigo-600 text-[10px] font-black uppercase tracking-wider">
+                              {request.artists?.category || 'General'}
+                            </span>
+                            <div className="flex items-center gap-1.5">
+                              {request.artists?.is_artist_of_month && (
+                                <div className="w-6 h-6 rounded-full bg-rose-50 text-rose-600 border border-rose-100 flex items-center justify-center shadow-sm" title="Artist of the Month">
+                                  <Music size={12} />
+                                </div>
+                              )}
+                              {request.artists?.is_trending ? (
+                                <div className="w-6 h-6 rounded-full bg-amber-50 text-amber-600 border border-amber-100 flex items-center justify-center shadow-sm" title="Popular Artist">
+                                  <Star size={12} fill="currentColor" />
+                                </div>
+                              ) : (
+                                <div className="w-6 h-6 rounded-full bg-slate-50 text-slate-500 border border-slate-100 flex items-center justify-center shadow-sm" title="Standard Artist">
+                                  <User size={12} />
+                                </div>
+                              )}
+                            </div>
+                         </div>
+                      </div>
+                      <div className="w-full sm:min-w-[140px]">
+                         <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2">Budget Evaluation</p>
+                         <div className="flex flex-wrap sm:flex-nowrap items-center gap-3">
+                           <span className="text-[16px] font-black text-slate-900 tracking-tight">₹{request.budget?.toLocaleString()}</span>
+                           {request.artists && (
+                              (() => {
+                                const inRange = request.budget >= (request.artists.price_min || 0) && request.budget <= (request.artists.price_max || Infinity);
+                                return (
+                                  <span className={cn(
+                                     "px-2 py-0.5 rounded-md text-[9px] font-black uppercase tracking-wider",
+                                     inRange ? "bg-emerald-50 text-emerald-600 border border-emerald-100" : "bg-rose-50 text-rose-600 border border-rose-100"
+                                  )}>
+                                    {inRange ? "Fit" : "Low"}
+                                  </span>
+                                );
+                              })()
+                           )}
+                         </div>
+                      </div>
                     </div>
-                    <div className="w-full sm:min-w-[140px]">
-                       <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2">Budget Evaluation</p>
-                       <div className="flex flex-wrap sm:flex-nowrap items-center gap-3">
-                         <span className="text-[16px] font-black text-slate-900 tracking-tight">₹{request.budget?.toLocaleString()}</span>
-                         {request.artists && (
-                            (() => {
-                              const inRange = request.budget >= (request.artists.price_min || 0) && request.budget <= (request.artists.price_max || Infinity);
-                              return (
-                                <span className={cn(
-                                   "px-2 py-0.5 rounded-md text-[9px] font-black uppercase tracking-wider",
-                                   inRange ? "bg-emerald-50 text-emerald-600 border border-emerald-100" : "bg-rose-50 text-rose-600 border border-rose-100"
-                                )}>
-                                  {inRange ? "Fit" : "Low"}
-                                </span>
-                              );
-                            })()
-                         )}
-                       </div>
-                    </div>
-                  </div>
 
-                  <div className="flex items-center gap-2">
-                    <button className="w-9 h-9 rounded-xl flex items-center justify-center bg-white border border-slate-100 text-slate-400 hover:text-sky-600 hover:border-sky-200 transition-all shadow-sm">
-                      <Eye size={16} />
-                    </button>
+                    <div className="flex items-center gap-2">
+                      <button className="w-9 h-9 rounded-xl flex items-center justify-center bg-white border border-slate-100 text-slate-400 hover:text-sky-600 hover:border-sky-200 transition-all shadow-sm">
+                        <Eye size={16} />
+                      </button>
+                    </div>
                   </div>
                 </div>
               );

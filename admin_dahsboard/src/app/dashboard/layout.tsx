@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
-import { Sidebar, navItems } from '@/components/dashboard/Sidebar';
+import { Sidebar, navSections } from '@/components/dashboard/Sidebar';
 import { Loader2, LogOut, Menu } from 'lucide-react';
 import NextImage from 'next/image';
 import Link from 'next/link';

@@ -128,7 +128,7 @@ export default function HeroSection() {
                 <span className="hp-btn-shine" aria-hidden="true" />
               </button>
               <Link href="/artists" className="hp-btn hp-btn-ghost">
-                Look Now
+                View All Artists
               </Link>
             </motion.div>
 

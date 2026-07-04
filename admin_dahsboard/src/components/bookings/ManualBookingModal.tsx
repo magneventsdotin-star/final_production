@@ -62,7 +62,7 @@ interface ManualBookingModalProps {
 }
 
 export function ManualBookingModal({ open, onOpenChange, onSuccess, initialArtistId }: ManualBookingModalProps) {
-  const [artists, setArtists] = useState<{ id: string, name: string, alias: string, price_min?: number, price_max?: number }[]>([]);
+  const [artists, setArtists] = useState<{ id: string, name: string, alias: string, price_min?: number, price_max?: number, cover_image_url?: string, artist_images?: { image_url: string }[], category?: string, city?: string }[]>([]);
   const [loading, setLoading] = useState(false);
   const [isManualCity, setIsManualCity] = useState(false);
   const [isManualEventType, setIsManualEventType] = useState(false);
@@ -93,7 +93,7 @@ export function ManualBookingModal({ open, onOpenChange, onSuccess, initialArtis
     async function fetchArtists() {
       const { data, error } = await supabase
         .from('artists')
-        .select('id, name, alias, price_min, price_max, members_min, members_max')
+        .select('id, name, alias, price_min, price_max, members_min, members_max, cover_image_url, artist_images(image_url), category, city')
         .order('name', { ascending: true });
 
       if (!error && data) {
@@ -249,7 +249,36 @@ export function ManualBookingModal({ open, onOpenChange, onSuccess, initialArtis
                         />
                       </FormControl>
                     )}
-                    <FormMessage />
+                    {(() => {
+                      const selectedId = field.value;
+                      const selectedArtist = artists.find(a => a.id === selectedId);
+                      if (!selectedArtist || isManualArtist) return null;
+                      
+                      return (
+                        <div className="mt-4 p-4 rounded-2xl bg-slate-50/50 border border-slate-100 shadow-sm flex items-center gap-4 animate-in fade-in slide-in-from-top-2">
+                          <div className="w-16 h-16 rounded-xl bg-slate-200 overflow-hidden shrink-0 border border-slate-200/50 shadow-inner">
+                            {(selectedArtist.cover_image_url || selectedArtist.artist_images?.[0]?.image_url) ? (
+                              <img src={selectedArtist.cover_image_url || selectedArtist.artist_images?.[0]?.image_url} alt={selectedArtist.name} className="w-full h-full object-cover" />
+                            ) : (
+                              <div className="w-full h-full flex items-center justify-center text-slate-400"><User size={24} /></div>
+                            )}
+                          </div>
+                          <div className="flex flex-col min-w-0 flex-1">
+                            <h4 className="font-bold text-slate-900 truncate text-sm">
+                              {selectedArtist.name} {selectedArtist.alias && <span className="text-slate-500 font-medium">(@{selectedArtist.alias})</span>}
+                            </h4>
+                            <p className="text-[10px] font-black text-sky-600 mt-1 uppercase tracking-widest">{selectedArtist.category || 'Artist'}</p>
+                            <div className="flex flex-wrap items-center gap-x-4 gap-y-1 mt-1.5 text-xs font-bold text-slate-500">
+                              {selectedArtist.city && <span className="flex items-center gap-1"><MapPin size={12} className="text-slate-400" /> {selectedArtist.city}</span>}
+                              {(selectedArtist.price_min || selectedArtist.price_max) ? (
+                                <span className="flex items-center gap-1 text-emerald-600"><IndianRupee size={12} strokeWidth={2.5} /> {selectedArtist.price_min || 0} - {selectedArtist.price_max || 0}</span>
+                              ) : null}
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })()}
+                    <FormMessage className="mt-2" />
                   </FormItem>
                 )}
               />

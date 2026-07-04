@@ -406,18 +406,43 @@ export default function BookingsPage() {
             <p className="text-sm text-slate-400">Try adjusting your search or filters</p>
           </div>
         ) : (
-          <div className="divide-y divide-slate-100">
-            {paginatedBookings.map((booking) => {
+          <div className="flex flex-col">
+            {paginatedBookings.map((booking, index) => {
+              let showHeader = false;
+              let headerText = '';
+              
+              if (sortBy === 'created_at') {
+                const dateStr = booking.created_at ? new Date(booking.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'Unknown Date';
+                const prevDateStr = index > 0 && paginatedBookings[index - 1].created_at 
+                  ? new Date(paginatedBookings[index - 1].created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) 
+                  : null;
+                showHeader = dateStr !== prevDateStr;
+                headerText = dateStr;
+              } else if (sortBy === 'event_date') {
+                const dateStr = booking.event_date ? new Date(booking.event_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'TBD';
+                const prevDateStr = index > 0 && paginatedBookings[index - 1].event_date 
+                  ? new Date(paginatedBookings[index - 1].event_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) 
+                  : null;
+                showHeader = dateStr !== prevDateStr;
+                headerText = dateStr;
+              }
+
               const status = getStatusBadge(booking.status);
               const StatusIcon = status.icon;
               const artistImg = booking.artists?.artist_images?.[0]?.image_url;
 
               return (
-                <div
-                  key={booking.id}
-                  className="relative flex flex-col sm:flex-row sm:items-center gap-4 px-4 sm:px-6 py-5 sm:py-4 hover:bg-slate-50/50 transition-colors cursor-pointer group border-b border-slate-100 last:border-0"
-                  onClick={() => { setSelectedBooking(booking); setDetailOpen(true); }}
-                >
+                <div key={booking.id} className="flex flex-col">
+                  {showHeader && (
+                    <div className="bg-slate-100/80 backdrop-blur-sm px-6 py-2 text-xs font-bold text-slate-600 uppercase tracking-widest sticky top-0 z-10 shadow-sm border-b border-slate-200 flex items-center gap-2 mt-4 mb-2 first:mt-0 rounded-t-xl">
+                      <Calendar size={14} className="text-slate-400" />
+                      {sortBy === 'event_date' ? 'Event Date: ' : 'Submitted: '}{headerText}
+                    </div>
+                  )}
+                  <div
+                    className="relative flex flex-col sm:flex-row sm:items-center gap-4 px-4 sm:px-6 py-5 sm:py-4 hover:bg-slate-50/50 transition-colors cursor-pointer group border-b border-slate-100 last:border-0"
+                    onClick={() => { setSelectedBooking(booking); setDetailOpen(true); }}
+                  >
                   <div className="absolute top-4 right-4 sm:static sm:order-last">
                     <span className={cn(
                       "inline-flex items-center gap-1 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full text-[10px] sm:text-[11px] font-bold border whitespace-nowrap",
@@ -509,6 +534,7 @@ export default function BookingsPage() {
                     </button>
                   </div>
                 </div>
+               </div>
               );
             })}
           </div>

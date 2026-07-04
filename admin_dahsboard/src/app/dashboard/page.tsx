@@ -695,7 +695,11 @@ export default function DashboardOverview() {
                 ))
              ) : (
                 recentArtists.map((a) => (
-                  <div key={a.id} className="group relative aspect-square rounded-2xl overflow-hidden bg-slate-100 border border-slate-200/50">
+                  <div 
+                    key={a.id} 
+                    onClick={() => { setSelectedArtist(a); setDetailOpen(true); }}
+                    className="group relative aspect-square rounded-2xl overflow-hidden bg-slate-100 border border-slate-200/50 cursor-pointer"
+                  >
                     {a.artist_images?.[0]?.image_url ? (
                       <img src={a.artist_images[0].image_url} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
                     ) : (
@@ -1001,7 +1005,11 @@ export default function DashboardOverview() {
              ) : (
                <div className="divide-y divide-slate-50">
                  {recentArtists.map((artist) => (
-                   <div key={artist.id} className="p-4 flex items-center justify-between hover:bg-slate-50 rounded-xl transition-colors group">
+                   <div 
+                     key={artist.id} 
+                     onClick={() => { setSelectedArtist(artist); setDetailOpen(true); }}
+                     className="p-4 flex items-center justify-between hover:bg-slate-50 rounded-xl transition-colors group cursor-pointer"
+                   >
                      <div className="flex items-center gap-4">
                        <div className="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center text-slate-400 group-hover:bg-indigo-50 group-hover:text-indigo-500 transition-colors relative">
                         {artist.artist_images?.[0]?.image_url && (
@@ -1336,19 +1344,39 @@ export default function DashboardOverview() {
                     </div>
                   )}
 
-                  <div className="pt-8 flex justify-end gap-3 border-t border-slate-100">
+                  <div className="pt-4 flex justify-end gap-3" style={{ borderTop: '1px solid var(--border-default)' }}>
+                    <button
+                      onClick={() => setIsBookingModalOpen(true)}
+                      className="h-9 px-5 rounded-[10px] bg-white/40 backdrop-blur-md border border-white shadow-sm hover:shadow-md hover:bg-white/60 hover:border-sky-300 transition-all text-slate-700 font-bold text-[11px] uppercase tracking-wider flex items-center gap-2"
+                    >
+                      <Plus size={13} strokeWidth={2.5} className="text-sky-500" />
+                      Book Now
+                    </button>
                     <button
                       onClick={() => handleShare(selectedArtist.id)}
-                      className="h-11 px-8 rounded-xl text-[11px] font-black uppercase tracking-widest flex items-center gap-2 transition-all text-sky-600 bg-sky-50 border border-sky-100 hover:bg-sky-600 hover:text-white shadow-sm"
+                      className="h-9 px-5 rounded-[10px] text-[11px] font-semibold uppercase tracking-wider flex items-center gap-2 transition-all bg-sky-50 text-sky-600 border border-sky-100 hover:bg-sky-600 hover:text-white"
                     >
-                      <Share2 size={14} />
+                      <Share2 size={13} />
                       Share Profile
                     </button>
                     <button
-                      onClick={() => handleDeleteArtist(selectedArtist.id, selectedArtist.name)}
-                      className="h-11 px-8 rounded-xl text-[11px] font-black uppercase tracking-widest flex items-center gap-2 transition-all text-rose-600 bg-rose-50 border border-rose-100 hover:bg-rose-600 hover:text-white hover:border-rose-600 shadow-sm"
+                      onClick={() => {
+                        setEditingArtist(selectedArtist);
+                        setIsModalOpen(true);
+                      }}
+                      className="h-9 px-5 rounded-[10px] text-[11px] font-semibold uppercase tracking-wider flex items-center gap-2 transition-all bg-amber-50 text-amber-600 border border-amber-100 hover:bg-amber-600 hover:text-white"
                     >
-                      <Trash2 size={14} />
+                      <PencilLine size={13} />
+                      Edit Profile
+                    </button>
+                    <button
+                      onClick={() => handleDeleteArtist(selectedArtist.id, selectedArtist.name)}
+                      className="h-9 px-5 rounded-[10px] text-[11px] font-semibold uppercase tracking-wider flex items-center gap-2 transition-all"
+                      style={{ color: 'var(--danger)', background: 'var(--danger-bg)', border: '1px solid #FECDD3' }}
+                      onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--danger)'; e.currentTarget.style.color = '#fff'; e.currentTarget.style.borderColor = 'var(--danger)'; }}
+                      onMouseLeave={(e) => { e.currentTarget.style.background = 'var(--danger-bg)'; e.currentTarget.style.color = 'var(--danger)'; e.currentTarget.style.borderColor = '#FECDD3'; }}
+                    >
+                      <Trash2 size={13} />
                       Delete Artist
                     </button>
                   </div>

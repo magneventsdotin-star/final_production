@@ -7,7 +7,7 @@ import BottomNav from '@/app/components/layout/BottomNav';
 import Footer from '@/app/components/common/Footer';
 import { useMouseGlow } from '@/app/hooks/useMouseGlow';
 
-const HIDE_CHROME_ON = ['/checkout', '/confirmed', '/login', '/signup', '/onboarding', '/chat', '/artist/'];
+const HIDE_CHROME_ON = ['/checkout', '/confirmed', '/login', '/signup', '/onboarding', '/chat'];
 
 export function AppShellWrapper({ children }) {
   const pathname = usePathname();

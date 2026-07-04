@@ -142,7 +142,7 @@ export const FAQS = [
 export const NAV_LINKS = [
   { label: 'Home', path: '/' },
   {
-    label: 'Category',
+    label: 'Artists',
     path: '/artists',
     isMega: true,
     children: [

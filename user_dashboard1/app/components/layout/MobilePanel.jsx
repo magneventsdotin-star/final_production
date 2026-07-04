@@ -85,7 +85,7 @@ export default function MobilePanel({ isOpen, onClose, isLight, pathname, onOpen
 
         <nav className="lux-mobile-links-container">
           {NAV_LINKS.map(link => {
-            const isCategory = link.label.toLowerCase() === 'category';
+            const isCategory = link.label.toLowerCase() === 'artists';
 
             if (isCategory) {
               return (

@@ -5,6 +5,7 @@ import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useTheme } from '@/app/contexts/ThemeContext';
+import { useScrollDirection } from '@/app/hooks/useScrollDirection';
 import BrandMark from '@/app/components/common/BrandMark';
 import { NAV_LINKS } from '@/app/constants';
 import '@/app/styles/components/Nav.css';
@@ -34,6 +35,7 @@ export default function Nav() {
 
   const searchRef = useRef(null);
   const scrolled = useScrolled(20);
+  const scrollDirection = useScrollDirection();
   const isLight = resolvedTheme === 'light';
 
   useEffect(() => {
@@ -63,7 +65,7 @@ export default function Nav() {
 
   return (
     <>
-      <nav className={`lux-nav ${isLight ? 'is-light' : 'is-dark'} ${scrolled ? 'is-scrolled' : ''}`}>
+      <nav className={`lux-nav ${isLight ? 'is-light' : 'is-dark'} ${scrolled ? 'is-scrolled' : ''} ${scrollDirection === 'down' && scrolled ? 'nav-hidden' : ''}`}>
         <div className="lux-nav-glow" aria-hidden="true" />
         <div className="lux-nav-inner">
 

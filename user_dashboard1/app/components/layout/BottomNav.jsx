@@ -1,7 +1,8 @@
 "use client"
 
 import { useRouter, usePathname } from 'next/navigation'
-import { HomeIcon, ServicesIcon, AboutIcon, ContactIcon, RegisterIcon } from '@/app/components/icons/NavigationIcons'
+import { HomeIcon, ServicesIcon, AboutIcon, ContactIcon, RegisterIcon, ArtistsIcon, PricingIcon } from '@/app/components/icons/NavigationIcons'
+import { useScrollDirection } from '@/app/hooks/useScrollDirection'
 
 function Tab({ path, icon, label, onNavigate, isActive }) {
   const iconColor = isActive ? '#FFE032' : '#8a8f98'
@@ -41,6 +42,8 @@ export default function BottomNav() {
     return pathname === path
   }
 
+  const scrollDirection = useScrollDirection()
+
   return (
     <>
       <div className="booking-bottom-nav" style={{
@@ -58,12 +61,14 @@ export default function BottomNav() {
         WebkitBackdropFilter: 'blur(24px) saturate(180%)',
         display: 'flex',
         padding: '0 8px',
+        transform: scrollDirection === 'down' ? 'translateY(150%)' : 'translateY(0)',
+        transition: 'transform 0.4s cubic-bezier(0.23, 1, 0.32, 1)',
       }}>
         {/* Slot 1: Home */}
         <Tab path="/" icon={(color) => <HomeIcon color={color} />} label="Home" onNavigate={(p) => router.push(p)} isActive={active('/')} />
         
-        {/* Slot 2: Services */}
-        <Tab path="/services" icon={(color) => <ServicesIcon color={color} />} label="Services" onNavigate={(p) => router.push(p)} isActive={active('/services')} />
+        {/* Slot 2: Artists */}
+        <Tab path="/artists" icon={(color) => <ArtistsIcon color={color} />} label="Artists" onNavigate={(p) => router.push(p)} isActive={active('/artists')} />
         
         {/* Slot 3: Center Elevated Register FAB */}
         <div style={{
@@ -108,15 +113,13 @@ export default function BottomNav() {
         {/* Slot 4: Blog */}
         <Tab path="/blog-post" icon={(color) => <AboutIcon color={color} />} label="Blog" onNavigate={(p) => router.push(p)} isActive={active('/blog-post')} />
         
-        {/* Slot 5: Contact */}
+        {/* Slot 5: Pricing */}
         <Tab
-          path="/contact"
-          icon={(color) => <ContactIcon color={color} />}
-          label="Contact"
-          onNavigate={(p) => {
-            window.dispatchEvent(new CustomEvent('open-contact-modal', { detail: { type: 'contact' } }));
-          }}
-          isActive={active('/contact')}
+          path="/pricing"
+          icon={(color) => <PricingIcon color={color} />}
+          label="Pricing"
+          onNavigate={(p) => router.push(p)}
+          isActive={active('/pricing')}
         />
       </div>
 

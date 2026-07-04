@@ -24,6 +24,10 @@
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
 }
 
+.lux-nav.nav-hidden {
+  transform: translateY(-100%);
+}
+
 .lux-nav-inner {
   width: 100%;
   max-width: 1400px;

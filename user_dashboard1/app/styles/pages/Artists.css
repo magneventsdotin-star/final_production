@@ -64,6 +64,34 @@
   gap: 24px;
 }
 
+@media (max-width: 1200px) {
+  .artists-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+}
+
+@media (max-width: 992px) {
+  .artists-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .artists-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+}
+
+@media (max-width: 576px) {
+  .artists-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
+
 .artist-card-v2 {
   position: relative;
   background: #0a0a0a;
@@ -508,4 +536,111 @@ body.modal-open .booking-bottom-nav-spacer {
 .hp-btn-book-v2:hover {
   filter: brightness(1.1);
   transform: scale(1.02);
+}
+
+/* Modern Artist Card Styles */
+.modern-artist-card {
+  position: relative;
+  background: #0a0a0a;
+  border-radius: 18px;
+  overflow: hidden;
+  aspect-ratio: 3.2/4;
+  width: 100%;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+@media (max-width: 576px) {
+  .modern-artist-card {
+    height: 380px;
+    aspect-ratio: auto;
+  }
+}
+
+.modern-artist-card:hover {
+  transform: translateY(-6px) scale(1.02);
+  border-color: rgba(255, 224, 50, 0.4);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 20px rgba(255, 224, 50, 0.1);
+}
+
+.modern-img-wrap {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.modern-overlay-gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.4) 45%, transparent 100%);
+  pointer-events: none;
+}
+
+.modern-info-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  z-index: 10;
+}
+
+.modern-genres-wrapper {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 2px;
+}
+
+.modern-genre-badge {
+  font-size: 9px;
+  color: #1a1a1a;
+  background: #FFE032;
+  padding: 4px 8px;
+  border-radius: 100px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  box-shadow: 0 4px 10px rgba(255, 224, 50, 0.2);
+}
+
+.modern-genre-badge.outline {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: none;
+  backdrop-filter: blur(10px);
+}
+
+.modern-artist-name {
+  font-size: 20px;
+  font-weight: 800;
+  color: #fff;
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+.modern-artist-loc {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 500;
+}
+
+.modern-artist-rating {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.modern-score-text {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: 600;
 }

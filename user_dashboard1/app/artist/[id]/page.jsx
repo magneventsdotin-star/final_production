@@ -252,32 +252,47 @@ export default function ArtistProfilePage({ params }) {
               const ytId = (match && match[2].length === 11) ? match[2] : null;
 
               return (
-                <div key={idx} style={{ 
-                  borderRadius: '16px', overflow: 'hidden', background: '#000', 
-                  border: '1px solid rgba(255,40,126,0.2)', aspectRatio: '9/16',
-                  position: 'relative', boxShadow: '0 10px 30px rgba(0,0,0,0.5)'
+                <div key={idx} className="modern-video-card" style={{ 
+                  borderRadius: '20px', overflow: 'hidden', background: '#0a0a0a', 
+                  border: '1px solid rgba(255,255,255,0.05)', aspectRatio: '9/16',
+                  position: 'relative', boxShadow: '0 15px 35px rgba(0,0,0,0.6)',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center'
                 }}>
                   {ytId ? (
                     <iframe
-                      src={`https://www.youtube.com/embed/${ytId}?rel=0&modestbranding=1&controls=0&showinfo=0`}
-                      style={{ border: 'none', objectFit: 'cover', width: '100%', height: '100%', transform: 'scale(1.2)' }}
+                      src={`https://www.youtube.com/embed/${ytId}?rel=0&modestbranding=1&controls=0&showinfo=0&autoplay=1&mute=1`}
+                      style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', border: 'none', objectFit: 'cover', transform: 'scale(1.3)', pointerEvents: 'none' }}
+                      allow="autoplay; encrypted-media"
                       allowFullScreen
                     />
                   ) : (
-                    <video 
-                      src={url}
-                      controls={false}
-                      autoPlay
-                      muted
-                      loop
-                      playsInline
-                      style={{ objectFit: 'cover', width: '100%', height: '100%' }}
-                    />
+                    <>
+                      {/* Blurred backdrop for modern effect if video doesn't perfectly cover */}
+                      <div style={{ position: 'absolute', inset: -20, background: 'linear-gradient(45deg, #1a1a1a, #000)', filter: 'blur(20px)', zIndex: 0 }} />
+                      
+                      <video 
+                        src={url}
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
+                        style={{ 
+                          position: 'absolute', 
+                          top: 0, 
+                          left: 0, 
+                          width: '100%', 
+                          height: '100%', 
+                          objectFit: 'cover', 
+                          zIndex: 1 
+                        }}
+                      />
+                    </>
                   )}
                   <div style={{
-                    position: 'absolute', bottom: 0, left: 0, right: 0, padding: '30px 20px 20px',
-                    background: 'linear-gradient(to top, rgba(0,0,0,0.9), transparent)', color: 'white',
-                    fontWeight: '700', fontSize: '15px'
+                    position: 'absolute', bottom: 0, left: 0, right: 0, padding: '40px 20px 24px',
+                    background: 'linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.5) 60%, transparent 100%)', 
+                    color: 'white', fontWeight: '800', fontSize: '16px', zIndex: 10,
+                    letterSpacing: '0.02em', textTransform: 'uppercase'
                   }}>
                     {vid.topic || 'Live Performance'}
                   </div>
