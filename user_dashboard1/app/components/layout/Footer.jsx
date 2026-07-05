@@ -6,11 +6,11 @@ import '@/app/styles/components/Footer.css'
 
 const SHOP_LINKS = [
   ['Wedding Live Bands', '/artists?category=band'],
-  ['Corporate Music Shows', '/services'],
-  ['Occasion Experiences', '/services'],
+  // ['Corporate Music Shows', '/services'],
+  // ['Occasion Experiences', '/services'],
   ['Pricing Plans', '/pricing'],
   ['Featured Singers', '/artists?category=singer'],
-  ['Stage and Sound Setup', '/services'],
+  // ['Stage and Sound Setup', '/services'],
   ['Last Minute Booking', '/book'],
 ]
 
