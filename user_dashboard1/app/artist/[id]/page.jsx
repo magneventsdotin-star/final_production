@@ -260,7 +260,7 @@ export default function ArtistProfilePage({ params }) {
                 }}>
                   {ytId ? (
                     <iframe
-                      src={`https://www.youtube.com/embed/${ytId}?rel=0&modestbranding=1&controls=1&showinfo=0&autoplay=1&mute=0`}
+                      src={`https://www.youtube.com/embed/${ytId}?rel=0&modestbranding=1&controls=1&autoplay=1&mute=0&playsinline=1&iv_load_policy=3&fs=0`}
                       style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', border: 'none', objectFit: 'contain' }}
                       allow="autoplay; encrypted-media"
                       allowFullScreen
