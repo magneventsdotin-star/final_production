@@ -351,6 +351,9 @@ export function Sidebar({ onClose, userRole = 'admin' }: { onClose?: () => void;
           <LogOut size={14} />
           Sign Out
         </button>
+        <div className="text-center mt-4 text-[10px] text-white/20 font-bold tracking-widest uppercase">
+          v1.1.0
+        </div>
       </div>
     </div>
   );

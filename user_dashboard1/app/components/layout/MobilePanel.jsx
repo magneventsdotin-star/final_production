@@ -205,7 +205,7 @@ export default function MobilePanel({ isOpen, onClose, isLight, pathname, onOpen
           )}
 
           <div style={{ textAlign: 'center', marginTop: '32px', fontSize: '12px', color: '#8a8f98', letterSpacing: '0.05em' }}>
-            v1.0.0
+            v1.1.0
           </div>
         </div>
       </aside>
