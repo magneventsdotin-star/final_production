@@ -12,6 +12,9 @@ export default function PWAInstallPrompt() {
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
+    // Only show on the home page
+    if (window.location.pathname !== '/') return;
+
     const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
     if (isStandalone) {
       return;
