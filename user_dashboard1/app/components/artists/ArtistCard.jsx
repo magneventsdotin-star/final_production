@@ -49,11 +49,8 @@ const ArtistCard = forwardRef(({ artist, onBook }, ref) => {
     return [];
   };
 
-  let genres = parseJsonArray(artist.sub_categories, artist.sub_category);
-  if (genres.length === 0) {
-    const rawGenre = artist.subCategory || artist.category || 'Performer';
-    genres = rawGenre.split(',').map(g => g.trim()).filter(Boolean);
-  }
+  const rawGenre = artist.category || artist.subCategory || 'Performer';
+  let genres = rawGenre.split(',').map(g => g.trim()).filter(Boolean);
 
   let languages = parseJsonArray(artist.languages, artist.performing_language);
 
@@ -97,9 +94,9 @@ const ArtistCard = forwardRef(({ artist, onBook }, ref) => {
             {genres.length > 0 && (
               <div style={{ display: 'flex', gap: '4px', flexWrap: 'nowrap', overflow: 'hidden', alignItems: 'center' }}>
                 {genres.slice(0, 1).map((g, idx) => (
-                  <span key={`g-${idx}`} style={{ background: '#FFE032', color: '#1a1a1a', padding: '2px 8px', borderRadius: '8px', fontSize: '9px', fontWeight: '800', letterSpacing: '0.05em', textTransform: 'uppercase', boxShadow: '0 2px 5px rgba(255, 224, 50, 0.2)', whiteSpace: 'nowrap' }}>{g}</span>
+                  <span key={`g-${idx}`} style={{ background: 'rgba(255,255,255,0.15)', color: '#ffffff', border: '1px solid rgba(255,255,255,0.3)', padding: '2px 8px', borderRadius: '8px', fontSize: '9px', fontWeight: '800', letterSpacing: '0.05em', textTransform: 'uppercase', whiteSpace: 'nowrap' }}>{g}</span>
                 ))}
-                {genres.length > 1 && <span style={{ background: 'rgba(255, 224, 50, 0.1)', color: '#FFE032', border: '1px solid rgba(255, 224, 50, 0.5)', padding: '1px 6px', borderRadius: '8px', fontSize: '9px', fontWeight: '800', whiteSpace: 'nowrap' }}>+{genres.length - 1}</span>}
+                {genres.length > 1 && <span style={{ background: 'rgba(255,255,255,0.15)', color: '#ffffff', border: '1px solid rgba(255,255,255,0.3)', padding: '1px 6px', borderRadius: '8px', fontSize: '9px', fontWeight: '800', whiteSpace: 'nowrap' }}>+{genres.length - 1}</span>}
               </div>
             )}
             
@@ -135,7 +132,7 @@ const ArtistCard = forwardRef(({ artist, onBook }, ref) => {
             </div>
             {mounted && bookings > 0 && (
               <div style={{ background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(5, 150, 105, 0.4) 100%)', color: '#34d399', padding: '6px 10px', borderRadius: '20px', fontSize: '9px', fontWeight: '800', letterSpacing: '0.05em', textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: '4px', border: '1px solid rgba(16, 185, 129, 0.3)', boxShadow: '0 4px 12px rgba(16, 185, 129, 0.15)' }}>
-                 🔥 {bookings} SHOWS
+                 🔥 {bookings} Elite Success
               </div>
             )}
           </div>
