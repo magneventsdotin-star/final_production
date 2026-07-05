@@ -47,8 +47,8 @@ function FeaturedArtistsSection() {
           let parsedArtists = data.map(artist => ({
             name: artist.alias || artist.name,
             genre: artist.sub_category || artist.category || 'Performer',
-            bookings: artist.successful_bookings || Math.floor(Math.random() * 50) + 50,
-            rating: artist.rating || '4.9',
+            bookings: artist.successful_bookings || 0,
+            rating: artist.rating || '0.0',
             image: artist.artist_images?.[0]?.image_url || '/assets/lux-singer-session.webp',
             city: artist.city || 'India'
           }));
@@ -65,8 +65,8 @@ function FeaturedArtistsSection() {
             let parsedAny = anyData.map(artist => ({
               name: artist.alias || artist.name,
               genre: artist.sub_category || artist.category || 'Performer',
-              bookings: artist.successful_bookings || Math.floor(Math.random() * 50) + 50,
-              rating: artist.rating || '4.9',
+              bookings: artist.successful_bookings || 0,
+              rating: artist.rating || '0.0',
               image: artist.artist_images?.[0]?.image_url || '/assets/lux-singer-session.webp',
               city: artist.city || 'India'
             }));
