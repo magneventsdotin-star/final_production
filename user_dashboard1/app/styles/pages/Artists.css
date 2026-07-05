@@ -554,7 +554,7 @@ body.modal-open .booking-bottom-nav-spacer {
 
 @media (max-width: 576px) {
   .modern-artist-card {
-    height: 400px;
+    height: 420px;
     aspect-ratio: auto;
   }
 }

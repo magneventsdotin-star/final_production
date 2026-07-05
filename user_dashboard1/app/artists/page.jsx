@@ -133,13 +133,9 @@ export default function ArtistsPage() {
           {loading ? (
             <>
               {Array.from({ length: 8 }).map((_, i) => (
-                <div key={i} className="artist-card-skeleton" style={{ 
+                <div key={i} className="modern-artist-card artist-card-skeleton" style={{ 
                   background: '#0a0a0a', 
                   border: '1px solid rgba(255,255,255,0.05)',
-                  borderRadius: '18px', 
-                  aspectRatio: '2/3.15',
-                  width: '100%', 
-                  overflow: 'hidden',
                   position: 'relative',
                   display: 'flex',
                   flexDirection: 'column',
