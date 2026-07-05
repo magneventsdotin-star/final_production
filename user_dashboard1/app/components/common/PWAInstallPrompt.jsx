@@ -17,29 +17,41 @@ export default function PWAInstallPrompt() {
       return;
     }
 
-    const hasBeenShown = localStorage.getItem('magnevents-pwa-shown');
-    if (hasBeenShown === 'true') {
+    const hasBeenDismissed = localStorage.getItem('magnevents-pwa-dismissed');
+    if (hasBeenDismissed === 'true') {
+      return;
+    }
+
+    const hasBeenShownThisSession = sessionStorage.getItem('magnevents-pwa-shown-session');
+    if (hasBeenShownThisSession === 'true') {
       return;
     }
 
     const handleBeforeInstallPrompt = (e) => {
       e.preventDefault();
+      
+      if (localStorage.getItem('magnevents-pwa-dismissed') === 'true') return;
+
       setDeferredPrompt(e);
       window.deferredPrompt = e;
       setShowPrompt(true);
-      localStorage.setItem('magnevents-pwa-shown', 'true');
+      sessionStorage.setItem('magnevents-pwa-shown-session', 'true');
     };
 
     window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
 
     if (window.deferredPrompt) {
-      setDeferredPrompt(window.deferredPrompt);
-      setShowPrompt(true);
-      localStorage.setItem('magnevents-pwa-shown', 'true');
+      if (localStorage.getItem('magnevents-pwa-dismissed') !== 'true') {
+        setDeferredPrompt(window.deferredPrompt);
+        setShowPrompt(true);
+        sessionStorage.setItem('magnevents-pwa-shown-session', 'true');
+      }
     } else {
       const timer = setTimeout(() => {
-        setShowPrompt(true);
-        localStorage.setItem('magnevents-pwa-shown', 'true');
+        if (localStorage.getItem('magnevents-pwa-dismissed') !== 'true' && sessionStorage.getItem('magnevents-pwa-shown-session') !== 'true') {
+          setShowPrompt(true);
+          sessionStorage.setItem('magnevents-pwa-shown-session', 'true');
+        }
       }, 3000);
       
       return () => {
