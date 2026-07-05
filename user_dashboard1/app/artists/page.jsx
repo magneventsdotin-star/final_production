@@ -132,28 +132,47 @@ export default function ArtistsPage() {
         <div className="artists-grid">
           {loading ? (
             <>
-              {Array.from({ length: 6 }).map((_, i) => (
+              {Array.from({ length: 8 }).map((_, i) => (
                 <div key={i} className="artist-card-skeleton" style={{ 
-                  background: 'rgba(255,255,255,0.02)', 
+                  background: '#0a0a0a', 
                   border: '1px solid rgba(255,255,255,0.05)',
-                  borderRadius: '24px', 
-                  height: '460px', 
+                  borderRadius: '18px', 
+                  aspectRatio: '2/3.15',
                   width: '100%', 
-                  overflow: 'hidden'
+                  overflow: 'hidden',
+                  position: 'relative',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'flex-end',
+                  padding: '24px 20px 20px'
                 }}>
-                   <div className="skeleton-pulse" style={{ height: '220px', background: 'rgba(255,255,255,0.04)', width: '100%' }}></div>
-                   <div style={{ padding: '30px 20px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                     <div className="skeleton-pulse" style={{ height: '28px', width: '70%', background: 'rgba(255,255,255,0.04)', borderRadius: '6px', marginBottom: '12px' }}></div>
-                     <div className="skeleton-pulse" style={{ height: '14px', width: '40%', background: 'rgba(255,255,255,0.04)', borderRadius: '4px', marginBottom: '30px' }}></div>
+                   {/* Background Shimmer */}
+                   <div className="skeleton-pulse" style={{ position: 'absolute', inset: 0, background: 'rgba(255,255,255,0.03)' }}></div>
+                   
+                   {/* Overlay Gradient mimicking the real card */}
+                   <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.6) 50%, transparent 100%)', pointerEvents: 'none' }}></div>
+                   
+                   {/* Content */}
+                   <div style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                     {/* Name */}
+                     <div className="skeleton-pulse" style={{ height: '28px', width: '60%', background: 'rgba(255,255,255,0.1)', borderRadius: '6px' }}></div>
                      
-                     <div style={{ display: 'flex', gap: '20px', marginBottom: '30px', width: '100%', justifyContent: 'center' }}>
-                       <div className="skeleton-pulse" style={{ height: '36px', width: '60px', background: 'rgba(255,255,255,0.04)', borderRadius: '8px' }}></div>
-                       <div className="skeleton-pulse" style={{ height: '36px', width: '60px', background: 'rgba(255,255,255,0.04)', borderRadius: '8px' }}></div>
+                     {/* Genres */}
+                     <div style={{ display: 'flex', gap: '6px' }}>
+                       <div className="skeleton-pulse" style={{ height: '14px', width: '50px', background: 'rgba(255,255,255,0.08)', borderRadius: '4px' }}></div>
+                       <div className="skeleton-pulse" style={{ height: '14px', width: '60px', background: 'rgba(255,255,255,0.08)', borderRadius: '4px' }}></div>
                      </div>
                      
-                     <div style={{ display: 'flex', gap: '10px', width: '100%' }}>
-                       <div className="skeleton-pulse" style={{ height: '44px', flex: 1, background: 'rgba(255,255,255,0.04)', borderRadius: '100px' }}></div>
-                       <div className="skeleton-pulse" style={{ height: '44px', flex: 1, background: 'rgba(255,255,255,0.04)', borderRadius: '100px' }}></div>
+                     {/* Location */}
+                     <div className="skeleton-pulse" style={{ height: '14px', width: '40%', background: 'rgba(255,255,255,0.08)', borderRadius: '4px', marginBottom: '8px' }}></div>
+                     
+                     {/* Bottom Row */}
+                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '16px' }}>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                          <div className="skeleton-pulse" style={{ height: '14px', width: '70px', background: 'rgba(255,255,255,0.1)', borderRadius: '4px' }}></div>
+                          <div className="skeleton-pulse" style={{ height: '12px', width: '90px', background: 'rgba(255,255,255,0.1)', borderRadius: '4px' }}></div>
+                        </div>
+                        <div className="skeleton-pulse" style={{ height: '24px', width: '80px', background: 'rgba(255,255,255,0.1)', borderRadius: '12px' }}></div>
                      </div>
                    </div>
                 </div>
