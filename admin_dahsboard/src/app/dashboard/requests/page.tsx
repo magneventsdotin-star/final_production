@@ -183,11 +183,7 @@ function ClientRequestsContent() {
         setEmailMessage(msg);
         setEmailActionStatus(newActionStatus);
         
-        if (['approve', 'unavailable', 'reject'].includes(actionType)) {
-          setConfirmModalOpen(true);
-        } else {
-          setEmailModalOpen(true);
-        }
+        setEmailModalOpen(true);
 
         // Clean up the URL
         router.replace('/dashboard/requests', { scroll: false });

@@ -1,56 +1,27 @@
 "use client"
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { supabase } from '@/app/lib/supabase';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { 
-  MapPin, BadgeCheck, Languages, FileText, 
-  Camera, Film, ZoomIn, Play, Quote 
-} from 'lucide-react';
 import '@/app/styles/pages/ArtistProfile.css';
 
-// Animation Variants
-const fadeInUp = {
-  hidden: { opacity: 0, y: 40 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.165, 0.84, 0.44, 1] } }
+const StarRating = ({ rating }) => {
+  return (
+    <div style={{ display: 'flex', gap: '4px', color: '#FFE032' }}>
+      {[...Array(5)].map((_, i) => (
+        <svg key={i} width="16" height="16" viewBox="0 0 24 24" fill={i < rating ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2">
+          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+        </svg>
+      ))}
+    </div>
+  );
 };
-
-const staggerContainer = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.1 }
-  }
-};
-
-const SectionHeader = ({ icon: Icon, title, subtitle }) => (
-  <motion.div 
-    className="section-header-modern"
-    variants={fadeInUp}
-    initial="hidden"
-    whileInView="visible"
-    viewport={{ once: true, margin: "-100px" }}
-  >
-    <h2 className="section-title">
-      {Icon && <Icon className="section-title-icon" strokeWidth={1.5} />}
-      {title}
-    </h2>
-    {subtitle && <div className="section-subtitle">{subtitle}</div>}
-    <div className="animated-underline" />
-  </motion.div>
-);
 
 export default function ArtistProfilePage({ params }) {
   const [artist, setArtist] = useState(null);
   const [videos, setVideos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedImage, setSelectedImage] = useState(null);
-  const heroRef = useRef(null);
-
-  // Parallax scroll effect for hero background
-  const { scrollY } = useScroll();
-  const heroY = useTransform(scrollY, [0, 1000], [0, 300]);
 
   const decodedId = decodeURIComponent(params.id);
 
@@ -60,7 +31,9 @@ export default function ArtistProfilePage({ params }) {
     } else {
       document.body.style.overflow = '';
     }
-    return () => { document.body.style.overflow = ''; };
+    return () => {
+      document.body.style.overflow = '';
+    };
   }, [selectedImage]);
 
   useEffect(() => {
@@ -77,7 +50,7 @@ export default function ArtistProfilePage({ params }) {
           query = query.or(`alias.ilike.%${decodedId}%,name.ilike.%${decodedId}%`);
         }
 
-        let { data } = await query.limit(1).single();
+        let { data, error } = await query.limit(1).single();
 
         if (data) {
           setArtist(data);
@@ -93,8 +66,7 @@ export default function ArtistProfilePage({ params }) {
             setVideos(urls.map((url, idx) => ({ id: idx, video_url: url })));
           }
         } else {
-          // Fallback if no main artist found, check service_videos directly
-          const { data: svData } = await supabase
+          const { data: svData, error: svError } = await supabase
             .from('service_videos')
             .select('*')
             .or(`userName.ilike.%${decodedId}%,artistName.ilike.%${decodedId}%`);
@@ -107,7 +79,10 @@ export default function ArtistProfilePage({ params }) {
               sub_category: firstVideo.artistType,
               bio: firstVideo.artistBio || 'A highly talented performer ready to elevate your event.',
               city: 'Global',
+              state: '',
               performing_language: 'English, Regional',
+              price_min: null,
+              exclusive_price: null,
               artist_images: []
             });
             setVideos(svData);
@@ -125,22 +100,16 @@ export default function ArtistProfilePage({ params }) {
 
   if (loading) {
     return (
-      <div className="artist-profile-wrapper" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-        <motion.div 
-          animate={{ scale: [0.9, 1.1, 0.9], opacity: [0.5, 1, 0.5] }} 
-          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-          style={{ fontFamily: 'Playfair Display', fontSize: '24px', color: '#E7286A', letterSpacing: '0.2em', textTransform: 'uppercase' }}
-        >
-          Curating Profile...
-        </motion.div>
+      <div className="artist-profile-wrapper" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+        <div style={{ animation: 'pulse 1.5s infinite', color: '#E7286A', fontWeight: 'bold' }}>Loading Profile...</div>
       </div>
     );
   }
 
   if (!artist) {
     return (
-      <div className="artist-profile-wrapper" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-        <h1 style={{ fontFamily: 'Playfair Display', color: 'white', fontSize: '32px' }}>Artist Not Found</h1>
+      <div className="artist-profile-wrapper" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+        <h1 style={{ color: 'white' }}>Artist not found</h1>
       </div>
     );
   }
@@ -153,161 +122,129 @@ export default function ArtistProfilePage({ params }) {
 
   return (
     <main className="artist-profile-wrapper">
-      {/* Cinematic Hero */}
-      <section className="artist-hero-card" ref={heroRef}>
-        <motion.div 
-          className="hero-bg-image" 
-          style={{ backgroundImage: `url(${coverImage})`, y: heroY }} 
-        />
-        <div className="hero-gradient-overlay" />
-        
-        <motion.div 
-          className="hero-content"
-          initial="hidden"
-          animate="visible"
-          variants={staggerContainer}
-        >
-          <div className="hero-text-area">
-            <motion.div className="artist-badges" variants={fadeInUp}>
-              <span className="badge-item glass-badge"><BadgeCheck size={14} style={{ display: 'inline', marginRight: 4, marginBottom: 2 }} /> Premium Artist</span>
-              {artist.city && <span className="badge-item glass-badge"><MapPin size={14} style={{ display: 'inline', marginRight: 4, marginBottom: 2 }} /> {artist.city}</span>}
-              {artist.performing_language && <span className="badge-item glass-badge"><Languages size={14} style={{ display: 'inline', marginRight: 4, marginBottom: 2 }} /> {artist.performing_language}</span>}
-            </motion.div>
-            
-            <motion.h1 className="artist-name" variants={fadeInUp}>
-              {name}
-            </motion.h1>
-            
-            <motion.div className="artist-genres" variants={fadeInUp}>
-              {categories ? categories.split(',').map((cat, i) => (
-                <span key={i} className="genre-pill">{cat.trim()}</span>
-              )) : (
-                <span className="genre-pill">Live Performer</span>
-              )}
-            </motion.div>
-
-            <motion.div className="hero-actions" variants={fadeInUp}>
-              <button 
-                className="btn-primary-elegant" 
-                onClick={() => window.dispatchEvent(new CustomEvent('open-contact-modal', { detail: { type: 'booking', artist: { name } } }))}
-              >
-                Book Performance
-              </button>
-              <button 
-                className="btn-secondary-elegant" 
-                onClick={() => window.dispatchEvent(new CustomEvent('open-contact-modal', { detail: { type: 'booking', artist: { name } } }))}
-              >
-                Contact Now
-              </button>
-            </motion.div>
-          </div>
-        </motion.div>
-      </section>
-
       <div className="artist-container">
         
-        {/* Floating Booking / Stats Card */}
-        <motion.div 
-          className="booking-float-card"
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-        >
-          <div className="stat-block">
-            <span className="stat-label-lux">Original Price</span>
-            <span className="stat-value-lux" style={{ textDecoration: 'line-through', opacity: 0.5, fontSize: '24px' }}>
-              ₹{artist.price_min ? (artist.price_min + 5000).toLocaleString() : '15,000'}
-            </span>
-          </div>
-          <div className="stat-block">
-            <span className="stat-label-lux">Exclusive Price</span>
-            <span className="stat-value-lux accent">
-              ₹{artist.price_min ? artist.price_min.toLocaleString() : '10,000'}
-            </span>
-          </div>
-          <div className="stat-block">
-            <span className="stat-label-lux">Rating</span>
-            <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px' }}>
-              <span className="stat-value-lux">{(artist.rating || 5.0).toFixed(1)}</span>
-              <span style={{ color: '#FFD166' }}>★★★★★</span>
+        <section className="artist-hero-card">
+          <div className="hero-bg-image" style={{ backgroundImage: `url(${coverImage})` }} />
+          <div className="hero-gradient-overlay" />
+          
+          <div className="hero-content">
+            <div className="hero-text-area">
+              <div className="artist-badges">
+                <span className="badge-item glass-badge">★ Premium Artist</span>
+                {artist.category && <span className="badge-item glass-badge">{artist.category}</span>}
+              </div>
+              
+              <h1 className="artist-name">{name}</h1>
+              
+              <div className="artist-genres">
+                {categories ? categories.split(',').map((cat, i) => (
+                  <span key={i} className="genre-pill">{cat.trim()}</span>
+                )) : (
+                  <span className="genre-pill">Live Performer</span>
+                )}
+              </div>
+
+              <div className="hero-actions">
+                <button className="btn-primary-elegant" onClick={() => window.dispatchEvent(new CustomEvent('open-contact-modal', { detail: { type: 'booking', artist: { name } } }))}>
+                  Book Performance
+                </button>
+                <button className="btn-secondary-elegant" onClick={() => window.dispatchEvent(new CustomEvent('open-contact-modal', { detail: { type: 'booking', artist: { name } } }))}>
+                  Contact Now
+                </button>
+              </div>
+            </div>
+
+            <div className="hero-stats">
+              <div className="stat-item">
+                <div className="stat-value">{(artist.rating || 0).toFixed(1)}</div>
+                <div className="stat-label" style={{ marginTop: '4px' }}>
+                  <StarRating rating={Math.round(artist.rating || 0)} />
+                </div>
+                <div className="stat-sublabel">Rating</div>
+              </div>
+              <div className="stat-divider" />
+              <div className="stat-item">
+                <div className="stat-value">{artist.successful_bookings || 0}</div>
+                <div style={{ height: '14px' }} />
+                <div className="stat-sublabel">Total Shows</div>
+              </div>
             </div>
           </div>
-          <div className="stat-block">
-            <span className="stat-label-lux">Total Shows</span>
-            <span className="stat-value-lux">{artist.successful_bookings || '150+'}</span>
-          </div>
-        </motion.div>
-
-        {/* Professional Bio Quote Card */}
-        <section className="info-section">
-          <SectionHeader 
-            icon={FileText}
-            title="Professional Bio" 
-            subtitle="The artist's journey and repertoire."
-          />
-          <motion.div 
-            className="luxury-quote-card"
-            variants={fadeInUp}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-          >
-            <Quote className="quote-mark" />
-            <p className="bio-text-lux">
-              {artist.bio || "A spectacular performer known for bringing high energy and unforgettable moments to every stage. Whether it's a corporate event, a private wedding, or a grand festival, their versatile talent ensures the crowd is always engaged and amazed."}
-            </p>
-          </motion.div>
         </section>
 
-        {/* Photo Gallery - Pinterest Masonry */}
+        <section className="info-section">
+          <h2 className="section-title">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+            Artist Information
+          </h2>
+          
+          <div className="info-grid">
+            <div className="info-card">
+              <div className="info-icon-wrapper">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+              </div>
+              <span className="info-label">Location</span>
+              <span className="info-value">{artist.city || 'Global'}</span>
+            </div>
+            
+            <div className="info-card">
+              <div className="info-icon-wrapper">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+              </div>
+              <span className="info-label">Category</span>
+              <span className="info-value">{artist.category || 'Live Musician'}</span>
+            </div>
+            
+            <div className="info-card">
+              <div className="info-icon-wrapper">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21.54 15H17a2 2 0 0 0-2 2v4.54"></path><path d="M7 3.34V5a3 3 0 0 0 3 3v0a2 2 0 0 1 2 2v0c0 1.1.9 2 2 2v0a2 2 0 0 0 2-2v0c0-1.1.9-2 2-2h3.17"></path><path d="M11 21.95V18a2 2 0 0 0-2-2v0a2 2 0 0 1-2-2v-1a2 2 0 0 0-2-2H2.05"></path><circle cx="12" cy="12" r="10"></circle></svg>
+              </div>
+              <span className="info-label">Languages</span>
+              <span className="info-value">{artist.performing_language || 'English, Hindi'}</span>
+            </div>
+            
+            <div className="info-card">
+              <div className="info-icon-wrapper">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+              </div>
+              <span className="info-label">Original Price</span>
+              <span className="info-value price-strike">₹{artist.price_min ? (artist.price_min + 5000).toLocaleString() : '15,000'}</span>
+            </div>
+            
+            <div className="info-card">
+              <div className="info-icon-wrapper">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+              </div>
+              <span className="info-label">Exclusive Price</span>
+              <span className="info-value price-exclusive">₹{artist.price_min ? artist.price_min.toLocaleString() : '10,000'}</span>
+            </div>
+          </div>
+
+          <div className="bio-block">
+            <h2 className="section-title">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+              Professional Bio
+            </h2>
+            <p style={{ whiteSpace: 'pre-wrap' }}>{artist.bio || "This artist is a spectacular performer known for bringing high energy and unforgettable moments to every stage. Whether it's a corporate event, a private wedding, or a grand festival, their versatile talent ensures the crowd is always engaged and amazed."}</p>
+          </div>
+        </section>
         {artist.artist_images && artist.artist_images.length > 0 && (
           <section className="info-section">
-            <SectionHeader 
-              icon={Camera}
-              title="Photo Gallery" 
-              subtitle="Captured luxury moments from exclusive events."
-            />
-            <motion.div 
-              className="flex-gallery"
-              variants={staggerContainer}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-100px" }}
-            >
+            <h2 className="section-title">Photo Gallery</h2>
+            <div className="gallery-grid">
               {artist.artist_images.map((img, idx) => (
-                <motion.div 
-                  key={idx} 
-                  className="flex-gallery-item" 
-                  variants={fadeInUp}
-                  onClick={() => setSelectedImage(img.image_url)}
-                >
-                  <img src={img.image_url} alt={`${name} performance ${idx + 1}`} loading="lazy" />
-                  <div className="flex-gallery-item-overlay">
-                    <div className="zoom-icon-wrapper">
-                      <ZoomIn size={24} />
-                    </div>
-                  </div>
-                </motion.div>
+                <div key={idx} className="gallery-item" onClick={() => setSelectedImage(img.image_url)} style={{ cursor: 'pointer' }}>
+                  <img src={img.image_url} alt={`${name} gallery ${idx + 1}`} className="gallery-image" />
+                </div>
               ))}
-            </motion.div>
+            </div>
           </section>
         )}
-
-        {/* Video Formats */}
-        <section className="info-section" style={{ paddingBottom: '100px' }}>
-          <SectionHeader 
-            icon={Film}
-            title="Cinematic Performances" 
-            subtitle="Live videos and exclusive showcases."
-          />
+        <section className="info-section" style={{ marginTop: '80px' }}>
+          <h2 className="section-title">Performance Formats & Videos</h2>
           
-          <motion.div 
-            className="video-grid-lux"
-            variants={staggerContainer}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-          >
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '30px', marginTop: '30px' }}>
             {videos.length > 0 ? videos.map((vid, idx) => {
               const url = vid.video_url;
               const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=|shorts\/)([^#\&\?]*).*/;
@@ -315,49 +252,68 @@ export default function ArtistProfilePage({ params }) {
               const ytId = (match && match[2].length === 11) ? match[2] : null;
 
               return (
-                <motion.div key={idx} className="lux-video-card" variants={fadeInUp}>
+                <div key={idx} className="modern-video-card" style={{ 
+                  borderRadius: '20px', overflow: 'hidden', background: '#0a0a0a', 
+                  border: '1px solid rgba(255,255,255,0.05)', aspectRatio: '9/16',
+                  position: 'relative', boxShadow: '0 15px 35px rgba(0,0,0,0.6)',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center'
+                }}>
                   {ytId ? (
                     <iframe
                       src={`https://www.youtube.com/embed/${ytId}?rel=0&modestbranding=1&controls=1&autoplay=1&mute=0&playsinline=1&iv_load_policy=3&fs=0`}
                       style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', border: 'none', objectFit: 'contain' }}
                       allow="autoplay; encrypted-media"
+                      allowFullScreen
                     />
                   ) : (
                     <>
-                      <div style={{ position: 'absolute', inset: -20, background: 'linear-gradient(45deg, #000, #111)', filter: 'blur(20px)', zIndex: 0 }} />
+                      {/* Blurred backdrop for modern effect if video doesn't perfectly cover */}
+                      <div style={{ position: 'absolute', inset: -20, background: 'linear-gradient(45deg, #1a1a1a, #000)', filter: 'blur(20px)', zIndex: 0 }} />
+                      
                       <video 
                         src={url}
                         controls
                         autoPlay
                         playsInline
-                        style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'contain', zIndex: 1 }}
+                        style={{ 
+                          position: 'absolute', 
+                          top: 0, 
+                          left: 0, 
+                          width: '100%', 
+                          height: '100%', 
+                          objectFit: 'contain', 
+                          zIndex: 1 
+                        }}
                       />
                     </>
                   )}
-                  {/* Decorative Gradient Shadow */}
-                  <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', boxShadow: 'inset 0 0 0 1px rgba(255,255,255,0.05)', zIndex: 20 }} />
-                </motion.div>
+                  <div style={{
+                    position: 'absolute', bottom: 0, left: 0, right: 0, padding: '40px 20px 24px',
+                    background: 'linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.5) 60%, transparent 100%)', 
+                    color: 'white', fontWeight: '800', fontSize: '16px', zIndex: 10,
+                    letterSpacing: '0.02em', textTransform: 'uppercase'
+                  }}>
+                    {vid.topic || 'Live Performance'}
+                  </div>
+                </div>
               )
             }) : (
-              <p style={{ color: 'rgba(255,255,255,0.5)', fontFamily: 'Playfair Display', fontSize: '20px' }}>No cinematic performances available yet.</p>
+              <p style={{ color: 'rgba(255,255,255,0.5)' }}>No videos available for this artist yet.</p>
             )}
-          </motion.div>
+          </div>
         </section>
 
       </div>
 
-      {/* Lightbox Modal */}
       {selectedImage && typeof document !== 'undefined' && createPortal(
-        <motion.div 
+        <div 
           className="lightbox-overlay"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
           onClick={() => setSelectedImage(null)}
         >
           <button 
             className="lightbox-close"
             onClick={(e) => { e.stopPropagation(); setSelectedImage(null); }}
+            aria-label="Close"
           >
             &times;
           </button>
@@ -375,13 +331,10 @@ export default function ArtistProfilePage({ params }) {
             </button>
           )}
 
-          <motion.img 
+          <img 
             src={selectedImage} 
-            alt="Expanded luxury view" 
+            alt="Expanded view" 
             className="lightbox-image"
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ type: "spring", damping: 25, stiffness: 300 }}
             onClick={(e) => e.stopPropagation()} 
           />
           
@@ -397,7 +350,7 @@ export default function ArtistProfilePage({ params }) {
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
             </button>
           )}
-        </motion.div>,
+        </div>,
         document.body
       )}
     </main>

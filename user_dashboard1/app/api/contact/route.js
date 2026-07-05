@@ -293,10 +293,10 @@ export async function POST(req) {
       
       const bId = bookingId || 'unknown';
       const confirmLink = `${adminUrl}/dashboard/requests?reply=${bId}&action=confirm`;
-      const approveLink = `${adminUrl}/api/action-request?id=${bId}&type=client_request&action=approve`;
+      const approveLink = `${adminUrl}/dashboard/requests?reply=${bId}&action=approve`;
       const moreInfoLink = `${adminUrl}/dashboard/requests?reply=${bId}&action=more_info`;
-      const unavailableLink = `${adminUrl}/api/action-request?id=${bId}&type=client_request&action=unavailable`;
-      const rejectLink = `${adminUrl}/api/action-request?id=${bId}&type=client_request&action=reject`;
+      const unavailableLink = `${adminUrl}/dashboard/requests?reply=${bId}&action=unavailable`;
+      const rejectLink = `${adminUrl}/dashboard/requests?reply=${bId}&action=reject`;
       const customReplyLink = `${adminUrl}/dashboard/requests?reply=${bId}&action=custom`;
       const previewLink = `${adminUrl}/dashboard/requests?reply=${bId}`;
 

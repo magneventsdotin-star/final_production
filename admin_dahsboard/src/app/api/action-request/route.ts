@@ -17,6 +17,11 @@ export async function GET(req: Request) {
       return new NextResponse('Missing required parameters', { status: 400 });
     }
 
+    if (type === 'client_request') {
+      const origin = process.env.NEXT_PUBLIC_APP_URL || 'https://admin.magnevents.in';
+      return NextResponse.redirect(`${origin}/dashboard/requests?reply=${id}&action=${action}`);
+    }
+
     let error = null;
 
     if (type === 'duplicate_approval') {
