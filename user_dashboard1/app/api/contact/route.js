@@ -348,7 +348,7 @@ export async function POST(req) {
     
 
     const mailOptions = {
-      from: process.env.EMAIL_USER,
+      from: `"${subjectPrefix} - Magnevents" <${process.env.EMAIL_USER}>`,
       to: process.env.EMAIL_USER,
       subject: `${subjectPrefix} - ${data.name}`,
       text: emailBody,
