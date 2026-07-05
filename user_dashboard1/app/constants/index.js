@@ -284,11 +284,11 @@ export const INFO_CARDS = [
     accent: "matrix"
   },
   {
-    title: "Book Your Event",
+    title: "Book For Your Event",
     subtitle: "Let’s Bring Your Event to Life",
     icon: "✨",
     link: "/contact",
-    points: ["Solo Singer", "Full Band", "Sufi Artist"],
+    points: ["Book Solo Singer or Band", "Anchors and Comedians", "DJs and Magicians"],
     accent: "pink"
   }
 ]
