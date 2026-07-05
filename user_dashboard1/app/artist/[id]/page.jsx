@@ -260,8 +260,8 @@ export default function ArtistProfilePage({ params }) {
                 }}>
                   {ytId ? (
                     <iframe
-                      src={`https://www.youtube.com/embed/${ytId}?rel=0&modestbranding=1&controls=0&showinfo=0&autoplay=1&mute=1`}
-                      style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', border: 'none', objectFit: 'cover', transform: 'scale(1.3)', pointerEvents: 'none' }}
+                      src={`https://www.youtube.com/embed/${ytId}?rel=0&modestbranding=1&controls=1&showinfo=0&autoplay=0&mute=0`}
+                      style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', border: 'none', objectFit: 'contain' }}
                       allow="autoplay; encrypted-media"
                       allowFullScreen
                     />
@@ -272,9 +272,7 @@ export default function ArtistProfilePage({ params }) {
                       
                       <video 
                         src={url}
-                        autoPlay
-                        muted
-                        loop
+                        controls
                         playsInline
                         style={{ 
                           position: 'absolute', 
@@ -282,7 +280,7 @@ export default function ArtistProfilePage({ params }) {
                           left: 0, 
                           width: '100%', 
                           height: '100%', 
-                          objectFit: 'cover', 
+                          objectFit: 'contain', 
                           zIndex: 1 
                         }}
                       />
