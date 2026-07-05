@@ -138,8 +138,20 @@ function ClientRequestsContent() {
 
   // Auto-open email modal if reply param is present
   useEffect(() => {
-    if (replyId && requests.length > 0) {
-      const req = requests.find(r => r.id === replyId);
+    const handleDeepLink = async () => {
+      if (!replyId) return;
+      
+      let req = requests.find(r => r.id === replyId);
+      
+      // If we finished loading the main list but didn't find the request, fetch it directly
+      if (!req && !loading) {
+        const { data } = await (supabase.from('bookings') as any)
+          .select('*, artists(id, name, alias, category, city, price_min, price_max, is_trending, is_artist_of_month, artist_images!fk_artist_id(image_url))')
+          .eq('id', replyId)
+          .single();
+        if (data) req = data;
+      }
+
       if (req) {
         setSelectedRequest(req);
         setDetailOpen(true); // Always open the event details in the background
@@ -188,8 +200,10 @@ function ClientRequestsContent() {
         // Clean up the URL
         router.replace('/dashboard/requests', { scroll: false });
       }
-    }
-  }, [replyId, actionType, requests, router]);
+    };
+    
+    handleDeepLink();
+  }, [replyId, actionType, requests, loading, router]);
 
   const totalPages = Math.max(1, Math.ceil(requests.length / ITEMS_PER_PAGE));
   const paginatedRequests = requests.slice(
