@@ -61,11 +61,11 @@ export function ImageUploader({ images, onChange, maxImages = 15 }: ImageUploade
           continue;
         }
 
-        if (file.size > 5 * 1024 * 1024) {
+        if (file.size > 15 * 1024 * 1024) {
           toast({
-            variant: "destructive",
-            title: "File Too Large",
-            description: `${file.name} exceeds the 5MB limit.`,
+            variant: 'destructive',
+            title: 'File too large',
+            description: `${file.name} exceeds the 15MB limit.`,
           });
           continue;
         }

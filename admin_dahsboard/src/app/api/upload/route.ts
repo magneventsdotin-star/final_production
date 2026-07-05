@@ -27,8 +27,8 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'File must be an image or a video' }, { status: 400 });
     }
 
-    if (file.type.startsWith('image/') && file.size > 5 * 1024 * 1024) {
-      return NextResponse.json({ error: 'Image exceeds 5MB limit' }, { status: 400 });
+    if (file.type.startsWith('image/') && file.size > 15 * 1024 * 1024) {
+      return NextResponse.json({ error: 'Image exceeds 15MB limit' }, { status: 400 });
     }
 
     if (file.type.startsWith('video/') && file.size > 200 * 1024 * 1024) {

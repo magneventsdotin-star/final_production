@@ -158,8 +158,9 @@ export default function ServicesPage() {
     <div className="v4-services-wrapper">
       
       {/* =========================================
-          SECTION 1: FULL SCREEN HERO
+          SECTION 1: FULL SCREEN HERO (COMMENTED OUT)
           ========================================= */}
+      {/* 
       <section className="v4-hero-section">
         {!heroVideo?.includes('youtube') ? (
           <video src={heroVideo} autoPlay muted loop playsInline className="v4-hero-media" />
@@ -193,6 +194,7 @@ export default function ServicesPage() {
           </button>
         </motion.div>
       </section>
+      */}
 
       {/* =========================================
           SECTION 3: CATEGORY VIDEOS
