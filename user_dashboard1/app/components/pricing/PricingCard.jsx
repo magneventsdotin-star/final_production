@@ -61,7 +61,7 @@ export default function PricingCard({ plan, index }) {
             } 
           } 
         }))} 
-        className={`card-btn ${plan.popular ? 'btn-primary' : 'btn-outline'}`}
+        className="card-btn btn-primary"
       >
         Book now
       </button>
