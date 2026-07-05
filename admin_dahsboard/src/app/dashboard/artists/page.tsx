@@ -501,13 +501,56 @@ export default function ArtistManagement() {
           </h1>
           <p className="text-body mt-1 max-w-2xl font-medium">Manage and view all registered talent profiles.</p>
         </div>
-        <button
-          className="w-full sm:w-auto h-11 px-6 rounded-xl bg-slate-900 text-white shadow-lg shadow-slate-200/50 hover:bg-slate-800 hover:scale-[1.02] active:scale-[0.98] transition-all font-bold text-[12px] uppercase tracking-wider flex items-center justify-center gap-2"
-          onClick={() => { setEditingArtist(null); setIsModalOpen(true); }}
-        >
-          <Plus size={16} strokeWidth={3} />
-          Add Artist
-        </button>
+        <div className="flex items-center gap-3 w-full sm:w-auto">
+          <button
+            className="flex-1 sm:flex-none h-11 px-6 rounded-xl bg-slate-900 text-white shadow-lg shadow-slate-200/50 hover:bg-slate-800 hover:scale-[1.02] active:scale-[0.98] transition-all font-bold text-[12px] uppercase tracking-wider flex items-center justify-center gap-2"
+            onClick={() => { setEditingArtist(null); setIsModalOpen(true); }}
+          >
+            <Plus size={16} strokeWidth={3} />
+            Add Artist
+          </button>
+          <button
+            onClick={async () => {
+              try {
+                if (!artists || artists.length === 0) {
+                  toast({ variant: 'destructive', title: 'No Data', description: 'No artists to export.' });
+                  return;
+                }
+                const XLSX = await import('xlsx');
+                const exportData = artists.map((a: any, index: number) => ({
+                  'S.No': index + 1,
+                  'Artist No': a.artist_no || 'N/A',
+                  'Artist Name': a.name || 'N/A',
+                  'Alias': a.alias || 'N/A',
+                  'Category': a.category || 'N/A',
+                  'Contact Person': a.contact_person || 'N/A',
+                  'Phone No': a.phone_no || 'N/A',
+                  'Email': a.email || 'N/A',
+                  'City': a.city || 'N/A',
+                  'State': a.state || 'N/A',
+                  'Price Range': a.price_range || (a.price_min && a.price_max ? `${a.price_min}-${a.price_max}` : 'N/A'),
+                  'Language': a.performing_language || 'N/A',
+                  'Trending': a.is_trending ? 'Yes' : 'No',
+                  'Artist of Month': a.is_artist_of_month ? 'Yes' : 'No',
+                  'Status': a.is_live ? 'Live' : 'Hidden',
+                  'Added On': a.created_at ? new Date(a.created_at).toLocaleString('en-IN') : 'N/A',
+                }));
+                const ws = XLSX.utils.json_to_sheet(exportData);
+                const wb = XLSX.utils.book_new();
+                XLSX.utils.book_append_sheet(wb, ws, 'Artists');
+                const today = new Date().toISOString().split('T')[0];
+                XLSX.writeFile(wb, `TalentTrack_Artists_${today}.xlsx`);
+                toast({ title: 'Downloaded!', description: 'Artists exported as XLS file.' });
+              } catch (error: any) {
+                toast({ variant: 'destructive', title: 'Export Error', description: error.message });
+              }
+            }}
+            className="group flex-1 sm:flex-none h-11 px-6 rounded-xl bg-gradient-to-r from-emerald-500 to-emerald-600 border border-emerald-400 text-white text-[11px] font-black uppercase tracking-[0.2em] hover:shadow-lg hover:shadow-emerald-200/50 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 flex items-center justify-center gap-3 shadow-sm"
+          >
+            <Download size={16} strokeWidth={3} className="text-white" />
+            Export XLS
+          </button>
+        </div>
       </div>
       <CreateArtistModal
         key={editingArtist?.id || 'new'}

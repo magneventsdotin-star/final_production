@@ -152,6 +152,37 @@ function EmailsContent() {
             <RefreshCw size={16} />
             Refresh
           </button>
+          <button
+            onClick={async () => {
+              try {
+                if (!emails || emails.length === 0) {
+                  toast({ variant: 'destructive', title: 'No Data', description: 'No emails to export.' });
+                  return;
+                }
+                const XLSX = await import('xlsx');
+                const exportData = emails.map((e: any, index: number) => ({
+                  'S.No': index + 1,
+                  'Subject': e.subject || 'N/A',
+                  'Recipient': e.recipient_email || 'N/A',
+                  'Client': e.bookings?.client_name || 'N/A',
+                  'Type': e.email_type || 'N/A',
+                  'Status': e.status || 'N/A',
+                  'Sent At': e.sent_at ? new Date(e.sent_at).toLocaleString('en-IN') : 'N/A',
+                }));
+                const ws = XLSX.utils.json_to_sheet(exportData);
+                const wb = XLSX.utils.book_new();
+                XLSX.utils.book_append_sheet(wb, ws, 'Emails');
+                const today = new Date().toISOString().split('T')[0];
+                XLSX.writeFile(wb, `TalentTrack_Emails_${today}.xlsx`);
+                toast({ title: 'Downloaded!', description: 'Emails exported as XLS file.' });
+              } catch (error: any) {
+                toast({ variant: 'destructive', title: 'Export Error', description: error.message });
+              }
+            }}
+            className="group h-9 px-4 rounded-xl bg-gradient-to-r from-emerald-500 to-emerald-600 border border-emerald-400 text-white text-[11px] font-black uppercase tracking-[0.1em] hover:shadow-lg hover:shadow-emerald-200/50 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 flex items-center justify-center gap-2 shadow-sm"
+          >
+            Export XLS
+          </button>
         </div>
       </div>
 

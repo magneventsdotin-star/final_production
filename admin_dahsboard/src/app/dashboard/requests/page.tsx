@@ -309,9 +309,46 @@ function ClientRequestsContent() {
   return (
     <div className="space-y-6 pb-8">
       <div className="relative -mx-4 sm:-mx-6 lg:-mx-8 xl:-mx-10 -mt-4 sm:-mt-6 lg:-mt-8 xl:-mt-10 px-4 sm:px-6 lg:px-8 xl:px-10 pt-8 pb-8 bg-gradient-to-b from-slate-50 to-transparent border-b border-white mb-2 text-center sm:text-left">
-          <div className="mb-6">
-            <h1 className="text-3xl font-black text-slate-900 tracking-tight mb-2">Client Inquiries</h1>
-            <p className="text-sm font-medium text-slate-500">Incoming requests from the client website. Acknowledge to move them to Bookings.</p>
+          <div className="mb-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div>
+              <h1 className="text-3xl font-black text-slate-900 tracking-tight mb-2">Client Inquiries</h1>
+              <p className="text-sm font-medium text-slate-500">Incoming requests from the client website. Acknowledge to move them to Bookings.</p>
+            </div>
+            <button
+              onClick={async () => {
+                try {
+                  if (!requests || requests.length === 0) {
+                    toast({ variant: 'destructive', title: 'No Data', description: 'No requests to export.' });
+                    return;
+                  }
+                  const XLSX = await import('xlsx');
+                  const exportData = requests.map((r: any, index: number) => ({
+                    'S.No': index + 1,
+                    'Artist Name': r.artists?.name || 'N/A',
+                    'Client Name': r.client_name || 'N/A',
+                    'Client Email': r.client_email || 'N/A',
+                    'Client Phone': r.client_phone || 'N/A',
+                    'Event Type': r.event_type || 'N/A',
+                    'Budget': r.budget || 'N/A',
+                    'Venue': r.venue || 'N/A',
+                    'Status': r.status || 'N/A',
+                    'Date': r.created_at ? new Date(r.created_at).toLocaleString('en-IN') : 'N/A',
+                  }));
+                  const ws = XLSX.utils.json_to_sheet(exportData);
+                  const wb = XLSX.utils.book_new();
+                  XLSX.utils.book_append_sheet(wb, ws, 'Client Inquiries');
+                  const today = new Date().toISOString().split('T')[0];
+                  XLSX.writeFile(wb, `TalentTrack_Inquiries_${today}.xlsx`);
+                  toast({ title: 'Downloaded!', description: 'Inquiries exported as XLS file.' });
+                } catch (error: any) {
+                  toast({ variant: 'destructive', title: 'Export Error', description: error.message });
+                }
+              }}
+              className="group h-11 px-6 rounded-xl bg-gradient-to-r from-emerald-500 to-emerald-600 border border-emerald-400 text-white text-[11px] font-black uppercase tracking-[0.2em] hover:shadow-lg hover:shadow-emerald-200/50 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 flex items-center justify-center gap-3 shadow-sm"
+            >
+              <Download size={16} strokeWidth={3} className="text-white" />
+              Export XLS
+            </button>
           </div>
 
         <div className="flex flex-col space-y-3">
