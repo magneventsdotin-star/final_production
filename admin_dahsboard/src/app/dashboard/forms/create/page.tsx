@@ -67,6 +67,7 @@ export default function CreateFormPage() {
   const [description, setDescription] = useState('');
   const [fields, setFields] = useState<any[]>([]);
   const [saving, setSaving] = useState(false);
+  const [showFieldSuccess, setShowFieldSuccess] = useState(false);
   
   // Design states
   const [coverImage, setCoverImage] = useState<string>('');
@@ -109,6 +110,11 @@ export default function CreateFormPage() {
       description: 'A new field has been added to your form.',
       variant: 'default',
     });
+    
+    setShowFieldSuccess(true);
+    setTimeout(() => {
+      setShowFieldSuccess(false);
+    }, 3000);
   };
 
   const removeField = (id: string) => {
@@ -338,12 +344,19 @@ export default function CreateFormPage() {
           <div className="space-y-4">
             <div className="flex items-center justify-between">
               <h2 className="text-xl font-black text-slate-900">Form Fields</h2>
-              <button 
-                onClick={addField}
-                className="bg-slate-900 text-white hover:bg-slate-800 px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-all flex items-center gap-2 shadow-sm"
-              >
-                <Plus size={16} /> Add Field
-              </button>
+              <div className="flex items-center gap-4">
+                {showFieldSuccess && (
+                  <span className="text-sm font-bold text-emerald-600 bg-emerald-50 px-3 py-1 rounded-lg animate-in fade-in slide-in-from-right-2">
+                    <CheckCircle2 size={16} className="inline mr-1 mb-0.5" /> Field Added
+                  </span>
+                )}
+                <button 
+                  onClick={addField}
+                  className="bg-slate-900 text-white hover:bg-slate-800 px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-all flex items-center gap-2 shadow-sm"
+                >
+                  <Plus size={16} /> Add Field
+                </button>
+              </div>
             </div>
 
             {fields.length === 0 ? (
