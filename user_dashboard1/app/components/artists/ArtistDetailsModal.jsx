@@ -77,7 +77,6 @@ export default function ArtistDetailsModal({ artist, showDetails, setShowDetails
 
             <div className={`proper-modal-content-new ${(!artist.videoUrls?.length && !artist.galleryImages?.length) ? 'single-col' : ''}`} style={{ padding: '40px' }}>
               
-              {/* Only show left column if there is media */}
               {(artist.videoUrls?.length > 0 || artist.galleryImages?.length > 0) && (
                 <div className="proper-modal-left-col">
                   <div className="proper-section">

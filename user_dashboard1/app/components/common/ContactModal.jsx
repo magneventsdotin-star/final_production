@@ -133,7 +133,6 @@ export default function ContactModal() {
       selectedService: initialService
     }
 
-    // Fast background submission - instantly show success
     setSubmitted(true)
 
     bookingService.submitRequest({ ...submissionData, formType }).catch(error => {

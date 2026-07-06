@@ -65,7 +65,7 @@ export default function Nav() {
 
   return (
     <>
-      <nav className={`lux-nav ${isLight ? 'is-light' : 'is-dark'} ${scrolled ? 'is-scrolled' : ''} ${scrollDirection === 'down' && scrolled ? 'nav-hidden' : ''}`}>
+      <nav className={`lux-nav ${isLight ? 'is-light' : 'is-dark'} ${scrolled ? 'is-scrolled' : ''}`}>
         <div className="lux-nav-glow" aria-hidden="true" />
         <div className="lux-nav-inner">
 

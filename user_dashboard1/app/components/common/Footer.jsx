@@ -77,7 +77,6 @@ export default function Footer() {
             </h4>
             <ul className="lux-footer-links">
               <li><Link href="/blog-post" className="lux-footer-link">Blog Post</Link></li>
-              {/* <li><Link href="/services" className="lux-footer-link">Services</Link></li> */}
               <li><Link href="/why-choose" className="lux-footer-link">Why Choose Us</Link></li>
               <li><button type="button" onClick={(e) => triggerModal(e, 'contact')} className="lux-footer-link" style={{ textAlign: 'left', width: '100%', padding: 0 }}>Contact Support</button></li>
             </ul>
