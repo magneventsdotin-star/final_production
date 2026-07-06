@@ -37,8 +37,6 @@ export async function POST(request: Request) {
     if (profileError) {
       return NextResponse.json({ error: profileError.message }, { status: 500 });
     }
-
-    // 2. Delete from auth.users
     const { error: authError } = await supabaseAdmin.auth.admin.deleteUser(userId);
 
     if (authError && authError.message !== 'User not found') {

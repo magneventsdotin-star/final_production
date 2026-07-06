@@ -3,7 +3,6 @@ import { supabase } from '@/lib/supabase';
 import { S3Client, ListObjectsV2Command } from '@aws-sdk/client-s3';
 import os from 'os';
 
-// Initialize S3 Client for R2
 const r2Client = new S3Client({
   region: 'auto',
   endpoint: process.env.R2_S3_ENDPOINT || '',
@@ -65,13 +64,9 @@ export async function GET() {
     bookings: 0
   };
 
-  // 1. Check Database
   try {
     const dbStart = performance.now();
-    // simple lightweight query to check connection
     const { error } = await supabase.from('profiles').select('id').limit(1);
-    
-    // Also fetch counts in parallel for real metrics
     const [
       { count: usersCount },
       { count: artistsCount },
@@ -93,8 +88,6 @@ export async function GET() {
     dbStatus.status = 'error';
     dbStatus.error = err.message;
   }
-
-  // 2. Check Storage (R2)
   try {
     const storageStart = performance.now();
     const command = new ListObjectsV2Command({
