@@ -104,6 +104,11 @@ export default function CreateFormPage() {
         options: '',
       }
     ]);
+    toast({
+      title: 'Field Added',
+      description: 'A new field has been added to your form.',
+      variant: 'default',
+    });
   };
 
   const removeField = (id: string) => {
