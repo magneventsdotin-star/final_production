@@ -106,21 +106,21 @@ const ArtistCard = forwardRef(({ artist, onBook }, ref) => {
             <span style={{ color: '#cbd5e1', fontSize: '13px', fontWeight: '500' }}>{location}</span>
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '16px' }}>
-            <div className="flex items-center gap-1.5">
-              <Stars count={Math.round(Number(rating))} />
-              <span style={{ color: '#ffffff', fontWeight: '800', fontSize: '14px' }}>{rating}</span>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '16px' }}>
+            <div className="flex flex-col gap-1">
+              <div className="flex items-center gap-1.5">
+                <Stars count={Math.round(Number(rating))} />
+                <span style={{ color: '#ffffff', fontWeight: '800', fontSize: '14px' }}>{rating}</span>
+              </div>
             </div>
             {mounted && bookings > 0 && (
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <div style={{ background: 'rgba(16, 185, 129, 0.15)', padding: '4px', borderRadius: '50%', border: '1px solid rgba(16, 185, 129, 0.3)' }}>
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" style={{ width: '10px', height: '10px', color: '#34d399' }}>
+              <div style={{ background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(5, 150, 105, 0.4) 100%)', color: '#34d399', padding: '4px 8px', borderRadius: '20px', fontSize: '8px', fontWeight: '800', letterSpacing: '0.02em', textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: '4px', border: '1px solid rgba(16, 185, 129, 0.3)', boxShadow: '0 4px 12px rgba(16, 185, 129, 0.15)', whiteSpace: 'nowrap' }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '12px', height: '12px', flexShrink: 0, background: 'rgba(16, 185, 129, 0.25)', borderRadius: '50%' }}>
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" style={{ width: '8px', height: '8px', color: '#34d399' }}>
                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                   </svg>
                 </div>
-                <span style={{ color: '#34d399', fontSize: '11px', fontWeight: '800', letterSpacing: '0.02em', textTransform: 'uppercase' }}>
-                  {bookings} Successful Bookings
-                </span>
+                <span>{bookings} Successful Bookings</span>
               </div>
             )}
           </div>
