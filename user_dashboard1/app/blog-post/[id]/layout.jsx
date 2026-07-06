@@ -75,12 +75,12 @@ export default async function BlogLayout({ children, params }) {
       "name": "Magnevents",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://magnevents.com/icon-512.png"
+        "url": "https://www.magnevents.in/icon-512.png"
       }
     },
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id": `https://magnevents.com/blog-post/${id}`
+      "@id": `https://www.magnevents.in/blog-post/${id}`
     }
   };
 

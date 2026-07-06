@@ -56,7 +56,7 @@ export default async function ArtistLayout({ children, params }) {
     "description": data?.bio || "Live performer available for booking",
     "image": image,
     "jobTitle": data?.category || "Artist",
-    "url": `https://magnevents.com/artist/${params.id}`
+    "url": `https://www.magnevents.in/artist/${params.id}`
   };
 
   return (

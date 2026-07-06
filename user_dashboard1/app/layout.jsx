@@ -25,7 +25,7 @@ export const viewport = {
 };
 
 export const metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://magnevents.com'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://www.magnevents.in'),
   title: 'Magnevents — Premium Live Artist Booking',
   description: 'Artist-first booking for weddings, corporate nights, and concerts.',
   manifest: '/manifest.json',

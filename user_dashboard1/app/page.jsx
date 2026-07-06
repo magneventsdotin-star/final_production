@@ -15,8 +15,8 @@ export default function HomePage() {
     "@context": "https://schema.org",
     "@type": "Organization",
     "name": "Magnevents",
-    "url": "https://magnevents.com",
-    "logo": "https://magnevents.com/icon-512.png",
+    "url": "https://www.magnevents.in",
+    "logo": "https://www.magnevents.in/icon-512.png",
     "sameAs": [
       "https://www.instagram.com/magnevents.in?igsh=MXY2NmtjMm82bTFnaA==",
       "https://facebook.com/magnevents"

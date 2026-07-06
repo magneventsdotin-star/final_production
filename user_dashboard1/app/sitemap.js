@@ -2,7 +2,7 @@
 // I've added placeholders for how you would fetch them. 
 
 export default async function sitemap() {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://magnevents.com';
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.magnevents.in';
 
   // Example of how you would fetch dynamic routes:
   // const artists = await fetch('.../api/artists').then((res) => res.json());
