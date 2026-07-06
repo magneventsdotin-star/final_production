@@ -556,3 +556,10 @@
   }
 }
 
+
+/* Mobile: Keep Top Navbar Stuck */
+@media (max-width: 768px) {
+  .lux-nav.nav-hidden {
+    transform: none !important;
+  }
+}
