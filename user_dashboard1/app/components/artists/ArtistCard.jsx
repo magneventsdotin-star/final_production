@@ -35,13 +35,13 @@ const ArtistCard = forwardRef(({ artist, onBook }, ref) => {
 
   const parseJsonArray = (val, fallbackStr) => {
     if (Array.isArray(val)) return val.filter(Boolean);
-    if (typeof val === 'string') {
-      try {
+    try {
+      if (typeof val === 'string') {
         const parsed = JSON.parse(val);
         if (Array.isArray(parsed)) return parsed.filter(Boolean);
-      } catch (e) {
-        // Not a JSON array string
       }
+    } catch (e) {
+      // ignore
     }
     if (typeof fallbackStr === 'string' && fallbackStr.trim() !== '') {
       return fallbackStr.split(',').map(s => s.trim()).filter(Boolean);
@@ -49,8 +49,8 @@ const ArtistCard = forwardRef(({ artist, onBook }, ref) => {
     return [];
   };
 
-  let subCats = parseJsonArray(artist.sub_categories, artist.sub_category);
-  let langs = parseJsonArray(artist.languages, artist.performing_language);
+  let subCats = parseJsonArray(artist.subCategory, artist.subCategory);
+  let langs = parseJsonArray(artist.languages, artist.languages);
   let mainCat = artist.category ? artist.category.split(',').map(s => s.trim()) : [];
   
   let allTags = [...new Set([...mainCat, ...subCats, ...langs])].filter(Boolean);
