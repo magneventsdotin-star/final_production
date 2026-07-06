@@ -142,21 +142,15 @@ export default function ClientFormPage({ params }) {
 
   // Parse design config
   const design = form.design_config || {};
-  const isDarkGlass = design.theme === 'dark-glass';
-  const isLight = design.theme === 'light';
-  const accentColor = design.accentColor || '#4f46e5';
+  const accentColor = design.accentColor || '#D65050'; // Use Magnevents red/gold accent by default
   
-  // Theme Classes
-  const bgClass = isLight ? 'bg-slate-50' : 'bg-[#020617]';
-  const textTitleClass = isLight ? 'text-slate-900' : 'text-white';
-  const textDescClass = isLight ? 'text-slate-500' : 'text-slate-400';
-  const labelClass = isLight ? 'text-slate-700' : 'text-slate-300';
-  const inputClass = isLight ? 'bg-white border-slate-200 text-slate-900 placeholder:text-slate-400' : 'bg-[#020617]/50 border-white/10 text-white placeholder:text-slate-600';
-  const containerClass = isLight 
-    ? 'bg-white rounded-[32px] border border-slate-100 shadow-xl overflow-hidden' 
-    : (design.glassmorphism 
-        ? 'bg-[#0f172a]/80 backdrop-blur-2xl rounded-[32px] border border-white/10 shadow-2xl overflow-hidden' 
-        : 'bg-[#0f172a] rounded-[32px] border border-white/10 shadow-2xl overflow-hidden');
+  // Force Premium Dark Theme to match Magnevents website
+  const bgClass = 'bg-[#050505]';
+  const textTitleClass = 'text-white';
+  const textDescClass = 'text-gray-400';
+  const labelClass = 'text-gray-300';
+  const inputClass = 'bg-[#111111]/60 border border-white/10 text-white placeholder:text-gray-600 focus:bg-[#1a1a1a] hover:border-white/20 focus:border-white/30';
+  const containerClass = 'bg-[#0a0a0a]/80 backdrop-blur-3xl rounded-[32px] border border-white/10 shadow-[0_0_50px_rgba(0,0,0,0.5)] overflow-hidden';
 
   if (submitted) {
     return (
@@ -164,22 +158,18 @@ export default function ClientFormPage({ params }) {
         <script src="https://cdn.tailwindcss.com"></script>
         <script dangerouslySetInnerHTML={{ __html: `tailwind.config = { corePlugins: { preflight: false } }` }}></script>
         <div className={`min-h-screen ${bgClass} flex flex-col items-center justify-center p-6 text-center relative overflow-hidden`}>
-          {!isLight && (
-            <>
-              <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-20 mix-blend-overlay"></div>
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 rounded-full blur-[100px]" style={{ backgroundColor: `${accentColor}33` }}></div>
-            </>
-          )}
+          <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-20 mix-blend-overlay"></div>
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 rounded-full blur-[100px]" style={{ backgroundColor: `${accentColor}33` }}></div>
         
-        <div className={`${isLight ? 'bg-white border-slate-100 shadow-lg' : 'bg-[#0f172a]/80 backdrop-blur-xl border-white/10 shadow-2xl'} p-10 rounded-3xl border max-w-md w-full relative z-10`}>
-          <div className="w-20 h-20 text-white rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg" style={{ background: `linear-gradient(to top right, ${accentColor}, ${accentColor}dd)` }}>
+        <div className={`bg-[#0a0a0a]/80 backdrop-blur-xl border border-white/10 shadow-2xl p-10 rounded-3xl max-w-md w-full relative z-10`}>
+          <div className="w-20 h-20 text-white rounded-full flex items-center justify-center mx-auto mb-6 shadow-[0_0_30px_rgba(214,80,80,0.4)]" style={{ background: `linear-gradient(to top right, ${accentColor}, ${accentColor}dd)` }}>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor" className="w-10 h-10">
               <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
             </svg>
           </div>
           <h1 className={`text-3xl font-black ${textTitleClass} mb-3 tracking-tight`}>Thank You!</h1>
           <p className={`${textDescClass} mb-8 leading-relaxed`}>Your responses have been successfully submitted to the Magnevents team. We will be in touch shortly.</p>
-          <button onClick={() => window.location.href = '/'} className={`${isLight ? 'bg-slate-100 text-slate-700 hover:bg-slate-200' : 'bg-white/5 text-white hover:bg-white/10 border border-white/10'} font-bold py-3 px-8 rounded-xl w-full transition-all`}>
+          <button onClick={() => window.location.href = '/'} className={`bg-white/5 text-white hover:bg-white/10 border border-white/10 font-bold py-3 px-8 rounded-xl w-full transition-all`}>
             Return to Home
           </button>
         </div>
@@ -193,17 +183,13 @@ export default function ClientFormPage({ params }) {
       <script src="https://cdn.tailwindcss.com"></script>
       <script dangerouslySetInnerHTML={{ __html: `tailwind.config = { corePlugins: { preflight: false } }` }}></script>
       <div className={`min-h-screen ${bgClass} relative overflow-hidden`} style={{ selection: { backgroundColor: `${accentColor}4d` } }}>
-        {!isLight && (
-          <>
-            <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-20 mix-blend-overlay"></div>
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] rounded-full blur-[120px] pointer-events-none" style={{ backgroundColor: `${accentColor}33` }}></div>
-          </>
-        )}
+        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-20 mix-blend-overlay"></div>
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] rounded-full blur-[120px] pointer-events-none" style={{ backgroundColor: `${accentColor}33` }}></div>
 
       <div className="max-w-3xl mx-auto px-4 py-12 relative z-10">
         <div className="flex justify-center mb-10">
-          <div className={`${isLight ? 'bg-white shadow-sm border border-slate-200' : 'bg-white/5 backdrop-blur-md border border-white/10'} p-4 rounded-3xl`}>
-             <Image src="/assets/logo.webp" alt="Magnevents Logo" width={140} height={60} className={`h-10 w-auto object-contain ${isLight ? '' : 'filter invert brightness-200'}`} priority />
+          <div className={`bg-white/5 backdrop-blur-md border border-white/10 p-4 rounded-3xl`}>
+             <Image src="/assets/logo.webp" alt="Magnevents Logo" width={140} height={60} className={`h-10 w-auto object-contain filter invert brightness-200`} priority />
           </div>
         </div>
 
@@ -211,11 +197,11 @@ export default function ClientFormPage({ params }) {
           {form.cover_image && (
             <div className="w-full h-48 md:h-64 relative border-b border-white/5">
               <img src={form.cover_image} alt="Form Cover" className="w-full h-full object-cover" />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0f172a] to-transparent opacity-60"></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] to-transparent opacity-80"></div>
             </div>
           )}
 
-          <div className={`p-8 md:p-12 border-b ${isLight ? 'border-slate-100 bg-slate-50/50' : 'border-white/5 bg-gradient-to-b from-white/5 to-transparent'}`}>
+          <div className={`p-8 md:p-12 border-b border-white/5 bg-gradient-to-b from-white/5 to-transparent`}>
             <h1 className={`text-3xl md:text-4xl font-black ${textTitleClass} tracking-tight mb-4`}>{form.title}</h1>
             {form.description && (
               <p className={`${textDescClass} leading-relaxed text-lg`}>{form.description}</p>
@@ -225,20 +211,20 @@ export default function ClientFormPage({ params }) {
           <div className="p-8 md:p-12">
             <form onSubmit={handleSubmit} className="space-y-8">
               
-              <div className={`p-6 rounded-2xl border`} style={{ backgroundColor: isLight ? `${accentColor}11` : `${accentColor}22`, borderColor: `${accentColor}44` }}>
-                <label className="block text-sm font-bold uppercase tracking-widest mb-3" style={{ color: isLight ? accentColor : `${accentColor}ee` }}>Your Email Address <span className="text-rose-400">*</span></label>
+              <div className={`p-6 rounded-2xl border`} style={{ backgroundColor: `${accentColor}11`, borderColor: `${accentColor}33` }}>
+                <label className="block text-sm font-bold uppercase tracking-widest mb-3" style={{ color: `${accentColor}ee` }}>Your Email Address <span className="text-rose-400">*</span></label>
                 <input
                   type="email"
                   required
                   value={email}
                   onChange={e => setEmail(e.target.value)}
                   placeholder="Where should we contact you?"
-                  className={`w-full border rounded-xl px-5 py-4 font-medium focus:outline-none transition-all ${inputClass}`}
+                  className={`w-full rounded-xl px-5 py-4 font-medium focus:outline-none transition-all ${inputClass}`}
                   style={{ outlineColor: accentColor }}
                 />
               </div>
 
-              <div className={`w-full h-px my-8 ${isLight ? 'bg-slate-200' : 'bg-white/5'}`}></div>
+              <div className={`w-full h-px my-8 bg-white/5`}></div>
 
               {fields.map(field => (
                 <div key={field.id} className="space-y-3">
@@ -254,7 +240,7 @@ export default function ClientFormPage({ params }) {
                       placeholder={field.placeholder || ''}
                       value={formData[field.id]}
                       onChange={e => handleChange(field.id, e.target.value)}
-                      className={`w-full border rounded-xl px-5 py-3.5 focus:outline-none transition-all ${inputClass}`}
+                      className={`w-full rounded-xl px-5 py-3.5 focus:outline-none transition-all ${inputClass}`}
                       style={{ outlineColor: accentColor }}
                     />
                   )}
@@ -266,7 +252,7 @@ export default function ClientFormPage({ params }) {
                       placeholder={field.placeholder || ''}
                       value={formData[field.id]}
                       onChange={e => handleChange(field.id, e.target.value)}
-                      className={`w-full border rounded-xl px-5 py-3.5 focus:outline-none transition-all ${inputClass}`}
+                      className={`w-full rounded-xl px-5 py-3.5 focus:outline-none transition-all ${inputClass}`}
                       style={{ outlineColor: accentColor }}
                     />
                   )}
@@ -278,7 +264,7 @@ export default function ClientFormPage({ params }) {
                       value={formData[field.id]}
                       onChange={e => handleChange(field.id, e.target.value)}
                       rows={4}
-                      className={`w-full border rounded-xl px-5 py-3.5 focus:outline-none transition-all resize-none ${inputClass}`}
+                      className={`w-full rounded-xl px-5 py-3.5 focus:outline-none transition-all resize-none ${inputClass}`}
                       style={{ outlineColor: accentColor }}
                     />
                   )}
@@ -289,7 +275,7 @@ export default function ClientFormPage({ params }) {
                       required={field.is_required}
                       value={formData[field.id]}
                       onChange={e => handleChange(field.id, e.target.value)}
-                      className={`w-full border rounded-xl px-5 py-3.5 focus:outline-none transition-all ${inputClass}`}
+                      className={`w-full rounded-xl px-5 py-3.5 focus:outline-none transition-all ${inputClass}`}
                       style={{ outlineColor: accentColor }}
                     />
                   )}
@@ -299,27 +285,27 @@ export default function ClientFormPage({ params }) {
                       required={field.is_required}
                       value={formData[field.id]}
                       onChange={e => handleChange(field.id, e.target.value)}
-                      className={`w-full border rounded-xl px-5 py-3.5 focus:outline-none transition-all ${inputClass}`}
+                      className={`w-full rounded-xl px-5 py-3.5 focus:outline-none transition-all ${inputClass}`}
                       style={{ outlineColor: accentColor }}
                     >
-                      <option value="" disabled>Select an option...</option>
+                      <option value="" disabled className="bg-[#111]">Select an option...</option>
                       {field.options && JSON.parse(field.options).map((opt, i) => (
-                        <option key={i} value={opt} className={isLight ? 'bg-white' : 'bg-slate-900'}>{opt}</option>
+                        <option key={i} value={opt} className="bg-[#111]">{opt}</option>
                       ))}
                     </select>
                   )}
 
                   {field.field_type === 'checkbox' && (
-                    <label className={`flex items-center gap-4 cursor-pointer p-4 rounded-xl border transition-colors ${isLight ? 'bg-slate-50 hover:bg-slate-100 border-slate-200' : 'bg-[#020617]/30 hover:bg-[#020617]/60 border-white/10'}`}>
+                    <label className={`flex items-center gap-4 cursor-pointer p-4 rounded-xl border transition-colors bg-white/5 hover:bg-white/10 border-white/10`}>
                       <input
                         type="checkbox"
                         required={field.is_required}
                         checked={formData[field.id]}
                         onChange={e => handleChange(field.id, e.target.checked)}
-                        className={`w-5 h-5 rounded bg-transparent focus:ring-1 ${isLight ? 'border-slate-300' : 'border-white/20'}`}
+                        className={`w-5 h-5 rounded bg-transparent focus:ring-1 border-white/20`}
                         style={{ accentColor: accentColor }}
                       />
-                      <span className={`${isLight ? 'text-slate-700' : 'text-slate-300'} font-medium`}>Yes, I confirm this</span>
+                      <span className={`text-slate-300 font-medium`}>Yes, I confirm this</span>
                     </label>
                   )}
                 </div>
@@ -329,8 +315,8 @@ export default function ClientFormPage({ params }) {
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="w-full text-white font-black text-sm tracking-widest uppercase py-5 rounded-2xl shadow-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3"
-                  style={{ backgroundColor: accentColor, boxShadow: `0 10px 30px -10px ${accentColor}` }}
+                  className="w-full text-white font-black text-sm tracking-widest uppercase py-5 rounded-2xl shadow-[0_10px_30px_rgba(214,80,80,0.3)] transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3 hover:scale-[1.02] active:scale-95"
+                  style={{ backgroundColor: accentColor }}
                 >
                   {submitting ? (
                     <><div className="w-5 h-5 rounded-full border-2 border-white/30 border-t-white animate-spin"></div> Submitting...</>
@@ -338,7 +324,7 @@ export default function ClientFormPage({ params }) {
                     'Submit Response'
                   )}
                 </button>
-                <p className={`text-center text-xs font-bold uppercase tracking-widest mt-6 ${isLight ? 'text-slate-400' : 'text-slate-500'}`}>
+                <p className={`text-center text-xs font-bold uppercase tracking-widest mt-6 text-slate-500`}>
                   Powered by Magnevents
                 </p>
               </div>
