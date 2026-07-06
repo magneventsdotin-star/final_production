@@ -13,6 +13,10 @@ export default function PWAInstallPrompt() {
     if (typeof window === 'undefined') return;
     if (window.location.pathname !== '/') return;
 
+    // Only show on mobile devices
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(window.navigator.userAgent);
+    if (!isMobile) return;
+
     const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
     if (isStandalone) {
       return;
