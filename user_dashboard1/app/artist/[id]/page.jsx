@@ -171,7 +171,7 @@ export default function ArtistProfilePage({ params }) {
   }
 
   const name = artist.alias || artist.name;
-  const categories = [artist.category, artist.sub_category].filter(Boolean).join(', ');
+  const categories = [artist.category, artist.sub_category, artist.genre, artist.genres, artist.tags].filter(Boolean).join(', ');
   const coverImage = artist.artist_images && artist.artist_images.length > 0 
     ? artist.artist_images[0].image_url 
     : 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=2070&auto=format&fit=crop'; 
@@ -194,7 +194,7 @@ export default function ArtistProfilePage({ params }) {
               <h1 className="artist-name">{name}</h1>
               
               <div className="artist-genres">
-                {categories ? categories.split(',').map((cat, i) => (
+                {categories ? categories.split(',').filter(cat => cat.trim() !== '').map((cat, i) => (
                   <span key={i} className="genre-pill">{cat.trim()}</span>
                 )) : (
                   <span className="genre-pill">Live Performer</span>
@@ -370,6 +370,26 @@ export default function ArtistProfilePage({ params }) {
           </div>
         </section>
 
+        <section className="share-section" style={{ marginTop: '60px', padding: '40px', background: 'linear-gradient(135deg, rgba(231,40,106,0.1), rgba(15,17,23,0.8))', borderRadius: '24px', border: '1px solid rgba(231,40,106,0.3)', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
+          <h2 className="section-title" style={{ marginBottom: '16px', justifyContent: 'center' }}>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+            Share Profile
+          </h2>
+          <p style={{ color: 'rgba(255,255,255,0.7)', marginBottom: '24px', maxWidth: '400px' }}>
+            Love this artist? Share their profile with friends and event organizers!
+          </p>
+          <button 
+            className="btn-primary-elegant"
+            onClick={(e) => {
+              navigator.clipboard.writeText(window.location.href);
+              const originalText = e.target.innerHTML;
+              e.target.innerHTML = 'Link Copied!';
+              setTimeout(() => { e.target.innerHTML = originalText; }, 2000);
+            }}
+          >
+            Copy Profile Link
+          </button>
+        </section>
       </div>
 
       {selectedImage && typeof document !== 'undefined' && createPortal(
