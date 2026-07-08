@@ -10,8 +10,7 @@ const files = [
 files.forEach(file => {
   let content = fs.readFileSync(file, 'utf8');
 
-  // Fix duplicates
-  // Find all imports from lucide-react
+
   const lucideMatch = content.match(/import \{([^}]+)\} from 'lucide-react';/);
   if (lucideMatch) {
      let imports = lucideMatch[1].split(',').map(s => s.trim());

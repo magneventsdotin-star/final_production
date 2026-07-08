@@ -642,6 +642,15 @@ function ClientRequestsContent() {
 
       <Dialog open={detailOpen} onOpenChange={setDetailOpen}>
         <DialogContent className="max-w-2xl rounded-[32px] border-none shadow-2xl p-0 overflow-hidden">
+          {exportMode !== 'select' && (
+            <button 
+              onClick={() => setExportMode('select')}
+              className="absolute left-6 top-6 p-2 rounded-full hover:bg-slate-100 transition-all text-slate-400 hover:text-slate-600"
+            >
+              <ArrowLeft size={20} />
+            </button>
+          )}
+
           {selectedRequest && (
             <>
               <div className="bg-slate-900 p-8 text-white relative">

@@ -438,6 +438,15 @@ ${plainTextBody}`;
 
       <Dialog open={modalOpen} onOpenChange={setModalOpen}>
         <DialogContent className="max-w-3xl rounded-[24px] shadow-2xl p-0 overflow-hidden bg-slate-50 border-none">
+          {exportMode !== 'select' && (
+            <button 
+              onClick={() => setExportMode('select')}
+              className="absolute left-6 top-6 p-2 rounded-full hover:bg-slate-100 transition-all text-slate-400 hover:text-slate-600"
+            >
+              <ArrowLeft size={20} />
+            </button>
+          )}
+
           {selectedEmail && (
             <div className="flex flex-col h-[80vh]">
               <div className="bg-slate-900 p-6 text-white flex justify-between items-start flex-shrink-0">

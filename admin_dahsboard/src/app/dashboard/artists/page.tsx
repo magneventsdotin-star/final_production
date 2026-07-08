@@ -1037,6 +1037,15 @@ export default function ArtistManagement() {
       {/* Export Modal */}
       <Dialog open={exportModalOpen} onOpenChange={(open) => { setExportModalOpen(open); if(!open) setExportMode('select'); }}>
         <DialogContent className="max-w-md w-full p-8 rounded-[24px] bg-white border border-slate-100 shadow-2xl">
+          {exportMode !== 'select' && (
+            <button 
+              onClick={() => setExportMode('select')}
+              className="absolute left-6 top-6 p-2 rounded-full hover:bg-slate-100 transition-all text-slate-400 hover:text-slate-600"
+            >
+              <ArrowLeft size={20} />
+            </button>
+          )}
+
           <div className="flex flex-col items-center text-center">
             <div className="w-16 h-16 rounded-2xl bg-emerald-50 flex items-center justify-center mb-6">
               <Download size={32} strokeWidth={2.5} className="text-emerald-500" />

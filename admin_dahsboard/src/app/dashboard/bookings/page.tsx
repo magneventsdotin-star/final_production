@@ -699,6 +699,15 @@ export default function BookingsPage() {
 
       <Dialog open={detailOpen} onOpenChange={(open) => { setDetailOpen(open); if (!open) setTimeout(() => setSelectedBooking(null), 200); }}>
         <DialogContent className="max-w-[95vw] w-[95vw] lg:max-w-[90vw] max-h-[95vh] overflow-y-auto p-0 border border-slate-200 rounded-[24px] sm:rounded-3xl shadow-2xl bg-white focus:outline-none">
+          {exportMode !== 'select' && (
+            <button 
+              onClick={() => setExportMode('select')}
+              className="absolute left-6 top-6 p-2 rounded-full hover:bg-slate-100 transition-all text-slate-400 hover:text-slate-600"
+            >
+              <ArrowLeft size={20} />
+            </button>
+          )}
+
           {selectedBooking ? (
             <>
               <div className="bg-slate-50 border-b border-slate-100 p-6 sm:p-8 relative">

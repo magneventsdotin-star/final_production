@@ -946,6 +946,15 @@ export default function TeamRequestsPage() {
       {/* Export Modal */}
       <Dialog open={exportModalOpen} onOpenChange={(open) => { setExportModalOpen(open); if(!open) setExportMode('select'); }}>
         <DialogContent className="max-w-md rounded-[32px] border-none shadow-2xl p-0 overflow-hidden">
+          {exportMode !== 'select' && (
+            <button 
+              onClick={() => setExportMode('select')}
+              className="absolute left-6 top-6 p-2 rounded-full hover:bg-slate-100 transition-all text-slate-400 hover:text-slate-600"
+            >
+              <ArrowLeft size={20} />
+            </button>
+          )}
+
           <div className="bg-emerald-600 p-8 text-white relative text-center">
             <div className="mx-auto w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mb-4">
               <FileText size={32} className="text-white" />
