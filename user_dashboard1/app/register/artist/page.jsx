@@ -133,8 +133,7 @@ export default function ArtistRegistrationPage() {
                     <label style={{ display: 'block', fontSize: '12px', color: 'rgba(255,255,255,0.5)', marginBottom: '8px' }}>PERFORMANCE PRICE (₹)</label>
                     <input
                       ref={priceRef}
-                      type="number" required placeholder="e.g. 50000"
-                      min="0"
+                      type="text" required placeholder="e.g. 50000 - 100000"
                       defaultValue=""
                       style={{ width: '100%', padding: '12px', background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', color: '#fff' }}
                     />
