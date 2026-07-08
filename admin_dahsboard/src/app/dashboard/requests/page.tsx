@@ -233,6 +233,7 @@ function ClientRequestsContent() {
         }
       }
       fetchRequests();
+      window.dispatchEvent(new Event('refresh_sidebar_counts'));
     } catch (error: any) {
       toast({ variant: 'destructive', title: 'Error', description: error.message });
     }
@@ -273,6 +274,7 @@ function ClientRequestsContent() {
       setEmailModalOpen(false);
       setDetailOpen(false);
       fetchRequests();
+      window.dispatchEvent(new Event('refresh_sidebar_counts'));
     } catch (err: any) {
       toast({ variant: 'destructive', title: 'Send Failed', description: err.message });
     } finally {
@@ -289,6 +291,7 @@ function ClientRequestsContent() {
       setDeleteModalOpen(false);
       setDetailOpen(false);
       fetchRequests();
+      window.dispatchEvent(new Event('refresh_sidebar_counts'));
     } catch (error: any) {
       toast({ variant: 'destructive', title: 'Error', description: error.message });
     }
@@ -302,6 +305,7 @@ function ClientRequestsContent() {
       setDeleteModalOpen(false);
       setDetailOpen(false);
       fetchRequests();
+      window.dispatchEvent(new Event('refresh_sidebar_counts'));
     } catch (error: any) {
       toast({ variant: 'destructive', title: 'Error', description: error.message });
     }

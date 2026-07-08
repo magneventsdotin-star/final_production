@@ -252,6 +252,7 @@ function ArtistRequestsContent() {
         }
       }
       fetchRequests();
+      window.dispatchEvent(new Event('refresh_sidebar_counts'));
     } catch (error: any) {
       toast({ variant: 'destructive', title: 'Error', description: error.message });
     }
@@ -292,6 +293,7 @@ function ArtistRequestsContent() {
       setEmailModalOpen(false);
       setDetailOpen(false);
       fetchRequests();
+      window.dispatchEvent(new Event('refresh_sidebar_counts'));
     } catch (err: any) {
       toast({ variant: 'destructive', title: 'Send Failed', description: err.message });
     } finally {
@@ -307,6 +309,7 @@ function ArtistRequestsContent() {
       toast({ title: 'Deleted', description: 'Request has been removed.' });
       setDetailOpen(false);
       fetchRequests();
+      window.dispatchEvent(new Event('refresh_sidebar_counts'));
     } catch (error: any) {
       toast({ variant: 'destructive', title: 'Error', description: error.message });
     }

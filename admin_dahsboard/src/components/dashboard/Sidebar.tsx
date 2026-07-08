@@ -173,9 +173,13 @@ export function Sidebar({ onClose, userRole = 'admin' }: { onClose?: () => void;
       })
       .subscribe();
 
+    const handleForceRefresh = () => fetchPendingCount();
+    window.addEventListener('refresh_sidebar_counts', handleForceRefresh);
+
     return () => {
       subscription.unsubscribe();
       supabase.removeChannel(channel);
+      window.removeEventListener('refresh_sidebar_counts', handleForceRefresh);
     };
   }, []);
 
