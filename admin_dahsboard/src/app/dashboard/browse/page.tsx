@@ -31,7 +31,7 @@ function BrowseArtistsContent() {
       try {
         const { data: { session } } = await supabase.auth.getSession();
         if (session?.user) {
-          const { data } = await supabase.from('profiles').select('role, can_view_all_artists').eq('id', session.user.id).single();
+          const { data } = await (supabase.from('profiles') as any).select('role, can_view_all_artists').eq('id', session.user.id).single();
           const isSuperAdmin = data?.role === 'super_admin' || session.user.email?.toLowerCase() === process.env.NEXT_PUBLIC_SUPER_ADMIN_EMAIL?.toLowerCase();
           setCurrentUser({ id: session.user.id, canViewAll: !!(isSuperAdmin || data?.can_view_all_artists) });
         }
