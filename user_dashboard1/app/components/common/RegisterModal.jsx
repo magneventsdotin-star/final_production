@@ -17,6 +17,7 @@ export default function RegisterModal() {
   const emailRef = useRef(null)
   const categoryRef = useRef(null)
   const portfolioRef = useRef(null)
+  const priceRef = useRef(null)
   const bioRef = useRef(null)
 
   const eventNameRef = useRef(null)
@@ -70,6 +71,7 @@ export default function RegisterModal() {
       email: emailRef.current?.value || '',
       category: categoryRef.current?.value || '',
       portfolio: portfolioRef.current?.value || '',
+      price: priceRef.current?.value || '',
       bio: bioRef.current?.value || ''
     }
 
@@ -311,6 +313,15 @@ export default function RegisterModal() {
                         defaultValue=""
                       />
                     </div>
+                  </div>
+
+                  <div className="lux-form-group">
+                    <label>PERFORMANCE PRICE (INR)</label>
+                    <input
+                      ref={priceRef}
+                      type="text" required placeholder="e.g. 10000 - 20000"
+                      defaultValue=""
+                    />
                   </div>
 
                   <div className="lux-form-group">
