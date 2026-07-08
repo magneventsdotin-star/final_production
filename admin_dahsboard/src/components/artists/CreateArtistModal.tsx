@@ -200,7 +200,7 @@ export function CreateArtistModal({ open, onOpenChange, onSuccess, initialData }
           const row: any = data[0];
           const newValues = { ...form.getValues() };
           
-          Object.keys(row).forEach(key => {
+          Object.keys(row as object).forEach(key => {
             const normalizedKey = key.trim().toLowerCase();
             const matchingKey = Object.keys(newValues).find(k => k.toLowerCase() === normalizedKey);
             
@@ -227,7 +227,7 @@ export function CreateArtistModal({ open, onOpenChange, onSuccess, initialData }
           for (const row of data) {
             try {
               const normalizedRow: any = {};
-              Object.keys(row).forEach(key => {
+              Object.keys(row as object).forEach(key => {
                 normalizedRow[key.trim().toLowerCase()] = row[key];
               });
               

@@ -182,7 +182,7 @@ export default function CreateFormPage() {
 
       // 2. Create fields
       const dbFields = fields.map((f, i) => ({
-        form_id: formData.id,
+        form_id: (formData as any).id,
         field_type: f.field_type,
         label: f.label,
         placeholder: f.placeholder || null,

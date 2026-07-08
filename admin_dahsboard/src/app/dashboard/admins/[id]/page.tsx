@@ -198,7 +198,7 @@ export default function AdminProfileDashboard() {
             {admin.avatar_url ? (
               <img src={admin.avatar_url} alt="Admin Profile" className="w-full h-full object-cover" />
             ) : (
-              admin.full_name?.[0]?.toUpperCase() || admin.email?.[0]?.toUpperCase() || 'A'
+              admin.full_name?.[0]?.toUpperCase() || (admin as any).email?.[0]?.toUpperCase() || 'A'
             )}
           </div>
           
@@ -218,7 +218,7 @@ export default function AdminProfileDashboard() {
               </div>
               <div className="flex items-center justify-center md:justify-start gap-2 text-slate-500 font-medium text-[15px]">
                 <Mail size={16} className="text-slate-400" />
-                {admin.email}
+                {(admin as any).email}
               </div>
             </div>
 

@@ -19,6 +19,7 @@ import { Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 function BrowseArtistsContent() {
+  const { confirmAction } = useConfirm();
   const searchParams = useSearchParams();
   const initialSearch = searchParams.get('search') || '';
   const [filteredArtists, setFilteredArtists] = useState<any[]>([]);
