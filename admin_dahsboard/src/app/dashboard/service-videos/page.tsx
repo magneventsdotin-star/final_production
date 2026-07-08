@@ -1,5 +1,5 @@
-import { useConfirm } from '@/components/ui/ConfirmProvider';
 "use client";
+import { useConfirm } from '@/components/ui/ConfirmProvider';
 
 import { useState, useEffect, useRef } from 'react';
 import { supabase } from '@/lib/supabase';

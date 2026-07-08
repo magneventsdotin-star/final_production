@@ -1,5 +1,5 @@
-import { useConfirm } from '@/components/ui/ConfirmProvider';
 "use client";
+import { useConfirm } from '@/components/ui/ConfirmProvider';
 
 import { useState, useEffect, useCallback, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
