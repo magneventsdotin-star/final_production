@@ -276,16 +276,18 @@ export default function ContactModal() {
             <form className="lux-modal-form" onSubmit={handleSubmit}>
               <div className="lux-form-row">
                 <div className="lux-form-group">
-                  <label>Name</label>
+                  <label htmlFor="modal-name">Name</label>
                   <input
+                    id="modal-name"
                     ref={nameRef}
                     type="text" required placeholder="e.g. Arjun Sharma"
                     defaultValue=""
                   />
                 </div>
                 <div className="lux-form-group">
-                  <label>Phone no.</label>
+                  <label htmlFor="modal-phone">Phone no.</label>
                   <input
+                    id="modal-phone"
                     ref={phoneRef}
                     type="tel" placeholder="+91 9XXX-XXXXXX"
                     defaultValue=""
@@ -295,16 +297,18 @@ export default function ContactModal() {
 
               <div className="lux-form-row">
                 <div className="lux-form-group">
-                  <label>Email ID</label>
+                  <label htmlFor="modal-email">Email ID</label>
                   <input
+                    id="modal-email"
                     ref={emailRef}
                     type="email" placeholder="name@email.com"
                     defaultValue=""
                   />
                 </div>
                 <div className="lux-form-group">
-                  <label>Event Type</label>
+                  <label htmlFor="modal-event-type">Event Type</label>
                   <input
+                    id="modal-event-type"
                     type="text" required placeholder="Wedding, Sangeet, Corporate..."
                     value={selectedEventType}
                     onChange={(e) => setSelectedEventType(e.target.value)}

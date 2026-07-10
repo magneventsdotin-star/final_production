@@ -103,8 +103,9 @@ export default function ContactSection() {
           <h3 className="hp-quote-title">Request a call</h3>
           <form className="hp-contact-form" onSubmit={handleSubmit}>
             <div className="hp-form-field">
-              <label>Name *</label>
+              <label htmlFor="contact-name">Name *</label>
               <input 
+                id="contact-name"
                 ref={nameRef}
                 type="text" 
                 placeholder="Your full name" 
@@ -113,8 +114,9 @@ export default function ContactSection() {
               />
             </div>
             <div className="hp-form-field">
-              <label>Email *</label>
+              <label htmlFor="contact-email">Email *</label>
               <input 
+                id="contact-email"
                 ref={emailRef}
                 type="email" 
                 placeholder="your@email.com" 
@@ -123,8 +125,9 @@ export default function ContactSection() {
               />
             </div>
             <div className="hp-form-field">
-              <label>Phone *</label>
+              <label htmlFor="contact-phone">Phone *</label>
               <input 
+                id="contact-phone"
                 ref={phoneRef}
                 type="tel" 
                 placeholder="Your phone number" 
