@@ -8,6 +8,7 @@ import '@fontsource/inter/600.css';
 import '@fontsource/inter/700.css';
 
 import dynamic from 'next/dynamic'
+import Script from 'next/script'
 import { Providers } from '@/app/layouts/Providers';
 import { AppShellWrapper } from '@/app/layouts/AppShellWrapper';
 
@@ -114,6 +115,19 @@ export default function RootLayout({ children }) {
             `
           }}
         />
+        {/* Google tag (gtag.js) */}
+        <Script 
+          src="https://www.googletagmanager.com/gtag/js?id=G-F1VERBXX87"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-F1VERBXX87');
+          `}
+        </Script>
       </head>
       <body className="antialiased" suppressHydrationWarning>
         <Providers>
