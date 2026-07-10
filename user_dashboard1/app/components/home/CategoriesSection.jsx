@@ -3,39 +3,21 @@
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Mic2, Music, Headphones, Smile, Megaphone, Sparkles, Wand2 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import FadeSection from '@/app/components/common/FadeSection'
 import { ARTIST_CATEGORIES } from '@/app/constants'
-
-const ModernGradients = () => (
-  <svg width="0" height="0" style={{ position: 'absolute' }}>
-    <defs>
-      <linearGradient id="icon-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stopColor="#FFF2A8" />
-        <stop offset="50%" stopColor="#FFE032" />
-        <stop offset="100%" stopColor="#FF9D00" />
-      </linearGradient>
-      <linearGradient id="icon-grad-alt" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stopColor="#FFB3B3" />
-        <stop offset="50%" stopColor="#FF4D4D" />
-        <stop offset="100%" stopColor="#990000" />
-      </linearGradient>
-    </defs>
-  </svg>
-)
+import { SingerIcon, BandsIcon, DjIcon, ComedianIcon, AnchorIcon, DancerIcon, MagicianIcon } from '@/app/components/home/CategoryIcons'
 
 const getCategoryIcon = (label) => {
-  const props = { size: 72, strokeWidth: 1.5, stroke: "url(#icon-grad)", style: { filter: 'drop-shadow(0px 4px 8px rgba(0,0,0,0.6))' } }
   switch(label) {
-    case 'Singers': return <Mic2 {...props} />;
-    case 'Live Bands': return <Music {...props} />;
-    case 'DJs': return <Headphones {...props} />;
-    case 'Comedians': return <Smile {...props} />;
-    case 'Anchors': return <Megaphone {...props} />;
-    case 'Dancers': return <Sparkles {...props} />;
-    case 'Magicians': return <Wand2 {...props} />;
-    default: return <Sparkles {...props} />;
+    case 'Singers': return <SingerIcon />;
+    case 'Live Bands': return <BandsIcon />;
+    case 'DJs': return <DjIcon />;
+    case 'Comedians': return <ComedianIcon />;
+    case 'Anchors': return <AnchorIcon />;
+    case 'Dancers': return <DancerIcon />;
+    case 'Magicians': return <MagicianIcon />;
+    default: return <SingerIcon />;
   }
 }
 
@@ -61,7 +43,6 @@ function CategoriesSection() {
 
   return (
     <FadeSection className="hp-shell hp-block">
-      <ModernGradients />
       <div className="hp-cat-section">
         <div className="hp-cat-header">
           <h2 className="hp-cat-title">Artist Categories</h2>
@@ -106,21 +87,12 @@ function CategoriesSection() {
                       <div className="hp-cat-img-wrapper" style={{ 
                         display: 'flex', 
                         alignItems: 'center', 
-                        justifyContent: 'center', 
-                        background: 'linear-gradient(145deg, rgba(30,30,30,0.9) 0%, rgba(10,10,10,0.95) 100%)',
-                        boxShadow: 'inset 0 2px 10px rgba(255,224,50,0.15), inset 0 -4px 15px rgba(0,0,0,0.8), 0 10px 20px rgba(0,0,0,0.4)',
-                        border: '1px solid rgba(255, 224, 50, 0.2)',
-                        position: 'relative',
-                        overflow: 'hidden'
+                        justifyContent: 'center',
+                        width: '100%',
+                        height: '100%',
+                        padding: '10px'
                       }}>
-                        <div style={{
-                          position: 'absolute',
-                          top: '-30%', left: '-30%',
-                          width: '160%', height: '160%',
-                          background: 'radial-gradient(circle at 30% 30%, rgba(255, 224, 50, 0.15) 0%, transparent 60%)',
-                          zIndex: 0
-                        }} />
-                        <div style={{ zIndex: 1 }}>
+                        <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                           {getCategoryIcon(cat.label)}
                         </div>
                       </div>
