@@ -7,13 +7,13 @@ import { motion } from 'framer-motion'
 import FadeSection from '@/app/components/common/FadeSection'
 import TiltCard from '@/app/components/common/TiltCard'
 import Stars from '@/app/components/common/Stars'
-import { FEATURED_ARTISTS } from '@/app/constants'
+
 import { supabase } from '@/app/lib/supabase'
 import { useRouter } from 'next/navigation'
 
 function FeaturedArtistsSection() {
   const router = useRouter();
-  const [featuredArtists, setFeaturedArtists] = useState(FEATURED_ARTISTS)
+  const [featuredArtists, setFeaturedArtists] = useState([])
   const [loading, setLoading] = useState(true)
   const [pauseFeatured, setPauseFeatured] = useState(false)
   const [selectedArtist, setSelectedArtist] = useState(null)
@@ -69,7 +69,7 @@ function FeaturedArtistsSection() {
           if (anyData && anyData.length > 0) {
             setFeaturedArtists(formatArtistData(anyData));
           } else {
-            setFeaturedArtists(FEATURED_ARTISTS.slice(0, 15));
+            setFeaturedArtists([]);
           }
         }
       } catch (err) {
@@ -139,6 +139,10 @@ function FeaturedArtistsSection() {
     const x = e.pageX - featuredRef.current.offsetLeft
     const walk = (x - startX) * 2
     featuredRef.current.scrollLeft = scrollLeft - walk
+  }
+
+  if (!loading && featuredArtists.length === 0) {
+    return null;
   }
 
   return (

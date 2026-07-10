@@ -3,11 +3,11 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { FEATURED_ARTISTS } from '@/app/constants';
+
 import { supabase } from '@/app/lib/supabase';
 
 function MobileFeaturedArtists() {
-  const [featuredArtists, setFeaturedArtists] = useState(FEATURED_ARTISTS);
+  const [featuredArtists, setFeaturedArtists] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -47,7 +47,7 @@ function MobileFeaturedArtists() {
           if (anyData && anyData.length > 0) {
             setFeaturedArtists(formatArtistData(anyData));
           } else {
-            setFeaturedArtists(FEATURED_ARTISTS.slice(0, 5));
+            setFeaturedArtists([]);
           }
         }
       } catch (err) {
@@ -58,6 +58,10 @@ function MobileFeaturedArtists() {
     };
     fetchFeatured();
   }, []);
+
+  if (!loading && featuredArtists.length === 0) {
+    return null;
+  }
 
   return (
     <section className="mobile-shell" style={{ marginBottom: '40px' }}>

@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { AppShellWrapper } from '@/app/layouts/AppShellWrapper'
 import ArtistCard from '@/app/components/artists/ArtistCard'
-import { ARTISTS_CAT_FILTER, FEATURED_ARTISTS } from '@/app/constants'
+import { ARTISTS_CAT_FILTER } from '@/app/constants'
 import { supabase } from '@/app/lib/supabase'
 import '@/app/styles/pages/Artists.css'
 

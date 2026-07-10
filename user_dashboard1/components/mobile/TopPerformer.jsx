@@ -3,12 +3,11 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ARTIST_OF_MONTH } from '@/app/constants';
 import { formatINR } from '@/app/utils/formatters';
 import { supabase } from '@/app/lib/supabase';
 
 function MobileTopPerformer() {
-  const [artist, setArtist] = useState(ARTIST_OF_MONTH);
+  const [artist, setArtist] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -35,12 +34,13 @@ function MobileTopPerformer() {
           if (fallbackData) {
             topArtist = fallbackData;
           } else {
+            setArtist(null);
             return;
           }
         }
 
         if (topArtist) {
-          let genres = ARTIST_OF_MONTH.genres;
+          let genres = [];
           if (topArtist.sub_categories && topArtist.sub_categories.length > 0) {
              genres = topArtist.sub_categories;
           } else if (topArtist.sub_category) {
@@ -48,8 +48,8 @@ function MobileTopPerformer() {
           }
 
           setArtist({
-            name: topArtist.alias || topArtist.name || ARTIST_OF_MONTH.name,
-            image: topArtist.artist_images?.[0]?.image_url || ARTIST_OF_MONTH.image,
+            name: topArtist.alias || topArtist.name,
+            image: topArtist.artist_images?.[0]?.image_url || '/placeholder.png',
             genres: genres,
             originalPrice: topArtist.original_price || topArtist.price_max || 0,
             exclusivePrice: topArtist.exclusive_price || topArtist.price_min || 0,
@@ -74,6 +74,10 @@ function MobileTopPerformer() {
         <div style={{ height: '400px', background: 'rgba(255,255,255,0.05)', borderRadius: '16px', marginTop: '16px' }} />
       </section>
     );
+  }
+
+  if (!artist) {
+    return null;
   }
 
   return (

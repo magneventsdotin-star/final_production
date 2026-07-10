@@ -4,16 +4,6 @@ export const HERO_STATS = [
   { value: 24,   suffix: '/7', label: 'Human Support' },
 ]
 
-export const ARTIST_OF_MONTH = {
-  name: 'Vikhyat: The Soothing Voice',
-  image: 'https://pub-1802bb19214743ffa99aa227f25e7ede.r2.dev/assets/lux-hero-artist.webp',
-  genres: ['SUFI', 'BOLLYWOOD', 'RETRO'],
-  originalPrice: 59999,
-  exclusivePrice: 44999,
-  rating: 4.9,
-  bookings: 182,
-}
-
 export const HERO_SPOTLIGHT_SLIDES = [
   'https://pub-1802bb19214743ffa99aa227f25e7ede.r2.dev/heroSec/1.webp',
   'https://pub-1802bb19214743ffa99aa227f25e7ede.r2.dev/heroSec/2.webp',
@@ -32,23 +22,7 @@ export const ARTIST_CATEGORIES = [
   { label: 'Magicians',    image: 'https://pub-1802bb19214743ffa99aa227f25e7ede.r2.dev/assets/lux-hero-artist.webp', query: 'Magician', startingPrice: 'Top Talent' },
 ]
 
-export const FEATURED_ARTISTS = [
-  { name: 'Swaresh: The Power House', genre: 'Bollywood Pop', bookings: '132 bookings', rating: '4.9', image: 'https://pub-1802bb19214743ffa99aa227f25e7ede.r2.dev/assets/lux-singer-session.webp', city: 'Delhi' },
-  { name: 'Sahil Soulful Sufi',        genre: 'Sufi',         bookings: '118 bookings', rating: '4.8', image: 'https://pub-1802bb19214743ffa99aa227f25e7ede.r2.dev/assets/lux-hero-artist.webp', city: 'Noida' },
-  { name: 'Sudhir Retro King',         genre: 'Retro',        bookings: '96 bookings',  rating: '4.7', image: 'https://pub-1802bb19214743ffa99aa227f25e7ede.r2.dev/assets/lux-live-band-concert.webp', city: 'Gurugram' },
-  { name: 'The Wedding Live Unit',     genre: 'Band',         bookings: '146 bookings', rating: '4.9', image: 'https://pub-1802bb19214743ffa99aa227f25e7ede.r2.dev/assets/lux-wedding-celebration.webp', city: 'Jaipur' },
-  { name: 'Arohi Evening Notes',       genre: 'Soul Pop',     bookings: '88 bookings',  rating: '4.8', image: 'https://pub-1802bb19214743ffa99aa227f25e7ede.r2.dev/assets/lux-female-singer-thumb.webp', city: 'Mumbai' },
-  { name: 'The Sangeet Project',       genre: 'Fusion Band',  bookings: '164 bookings', rating: '5.0', image: 'https://pub-1802bb19214743ffa99aa227f25e7ede.r2.dev/assets/duo-musical-performance.webp', city: 'Bengaluru' },
-  { name: 'DJ Zoya',                   genre: 'EDM & Techno', bookings: '210 bookings', rating: '4.9', image: 'https://pub-1802bb19214743ffa99aa227f25e7ede.r2.dev/assets/lux-percussion-dj-thumb.webp', city: 'Goa' },
-  { name: 'Rhythm Masters',            genre: 'Instrumental', bookings: '105 bookings', rating: '4.8', image: 'https://pub-1802bb19214743ffa99aa227f25e7ede.r2.dev/assets/male-singer-acoustic.webp', city: 'Pune' },
-  { name: 'Kabir Poetry',              genre: 'Folk Fusion',  bookings: '75 bookings',  rating: '4.9', image: 'https://pub-1802bb19214743ffa99aa227f25e7ede.r2.dev/assets/lux-hero-artist.webp', city: 'Udaipur' },
-  { name: 'The Midnight Jazz',         genre: 'Jazz Band',    bookings: '64 bookings',  rating: '4.7', image: 'https://pub-1802bb19214743ffa99aa227f25e7ede.r2.dev/assets/lux-live-band-concert.webp', city: 'Mumbai' },
-  { name: 'Laughter Riot',             genre: 'Standup',      bookings: '150 bookings', rating: '4.9', image: 'https://pub-1802bb19214743ffa99aa227f25e7ede.r2.dev/assets/standup-comedian.webp', city: 'Delhi' },
-  { name: 'Anchor Sameer',             genre: 'Emcee',        bookings: '230 bookings', rating: '5.0', image: 'https://pub-1802bb19214743ffa99aa227f25e7ede.r2.dev/assets/wedding-anchor-stage.webp', city: 'Chandigarh' },
-  { name: 'Divine Ghazals',            genre: 'Ghazal',       bookings: '92 bookings',  rating: '4.9', image: 'https://pub-1802bb19214743ffa99aa227f25e7ede.r2.dev/assets/lux-ghazal-thumb.webp', city: 'Lucknow' },
-  { name: 'Acoustic Vibes',            genre: 'Acoustic',     bookings: '128 bookings', rating: '4.8', image: 'https://pub-1802bb19214743ffa99aa227f25e7ede.r2.dev/assets/male-singer-acoustic.webp', city: 'Bengaluru' },
-  { name: 'Neon Beatbox',              genre: 'Beatboxer',    bookings: '54 bookings',  rating: '4.6', image: 'https://pub-1802bb19214743ffa99aa227f25e7ede.r2.dev/assets/lux-singer-session.webp', city: 'Pune' }
-]
+
 
 export const BOOKING_STEPS = [
   { num: '01', icon: '📋', title: 'Share Your Event', desc: 'Fill out our booking form, call, or WhatsApp us. Tell us if you want to book a singer for a wedding, hire a band for a party, or book Sufi singers in Delhi — plus your event date, vibe, and budget.' },
