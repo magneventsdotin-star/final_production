@@ -218,7 +218,7 @@ function FeaturedArtistsSection() {
                 >
                   <div className="hp-feat-img-wrap-v2">
                     <Image
-                      src={artist.img || '/assets/lux-singer-session.webp'}
+                      src={artist.img || 'https://pub-1802bb19214743ffa99aa227f25e7ede.r2.dev/assets/lux-singer-session.webp'}
                       alt={artist.name}
                       fill
                       style={{ objectFit: 'cover' }}

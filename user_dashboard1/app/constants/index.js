@@ -6,7 +6,7 @@ export const HERO_STATS = [
 
 export const ARTIST_OF_MONTH = {
   name: 'Vikhyat: The Soothing Voice',
-  image: '/assets/lux-hero-artist.webp',
+  image: 'https://pub-1802bb19214743ffa99aa227f25e7ede.r2.dev/assets/lux-hero-artist.webp',
   genres: ['SUFI', 'BOLLYWOOD', 'RETRO'],
   originalPrice: 59999,
   exclusivePrice: 44999,
@@ -15,39 +15,39 @@ export const ARTIST_OF_MONTH = {
 }
 
 export const HERO_SPOTLIGHT_SLIDES = [
-  '/heroSec/1.webp',
-  '/heroSec/2.webp',
-  '/heroSec/3.webp',
-  '/heroSec/4.webp',
-  '/heroSec/5.webp',
+  'https://pub-1802bb19214743ffa99aa227f25e7ede.r2.dev/heroSec/1.webp',
+  'https://pub-1802bb19214743ffa99aa227f25e7ede.r2.dev/heroSec/2.webp',
+  'https://pub-1802bb19214743ffa99aa227f25e7ede.r2.dev/heroSec/3.webp',
+  'https://pub-1802bb19214743ffa99aa227f25e7ede.r2.dev/heroSec/4.webp',
+  'https://pub-1802bb19214743ffa99aa227f25e7ede.r2.dev/heroSec/5.webp',
 ]
 
 export const ARTIST_CATEGORIES = [
-  { label: 'Singers',      image: '/assets/lux-singer-session.webp', query: 'Singer', startingPrice: 'Starting 3999/-' },
-  { label: 'Live Bands',   image: '/assets/lux-live-band-concert.webp', query: 'Band', startingPrice: 'Starting 14999/-' },
-  { label: 'DJs',          image: '/assets/lux-percussion-dj-thumb.webp', query: 'Dj', startingPrice: 'Starting 9999/-' },
-  { label: 'Comedians',    image: '/assets/standup-comedian.webp', query: 'Comedian', startingPrice: 'Top Talent' },
-  { label: 'Anchors',      image: '/assets/wedding-anchor-stage.webp', query: 'Emcee', startingPrice: 'Top Talent' },
-  { label: 'Dancers',      image: '/assets/lux-wedding-celebration.webp', query: 'Dancer', startingPrice: 'Top Talent' },
-  { label: 'Magicians',    image: '/assets/lux-hero-artist.webp', query: 'Magician', startingPrice: 'Top Talent' },
+  { label: 'Singers',      image: 'https://pub-1802bb19214743ffa99aa227f25e7ede.r2.dev/assets/lux-singer-session.webp', query: 'Singer', startingPrice: 'Starting 3999/-' },
+  { label: 'Live Bands',   image: 'https://pub-1802bb19214743ffa99aa227f25e7ede.r2.dev/assets/lux-live-band-concert.webp', query: 'Band', startingPrice: 'Starting 14999/-' },
+  { label: 'DJs',          image: 'https://pub-1802bb19214743ffa99aa227f25e7ede.r2.dev/assets/lux-percussion-dj-thumb.webp', query: 'Dj', startingPrice: 'Starting 9999/-' },
+  { label: 'Comedians',    image: 'https://pub-1802bb19214743ffa99aa227f25e7ede.r2.dev/assets/standup-comedian.webp', query: 'Comedian', startingPrice: 'Top Talent' },
+  { label: 'Anchors',      image: 'https://pub-1802bb19214743ffa99aa227f25e7ede.r2.dev/assets/wedding-anchor-stage.webp', query: 'Emcee', startingPrice: 'Top Talent' },
+  { label: 'Dancers',      image: 'https://pub-1802bb19214743ffa99aa227f25e7ede.r2.dev/assets/lux-wedding-celebration.webp', query: 'Dancer', startingPrice: 'Top Talent' },
+  { label: 'Magicians',    image: 'https://pub-1802bb19214743ffa99aa227f25e7ede.r2.dev/assets/lux-hero-artist.webp', query: 'Magician', startingPrice: 'Top Talent' },
 ]
 
 export const FEATURED_ARTISTS = [
-  { name: 'Swaresh: The Power House', genre: 'Bollywood Pop', bookings: '132 bookings', rating: '4.9', image: '/assets/lux-singer-session.webp', city: 'Delhi' },
-  { name: 'Sahil Soulful Sufi',        genre: 'Sufi',         bookings: '118 bookings', rating: '4.8', image: '/assets/lux-hero-artist.webp', city: 'Noida' },
-  { name: 'Sudhir Retro King',         genre: 'Retro',        bookings: '96 bookings',  rating: '4.7', image: '/assets/lux-live-band-concert.webp', city: 'Gurugram' },
-  { name: 'The Wedding Live Unit',     genre: 'Band',         bookings: '146 bookings', rating: '4.9', image: '/assets/lux-wedding-celebration.webp', city: 'Jaipur' },
-  { name: 'Arohi Evening Notes',       genre: 'Soul Pop',     bookings: '88 bookings',  rating: '4.8', image: '/assets/lux-female-singer-thumb.webp', city: 'Mumbai' },
-  { name: 'The Sangeet Project',       genre: 'Fusion Band',  bookings: '164 bookings', rating: '5.0', image: '/assets/duo-musical-performance.webp', city: 'Bengaluru' },
-  { name: 'DJ Zoya',                   genre: 'EDM & Techno', bookings: '210 bookings', rating: '4.9', image: '/assets/lux-percussion-dj-thumb.webp', city: 'Goa' },
-  { name: 'Rhythm Masters',            genre: 'Instrumental', bookings: '105 bookings', rating: '4.8', image: '/assets/male-singer-acoustic.webp', city: 'Pune' },
-  { name: 'Kabir Poetry',              genre: 'Folk Fusion',  bookings: '75 bookings',  rating: '4.9', image: '/assets/lux-hero-artist.webp', city: 'Udaipur' },
-  { name: 'The Midnight Jazz',         genre: 'Jazz Band',    bookings: '64 bookings',  rating: '4.7', image: '/assets/lux-live-band-concert.webp', city: 'Mumbai' },
-  { name: 'Laughter Riot',             genre: 'Standup',      bookings: '150 bookings', rating: '4.9', image: '/assets/standup-comedian.webp', city: 'Delhi' },
-  { name: 'Anchor Sameer',             genre: 'Emcee',        bookings: '230 bookings', rating: '5.0', image: '/assets/wedding-anchor-stage.webp', city: 'Chandigarh' },
-  { name: 'Divine Ghazals',            genre: 'Ghazal',       bookings: '92 bookings',  rating: '4.9', image: '/assets/lux-ghazal-thumb.webp', city: 'Lucknow' },
-  { name: 'Acoustic Vibes',            genre: 'Acoustic',     bookings: '128 bookings', rating: '4.8', image: '/assets/male-singer-acoustic.webp', city: 'Bengaluru' },
-  { name: 'Neon Beatbox',              genre: 'Beatboxer',    bookings: '54 bookings',  rating: '4.6', image: '/assets/lux-singer-session.webp', city: 'Pune' }
+  { name: 'Swaresh: The Power House', genre: 'Bollywood Pop', bookings: '132 bookings', rating: '4.9', image: 'https://pub-1802bb19214743ffa99aa227f25e7ede.r2.dev/assets/lux-singer-session.webp', city: 'Delhi' },
+  { name: 'Sahil Soulful Sufi',        genre: 'Sufi',         bookings: '118 bookings', rating: '4.8', image: 'https://pub-1802bb19214743ffa99aa227f25e7ede.r2.dev/assets/lux-hero-artist.webp', city: 'Noida' },
+  { name: 'Sudhir Retro King',         genre: 'Retro',        bookings: '96 bookings',  rating: '4.7', image: 'https://pub-1802bb19214743ffa99aa227f25e7ede.r2.dev/assets/lux-live-band-concert.webp', city: 'Gurugram' },
+  { name: 'The Wedding Live Unit',     genre: 'Band',         bookings: '146 bookings', rating: '4.9', image: 'https://pub-1802bb19214743ffa99aa227f25e7ede.r2.dev/assets/lux-wedding-celebration.webp', city: 'Jaipur' },
+  { name: 'Arohi Evening Notes',       genre: 'Soul Pop',     bookings: '88 bookings',  rating: '4.8', image: 'https://pub-1802bb19214743ffa99aa227f25e7ede.r2.dev/assets/lux-female-singer-thumb.webp', city: 'Mumbai' },
+  { name: 'The Sangeet Project',       genre: 'Fusion Band',  bookings: '164 bookings', rating: '5.0', image: 'https://pub-1802bb19214743ffa99aa227f25e7ede.r2.dev/assets/duo-musical-performance.webp', city: 'Bengaluru' },
+  { name: 'DJ Zoya',                   genre: 'EDM & Techno', bookings: '210 bookings', rating: '4.9', image: 'https://pub-1802bb19214743ffa99aa227f25e7ede.r2.dev/assets/lux-percussion-dj-thumb.webp', city: 'Goa' },
+  { name: 'Rhythm Masters',            genre: 'Instrumental', bookings: '105 bookings', rating: '4.8', image: 'https://pub-1802bb19214743ffa99aa227f25e7ede.r2.dev/assets/male-singer-acoustic.webp', city: 'Pune' },
+  { name: 'Kabir Poetry',              genre: 'Folk Fusion',  bookings: '75 bookings',  rating: '4.9', image: 'https://pub-1802bb19214743ffa99aa227f25e7ede.r2.dev/assets/lux-hero-artist.webp', city: 'Udaipur' },
+  { name: 'The Midnight Jazz',         genre: 'Jazz Band',    bookings: '64 bookings',  rating: '4.7', image: 'https://pub-1802bb19214743ffa99aa227f25e7ede.r2.dev/assets/lux-live-band-concert.webp', city: 'Mumbai' },
+  { name: 'Laughter Riot',             genre: 'Standup',      bookings: '150 bookings', rating: '4.9', image: 'https://pub-1802bb19214743ffa99aa227f25e7ede.r2.dev/assets/standup-comedian.webp', city: 'Delhi' },
+  { name: 'Anchor Sameer',             genre: 'Emcee',        bookings: '230 bookings', rating: '5.0', image: 'https://pub-1802bb19214743ffa99aa227f25e7ede.r2.dev/assets/wedding-anchor-stage.webp', city: 'Chandigarh' },
+  { name: 'Divine Ghazals',            genre: 'Ghazal',       bookings: '92 bookings',  rating: '4.9', image: 'https://pub-1802bb19214743ffa99aa227f25e7ede.r2.dev/assets/lux-ghazal-thumb.webp', city: 'Lucknow' },
+  { name: 'Acoustic Vibes',            genre: 'Acoustic',     bookings: '128 bookings', rating: '4.8', image: 'https://pub-1802bb19214743ffa99aa227f25e7ede.r2.dev/assets/male-singer-acoustic.webp', city: 'Bengaluru' },
+  { name: 'Neon Beatbox',              genre: 'Beatboxer',    bookings: '54 bookings',  rating: '4.6', image: 'https://pub-1802bb19214743ffa99aa227f25e7ede.r2.dev/assets/lux-singer-session.webp', city: 'Pune' }
 ]
 
 export const BOOKING_STEPS = [
@@ -223,12 +223,12 @@ export const ALL_ARTISTS = [
 ]
 
 export const GALLERY_ITEMS = [
-  { id: 1, img: '/assets/lux-hero-artist.webp', title: 'Grand Finale Gurgaon', size: 'large' },
-  { id: 2, img: '/assets/lux-wedding-celebration.webp', title: 'Palace Wedding Jaipur', size: 'small' },
-  { id: 3, img: '/assets/lux-live-band-concert.webp', title: 'Corporate Gala Delhi', size: 'small' },
-  { id: 4, img: '/assets/lux-singer-session.webp', title: 'Intimate Soiree Noida', size: 'medium' },
-  { id: 5, img: '/assets/male-singer-acoustic.webp', title: 'Acoustic Night', size: 'medium' },
-  { id: 6, img: '/assets/wedding-anchor-stage.webp', title: 'Star Anchor Session', size: 'large' }
+  { id: 1, img: 'https://pub-1802bb19214743ffa99aa227f25e7ede.r2.dev/assets/lux-hero-artist.webp', title: 'Grand Finale Gurgaon', size: 'large' },
+  { id: 2, img: 'https://pub-1802bb19214743ffa99aa227f25e7ede.r2.dev/assets/lux-wedding-celebration.webp', title: 'Palace Wedding Jaipur', size: 'small' },
+  { id: 3, img: 'https://pub-1802bb19214743ffa99aa227f25e7ede.r2.dev/assets/lux-live-band-concert.webp', title: 'Corporate Gala Delhi', size: 'small' },
+  { id: 4, img: 'https://pub-1802bb19214743ffa99aa227f25e7ede.r2.dev/assets/lux-singer-session.webp', title: 'Intimate Soiree Noida', size: 'medium' },
+  { id: 5, img: 'https://pub-1802bb19214743ffa99aa227f25e7ede.r2.dev/assets/male-singer-acoustic.webp', title: 'Acoustic Night', size: 'medium' },
+  { id: 6, img: 'https://pub-1802bb19214743ffa99aa227f25e7ede.r2.dev/assets/wedding-anchor-stage.webp', title: 'Star Anchor Session', size: 'large' }
 ]
 
 export const HOW_TO_BOOK_STEPS = [
@@ -405,21 +405,21 @@ export const SERVICES = [
   {
     title: 'Book a Singer for House Parties',
     desc: 'Solo vocals, intimate setups, quick confirmation.',
-    image: '/assets/lux-singer-session.webp',
+    image: 'https://pub-1802bb19214743ffa99aa227f25e7ede.r2.dev/assets/lux-singer-session.webp',
   },
   {
     title: 'Book a Live Band for Weddings',
     desc: 'Full wedding energy with stage-ready performance.',
-    image: '/assets/lux-wedding-celebration.webp',
+    image: 'https://pub-1802bb19214743ffa99aa227f25e7ede.r2.dev/assets/lux-wedding-celebration.webp',
   },
   {
     title: 'Hire a Live Band for Corporate Event',
     desc: 'Professional sets for launches, dinners, and galas.',
-    image: '/assets/lux-live-band-concert.webp',
+    image: 'https://pub-1802bb19214743ffa99aa227f25e7ede.r2.dev/assets/lux-live-band-concert.webp',
   },
   {
     title: 'Book Your Event',
     desc: 'Contact us for solo singers, bands, and Sufi performances.',
-    image: '/assets/lux-hero-artist.webp',
+    image: 'https://pub-1802bb19214743ffa99aa227f25e7ede.r2.dev/assets/lux-hero-artist.webp',
   },
 ]

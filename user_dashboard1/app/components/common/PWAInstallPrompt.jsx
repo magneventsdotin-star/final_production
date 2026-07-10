@@ -109,7 +109,7 @@ export default function PWAInstallPrompt() {
           <div className="pwa-card-content">
             <div className="pwa-app-logo" style={{ overflow: 'hidden', position: 'relative', width: '80px', height: '48px', flexShrink: 0, backgroundColor: 'transparent' }}>
               <Image 
-                src="/assets/logo.webp" 
+                src="https://pub-1802bb19214743ffa99aa227f25e7ede.r2.dev/assets/logo.webp" 
                 alt="Magnevents Logo" 
                 fill
                 sizes="80px"

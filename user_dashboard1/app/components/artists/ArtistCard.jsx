@@ -60,7 +60,7 @@ const ArtistCard = forwardRef(({ artist, onBook }, ref) => {
   const rating = artist.rating !== undefined && artist.rating !== null ? Number(artist.rating).toFixed(1) : '0.0'
   
   const imgSrc = (!artist.img || imageError) 
-    ? '/assets/lux-singer-session.webp'
+    ? 'https://pub-1802bb19214743ffa99aa227f25e7ede.r2.dev/assets/lux-singer-session.webp'
     : artist.img
 
   return (

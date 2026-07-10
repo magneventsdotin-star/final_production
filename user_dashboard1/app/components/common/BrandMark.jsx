@@ -21,7 +21,7 @@ export default function BrandMark({ size = 'md', showTag = false, light = false,
         }}
       >
         <Image
-          src="/assets/logo.webp"
+          src="https://pub-1802bb19214743ffa99aa227f25e7ede.r2.dev/assets/logo.webp"
           alt="Magnevents"
           fill
           style={{

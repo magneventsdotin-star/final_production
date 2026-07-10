@@ -46,7 +46,7 @@ export default function ArtistDetailsModal({ artist, showDetails, setShowDetails
             <div className="proper-modal-header" style={{ position: 'relative', width: '100%', height: '380px', overflow: 'hidden' }}>
               {(!artist.img && !artist.image) || imageError ? (
                 <Image
-                  src={'/assets/lux-hero-artist.webp'}
+                  src={'https://pub-1802bb19214743ffa99aa227f25e7ede.r2.dev/assets/lux-hero-artist.webp'}
                   alt={artist.name}
                   fill
                   sizes="1000px"
