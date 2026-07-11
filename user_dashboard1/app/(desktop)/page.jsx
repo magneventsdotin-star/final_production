@@ -16,7 +16,7 @@ export default function HomePage() {
     "@type": "Organization",
     "name": "Magnevents",
     "url": "https://www.magnevents.in",
-    "logo": "https://pub-1802bb19214743ffa99aa227f25e7ede.r2.dev/assets/logo.webp",
+    "logo": "https://www.magnevents.in/logo.webp",
     "sameAs": [
       "https://www.instagram.com/magnevents.in?igsh=MXY2NmtjMm82bTFnaA==",
       "https://facebook.com/magnevents"

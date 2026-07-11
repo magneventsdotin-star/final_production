@@ -196,7 +196,7 @@ export default function ClientFormPage({ params }) {
       <div className="max-w-3xl mx-auto px-4 py-12 relative z-10">
         <div className="flex justify-center mb-10">
           <div className={`bg-white/5 backdrop-blur-md border border-white/10 p-4 rounded-3xl`}>
-             <Image src="https://pub-1802bb19214743ffa99aa227f25e7ede.r2.dev/assets/logo.webp" alt="Magnevents Logo" width={140} height={60} className={`h-10 w-auto object-contain filter invert brightness-200`} priority />
+             <Image src="/logo.webp" alt="Magnevents Logo" width={140} height={60} className={`h-10 w-auto object-contain filter invert brightness-200`} priority />
           </div>
         </div>
 
