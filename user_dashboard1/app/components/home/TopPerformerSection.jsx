@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useEffect } from 'react'
-import Image from 'next/image'
 import Link from 'next/link'
 import FadeSection from '@/app/components/common/FadeSection'
 import Stars from '@/app/components/common/Stars'
@@ -119,13 +118,9 @@ function TopPerformerSection() {
                 style={{ backgroundImage: `url(${artist.image})` }}
               />
               {/* Actual image contained so it's fully visible */}
-              <Image
-                src={artist.image}
-                alt={artist.name}
-                fill
-                style={{ objectFit: 'contain', zIndex: 2 }}
-                unoptimized
-              />
+              <img
+                src={typeof artist.image === "object" ? artist.image?.src : artist.image}
+                alt={artist.name} style={{ objectFit: 'contain', zIndex: 2 }}  />
               <div className="hp-aom-badge" style={{ zIndex: 10 }}>
                 <span className="hp-aom-badge-icon">🏆</span>
                 Artist of the Month

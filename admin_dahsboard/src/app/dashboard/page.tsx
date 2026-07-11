@@ -886,7 +886,7 @@ export default function DashboardOverview() {
 
                     {artist.artist_images?.length > 0 && (
                       <div className="absolute top-4 right-4 px-2.5 py-1 rounded-full flex items-center gap-1.5 text-[10px] font-black text-white bg-black/60 border border-white/10">
-                        <ImageIcon size={11} />
+                        <imgIcon size={11}  />
                         {artist.artist_images.length}
                       </div>
                     )}
@@ -1337,7 +1337,7 @@ export default function DashboardOverview() {
                   {selectedArtist.artist_images?.length > 0 && (
                     <div className="space-y-4">
                       <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 flex items-center gap-2">
-                        <ImageIcon size={14} className="text-sky-600" />
+                        <imgIcon size={14} className="text-sky-600"  />
                         Gallery ({selectedArtist.artist_images.length} photos)
                       </h3>
                       <div className="grid grid-cols-2 md:grid-cols-3 gap-4">

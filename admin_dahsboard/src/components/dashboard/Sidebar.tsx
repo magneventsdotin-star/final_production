@@ -24,7 +24,6 @@ import {
   Terminal,
   ClipboardList
 } from 'lucide-react';
-import NextImage from 'next/image';
 
 export const navSections = [
   {
@@ -195,14 +194,12 @@ export function Sidebar({ onClose, userRole = 'admin' }: { onClose?: () => void;
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="flex-shrink-0 h-9 rounded-lg overflow-hidden">
-               <NextImage
+               <img
                   src="/logo.webp"
                   alt="Logo"
                   width={56}
                   height={36}
-                  className="h-full w-auto object-contain"
-                  priority
-                />
+                  className="h-full w-auto object-contain"  />
             </div>
             <div className="flex flex-col">
               <span className="text-white font-black text-xl tracking-tighter leading-none">Magnevents</span>

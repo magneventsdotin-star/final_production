@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
-import Image from 'next/image'
 import { motion } from 'framer-motion'
 import FadeSection from '@/app/components/common/FadeSection'
 import TiltCard from '@/app/components/common/TiltCard'
@@ -221,13 +220,9 @@ function FeaturedArtistsSection() {
                   style={{ cursor: 'pointer', width: '100%', display: 'flex', flexDirection: 'column' }}
                 >
                   <div className="hp-feat-img-wrap-v2">
-                    <Image
-                      src={artist.img || 'https://pub-1802bb19214743ffa99aa227f25e7ede.r2.dev/assets/lux-singer-session.webp'}
-                      alt={artist.name}
-                      fill
-                      style={{ objectFit: 'cover' }}
-                      quality={100}
-                    />
+                    <img
+                      src={typeof artist.img || 'https://pub-1802bb19214743ffa99aa227f25e7ede.r2.dev/assets/lux-singer-session.webp' === "object" ? artist.img || 'https://pub-1802bb19214743ffa99aa227f25e7ede.r2.dev/assets/lux-singer-session.webp'?.src : artist.img || 'https://pub-1802bb19214743ffa99aa227f25e7ede.r2.dev/assets/lux-singer-session.webp'}
+                      alt={artist.name} style={{ objectFit: 'cover' }}  />
                   </div>
                   <div className="hp-feat-info-v2">
                     <div>

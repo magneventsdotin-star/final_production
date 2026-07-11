@@ -4,7 +4,6 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabase';
 import { useRouter } from 'next/navigation';
-import Image from 'next/image';
 
 export default function ClientFormPage({ params }) {
   const [form, setForm] = useState(null);
@@ -196,7 +195,7 @@ export default function ClientFormPage({ params }) {
       <div className="max-w-3xl mx-auto px-4 py-12 relative z-10">
         <div className="flex justify-center mb-10">
           <div className={`bg-white/5 backdrop-blur-md border border-white/10 p-4 rounded-3xl`}>
-             <Image src="/logo.webp" alt="Magnevents Logo" width={140} height={60} className={`h-10 w-auto object-contain filter invert brightness-200`} priority />
+             <img src="/logo.webp" alt="Magnevents Logo" width={140} height={60} className={`h-10 w-auto object-contain filter invert brightness-200`}  />
           </div>
         </div>
 

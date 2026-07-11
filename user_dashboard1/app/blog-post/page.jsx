@@ -1,7 +1,6 @@
 "use client"
 
 import { useState, useEffect } from 'react'
-import Image from 'next/image'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { supabase } from '@/app/lib/supabase'
@@ -75,14 +74,10 @@ export default function BlogPostPage() {
           <section className="featured-section">
             <Link href={`/blog-post/${featuredPost.slug}`} className="featured-card">
               <div className="featured-image" style={{ position: 'relative', overflow: 'hidden' }}>
-                <Image
-                  src={featuredPost.img}
-                  alt={featuredPost.title}
-                  fill
-                  priority
-                  sizes="(max-width: 1220px) 100vw, 800px"
-                  style={{ objectFit: 'cover' }}
-                />
+                <img
+                  src={typeof featuredPost.img === "object" ? featuredPost.img?.src : featuredPost.img}
+                  alt={featuredPost.title} style={{ objectFit: 'cover' }}
+                 />
                 <div className="featured-tag">FEATURED STORY</div>
               </div>
               <div className="featured-content">
@@ -112,14 +107,9 @@ export default function BlogPostPage() {
                   whileHover={{ y: -10 }}
                 >
                   <div className="card-image" style={{ position: 'relative', overflow: 'hidden' }}>
-                    <Image
-                      src={blog.img}
-                      alt={blog.title}
-                      fill
-                      sizes="(max-width: 768px) 100vw, 400px"
-                      style={{ objectFit: 'cover' }}
-                      loading="lazy"
-                    />
+                    <img
+                      src={typeof blog.img === "object" ? blog.img?.src : blog.img}
+                      alt={blog.title} style={{ objectFit: 'cover' }}  />
                     <div className="card-overlay" />
                   </div>
                   <div className="card-body">
@@ -157,14 +147,9 @@ export default function BlogPostPage() {
                   <motion.div className="modern-blog-card" whileHover={{ y: -10 }}>
                     {blog.image_url && (
                       <div className="card-image" style={{ position: 'relative', overflow: 'hidden' }}>
-                        <Image
-                          src={blog.image_url}
-                          alt={blog.title}
-                          fill
-                          sizes="(max-width: 768px) 100vw, 400px"
-                          style={{ objectFit: 'cover' }}
-                          loading="lazy"
-                        />
+                        <img
+                          src={typeof blog.image_url === "object" ? blog.image_url?.src : blog.image_url}
+                          alt={blog.title} style={{ objectFit: 'cover' }}  />
                       </div>
                     )}
                     <div className="card-body">

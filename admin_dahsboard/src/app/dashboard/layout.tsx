@@ -5,7 +5,6 @@ import { useRouter, usePathname } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
 import { Sidebar, navSections } from '@/components/dashboard/Sidebar';
 import { Loader2, LogOut, Menu } from 'lucide-react';
-import NextImage from 'next/image';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { ConfirmProvider } from '@/components/ui/ConfirmProvider';
@@ -140,14 +139,12 @@ export default function DashboardLayout({
         <header className="lg:hidden h-16 bg-[#BAE6FD] border-b border-sky-300/50 flex items-center justify-between px-4 sticky top-0 z-30">
           <div className="flex items-center gap-2.5">
             <div className="h-8 w-auto flex-shrink-0">
-               <NextImage
+               <img
                 src="/logo.webp"
                 alt="Logo"
                 width={64}
                 height={40}
-                className="h-full w-auto object-contain"
-                priority
-              />
+                className="h-full w-auto object-contain"  />
             </div>
             <span className="font-black text-[17px] tracking-tighter text-slate-900 leading-none">TalentTrack</span>
           </div>

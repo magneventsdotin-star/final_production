@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
 import { formatINR } from '@/app/utils/formatters';
 import { supabase } from '@/app/lib/supabase';
@@ -93,13 +92,9 @@ function MobileTopPerformer() {
         border: '1px solid rgba(255, 224, 50, 0.15)'
       }}>
         <div style={{ position: 'relative', width: '100%', height: '300px' }}>
-          <Image
-            src={artist.image}
-            alt={artist.name}
-            fill
-            style={{ objectFit: 'contain' }}
-            unoptimized
-          />
+          <img
+            src={typeof artist.image === "object" ? artist.image?.src : artist.image}
+            alt={artist.name} style={{ objectFit: 'contain' }}  />
           <div style={{ 
             position: 'absolute', top: '12px', left: '12px', 
             background: 'rgba(0,0,0,0.7)', color: '#FFE032', 

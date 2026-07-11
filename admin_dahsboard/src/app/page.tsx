@@ -4,7 +4,6 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
 import { Loader2 } from 'lucide-react';
-import Image from 'next/image';
 
 export default function Home() {
   const router = useRouter();
@@ -37,7 +36,7 @@ export default function Home() {
     <div className="min-h-screen flex items-center justify-center bg-white">
       <div className="flex flex-col items-center gap-6">
         <div className="w-24 h-24 flex items-center justify-center p-2 animate-pulse">
-          <Image src="/logo.webp" alt="Magnevents" width={96} height={96} className="object-contain" priority />
+          <img src="/logo.webp" alt="Magnevents" width={96} height={96} className="object-contain"  />
         </div>
         <div className="flex flex-col items-center gap-3">
           <h1 className="text-5xl font-black font-display tracking-tight text-slate-900 leading-none">

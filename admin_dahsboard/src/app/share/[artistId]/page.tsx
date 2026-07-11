@@ -5,7 +5,6 @@ import { supabase } from '@/lib/supabase';
 import { Loader2, Mic2, Star, MapPin, Languages, Tag, Info, Share2, Calendar, IndianRupee, PlayCircle, User, Users, Phone, Mail, Globe } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import Image from 'next/image';
 export default function ArtistSharePage() {
   const { artistId } = useParams();
   const [artist, setArtist] = useState<any>(null);

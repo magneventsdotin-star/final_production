@@ -2,7 +2,6 @@
 
 import React from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { ARTIST_CATEGORIES } from '@/app/constants';
 
 function MobileCategories() {
@@ -53,13 +52,10 @@ function MobileCategories() {
               position: 'relative',
               border: '2px solid rgba(255, 224, 50, 0.3)'
             }}>
-              <Image
-                src={cat.image}
-                alt={cat.label}
-                fill
-                sizes="100px"
-                style={{ objectFit: 'cover' }}
-              />
+              <img
+                src={typeof cat.image === "object" ? cat.image?.src : cat.image}
+                alt={cat.label} style={{ objectFit: 'cover' }}
+               />
             </div>
             <div style={{ textAlign: 'center' }}>
               <span style={{ display: 'block', fontSize: '13px', color: '#fff', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.05em' }}>

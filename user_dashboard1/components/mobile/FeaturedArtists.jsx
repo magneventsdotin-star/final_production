@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 
 import { supabase } from '@/app/lib/supabase';
 
@@ -108,13 +107,10 @@ function MobileFeaturedArtists() {
               }}
             >
               <div style={{ position: 'relative', width: '100%', height: '240px' }}>
-                <Image
-                  src={artist.img || '/images/placeholder.jpg'}
-                  alt={artist.name}
-                  fill
-                  sizes="280px"
-                  style={{ objectFit: 'cover' }}
-                />
+                <img
+                  src={typeof artist.img || '/images/placeholder.jpg' === "object" ? artist.img || '/images/placeholder.jpg'?.src : artist.img || '/images/placeholder.jpg'}
+                  alt={artist.name} style={{ objectFit: 'cover' }}
+                 />
               </div>
               <div style={{ padding: '16px' }}>
                 <span style={{ display: 'block', fontSize: '11px', color: '#FFE032', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '4px', fontWeight: '600' }}>

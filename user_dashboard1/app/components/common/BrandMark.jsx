@@ -1,4 +1,3 @@
-import Image from 'next/image'
 
 export default function BrandMark({ size = 'md', showTag = false, light = false, hideText = false }) {
   const markSizeMap = { sm: 22, md: 28, lg: 36 }
@@ -20,16 +19,13 @@ export default function BrandMark({ size = 'md', showTag = false, light = false,
           position: 'relative',
         }}
       >
-        <Image
+        <img
           src="/logo.webp"
-          alt="Magnevents"
-          fill
-          unoptimized={true}
-          style={{
+          alt="Magnevents" style={{
             objectFit: 'contain',
             filter: 'invert(1) brightness(2)' 
           }}
-        />
+         />
       </span>
       {!hideText && (
         <span style={{ display: 'flex', flexDirection: 'column', lineHeight: 1 }}>

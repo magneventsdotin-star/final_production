@@ -245,7 +245,7 @@ export default function CreateFormPage() {
             <h2 className="text-sm font-black text-slate-900 uppercase tracking-widest mb-4">Design & Theme</h2>
             
             <div>
-              <label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2 block flex items-center gap-2"><ImageIcon size={14}/> Cover / Background Image</label>
+              <label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2 block flex items-center gap-2"><imgIcon size={14} /> Cover / Background Image</label>
               <div className="aspect-video bg-slate-50 rounded-xl border-2 border-dashed border-slate-200 overflow-hidden relative group flex items-center justify-center">
                 {coverImage ? (
                   <>
@@ -254,7 +254,7 @@ export default function CreateFormPage() {
                   </>
                 ) : (
                   <div className="w-full p-2 h-full flex items-center justify-center">
-                    <ImageUploader 
+                    <imgUploader 
                       images={coverImage ? [coverImage] : []} 
                       onChange={(urls) => setCoverImage(urls[0] || '')} 
                       maxImages={1} 

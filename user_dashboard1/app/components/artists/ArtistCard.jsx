@@ -2,7 +2,6 @@
 
 import { useState, useEffect, forwardRef } from 'react'
 import { useRouter } from 'next/navigation'
-import Image from 'next/image'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import TiltCard from '@/app/components/common/TiltCard'
@@ -78,14 +77,9 @@ const ArtistCard = forwardRef(({ artist, onBook }, ref) => {
           className="modern-artist-card"
         >
         <div className="modern-img-wrap relative">
-          <Image
-            src={imgSrc}
-            alt={artist.name}
-            fill
-            sizes="(max-width: 768px) 100vw, 300px"
-            style={{ objectFit: 'cover' }}
-            unoptimized
-            onError={() => setImageError(true)}
+          <img
+            src={typeof imgSrc === "object" ? imgSrc?.src : imgSrc}
+            alt={artist.name} style={{ objectFit: 'cover' }} onError={() => setImageError(true)}
           />
           <div className="modern-overlay-gradient"></div>
         </div>

@@ -1,6 +1,5 @@
 "use client"
 import { motion } from 'framer-motion'
-import Image from 'next/image'
 import Link from 'next/link'
 
 export default function ServiceCard({ service, index }) {
@@ -12,14 +11,9 @@ export default function ServiceCard({ service, index }) {
       transition={{ delay: index * 0.1 }}
     >
       <div className="service-media" style={{ position: 'relative', overflow: 'hidden' }}>
-        <Image
-          src={service.image}
-          alt={service.title}
-          fill
-          sizes="(max-width: 768px) 100vw, 50vw"
-          style={{ objectFit: 'cover' }}
-          loading="lazy"
-        />
+        <img
+          src={typeof service.image === "object" ? service.image?.src : service.image}
+          alt={service.title} style={{ objectFit: 'cover' }}  />
         <div className="service-overlay" />
       </div>
       <div className="service-content">

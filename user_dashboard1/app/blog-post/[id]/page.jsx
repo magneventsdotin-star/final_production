@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react'
 import { useParams } from 'next/navigation'
-import Image from 'next/image'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { supabase } from '@/app/lib/supabase'
@@ -108,14 +107,10 @@ export default function BlogDetailPage() {
 
       <section className="blog-detail-hero">
         <div className="blog-hero-image" style={{ position: 'relative', overflow: 'hidden' }}>
-          <Image
-            src={blog.img}
-            alt={blog.title}
-            fill
-            priority
-            sizes="100vw"
-            style={{ objectFit: 'cover' }}
-          />
+          <img
+            src={typeof blog.img === "object" ? blog.img?.src : blog.img}
+            alt={blog.title} style={{ objectFit: 'cover' }}
+           />
           <div className="blog-hero-overlay">
             <div className="lux-container">
               <span className="blog-cat-pill">ARTIST INSIGHTS</span>
@@ -181,14 +176,9 @@ export default function BlogDetailPage() {
                 {defaultBlogs.filter(b => b.id !== blog.id).map(item => (
                   <Link key={item.id} href={`/blog-post/${item.slug}`} className="sidebar-card">
                     <div className="side-img" style={{ position: 'relative', overflow: 'hidden' }}>
-                      <Image
-                        src={item.img}
-                        alt={item.title}
-                        fill
-                        sizes="120px"
-                        style={{ objectFit: 'cover' }}
-                        loading="lazy"
-                      />
+                      <img
+                        src={typeof item.img === "object" ? item.img?.src : item.img}
+                        alt={item.title} style={{ objectFit: 'cover' }}  />
                     </div>
                     <div className="side-info">
                       <h5>{item.title}</h5>

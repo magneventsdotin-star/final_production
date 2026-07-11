@@ -1491,7 +1491,7 @@ export function CreateArtistModal({ open, onOpenChange, onSuccess, initialData }
                 <div className="space-y-6">
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-xl bg-violet-50 flex items-center justify-center text-violet-600 shadow-sm border border-violet-100/50">
-                      <ImageIcon size={18} strokeWidth={2.5} />
+                      <imgIcon size={18} strokeWidth={2.5}  />
                     </div>
                     <div>
                       <h3 className="text-[12px] font-black uppercase tracking-[0.2em] text-slate-900">Digital Assets</h3>
@@ -1531,11 +1531,11 @@ export function CreateArtistModal({ open, onOpenChange, onSuccess, initialData }
                             </span>
                           </div>
                           <FormControl>
-                            <ImageUploader
+                            <imgUploader
                               images={field.value || []}
                               onChange={field.onChange}
                               maxImages={15}
-                            />
+                             />
                           </FormControl>
                         </FormItem>
                       )}

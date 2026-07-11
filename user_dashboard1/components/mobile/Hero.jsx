@@ -1,7 +1,6 @@
 "use client";
 
 import React from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
 import { HERO_STATS, HERO_SPOTLIGHT_SLIDES } from '@/app/constants';
 
@@ -11,14 +10,10 @@ export default function MobileHero() {
   return (
     <section className="mobile-hero">
       <div className="mobile-hero-bg">
-        <Image
-          src={bgImage}
-          alt="Live Music Background"
-          fill
-          priority
-          sizes="100vw"
-          style={{ objectFit: 'cover' }}
-        />
+        <img
+          src={typeof bgImage === "object" ? bgImage?.src : bgImage}
+          alt="Live Music Background" style={{ objectFit: 'cover' }}
+         />
         <div style={{ position: 'absolute', inset: 0, backgroundColor: 'rgba(0,0,0,0.6)' }} />
       </div>
       

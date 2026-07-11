@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react'
 import { createPortal } from 'react-dom'
-import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import '@/app/styles/pages/Artists.css'
 
@@ -45,23 +44,13 @@ export default function ArtistDetailsModal({ artist, showDetails, setShowDetails
 
             <div className="proper-modal-header" style={{ position: 'relative', width: '100%', height: '380px', overflow: 'hidden' }}>
               {(!artist.img && !artist.image) || imageError ? (
-                <Image
+                <img
                   src={'https://pub-1802bb19214743ffa99aa227f25e7ede.r2.dev/assets/lux-hero-artist.webp'}
-                  alt={artist.name}
-                  fill
-                  sizes="1000px"
-                  style={{ objectFit: 'cover', objectPosition: 'top center' }}
-                  unoptimized
-                />
+                  alt={artist.name} style={{ objectFit: 'cover', objectPosition: 'top center' }}  />
               ) : (
-                <Image
-                  src={artist.img || artist.image}
-                  alt={artist.name}
-                  fill
-                  sizes="1000px"
-                  style={{ objectFit: 'cover', objectPosition: 'top center' }}
-                  unoptimized
-                  onError={() => setImageError(true)}
+                <img
+                  src={typeof artist.img || artist.image === "object" ? artist.img || artist.image?.src : artist.img || artist.image}
+                  alt={artist.name} style={{ objectFit: 'cover', objectPosition: 'top center' }} onError={() => setImageError(true)}
                 />
               )}
               <div className="image-overlay-gradient"></div>
@@ -104,7 +93,7 @@ export default function ArtistDetailsModal({ artist, showDetails, setShowDetails
                       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(120px, 1fr))', gap: '12px' }}>
                         {artist.galleryImages.map((imgUrl, i) => (
                           <div key={i} style={{ position: 'relative', height: '100px', borderRadius: '12px', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.1)' }}>
-                            <Image src={imgUrl} fill style={{ objectFit: 'cover' }} alt={`${artist.name} gallery ${i+1}`} unoptimized />
+                            <img src={typeof imgUrl === "object" ? imgUrl?.src : imgUrl} style={{ objectFit: 'cover' }} alt={`${artist.name} gallery ${i+1}`}  />
                           </div>
                         ))}
                       </div>

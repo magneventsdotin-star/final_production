@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import Image from 'next/image'
 import { motion } from 'framer-motion'
 import AnimatedCounter from '@/app/components/common/AnimatedCounter'
 import { HERO_STATS, HERO_SPOTLIGHT_SLIDES } from '@/app/constants'
@@ -38,16 +37,10 @@ export default function HeroSection() {
               willChange: 'opacity'
             }}
           >
-            <Image
-              src={src}
-              alt={`Live musician and band performing at an event slide ${idx + 1}`}
-              fill
-              priority={idx === 0}
-              loading={idx === 0 ? "eager" : "lazy"}
-              quality={85}
-              sizes="100vw"
-              style={{ objectFit: 'cover' }}
-            />
+            <img
+              src={typeof src === "object" ? src?.src : src}
+              alt={`Live musician and band performing at an event slide ${idx + 1}`} style={{ objectFit: 'cover' }}
+             />
           </div>
         ))}
       </div>
