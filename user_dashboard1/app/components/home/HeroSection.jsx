@@ -39,7 +39,7 @@ export default function HeroSection() {
           >
             <img
               src={typeof src === "object" ? src?.src : src}
-              alt={`Live musician and band performing at an event slide ${idx + 1}`} style={{ objectFit: 'cover' }}
+              alt={`Live musician and band performing at an event slide ${idx + 1}`} style={{ objectFit: "cover", width: "100%", height: "100%", position: "absolute", inset: 0 }}
              />
           </div>
         ))}

@@ -109,7 +109,7 @@ export default function BlogDetailPage() {
         <div className="blog-hero-image" style={{ position: 'relative', overflow: 'hidden' }}>
           <img
             src={typeof blog.img === "object" ? blog.img?.src : blog.img}
-            alt={blog.title} style={{ objectFit: 'cover' }}
+            alt={blog.title} style={{ objectFit: "cover", width: "100%", height: "100%", position: "absolute", inset: 0 }}
            />
           <div className="blog-hero-overlay">
             <div className="lux-container">
@@ -178,7 +178,7 @@ export default function BlogDetailPage() {
                     <div className="side-img" style={{ position: 'relative', overflow: 'hidden' }}>
                       <img
                         src={typeof item.img === "object" ? item.img?.src : item.img}
-                        alt={item.title} style={{ objectFit: 'cover' }}  />
+                        alt={item.title} style={{ objectFit: "cover", width: "100%", height: "100%", position: "absolute", inset: 0 }}  />
                     </div>
                     <div className="side-info">
                       <h5>{item.title}</h5>

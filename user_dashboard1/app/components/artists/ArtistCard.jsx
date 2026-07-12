@@ -79,7 +79,7 @@ const ArtistCard = forwardRef(({ artist, onBook }, ref) => {
         <div className="modern-img-wrap relative">
           <img
             src={typeof imgSrc === "object" ? imgSrc?.src : imgSrc}
-            alt={artist.name} style={{ objectFit: 'cover' }} onError={() => setImageError(true)}
+            alt={artist.name} style={{ objectFit: "cover", width: "100%", height: "100%", position: "absolute", inset: 0 }} onError={() => setImageError(true)}
           />
           <div className="modern-overlay-gradient"></div>
         </div>

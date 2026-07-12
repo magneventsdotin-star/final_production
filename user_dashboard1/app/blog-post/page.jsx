@@ -76,7 +76,7 @@ export default function BlogPostPage() {
               <div className="featured-image" style={{ position: 'relative', overflow: 'hidden' }}>
                 <img
                   src={typeof featuredPost.img === "object" ? featuredPost.img?.src : featuredPost.img}
-                  alt={featuredPost.title} style={{ objectFit: 'cover' }}
+                  alt={featuredPost.title} style={{ objectFit: "cover", width: "100%", height: "100%", position: "absolute", inset: 0 }}
                  />
                 <div className="featured-tag">FEATURED STORY</div>
               </div>
@@ -109,7 +109,7 @@ export default function BlogPostPage() {
                   <div className="card-image" style={{ position: 'relative', overflow: 'hidden' }}>
                     <img
                       src={typeof blog.img === "object" ? blog.img?.src : blog.img}
-                      alt={blog.title} style={{ objectFit: 'cover' }}  />
+                      alt={blog.title} style={{ objectFit: "cover", width: "100%", height: "100%", position: "absolute", inset: 0 }}  />
                     <div className="card-overlay" />
                   </div>
                   <div className="card-body">
@@ -149,7 +149,7 @@ export default function BlogPostPage() {
                       <div className="card-image" style={{ position: 'relative', overflow: 'hidden' }}>
                         <img
                           src={typeof blog.image_url === "object" ? blog.image_url?.src : blog.image_url}
-                          alt={blog.title} style={{ objectFit: 'cover' }}  />
+                          alt={blog.title} style={{ objectFit: "cover", width: "100%", height: "100%", position: "absolute", inset: 0 }}  />
                       </div>
                     )}
                     <div className="card-body">

@@ -222,7 +222,7 @@ function FeaturedArtistsSection() {
                   <div className="hp-feat-img-wrap-v2">
                     <img
                       src={typeof artist.img || 'https://pub-1802bb19214743ffa99aa227f25e7ede.r2.dev/assets/lux-singer-session.webp' === "object" ? artist.img || 'https://pub-1802bb19214743ffa99aa227f25e7ede.r2.dev/assets/lux-singer-session.webp'?.src : artist.img || 'https://pub-1802bb19214743ffa99aa227f25e7ede.r2.dev/assets/lux-singer-session.webp'}
-                      alt={artist.name} style={{ objectFit: 'cover' }}  />
+                      alt={artist.name} style={{ objectFit: "cover", width: "100%", height: "100%", position: "absolute", inset: 0 }}  />
                   </div>
                   <div className="hp-feat-info-v2">
                     <div>

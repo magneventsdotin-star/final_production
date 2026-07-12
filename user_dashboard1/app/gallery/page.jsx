@@ -28,7 +28,7 @@ export default function GalleryPage() {
               <div className="gallery-media" style={{ position: 'relative', overflow: 'hidden' }}>
                 <img
                   src={typeof item.img === "object" ? item.img?.src : item.img}
-                  alt={item.title} style={{ objectFit: 'cover' }}  />
+                  alt={item.title} style={{ objectFit: "cover", width: "100%", height: "100%", position: "absolute", inset: 0 }}  />
                 <div className="gallery-overlay">
                   <h3>{item.title}</h3>
                 </div>

@@ -12,7 +12,7 @@ export default function MobileHero() {
       <div className="mobile-hero-bg">
         <img
           src={typeof bgImage === "object" ? bgImage?.src : bgImage}
-          alt="Live Music Background" style={{ objectFit: 'cover' }}
+          alt="Live Music Background" style={{ objectFit: "cover", width: "100%", height: "100%", position: "absolute", inset: 0 }}
          />
         <div style={{ position: 'absolute', inset: 0, backgroundColor: 'rgba(0,0,0,0.6)' }} />
       </div>

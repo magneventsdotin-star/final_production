@@ -109,7 +109,7 @@ function MobileFeaturedArtists() {
               <div style={{ position: 'relative', width: '100%', height: '240px' }}>
                 <img
                   src={typeof artist.img || '/images/placeholder.jpg' === "object" ? artist.img || '/images/placeholder.jpg'?.src : artist.img || '/images/placeholder.jpg'}
-                  alt={artist.name} style={{ objectFit: 'cover' }}
+                  alt={artist.name} style={{ objectFit: "cover", width: "100%", height: "100%", position: "absolute", inset: 0 }}
                  />
               </div>
               <div style={{ padding: '16px' }}>

@@ -93,7 +93,7 @@ export default function ArtistDetailsModal({ artist, showDetails, setShowDetails
                       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(120px, 1fr))', gap: '12px' }}>
                         {artist.galleryImages.map((imgUrl, i) => (
                           <div key={i} style={{ position: 'relative', height: '100px', borderRadius: '12px', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.1)' }}>
-                            <img src={typeof imgUrl === "object" ? imgUrl?.src : imgUrl} style={{ objectFit: 'cover' }} alt={`${artist.name} gallery ${i+1}`}  />
+                            <img src={typeof imgUrl === "object" ? imgUrl?.src : imgUrl} style={{ objectFit: "cover", width: "100%", height: "100%", position: "absolute", inset: 0 }} alt={`${artist.name} gallery ${i+1}`}  />
                           </div>
                         ))}
                       </div>

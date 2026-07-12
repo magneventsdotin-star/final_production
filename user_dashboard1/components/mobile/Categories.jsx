@@ -54,7 +54,7 @@ function MobileCategories() {
             }}>
               <img
                 src={typeof cat.image === "object" ? cat.image?.src : cat.image}
-                alt={cat.label} style={{ objectFit: 'cover' }}
+                alt={cat.label} style={{ objectFit: "cover", width: "100%", height: "100%", position: "absolute", inset: 0 }}
                />
             </div>
             <div style={{ textAlign: 'center' }}>

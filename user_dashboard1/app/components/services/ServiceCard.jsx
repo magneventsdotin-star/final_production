@@ -13,7 +13,7 @@ export default function ServiceCard({ service, index }) {
       <div className="service-media" style={{ position: 'relative', overflow: 'hidden' }}>
         <img
           src={typeof service.image === "object" ? service.image?.src : service.image}
-          alt={service.title} style={{ objectFit: 'cover' }}  />
+          alt={service.title} style={{ objectFit: "cover", width: "100%", height: "100%", position: "absolute", inset: 0 }}  />
         <div className="service-overlay" />
       </div>
       <div className="service-content">
