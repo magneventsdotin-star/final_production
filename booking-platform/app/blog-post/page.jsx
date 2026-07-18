@@ -85,7 +85,7 @@ export default function BlogPostPage() {
                 <h2>{featuredPost.title}</h2>
                 <p>{featuredPost.content.substring(0, 220)}...</p>
                 <div className="featured-footer">
-                  <span className="read-more">KEEP READING →</span>
+                  <span className="read-more">Read: {featuredPost.title} →</span>
                 </div>
               </div>
             </Link>
@@ -117,7 +117,7 @@ export default function BlogPostPage() {
                     <h4>{blog.title}</h4>
                     <p>{blog.content.substring(0, 120)}...</p>
                     <div className="card-footer">
-                      <span className="cta-link">READ ARTICLE</span>
+                      <span className="cta-link">Read: {blog.title}</span>
                     </div>
                   </div>
                 </motion.div>
@@ -156,7 +156,7 @@ export default function BlogPostPage() {
                       <h4>{blog.title}</h4>
                       <p>{blog.subtitle}</p>
                       <div className="card-footer">
-                        <span className="cta-link">READ ARTICLE</span>
+                        <span className="cta-link">Read: {blog.title}</span>
                       </div>
                     </div>
                   </motion.div>
