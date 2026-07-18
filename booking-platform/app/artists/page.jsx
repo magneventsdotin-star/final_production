@@ -72,7 +72,14 @@ export default function ArtistsPage() {
     <main className="artists-page">
       <div className="lux-container">
 
-
+        <div className="artists-header" style={{ textAlign: 'center', marginBottom: '3rem', paddingTop: '2rem' }}>
+          <h1 style={{ fontSize: '2.5rem', fontWeight: 'bold', marginBottom: '1rem', color: '#fff' }}>
+            Magnevents — Premium Live Artist Booking
+          </h1>
+          <p style={{ color: 'var(--text-muted)', maxWidth: '800px', margin: '0 auto', fontSize: '1.1rem', lineHeight: '1.6' }}>
+            Welcome to Magnevents, India's premier destination for booking top-tier live entertainment. Whether you are planning a grand wedding, a corporate gala, a private celebration, or a massive music festival, our curated roster of extraordinary talent ensures an unforgettable experience. Discover incredible live bands, soulful Sufi singers, high-energy Bollywood performers, and mesmerizing instrumentalists. Our artist-first booking platform connects you directly with the best musicians in the industry, guaranteeing transparent pricing and seamless management. Browse through our extensive selection below, filter by your preferred musical genre or location, and book the perfect artist to elevate your next event from ordinary to spectacular. We pride ourselves on delivering premium live artist booking services for weddings, corporate nights, and concerts across all major cities.
+          </p>
+        </div>
         <div className="artists-top-bar">
           <div className="artists-filters" style={{ margin: 0, flex: 1 }}>
             {ARTISTS_CAT_FILTER.map((cat, idx) => (
