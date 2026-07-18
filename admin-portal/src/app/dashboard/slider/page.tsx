@@ -152,7 +152,7 @@ export default function BlogManagement() {
                          {slide.image_url ? (
                            <img src={slide.image_url} className="w-full h-full object-cover" />
                          ) : (
-                           <imgIcon size={16} className="text-slate-300"  />
+                           <ImageIcon size={16} className="text-slate-300"  />
                          )}
                       </div>
                       <div>

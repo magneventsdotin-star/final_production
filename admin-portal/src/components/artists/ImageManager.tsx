@@ -50,7 +50,7 @@ export function ImageManager({ images, onChange, maxImages = 5 }: ImageManagerPr
 
         {images.length < maxImages && (
           <div className="aspect-square rounded-xl border-2 border-dashed border-slate-200 flex flex-col items-center justify-center gap-2 bg-slate-50/50 text-slate-400 group hover:border-[#5B5AF7] hover:bg-slate-50 transition-all">
-            <imgIcon size={24} className="group-hover:text-[#5B5AF7] transition-colors"  />
+            <ImageIcon size={24} className="group-hover:text-[#5B5AF7] transition-colors"  />
             <span className="text-[10px] font-bold uppercase tracking-widest">{images.length}/{maxImages} Images</span>
           </div>
         )}

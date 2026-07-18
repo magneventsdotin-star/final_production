@@ -112,10 +112,10 @@ export function BlogEditorModal({ isOpen, onClose, onSave, initialData }: BlogEd
             
             <div className="space-y-2.5">
               <Label className="text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center gap-2">
-                <imgPlus className="w-3.5 h-3.5 text-slate-400"  /> Cover Image
+                <ImagePlus className="w-3.5 h-3.5 text-slate-400"  /> Cover Image
               </Label>
               <div className="bg-slate-50 border border-slate-100 rounded-2xl p-2 shadow-sm">
-                <imgUploader 
+                <ImageUploader 
                   images={formData.image_url ? [formData.image_url] : []} 
                   onChange={handleImageChange} 
                   maxImages={1} 

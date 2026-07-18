@@ -585,7 +585,7 @@ export default function ArtistManagement() {
                 <>
                   <span className="w-1 h-1 rounded-full bg-slate-300" />
                   <span className="text-[11px] font-bold text-slate-400 flex items-center gap-1.5 italic">
-                    <imgIcon size={11} strokeWidth={2.5}  />
+                    <ImageIcon size={11} strokeWidth={2.5}  />
                     {artist.artist_images.length} Photos
                   </span>
                 </>

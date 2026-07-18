@@ -159,7 +159,7 @@ export function Sidebar({ onClose, userRole = 'admin' }: { onClose?: () => void;
     
     fetchPendingCount();
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event: any, session: any) => {
       if (session?.user) {
         setUser(session.user);
       } else {
