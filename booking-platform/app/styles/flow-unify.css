@@ -50,13 +50,11 @@
 .flow-unify-shell .page-enter {
   position: relative;
   isolation: isolate;
-  animation: flowUnifyPageIn var(--motion-enter-duration) var(--motion-ease-standard) both;
+  /* animation: flowUnifyPageIn var(--motion-enter-duration) var(--motion-ease-standard) both; */
 }
 
 .flow-unify-shell .page-enter.route-showcase {
-  animation:
-    flowUnifyPageIn var(--motion-enter-duration) var(--motion-ease-emphasis) both,
-    flowUnifyShowcaseGlow 800ms var(--motion-ease-soft) both;
+  /* Removed initial animations to prevent black flash and shadow flicker on refresh */
 }
 
 .flow-unify-shell .page-enter h1,
