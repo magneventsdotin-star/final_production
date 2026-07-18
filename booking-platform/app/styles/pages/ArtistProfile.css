@@ -14,7 +14,7 @@
   position: absolute;
   top: 0;
   left: 0;
-  width: 100vw;
+  width: 100%;
   height: 60vh;
   background: radial-gradient(circle at 50% 20%, rgba(231, 40, 106, 0.1) 0%, transparent 60%);
   filter: blur(100px);
