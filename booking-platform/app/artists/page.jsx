@@ -220,7 +220,7 @@ export default function ArtistsPage() {
             Magnevents — Premium Live Artist Booking
           </h1>
           <p style={{ color: 'var(--text-muted)', maxWidth: '800px', margin: '0 auto', fontSize: '1.1rem', lineHeight: '1.6' }}>
-            Welcome to Magnevents, India's premier destination for booking top-tier live entertainment. Whether you are planning a grand wedding, a corporate gala, a private celebration, or a massive music festival, our curated roster of extraordinary talent ensures an unforgettable experience. Discover incredible live bands, soulful Sufi singers, high-energy Bollywood performers, and mesmerizing instrumentalists. Our artist-first booking platform connects you directly with the best musicians in the industry, guaranteeing transparent pricing and seamless management. Browse through our extensive selection below, filter by your preferred musical genre or location, and book the perfect artist to elevate your next event from ordinary to spectacular. We pride ourselves on delivering premium live artist booking services for weddings, corporate nights, and concerts across all major cities.
+            Welcome to Magnevents, India's premier destination for booking top-tier live entertainment. Discover incredible live bands, soulful Sufi singers, and high-energy performers. Our artist-first booking platform connects you directly with the best musicians in the industry for your weddings, corporate galas, and private events.
           </p>
         </div>
 

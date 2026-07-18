@@ -53,9 +53,6 @@ export const metadata = {
     title: 'Magnevents',
     statusBarStyle: 'default',
   },
-  alternates: {
-    canonical: '/',
-  },
   keywords: ['Live Artist Booking', 'Weddings', 'Corporate Nights', 'Concerts', 'Musician Booking', 'Live Singers', 'Live Bands', 'DJs', 'Comedians'],
   openGraph: {
     title: 'Book Live Singers, Bands & Artists in India | Magnevents',
