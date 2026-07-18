@@ -9,7 +9,7 @@ export async function generateMetadata({ params }) {
   const formattedTitle = location_slug.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
 
   return {
-    title: `Best ${formattedTitle} | Hire for Weddings & Events`,
+    title: `${formattedTitle} | Verified Artists | Magnevents`,
     description: `Looking for the best ${formattedTitle}? Book verified artists, musicians, and performers for your house party, wedding, or corporate event via Magnevents.`,
     alternates: {
       canonical: `/${location_slug}`,

@@ -18,16 +18,16 @@ export async function generateMetadata({ params }) {
   const image = data?.artist_images?.[0]?.image_url || '/icon-512.png';
 
   return {
-    title: `Hire ${name} | Book Live Artist & Musician Online`,
+    title: `${name} | Book Live Singer | Magnevents`,
     description,
     openGraph: {
-      title: `Hire ${name} | Book Live Artist & Musician Online`,
+      title: `${name} | Book Live Singer | Magnevents`,
       description,
       images: [image],
     },
     twitter: {
       card: 'summary_large_image',
-      title: `${name} | Magnevents`,
+      title: `${name} | Book Live Singer | Magnevents`,
       description,
       images: [image],
     }

@@ -23,8 +23,8 @@ export const viewport = {
 
 export const metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://www.magnevents.in'),
-  title: 'Magnevents — Premium Live Artist Booking',
-  description: 'Artist-first booking for weddings, corporate nights, and concerts.',
+  title: 'Book Live Singers, Bands & Artists in India | Magnevents',
+  description: 'Book live singers, bands, and artists for weddings, corporate nights, and private events in India. Verified artists, direct booking, transparent pricing.',
   keywords: [
     'Magnevents',
     'book a singer for an event',
@@ -58,8 +58,8 @@ export const metadata = {
   },
   keywords: ['Live Artist Booking', 'Weddings', 'Corporate Nights', 'Concerts', 'Musician Booking', 'Live Singers', 'Live Bands', 'DJs', 'Comedians'],
   openGraph: {
-    title: 'Magnevents — Premium Live Artist Booking',
-    description: 'Artist-first booking for weddings, corporate nights, and concerts.',
+    title: 'Book Live Singers, Bands & Artists in India | Magnevents',
+    description: 'Book live singers, bands, and artists for weddings, corporate nights, and private events in India. Verified artists, direct booking, transparent pricing.',
     url: '/',
     siteName: 'Magnevents',
     images: [
@@ -74,8 +74,8 @@ export const metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Magnevents — Premium Live Artist Booking',
-    description: 'Artist-first booking for weddings, corporate nights, and concerts.',
+    title: 'Book Live Singers, Bands & Artists in India | Magnevents',
+    description: 'Book live singers, bands, and artists for weddings, corporate nights, and private events in India. Verified artists, direct booking, transparent pricing.',
     images: ['/icon-512.png'],
   },
 };
@@ -109,6 +109,34 @@ export default function RootLayout({ children }) {
             gtag('config', 'G-F1VERBXX87');
           `}
         </Script>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              "name": "Magnevents",
+              "url": "https://www.magnevents.in"
+            })
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              "name": "Magnevents",
+              "url": "https://www.magnevents.in",
+              "logo": "https://www.magnevents.in/icon-512.png",
+              "contactPoint": {
+                "@type": "ContactPoint",
+                "telephone": "+91-9999999999",
+                "contactType": "customer service"
+              }
+            })
+          }}
+        />
       </head>
       <body className="antialiased" suppressHydrationWarning>
         <Providers>
