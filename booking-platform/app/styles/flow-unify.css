@@ -53,9 +53,11 @@
   /* animation: flowUnifyPageIn var(--motion-enter-duration) var(--motion-ease-standard) both; */
 }
 
+/* 
 .flow-unify-shell .page-enter.route-showcase {
-  /* Removed initial animations to prevent black flash and shadow flicker on refresh */
-}
+  Removed initial animations to prevent black flash and shadow flicker on refresh
+} 
+*/
 
 .flow-unify-shell .page-enter h1,
 .flow-unify-shell .page-enter h2 {

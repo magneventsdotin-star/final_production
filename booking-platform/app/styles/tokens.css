@@ -136,6 +136,7 @@ body::after {
 
 .text-premium {
   background: linear-gradient(135deg, #fff 0%, #a1a1a1 100%);
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }

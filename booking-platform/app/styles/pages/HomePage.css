@@ -1913,9 +1913,9 @@
   }
 
   .hp-hero-h1 {
-    margin-bottom: 10px; /* Ensure bottom margin applies on mobile */
+    margin-bottom: 10px; 
     font-size: clamp(32px, 11vw, 52px);
-    line-height: 1.05; /* Fix words crashing vertically on mobile */
+    line-height: 1.05; 
   }
 
   .hp-hero-spotlight {

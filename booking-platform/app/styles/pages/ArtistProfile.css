@@ -356,6 +356,7 @@
 .price-exclusive {
   background: linear-gradient(90deg, #E7286A, #FFD166);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   font-size: 28px !important;
   font-weight: 900 !important;
