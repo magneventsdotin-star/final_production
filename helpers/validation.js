@@ -20,7 +20,7 @@ export const validateEmail = (email) => {
   if (!emailRegex.test(email)) {
     return "Please enter a valid email address.";
   }
-  return null; // Valid
+  return null; 
 };
 
 export const validatePhone = (phone) => {
@@ -31,5 +31,5 @@ export const validatePhone = (phone) => {
   if (!phoneRegex.test(phone)) {
     return "Please enter a valid phone number (10-15 digits).";
   }
-  return null; // Valid
+  return null;
 };
