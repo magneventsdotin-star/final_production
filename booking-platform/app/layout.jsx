@@ -23,8 +23,8 @@ export const viewport = {
 
 export const metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://www.magnevents.in'),
-  title: 'Magnevents | Book a Singer for an Event, Wedding, or House Party in Delhi',
-  description: 'Looking to book a live singer or live band for a party? Magnevents makes it easy to book bands for events, singers for house parties in Delhi, and book singers for weddings.',
+  title: 'Magnevents — Premium Live Artist Booking',
+  description: 'Artist-first booking for weddings, corporate nights, and concerts.',
   keywords: [
     'Magnevents',
     'book a singer for an event',
