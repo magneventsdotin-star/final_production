@@ -37,6 +37,12 @@ export default function EventForm({ copyToClipboard, setSubmitted }) {
     setIsSubmitting(true);
     try {
       await bookingService.submitRequest({ ...submissionData, formType: 'booking' });
+      if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
+        window.gtag('event', 'generate_lead', {
+          event_category: 'form',
+          event_label: 'event_register_submit'
+        });
+      }
       setIsSubmitting(false);
       setSubmitted(true);
     } catch (error) {

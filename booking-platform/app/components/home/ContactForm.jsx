@@ -15,6 +15,12 @@ export default function ContactForm() {
   function submit(e) {
     e.preventDefault()
     setLoading(true)
+    if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
+      window.gtag('event', 'generate_lead', {
+        event_category: 'form',
+        event_label: 'home_contact_submit'
+      });
+    }
     setTimeout(() => { setLoading(false); setSent(true) }, 1200)
   }
 
