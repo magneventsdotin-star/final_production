@@ -1,7 +1,7 @@
 {
-  "name": "haat-nextjs",
-  "version": "1.0.0",
-  "description": "Haat — Next.js Implementation",
+  "name": "magnevents-platform",
+  "version": "2.0.0",
+  "description": "Magnevents — Premium Live Artist Booking Platform",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
