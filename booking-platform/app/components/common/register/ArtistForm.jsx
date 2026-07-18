@@ -40,12 +40,6 @@ export default function ArtistForm({ copyToClipboard, setSubmitted }) {
     setIsSubmitting(true);
     try {
       await bookingService.submitRequest({ ...submissionData, type: 'artist_registration' });
-      if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
-        window.gtag('event', 'generate_lead', {
-          event_category: 'form',
-          event_label: 'artist_register_submit'
-        });
-      }
       setIsSubmitting(false);
       setSubmitted(true);
     } catch (error) {
