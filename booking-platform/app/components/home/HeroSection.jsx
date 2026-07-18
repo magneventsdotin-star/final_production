@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import AnimatedCounter from '@/app/components/common/AnimatedCounter'
+
 import { HERO_STATS, HERO_SPOTLIGHT_SLIDES } from '@/app/constants'
 
 export default function HeroSection() {
@@ -147,7 +147,7 @@ export default function HeroSection() {
                   }}
                 >
                   <strong>
-                    <AnimatedCounter to={item.value} suffix={item.suffix} />
+                    {item.value}{item.suffix}
                   </strong>
                   <span>{item.label}</span>
                 </motion.div>

@@ -8,7 +8,6 @@
   padding-bottom: 80px;
 }
 
-/* Ambient glow orbs */
 .artist-profile-wrapper::before {
   content: '';
   position: absolute;
@@ -30,7 +29,6 @@
   padding: 0 20px;
 }
 
-/* Hero Section */
 .artist-hero-card {
   position: relative;
   width: 100%;
