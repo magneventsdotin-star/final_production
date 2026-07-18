@@ -1902,6 +1902,7 @@
 
   .hp-hero {
     min-height: 76vh;
+    padding-top: 60px;
   }
 
   .hp-hero-overlay {
