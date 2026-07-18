@@ -129,7 +129,7 @@ export default function RootLayout({ children }) {
               "name": "Magnevents",
               "url": "https://www.magnevents.in",
               "logo": "https://www.magnevents.in/icon-512.png",
-              "email": "support@magnevents.in",
+              "email": "magneventsdotin@gmail.com",
               "contactPoint": {
                 "@type": "ContactPoint",
                 "telephone": "+91-8078515257",
@@ -137,9 +137,9 @@ export default function RootLayout({ children }) {
                 "availableLanguage": ["English", "Hindi"]
               },
               "sameAs": [
-                "https://www.instagram.com/magnevents",
-                "https://www.linkedin.com/company/magnevents",
-                "https://www.facebook.com/magnevents"
+                "https://www.instagram.com/magnevents.in?igsh=MXY2NmtjMm82bTFnaA==",
+                "https://x.com/magnevents94",
+                "https://youtube.com/@magnevents?si=QsPkahKK-fjSUTe4"
               ]
             })
           }}
