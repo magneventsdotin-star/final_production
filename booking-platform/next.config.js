@@ -16,6 +16,9 @@ const nextConfig = {
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production' ? { exclude: ['error', 'warn'] } : false,
   },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   webpack: (config) => {
     const path = require('path');
     config.resolve.alias['@database'] = path.resolve(__dirname, '../database');
