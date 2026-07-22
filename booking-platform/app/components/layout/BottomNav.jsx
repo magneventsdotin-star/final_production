@@ -85,7 +85,7 @@ export default function BottomNav() {
           <button
             className="booking-tab-btn register-center-fab"
             onClick={() => {
-              window.dispatchEvent(new CustomEvent('open-register-modal'));
+              window.dispatchEvent(new CustomEvent('open-register-modal', { detail: { view: 'event' } }));
             }}
             style={{
               position: 'absolute',
