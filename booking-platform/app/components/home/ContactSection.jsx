@@ -8,25 +8,30 @@ import { validateName, validateEmail, validatePhone } from '@helpers/validation'
 export default function ContactSection() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [formError, setFormError] = useState('');
+  
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: ''
+  });
 
-  const nameRef = useRef(null);
-  const emailRef = useRef(null);
-  const phoneRef = useRef(null);
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const submissionData = {
-      name: nameRef.current?.value || '',
-      email: emailRef.current?.value || '',
-      phone: phoneRef.current?.value || ''
-    };
+    setFormError('');
+    const submissionData = { ...formData };
 
     const nameErr = validateName(submissionData.name);
-    if (nameErr) return alert(nameErr);
+    if (nameErr) return setFormError(nameErr);
     const emailErr = validateEmail(submissionData.email);
-    if (emailErr) return alert(emailErr);
+    if (emailErr) return setFormError(emailErr);
     const phoneErr = validatePhone(submissionData.phone);
-    if (phoneErr) return alert(phoneErr);
+    if (phoneErr) return setFormError(phoneErr);
 
     setIsSubmitting(true);
     try {
@@ -49,9 +54,7 @@ export default function ContactSection() {
           });
         }
 
-        if (nameRef.current) nameRef.current.value = '';
-        if (emailRef.current) emailRef.current.value = '';
-        if (phoneRef.current) phoneRef.current.value = '';
+        setFormData({ name: '', email: '', phone: '' });
         setTimeout(() => setSubmitted(false), 3000);
       }, 300);
     } catch (error) {
@@ -102,14 +105,21 @@ export default function ContactSection() {
         <div className="hp-quote-form">
           <h3 className="hp-quote-title">Request a call</h3>
           <form className="hp-contact-form" onSubmit={handleSubmit}>
+            {formError && (
+              <div style={{ color: '#ff4d4f', background: 'rgba(255, 77, 79, 0.1)', padding: '10px 14px', borderRadius: '8px', marginBottom: '16px', fontSize: '14px', border: '1px solid rgba(255, 77, 79, 0.2)' }} role="alert">
+                {formError}
+              </div>
+            )}
             <div className="hp-form-field">
               <label htmlFor="contact-name">Name *</label>
               <input 
                 id="contact-name"
-                ref={nameRef}
+                name="name"
                 type="text" 
                 placeholder="Your full name" 
-                defaultValue=""
+                value={formData.name}
+                onChange={handleChange}
+                autoComplete="name"
                 required 
               />
             </div>
@@ -117,10 +127,12 @@ export default function ContactSection() {
               <label htmlFor="contact-email">Email *</label>
               <input 
                 id="contact-email"
-                ref={emailRef}
+                name="email"
                 type="email" 
                 placeholder="your@email.com" 
-                defaultValue=""
+                value={formData.email}
+                onChange={handleChange}
+                autoComplete="email"
                 required 
               />
             </div>
@@ -128,10 +140,12 @@ export default function ContactSection() {
               <label htmlFor="contact-phone">Phone *</label>
               <input 
                 id="contact-phone"
-                ref={phoneRef}
+                name="phone"
                 type="tel" 
                 placeholder="Your phone number" 
-                defaultValue=""
+                value={formData.phone}
+                onChange={handleChange}
+                autoComplete="tel"
                 required 
               />
             </div>

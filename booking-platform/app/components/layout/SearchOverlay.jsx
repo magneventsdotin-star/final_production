@@ -25,10 +25,14 @@ export default function SearchOverlay({ isOpen, onClose, query, onQueryChange, o
                 <path d="m21 21-4.35-4.35" />
               </svg>
               <input
+                id="search-input"
                 ref={searchRef}
                 placeholder="Search artists, bands, genres..."
                 aria-label="Search"
-                defaultValue=""
+                value={query || ''}
+                onChange={(e) => onQueryChange && onQueryChange(e.target.value)}
+                autoComplete="off"
+                type="search"
               />
               <button type="button" className="lux-search-esc" onClick={onClose}>ESC</button>
             </form>

@@ -10,6 +10,7 @@ import { validateName, validateEmail, validatePhone } from '@helpers/validation'
 export default function EventRegistrationPage() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitted, setSubmitted] = useState(false)
+  const [formError, setFormError] = useState('')
   const [selectedArtistTypes, setSelectedArtistTypes] = useState([])
 
   // Controlled form state
@@ -39,17 +40,18 @@ export default function EventRegistrationPage() {
 
   const handleEventSubmit = async (e) => {
     e.preventDefault()
+    setFormError('')
     const submissionData = {
       ...formData,
       artistType: selectedArtistTypes,
     }
 
     const nameErr = validateName(submissionData.name);
-    if (nameErr) return alert(nameErr);
+    if (nameErr) return setFormError(nameErr);
     const emailErr = validateEmail(submissionData.email);
-    if (emailErr) return alert(emailErr);
+    if (emailErr) return setFormError(emailErr);
     const phoneErr = validatePhone(submissionData.phone);
-    if (phoneErr) return alert(phoneErr);
+    if (phoneErr) return setFormError(phoneErr);
 
     setIsSubmitting(true)
     try {
@@ -103,24 +105,33 @@ export default function EventRegistrationPage() {
               </div>
 
               <form className="lux-modal-form" onSubmit={handleEventSubmit}>
+                {formError && (
+                  <div style={{ color: '#ff4d4f', background: 'rgba(255, 77, 79, 0.1)', padding: '10px 14px', borderRadius: '8px', marginBottom: '16px', fontSize: '14px', border: '1px solid rgba(255, 77, 79, 0.2)' }} role="alert">
+                    {formError}
+                  </div>
+                )}
                 <div className="lux-form-row" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '16px' }}>
                   <div className="lux-form-group">
-                    <label style={{ display: 'block', fontSize: '12px', color: 'rgba(255,255,255,0.5)', marginBottom: '8px' }}>YOUR NAME</label>
+                    <label htmlFor="evtpg-name" style={{ display: 'block', fontSize: '12px', color: 'rgba(255,255,255,0.5)', marginBottom: '8px' }}>YOUR NAME</label>
                     <input
+                      id="evtpg-name"
                       name="name"
                       type="text" required placeholder="e.g. Arjun Sharma"
                       value={formData.name}
                       onChange={handleChange}
+                      autoComplete="name"
                       style={{ width: '100%', padding: '12px', background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', color: '#fff' }}
                     />
                   </div>
                   <div className="lux-form-group">
-                    <label style={{ display: 'block', fontSize: '12px', color: 'rgba(255,255,255,0.5)', marginBottom: '8px' }}>PHONE NUMBER</label>
+                    <label htmlFor="evtpg-phone" style={{ display: 'block', fontSize: '12px', color: 'rgba(255,255,255,0.5)', marginBottom: '8px' }}>PHONE NUMBER</label>
                     <input
+                      id="evtpg-phone"
                       name="phone"
                       type="tel" required placeholder="+91 9XXX-XXXXXX"
                       value={formData.phone}
                       onChange={handleChange}
+                      autoComplete="tel"
                       style={{ width: '100%', padding: '12px', background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', color: '#fff' }}
                     />
                   </div>
@@ -128,18 +139,21 @@ export default function EventRegistrationPage() {
 
                 <div className="lux-form-row" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '16px' }}>
                   <div className="lux-form-group">
-                    <label style={{ display: 'block', fontSize: '12px', color: 'rgba(255,255,255,0.5)', marginBottom: '8px' }}>EMAIL ADDRESS</label>
+                    <label htmlFor="evtpg-email" style={{ display: 'block', fontSize: '12px', color: 'rgba(255,255,255,0.5)', marginBottom: '8px' }}>EMAIL ADDRESS</label>
                     <input
+                      id="evtpg-email"
                       name="email"
                       type="email" required placeholder="name@email.com"
                       value={formData.email}
                       onChange={handleChange}
+                      autoComplete="email"
                       style={{ width: '100%', padding: '12px', background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', color: '#fff' }}
                     />
                   </div>
                   <div className="lux-form-group">
-                    <label style={{ display: 'block', fontSize: '12px', color: 'rgba(255,255,255,0.5)', marginBottom: '8px' }}>EVENT TYPE</label>
+                    <label htmlFor="evtpg-type" style={{ display: 'block', fontSize: '12px', color: 'rgba(255,255,255,0.5)', marginBottom: '8px' }}>EVENT TYPE</label>
                     <select
+                      id="evtpg-type"
                       name="eventType"
                       required
                       value={formData.eventType}
@@ -160,8 +174,9 @@ export default function EventRegistrationPage() {
 
                 <div className="lux-form-row" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '16px' }}>
                   <div className="lux-form-group">
-                    <label style={{ display: 'block', fontSize: '12px', color: 'rgba(255,255,255,0.5)', marginBottom: '8px' }}>EVENT DATE</label>
+                    <label htmlFor="evtpg-date" style={{ display: 'block', fontSize: '12px', color: 'rgba(255,255,255,0.5)', marginBottom: '8px' }}>EVENT DATE</label>
                     <input
+                      id="evtpg-date"
                       name="date"
                       type="date" required
                       value={formData.date}
@@ -170,8 +185,9 @@ export default function EventRegistrationPage() {
                     />
                   </div>
                   <div className="lux-form-group">
-                    <label style={{ display: 'block', fontSize: '12px', color: 'rgba(255,255,255,0.5)', marginBottom: '8px' }}>LOCATION</label>
+                    <label htmlFor="evtpg-location" style={{ display: 'block', fontSize: '12px', color: 'rgba(255,255,255,0.5)', marginBottom: '8px' }}>LOCATION</label>
                     <input
+                      id="evtpg-location"
                       name="location"
                       type="text" required placeholder="Delhi, Mumbai, Lucknow..."
                       value={formData.location}
@@ -213,8 +229,9 @@ export default function EventRegistrationPage() {
                     </div>
                   </div>
                   <div className="lux-form-group" style={{ marginTop: '16px' }}>
-                    <label style={{ display: 'block', fontSize: '12px', color: 'rgba(255,255,255,0.5)', marginBottom: '8px' }}>BUDGET RANGE</label>
+                    <label htmlFor="evtpg-budget" style={{ display: 'block', fontSize: '12px', color: 'rgba(255,255,255,0.5)', marginBottom: '8px' }}>BUDGET RANGE</label>
                     <select
+                      id="evtpg-budget"
                       name="budget"
                       required
                       value={formData.budget}

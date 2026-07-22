@@ -4,6 +4,7 @@ import { validateName, validateEmail, validatePhone } from '@helpers/validation'
 
 export default function EventForm({ copyToClipboard, setSubmitted }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formError, setFormError] = useState('');
   const [selectedArtistTypes, setSelectedArtistTypes] = useState([]);
 
   // Controlled form state
@@ -24,17 +25,18 @@ export default function EventForm({ copyToClipboard, setSubmitted }) {
 
   const handleEventSubmit = async (e) => {
     e.preventDefault();
+    setFormError('');
     const submissionData = {
       ...formData,
       artistType: selectedArtistTypes,
     };
 
     const nameErr = validateName(submissionData.name);
-    if (nameErr) return alert(nameErr);
+    if (nameErr) return setFormError(nameErr);
     const emailErr = validateEmail(submissionData.email);
-    if (emailErr) return alert(emailErr);
+    if (emailErr) return setFormError(emailErr);
     const phoneErr = validatePhone(submissionData.phone);
-    if (phoneErr) return alert(phoneErr);
+    if (phoneErr) return setFormError(phoneErr);
 
     setIsSubmitting(true);
     try {
@@ -74,40 +76,52 @@ export default function EventForm({ copyToClipboard, setSubmitted }) {
       </div>
 
       <form className="lux-modal-form" onSubmit={handleEventSubmit}>
+        {formError && (
+          <div style={{ color: '#ff4d4f', background: 'rgba(255, 77, 79, 0.1)', padding: '10px 14px', borderRadius: '8px', marginBottom: '16px', fontSize: '14px', border: '1px solid rgba(255, 77, 79, 0.2)' }} role="alert">
+            {formError}
+          </div>
+        )}
         <div className="lux-form-row">
           <div className="lux-form-group">
-            <label>YOUR NAME</label>
+            <label htmlFor="evt-name">YOUR NAME</label>
             <input
+              id="evt-name"
               name="name"
               type="text" required placeholder="e.g. Arjun Sharma"
               value={formData.name}
               onChange={handleChange}
+              autoComplete="name"
             />
           </div>
           <div className="lux-form-group">
-            <label>PHONE NUMBER</label>
+            <label htmlFor="evt-phone">PHONE NUMBER</label>
             <input
+              id="evt-phone"
               name="phone"
               type="tel" required placeholder="+91 9XXX-XXXXXX"
               value={formData.phone}
               onChange={handleChange}
+              autoComplete="tel"
             />
           </div>
         </div>
 
         <div className="lux-form-row">
           <div className="lux-form-group">
-            <label>EMAIL ADDRESS</label>
+            <label htmlFor="evt-email">EMAIL ADDRESS</label>
             <input
+              id="evt-email"
               name="email"
               type="email" required placeholder="name@email.com"
               value={formData.email}
               onChange={handleChange}
+              autoComplete="email"
             />
           </div>
           <div className="lux-form-group">
-            <label>EVENT TYPE</label>
+            <label htmlFor="evt-type">EVENT TYPE</label>
             <select
+              id="evt-type"
               name="eventType"
               required
               value={formData.eventType}
@@ -127,8 +141,9 @@ export default function EventForm({ copyToClipboard, setSubmitted }) {
 
         <div className="lux-form-row">
           <div className="lux-form-group">
-            <label>EVENT DATE</label>
+            <label htmlFor="evt-date">EVENT DATE</label>
             <input
+              id="evt-date"
               name="date"
               type="date" required
               value={formData.date}
@@ -136,8 +151,9 @@ export default function EventForm({ copyToClipboard, setSubmitted }) {
             />
           </div>
           <div className="lux-form-group">
-            <label>LOCATION</label>
+            <label htmlFor="evt-location">LOCATION</label>
             <input
+              id="evt-location"
               name="location"
               type="text" required placeholder="Delhi, Mumbai, Lucknow..."
               value={formData.location}
@@ -168,8 +184,9 @@ export default function EventForm({ copyToClipboard, setSubmitted }) {
             </div>
           </div>
           <div className="lux-form-group">
-            <label>BUDGET RANGE</label>
+            <label htmlFor="evt-budget">BUDGET RANGE</label>
             <select
+              id="evt-budget"
               name="budget"
               required
               value={formData.budget}

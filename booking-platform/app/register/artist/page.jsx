@@ -20,38 +20,40 @@ export default function ArtistRegistrationPage() {
     });
   };
 
-  const nameRef = useRef(null)
-  const phoneRef = useRef(null)
-  const emailRef = useRef(null)
-  const categoryRef = useRef(null)
-  const portfolioRef = useRef(null)
-  const priceRef = useRef(null)
-  const bioRef = useRef(null)
-  const customCityRef = useRef(null)
-  
+  const [formError, setFormError] = useState('')
   const [selectedCity, setSelectedCity] = useState('')
+  const [formData, setFormData] = useState({
+    name: '',
+    phone: '',
+    email: '',
+    category: '',
+    price: '',
+    portfolio: '',
+    bio: '',
+    customCity: ''
+  })
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
 
   const handleArtistSubmit = async (e) => {
     e.preventDefault()
-    const finalCity = selectedCity === 'Other' ? customCityRef.current?.value : selectedCity;
+    setFormError('')
+    const finalCity = selectedCity === 'Other' ? formData.customCity : selectedCity;
     const submissionData = {
-      name: nameRef.current?.value || '',
-      phone: phoneRef.current?.value || '',
-      email: emailRef.current?.value || '',
-      category: categoryRef.current?.value || '',
-      price: priceRef.current?.value || '',
-      portfolio: portfolioRef.current?.value || '',
-      bio: bioRef.current?.value || '',
+      ...formData,
       city: finalCity || ''
     }
 
     const nameErr = validateName(submissionData.name);
-    if (nameErr) return alert(nameErr);
+    if (nameErr) return setFormError(nameErr);
     const emailErr = validateEmail(submissionData.email);
-    if (emailErr) return alert(emailErr);
+    if (emailErr) return setFormError(emailErr);
     const phoneErr = validatePhone(submissionData.phone);
-    if (phoneErr) return alert(phoneErr);
-    if (!submissionData.city) return alert("Please select or enter your city.");
+    if (phoneErr) return setFormError(phoneErr);
+    if (!submissionData.city) return setFormError("Please select or enter your city.");
 
     setIsSubmitting(true)
     try {
@@ -104,22 +106,33 @@ export default function ArtistRegistrationPage() {
               </div>
 
               <form className="lux-modal-form" onSubmit={handleArtistSubmit}>
+                {formError && (
+                  <div style={{ color: '#ff4d4f', background: 'rgba(255, 77, 79, 0.1)', padding: '10px 14px', borderRadius: '8px', marginBottom: '16px', fontSize: '14px', border: '1px solid rgba(255, 77, 79, 0.2)' }} role="alert">
+                    {formError}
+                  </div>
+                )}
                 <div className="lux-form-row" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '16px' }}>
                   <div className="lux-form-group">
-                    <label style={{ display: 'block', fontSize: '12px', color: 'rgba(255,255,255,0.5)', marginBottom: '8px' }}>FULL NAME</label>
+                    <label htmlFor="artpg-name" style={{ display: 'block', fontSize: '12px', color: 'rgba(255,255,255,0.5)', marginBottom: '8px' }}>FULL NAME</label>
                     <input
-                      ref={nameRef}
+                      id="artpg-name"
+                      name="name"
                       type="text" required placeholder="e.g. Rahul Verma"
-                      defaultValue=""
+                      value={formData.name}
+                      onChange={handleChange}
+                      autoComplete="name"
                       style={{ width: '100%', padding: '12px', background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', color: '#fff' }}
                     />
                   </div>
                   <div className="lux-form-group">
-                    <label style={{ display: 'block', fontSize: '12px', color: 'rgba(255,255,255,0.5)', marginBottom: '8px' }}>PHONE NUMBER</label>
+                    <label htmlFor="artpg-phone" style={{ display: 'block', fontSize: '12px', color: 'rgba(255,255,255,0.5)', marginBottom: '8px' }}>PHONE NUMBER</label>
                     <input
-                      ref={phoneRef}
+                      id="artpg-phone"
+                      name="phone"
                       type="tel" required placeholder="+91 9XXX-XXXXXX"
-                      defaultValue=""
+                      value={formData.phone}
+                      onChange={handleChange}
+                      autoComplete="tel"
                       style={{ width: '100%', padding: '12px', background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', color: '#fff' }}
                     />
                   </div>
@@ -127,20 +140,25 @@ export default function ArtistRegistrationPage() {
 
                 <div className="lux-form-row" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '16px' }}>
                   <div className="lux-form-group">
-                    <label style={{ display: 'block', fontSize: '12px', color: 'rgba(255,255,255,0.5)', marginBottom: '8px' }}>EMAIL ADDRESS</label>
+                    <label htmlFor="artpg-email" style={{ display: 'block', fontSize: '12px', color: 'rgba(255,255,255,0.5)', marginBottom: '8px' }}>EMAIL ADDRESS</label>
                     <input
-                      ref={emailRef}
+                      id="artpg-email"
+                      name="email"
                       type="email" required placeholder="name@email.in"
-                      defaultValue=""
+                      value={formData.email}
+                      onChange={handleChange}
+                      autoComplete="email"
                       style={{ width: '100%', padding: '12px', background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', color: '#fff' }}
                     />
                   </div>
                   <div className="lux-form-group">
-                    <label style={{ display: 'block', fontSize: '12px', color: 'rgba(255,255,255,0.5)', marginBottom: '8px' }}>PERFORMANCE PRICE (₹)</label>
+                    <label htmlFor="artpg-price" style={{ display: 'block', fontSize: '12px', color: 'rgba(255,255,255,0.5)', marginBottom: '8px' }}>PERFORMANCE PRICE (₹)</label>
                     <input
-                      ref={priceRef}
+                      id="artpg-price"
+                      name="price"
                       type="text" required placeholder="e.g. 50000 - 100000"
-                      defaultValue=""
+                      value={formData.price}
+                      onChange={handleChange}
                       style={{ width: '100%', padding: '12px', background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', color: '#fff' }}
                     />
                   </div>
@@ -148,11 +166,13 @@ export default function ArtistRegistrationPage() {
 
                 <div className="lux-form-row" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '16px' }}>
                   <div className="lux-form-group">
-                    <label style={{ display: 'block', fontSize: '12px', color: 'rgba(255,255,255,0.5)', marginBottom: '8px' }}>ARTIST CATEGORY</label>
+                    <label htmlFor="artpg-category" style={{ display: 'block', fontSize: '12px', color: 'rgba(255,255,255,0.5)', marginBottom: '8px' }}>ARTIST CATEGORY</label>
                     <select
-                      ref={categoryRef}
+                      id="artpg-category"
+                      name="category"
                       required
-                      defaultValue=""
+                      value={formData.category}
+                      onChange={handleChange}
                       style={{ width: '100%', padding: '12px', background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', color: '#fff' }}
                     >
                       <option value="">Select Type</option>
@@ -167,8 +187,9 @@ export default function ArtistRegistrationPage() {
                     </select>
                   </div>
                   <div className="lux-form-group">
-                    <label style={{ display: 'block', fontSize: '12px', color: 'rgba(255,255,255,0.5)', marginBottom: '8px' }}>CITY</label>
+                    <label htmlFor="artpg-city" style={{ display: 'block', fontSize: '12px', color: 'rgba(255,255,255,0.5)', marginBottom: '8px' }}>CITY</label>
                     <select
+                      id="artpg-city"
                       value={selectedCity}
                       onChange={(e) => setSelectedCity(e.target.value)}
                       required
@@ -207,32 +228,40 @@ export default function ArtistRegistrationPage() {
 
                 {selectedCity === 'Other' && (
                   <div className="lux-form-group" style={{ marginBottom: '16px' }}>
-                    <label style={{ display: 'block', fontSize: '12px', color: 'rgba(255,255,255,0.5)', marginBottom: '8px' }}>ENTER CUSTOM CITY</label>
+                    <label htmlFor="artpg-customcity" style={{ display: 'block', fontSize: '12px', color: 'rgba(255,255,255,0.5)', marginBottom: '8px' }}>ENTER CUSTOM CITY</label>
                     <input
-                      ref={customCityRef}
+                      id="artpg-customcity"
+                      name="customCity"
                       type="text" required placeholder="e.g. Jaipur"
+                      value={formData.customCity}
+                      onChange={handleChange}
                       style={{ width: '100%', padding: '12px', background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', color: '#fff' }}
                     />
                   </div>
                 )}
 
                 <div className="lux-form-group" style={{ marginBottom: '16px' }}>
-                  <label style={{ display: 'block', fontSize: '12px', color: 'rgba(255,255,255,0.5)', marginBottom: '8px' }}>PORTFOLIO / SOCIAL LINK</label>
+                  <label htmlFor="artpg-portfolio" style={{ display: 'block', fontSize: '12px', color: 'rgba(255,255,255,0.5)', marginBottom: '8px' }}>PORTFOLIO / SOCIAL LINK</label>
                   <input
-                    ref={portfolioRef}
+                    id="artpg-portfolio"
+                    name="portfolio"
                     type="url" required placeholder="Instagram, YouTube or Website"
-                    defaultValue=""
+                    value={formData.portfolio}
+                    onChange={handleChange}
+                    autoComplete="url"
                     style={{ width: '100%', padding: '12px', background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', color: '#fff' }}
                   />
                 </div>
 
                 <div className="lux-form-group" style={{ marginBottom: '24px' }}>
-                  <label style={{ display: 'block', fontSize: '12px', color: 'rgba(255,255,255,0.5)', marginBottom: '8px' }}>BIO & EXPERIENCE</label>
+                  <label htmlFor="artpg-bio" style={{ display: 'block', fontSize: '12px', color: 'rgba(255,255,255,0.5)', marginBottom: '8px' }}>BIO & EXPERIENCE</label>
                   <textarea
-                    ref={bioRef}
+                    id="artpg-bio"
+                    name="bio"
                     rows="4" required
                     placeholder="Briefly describe your performances, experience, and what makes you unique..."
-                    defaultValue=""
+                    value={formData.bio}
+                    onChange={handleChange}
                     style={{ width: '100%', padding: '12px', background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', color: '#fff', resize: 'vertical' }}
                   />
                 </div>

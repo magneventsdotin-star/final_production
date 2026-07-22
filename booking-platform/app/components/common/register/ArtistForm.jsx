@@ -4,6 +4,7 @@ import { validateName, validateEmail, validatePhone } from '@helpers/validation'
 
 export default function ArtistForm({ copyToClipboard, setSubmitted }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formError, setFormError] = useState('');
   const [selectedCity, setSelectedCity] = useState('');
   
   // Controlled form state
@@ -25,6 +26,7 @@ export default function ArtistForm({ copyToClipboard, setSubmitted }) {
 
   const handleArtistSubmit = async (e) => {
     e.preventDefault();
+    setFormError('');
     const finalCity = selectedCity === 'Other' ? formData.customCity : selectedCity;
     const submissionData = {
       ...formData,
@@ -32,12 +34,12 @@ export default function ArtistForm({ copyToClipboard, setSubmitted }) {
     };
 
     const nameErr = validateName(submissionData.name);
-    if (nameErr) return alert(nameErr);
+    if (nameErr) return setFormError(nameErr);
     const emailErr = validateEmail(submissionData.email);
-    if (emailErr) return alert(emailErr);
+    if (emailErr) return setFormError(emailErr);
     const phoneErr = validatePhone(submissionData.phone);
-    if (phoneErr) return alert(phoneErr);
-    if (!submissionData.city) return alert("Please select or enter your city.");
+    if (phoneErr) return setFormError(phoneErr);
+    if (!submissionData.city) return setFormError("Please select or enter your city.");
 
     setIsSubmitting(true);
     try {
@@ -71,41 +73,53 @@ export default function ArtistForm({ copyToClipboard, setSubmitted }) {
       </div>
 
       <form className="lux-modal-form" onSubmit={handleArtistSubmit}>
+        {formError && (
+          <div style={{ color: '#ff4d4f', background: 'rgba(255, 77, 79, 0.1)', padding: '10px 14px', borderRadius: '8px', marginBottom: '16px', fontSize: '14px', border: '1px solid rgba(255, 77, 79, 0.2)' }} role="alert">
+            {formError}
+          </div>
+        )}
         <div className="lux-form-row">
           <div className="lux-form-group">
-            <label>FULL NAME</label>
+            <label htmlFor="art-name">FULL NAME</label>
             <input
+              id="art-name"
               name="name"
               type="text" required placeholder="e.g. Rahul Verma"
               value={formData.name}
               onChange={handleChange}
+              autoComplete="name"
             />
           </div>
           <div className="lux-form-group">
-            <label>PHONE NUMBER</label>
+            <label htmlFor="art-phone">PHONE NUMBER</label>
             <input
+              id="art-phone"
               name="phone"
               type="tel" required placeholder="+91 9XXX-XXXXXX"
               value={formData.phone}
               onChange={handleChange}
+              autoComplete="tel"
             />
           </div>
         </div>
 
         <div className="lux-form-group">
-          <label>EMAIL ADDRESS</label>
+          <label htmlFor="art-email">EMAIL ADDRESS</label>
           <input
+            id="art-email"
             name="email"
             type="email" required placeholder="name@email.in"
             value={formData.email}
             onChange={handleChange}
+            autoComplete="email"
           />
         </div>
 
         <div className="lux-form-row">
           <div className="lux-form-group">
-            <label>ARTIST CATEGORY</label>
+            <label htmlFor="art-category">ARTIST CATEGORY</label>
             <select
+              id="art-category"
               name="category"
               required
               value={formData.category}
@@ -123,8 +137,9 @@ export default function ArtistForm({ copyToClipboard, setSubmitted }) {
             </select>
           </div>
           <div className="lux-form-group">
-            <label>CITY</label>
+            <label htmlFor="art-city">CITY</label>
             <select
+              id="art-city"
               value={selectedCity}
               onChange={(e) => setSelectedCity(e.target.value)}
               required
@@ -162,8 +177,9 @@ export default function ArtistForm({ copyToClipboard, setSubmitted }) {
 
         {selectedCity === 'Other' && (
           <div className="lux-form-group">
-            <label>ENTER CUSTOM CITY</label>
+            <label htmlFor="art-customcity">ENTER CUSTOM CITY</label>
             <input
+              id="art-customcity"
               name="customCity"
               type="text" required placeholder="e.g. Jaipur"
               value={formData.customCity}
@@ -174,17 +190,20 @@ export default function ArtistForm({ copyToClipboard, setSubmitted }) {
 
         <div className="lux-form-row">
           <div className="lux-form-group">
-            <label>PORTFOLIO / SOCIAL LINK</label>
+            <label htmlFor="art-portfolio">PORTFOLIO / SOCIAL LINK</label>
             <input
+              id="art-portfolio"
               name="portfolio"
               type="url" required placeholder="Instagram, YouTube or Website"
               value={formData.portfolio}
               onChange={handleChange}
+              autoComplete="url"
             />
           </div>
           <div className="lux-form-group">
-            <label>PERFORMANCE PRICE (INR)</label>
+            <label htmlFor="art-price">PERFORMANCE PRICE (INR)</label>
             <input
+              id="art-price"
               name="price"
               type="text" required placeholder="e.g. 10000 - 20000"
               value={formData.price}
@@ -194,8 +213,9 @@ export default function ArtistForm({ copyToClipboard, setSubmitted }) {
         </div>
 
         <div className="lux-form-group">
-          <label>BIO & EXPERIENCE</label>
+          <label htmlFor="art-bio">BIO & EXPERIENCE</label>
           <textarea
+            id="art-bio"
             name="bio"
             rows="3" required
             placeholder="Briefly describe your performances, experience, and what makes you unique..."

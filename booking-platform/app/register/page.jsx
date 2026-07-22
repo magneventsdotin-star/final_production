@@ -13,30 +13,32 @@ export default function RegisterPage() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitted, setSubmitted] = useState(false)
 
-  const nameRef = useRef(null)
-  const phoneRef = useRef(null)
-  const emailRef = useRef(null)
-  const categoryRef = useRef(null)
-  const portfolioRef = useRef(null)
-  const bioRef = useRef(null)
+  const [formError, setFormError] = useState('')
+  const [formData, setFormData] = useState({
+    name: '',
+    phone: '',
+    email: '',
+    category: '',
+    portfolio: '',
+    bio: ''
+  })
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    const submissionData = {
-      name: nameRef.current?.value || '',
-      phone: phoneRef.current?.value || '',
-      email: emailRef.current?.value || '',
-      category: categoryRef.current?.value || '',
-      portfolio: portfolioRef.current?.value || '',
-      bio: bioRef.current?.value || ''
-    }
+    setFormError('')
+    const submissionData = { ...formData }
 
     const nameErr = validateName(submissionData.name);
-    if (nameErr) return alert(nameErr);
+    if (nameErr) return setFormError(nameErr);
     const emailErr = validateEmail(submissionData.email);
-    if (emailErr) return alert(emailErr);
+    if (emailErr) return setFormError(emailErr);
     const phoneErr = validatePhone(submissionData.phone);
-    if (phoneErr) return alert(phoneErr);
+    if (phoneErr) return setFormError(phoneErr);
 
     setIsSubmitting(true)
     try {
@@ -83,43 +85,59 @@ export default function RegisterPage() {
               </div>
 
               <form className="lux-modal-form" onSubmit={handleSubmit}>
+                {formError && (
+                  <div style={{ color: '#ff4d4f', background: 'rgba(255, 77, 79, 0.1)', padding: '10px 14px', borderRadius: '8px', marginBottom: '16px', fontSize: '14px', border: '1px solid rgba(255, 77, 79, 0.2)' }} role="alert">
+                    {formError}
+                  </div>
+                )}
                 <div className="lux-form-grid">
                   <div className="lux-form-group">
-                    <label>FULL NAME</label>
+                    <label htmlFor="reg-name">FULL NAME</label>
                     <input
-                      ref={nameRef}
+                      id="reg-name"
+                      name="name"
                       type="text" required placeholder="e.g. Rahul Verma"
-                      defaultValue=""
+                      value={formData.name}
+                      onChange={handleChange}
+                      autoComplete="name"
                     />
                   </div>
                   <div className="lux-form-group">
-                    <label>PHONE NUMBER</label>
+                    <label htmlFor="reg-phone">PHONE NUMBER</label>
                     <input
-                      ref={phoneRef}
+                      id="reg-phone"
+                      name="phone"
                       type="tel" required placeholder="+91 9XXX-XXXXXX"
-                      defaultValue=""
+                      value={formData.phone}
+                      onChange={handleChange}
+                      autoComplete="tel"
                     />
                   </div>
                 </div>
 
                 <div className="lux-form-group">
-                  <label>EMAIL ADDRESS</label>
+                  <label htmlFor="reg-email">EMAIL ADDRESS</label>
                   <input
-                    ref={emailRef}
+                    id="reg-email"
+                    name="email"
                     type="email" required placeholder="name@email.in"
-                    defaultValue=""
+                    value={formData.email}
+                    onChange={handleChange}
+                    autoComplete="email"
                   />
                 </div>
 
                 <div className="lux-form-grid">
                   <div className="lux-form-group">
-                    <label>ARTIST CATEGORY</label>
+                    <label htmlFor="reg-category">ARTIST CATEGORY</label>
                     <select
-                      ref={categoryRef}
+                      id="reg-category"
+                      name="category"
                       required
-                      defaultValue=""
+                      value={formData.category}
+                      onChange={handleChange}
                     >
-                      <option value="">Select Type</option>
+                      <option value="" disabled>Select Type</option>
                       <option value="singer">Solo Singer</option>
                       <option value="band">Music Band</option>
                       <option value="dj">DJ / Percussionist</option>
@@ -129,22 +147,27 @@ export default function RegisterPage() {
                     </select>
                   </div>
                   <div className="lux-form-group">
-                    <label>PORTFOLIO / SOCIAL LINK</label>
+                    <label htmlFor="reg-portfolio">PORTFOLIO / SOCIAL LINK</label>
                     <input
-                      ref={portfolioRef}
+                      id="reg-portfolio"
+                      name="portfolio"
                       type="url" required placeholder="Instagram, YouTube or Website"
-                      defaultValue=""
+                      value={formData.portfolio}
+                      onChange={handleChange}
+                      autoComplete="url"
                     />
                   </div>
                 </div>
 
                 <div className="lux-form-group">
-                  <label>BIO & EXPERIENCE</label>
+                  <label htmlFor="reg-bio">BIO & EXPERIENCE</label>
                   <textarea
-                    ref={bioRef}
+                    id="reg-bio"
+                    name="bio"
                     rows="4" required
                     placeholder="Briefly describe your performances, experience, and what makes you unique..."
-                    defaultValue=""
+                    value={formData.bio}
+                    onChange={handleChange}
                   />
                 </div>
 

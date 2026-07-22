@@ -289,6 +289,7 @@ export default function ContactModal() {
                     type="text" required placeholder="e.g. Arjun Sharma"
                     value={formData.name}
                     onChange={handleChange}
+                    autoComplete="name"
                   />
                 </div>
                 <div className="lux-form-group">
@@ -299,6 +300,7 @@ export default function ContactModal() {
                     type="tel" placeholder="+91 9XXX-XXXXXX"
                     value={formData.phone}
                     onChange={handleChange}
+                    autoComplete="tel"
                   />
                 </div>
               </div>
@@ -312,6 +314,7 @@ export default function ContactModal() {
                     type="email" placeholder="name@email.com"
                     value={formData.email}
                     onChange={handleChange}
+                    autoComplete="email"
                   />
                 </div>
                 <div className="lux-form-group">
@@ -336,8 +339,9 @@ export default function ContactModal() {
 
               <div className="lux-form-row">
                 <div className="lux-form-group">
-                  <label>Event Date</label>
+                  <label htmlFor="modal-date">Event Date</label>
                   <input
+                    id="modal-date"
                     name="date"
                     type="date" required
                     value={formData.date}
@@ -345,8 +349,9 @@ export default function ContactModal() {
                   />
                 </div>
                 <div className="lux-form-group">
-                  <label>Location</label>
+                  <label htmlFor="modal-location">Location</label>
                   <input
+                    id="modal-location"
                     name="location"
                     type="text" required placeholder="Delhi, Mumbai, Lucknow..."
                     value={formData.location}
@@ -377,8 +382,9 @@ export default function ContactModal() {
                   </div>
                 </div>
                 <div className="lux-form-group">
-                  <label>Budget range</label>
+                  <label htmlFor="modal-budget">Budget range</label>
                   <select
+                    id="modal-budget"
                     required
                     value={selectedBudget}
                     onChange={(e) => setSelectedBudget(e.target.value)}
