@@ -46,11 +46,19 @@ export default function ContactModal() {
     });
   };
 
-  const nameRef = useRef(null)
-  const phoneRef = useRef(null)
-  const emailRef = useRef(null)
-  const dateRef = useRef(null)
-  const locationRef = useRef(null)
+  // Controlled form state
+  const [formData, setFormData] = useState({
+    name: '',
+    phone: '',
+    email: '',
+    date: '',
+    location: ''
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
 
   useEffect(() => {
     const handleOpenModal = (e) => {
@@ -116,20 +124,20 @@ export default function ContactModal() {
 
   const onClose = () => setIsOpen(false);
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    setFormError('')
-
-    const nameVal = nameRef.current?.value || ''
-    const phoneVal = phoneRef.current?.value || ''
-    const emailVal = emailRef.current?.value || ''
-
-    if (!phoneVal && !emailVal) {
-      setFormError('Please provide either a Phone number or an Email ID.')
-      return
-    }
-    
-    if (nameVal) {
+    const handleSubmit = (e) => {
+      e.preventDefault()
+      setFormError('')
+  
+      const nameVal = formData.name || ''
+      const phoneVal = formData.phone || ''
+      const emailVal = formData.email || ''
+  
+      if (!phoneVal && !emailVal) {
+        setFormError('Please provide either a Phone number or an Email ID.')
+        return
+      }
+      
+      if (nameVal) {
       const nameErr = validateName(nameVal);
       if (nameErr) return setFormError(nameErr);
     }
@@ -145,12 +153,8 @@ export default function ContactModal() {
     }
 
     const submissionData = {
-      name: nameRef.current?.value || '',
-      phone: phoneVal,
-      email: emailVal,
+      ...formData,
       eventType: selectedEventType,
-      date: dateRef.current?.value || '',
-      location: locationRef.current?.value || '',
       artistType: selectedArtistTypes,
       budget: selectedBudget,
       selectedArtist: initialArtist,
@@ -173,11 +177,13 @@ export default function ContactModal() {
 
     setTimeout(() => {
       onClose()
-      if (nameRef.current) nameRef.current.value = ''
-      if (phoneRef.current) phoneRef.current.value = ''
-      if (emailRef.current) emailRef.current.value = ''
-      if (dateRef.current) dateRef.current.value = ''
-      if (locationRef.current) locationRef.current.value = ''
+      setFormData({
+        name: '',
+        phone: '',
+        email: '',
+        date: '',
+        location: ''
+      })
       setSelectedEventType('')
       setSelectedBudget('')
       setSelectedArtistTypes([])
@@ -279,18 +285,20 @@ export default function ContactModal() {
                   <label htmlFor="modal-name">Name</label>
                   <input
                     id="modal-name"
-                    ref={nameRef}
+                    name="name"
                     type="text" required placeholder="e.g. Arjun Sharma"
-                    defaultValue=""
+                    value={formData.name}
+                    onChange={handleChange}
                   />
                 </div>
                 <div className="lux-form-group">
                   <label htmlFor="modal-phone">Phone no.</label>
                   <input
                     id="modal-phone"
-                    ref={phoneRef}
+                    name="phone"
                     type="tel" placeholder="+91 9XXX-XXXXXX"
-                    defaultValue=""
+                    value={formData.phone}
+                    onChange={handleChange}
                   />
                 </div>
               </div>
@@ -300,9 +308,10 @@ export default function ContactModal() {
                   <label htmlFor="modal-email">Email ID</label>
                   <input
                     id="modal-email"
-                    ref={emailRef}
+                    name="email"
                     type="email" placeholder="name@email.com"
-                    defaultValue=""
+                    value={formData.email}
+                    onChange={handleChange}
                   />
                 </div>
                 <div className="lux-form-group">
@@ -329,17 +338,19 @@ export default function ContactModal() {
                 <div className="lux-form-group">
                   <label>Event Date</label>
                   <input
-                    ref={dateRef}
+                    name="date"
                     type="date" required
-                    defaultValue=""
+                    value={formData.date}
+                    onChange={handleChange}
                   />
                 </div>
                 <div className="lux-form-group">
                   <label>Location</label>
                   <input
-                    ref={locationRef}
+                    name="location"
                     type="text" required placeholder="Delhi, Mumbai, Lucknow..."
-                    defaultValue=""
+                    value={formData.location}
+                    onChange={handleChange}
                   />
                 </div>
               </div>

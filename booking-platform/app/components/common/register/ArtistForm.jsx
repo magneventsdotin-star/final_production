@@ -6,26 +6,28 @@ export default function ArtistForm({ copyToClipboard, setSubmitted }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [selectedCity, setSelectedCity] = useState('');
   
-  const nameRef = useRef(null);
-  const phoneRef = useRef(null);
-  const emailRef = useRef(null);
-  const categoryRef = useRef(null);
-  const portfolioRef = useRef(null);
-  const priceRef = useRef(null);
-  const bioRef = useRef(null);
-  const customCityRef = useRef(null);
+  // Controlled form state
+  const [formData, setFormData] = useState({
+    name: '',
+    phone: '',
+    email: '',
+    category: '',
+    portfolio: '',
+    price: '',
+    bio: '',
+    customCity: ''
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
 
   const handleArtistSubmit = async (e) => {
     e.preventDefault();
-    const finalCity = selectedCity === 'Other' ? customCityRef.current?.value : selectedCity;
+    const finalCity = selectedCity === 'Other' ? formData.customCity : selectedCity;
     const submissionData = {
-      name: nameRef.current?.value || '',
-      phone: phoneRef.current?.value || '',
-      email: emailRef.current?.value || '',
-      category: categoryRef.current?.value || '',
-      portfolio: portfolioRef.current?.value || '',
-      price: priceRef.current?.value || '',
-      bio: bioRef.current?.value || '',
+      ...formData,
       city: finalCity || ''
     };
 
@@ -54,6 +56,7 @@ export default function ArtistForm({ copyToClipboard, setSubmitted }) {
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
           <p className="header-badge" style={{ background: 'rgba(0, 212, 255, 0.1)', color: '#00d4ff', margin: 0 }}>JOIN THE ELITE</p>
           <button 
+            type="button"
             onClick={() => copyToClipboard('/register/artist')}
             style={{ background: 'transparent', border: '1px solid rgba(0, 212, 255, 0.3)', color: '#00d4ff', borderRadius: '12px', padding: '4px 12px', fontSize: '11px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px', transition: 'all 0.2s' }}
             onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(0, 212, 255, 0.1)'; e.currentTarget.style.borderColor = '#00d4ff'; }}
@@ -72,17 +75,19 @@ export default function ArtistForm({ copyToClipboard, setSubmitted }) {
           <div className="lux-form-group">
             <label>FULL NAME</label>
             <input
-              ref={nameRef}
+              name="name"
               type="text" required placeholder="e.g. Rahul Verma"
-              defaultValue=""
+              value={formData.name}
+              onChange={handleChange}
             />
           </div>
           <div className="lux-form-group">
             <label>PHONE NUMBER</label>
             <input
-              ref={phoneRef}
+              name="phone"
               type="tel" required placeholder="+91 9XXX-XXXXXX"
-              defaultValue=""
+              value={formData.phone}
+              onChange={handleChange}
             />
           </div>
         </div>
@@ -90,9 +95,10 @@ export default function ArtistForm({ copyToClipboard, setSubmitted }) {
         <div className="lux-form-group">
           <label>EMAIL ADDRESS</label>
           <input
-            ref={emailRef}
+            name="email"
             type="email" required placeholder="name@email.in"
-            defaultValue=""
+            value={formData.email}
+            onChange={handleChange}
           />
         </div>
 
@@ -100,9 +106,10 @@ export default function ArtistForm({ copyToClipboard, setSubmitted }) {
           <div className="lux-form-group">
             <label>ARTIST CATEGORY</label>
             <select
-              ref={categoryRef}
+              name="category"
               required
-              defaultValue=""
+              value={formData.category}
+              onChange={handleChange}
             >
               <option value="">Select Type</option>
               <option value="singer">Singer</option>
@@ -157,8 +164,10 @@ export default function ArtistForm({ copyToClipboard, setSubmitted }) {
           <div className="lux-form-group">
             <label>ENTER CUSTOM CITY</label>
             <input
-              ref={customCityRef}
+              name="customCity"
               type="text" required placeholder="e.g. Jaipur"
+              value={formData.customCity}
+              onChange={handleChange}
             />
           </div>
         )}
@@ -167,17 +176,19 @@ export default function ArtistForm({ copyToClipboard, setSubmitted }) {
           <div className="lux-form-group">
             <label>PORTFOLIO / SOCIAL LINK</label>
             <input
-              ref={portfolioRef}
+              name="portfolio"
               type="url" required placeholder="Instagram, YouTube or Website"
-              defaultValue=""
+              value={formData.portfolio}
+              onChange={handleChange}
             />
           </div>
           <div className="lux-form-group">
             <label>PERFORMANCE PRICE (INR)</label>
             <input
-              ref={priceRef}
+              name="price"
               type="text" required placeholder="e.g. 10000 - 20000"
-              defaultValue=""
+              value={formData.price}
+              onChange={handleChange}
             />
           </div>
         </div>
@@ -185,10 +196,11 @@ export default function ArtistForm({ copyToClipboard, setSubmitted }) {
         <div className="lux-form-group">
           <label>BIO & EXPERIENCE</label>
           <textarea
-            ref={bioRef}
+            name="bio"
             rows="3" required
             placeholder="Briefly describe your performances, experience, and what makes you unique..."
-            defaultValue=""
+            value={formData.bio}
+            onChange={handleChange}
           />
         </div>
 
