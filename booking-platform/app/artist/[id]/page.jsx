@@ -299,7 +299,7 @@ export default function ArtistProfilePage({ params }) {
             <h2 className="section-title">Photo Gallery</h2>
             <div className="gallery-grid">
               {artist.artist_images.map((img, idx) => (
-                <div key={idx} className="gallery-item" onClick={() => setSelectedImage(img.image_url)} style={{ cursor: 'pointer' }}>
+                <div key={idx} className="gallery-item" onClick={() => setSelectedImage(img.image_url)} style={{ cursor: 'pointer', aspectRatio: '1/1', position: 'relative' }}>
                   <Image src={img.image_url} alt={`${name} gallery ${idx + 1}`} fill sizes="(max-width: 768px) 50vw, 25vw" style={{objectFit: 'cover'}} className="gallery-image" />
                 </div>
               ))}

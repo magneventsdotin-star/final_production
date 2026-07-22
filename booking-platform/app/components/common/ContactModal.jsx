@@ -187,13 +187,13 @@ function InnerContactForm({ formType, initialArtist, initialPlan, initialService
       } else if (planName.includes('band')) {
         setSelectedArtistTypes(['Music Band']); setSelectedBudget('20k_35k');
       }
-      setSelectedEventType('Live Booking');
+      setSelectedEventType('');
     } else if (initialService) {
-      setSelectedArtistTypes([]); setSelectedBudget(''); setSelectedEventType(initialService.title);
+      setSelectedArtistTypes([]); setSelectedBudget(''); setSelectedEventType('');
     } else if (initialArtist) {
       const tag = initialArtist.category || '';
       if (tag) setSelectedArtistTypes([tag]);
-      setSelectedBudget(''); setSelectedEventType('Artist Booking');
+      setSelectedBudget(''); setSelectedEventType('');
     } else {
       setSelectedArtistTypes([]); setSelectedBudget(''); setSelectedEventType('');
     }
