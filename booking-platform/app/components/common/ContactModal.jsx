@@ -190,14 +190,13 @@ export default function ContactModal() {
     }, 1800)
   }
 
-  if (!isOpen) return null
-
   return (
     <AnimatePresence>
-      <div className="lux-modal-root">
-        <motion.div
-          className="lux-modal-backdrop"
-          initial={{ opacity: 0 }}
+      {isOpen && (
+        <div key="contact-modal" className="lux-modal-root">
+          <motion.div
+            className="lux-modal-backdrop"
+            initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           onClick={onClose}
@@ -442,6 +441,7 @@ export default function ContactModal() {
           )}
         </motion.div>
       </div>
+      )}
     </AnimatePresence>
   )
 }
