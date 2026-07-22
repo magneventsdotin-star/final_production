@@ -6,25 +6,27 @@ export default function EventForm({ copyToClipboard, setSubmitted }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [selectedArtistTypes, setSelectedArtistTypes] = useState([]);
 
-  const eventNameRef = useRef(null);
-  const eventPhoneRef = useRef(null);
-  const eventEmailRef = useRef(null);
-  const eventTypeRef = useRef(null);
-  const eventDateRef = useRef(null);
-  const eventLocationRef = useRef(null);
-  const eventBudgetRef = useRef(null);
+  // Controlled form state
+  const [formData, setFormData] = useState({
+    name: '',
+    phone: '',
+    email: '',
+    eventType: '',
+    date: '',
+    location: '',
+    budget: ''
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
 
   const handleEventSubmit = async (e) => {
     e.preventDefault();
     const submissionData = {
-      name: eventNameRef.current?.value || '',
-      phone: eventPhoneRef.current?.value || '',
-      email: eventEmailRef.current?.value || '',
-      eventType: eventTypeRef.current?.value || '',
-      date: eventDateRef.current?.value || '',
-      location: eventLocationRef.current?.value || '',
+      ...formData,
       artistType: selectedArtistTypes,
-      budget: eventBudgetRef.current?.value || '',
     };
 
     const nameErr = validateName(submissionData.name);
@@ -57,6 +59,7 @@ export default function EventForm({ copyToClipboard, setSubmitted }) {
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
           <p className="header-badge" style={{ margin: 0 }}>DIRECT SUPPORT</p>
           <button 
+            type="button"
             onClick={() => copyToClipboard('/register/event')}
             style={{ background: 'transparent', border: '1px solid rgba(255, 224, 50, 0.3)', color: '#FFE032', borderRadius: '12px', padding: '4px 12px', fontSize: '11px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px', transition: 'all 0.2s' }}
             onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(255, 224, 50, 0.1)'; e.currentTarget.style.borderColor = '#FFE032'; }}
@@ -75,17 +78,19 @@ export default function EventForm({ copyToClipboard, setSubmitted }) {
           <div className="lux-form-group">
             <label>YOUR NAME</label>
             <input
-              ref={eventNameRef}
+              name="name"
               type="text" required placeholder="e.g. Arjun Sharma"
-              defaultValue=""
+              value={formData.name}
+              onChange={handleChange}
             />
           </div>
           <div className="lux-form-group">
             <label>PHONE NUMBER</label>
             <input
-              ref={eventPhoneRef}
+              name="phone"
               type="tel" required placeholder="+91 9XXX-XXXXXX"
-              defaultValue=""
+              value={formData.phone}
+              onChange={handleChange}
             />
           </div>
         </div>
@@ -94,17 +99,19 @@ export default function EventForm({ copyToClipboard, setSubmitted }) {
           <div className="lux-form-group">
             <label>EMAIL ADDRESS</label>
             <input
-              ref={eventEmailRef}
+              name="email"
               type="email" required placeholder="name@email.com"
-              defaultValue=""
+              value={formData.email}
+              onChange={handleChange}
             />
           </div>
           <div className="lux-form-group">
             <label>EVENT TYPE</label>
             <select
-              ref={eventTypeRef}
+              name="eventType"
               required
-              defaultValue=""
+              value={formData.eventType}
+              onChange={handleChange}
             >
               <option value="" disabled>Select event type...</option>
               <option value="Wedding">Wedding</option>
@@ -122,17 +129,19 @@ export default function EventForm({ copyToClipboard, setSubmitted }) {
           <div className="lux-form-group">
             <label>EVENT DATE</label>
             <input
-              ref={eventDateRef}
+              name="date"
               type="date" required
-              defaultValue=""
+              value={formData.date}
+              onChange={handleChange}
             />
           </div>
           <div className="lux-form-group">
             <label>LOCATION</label>
             <input
-              ref={eventLocationRef}
+              name="location"
               type="text" required placeholder="Delhi, Mumbai, Lucknow..."
-              defaultValue=""
+              value={formData.location}
+              onChange={handleChange}
             />
           </div>
         </div>
@@ -161,9 +170,10 @@ export default function EventForm({ copyToClipboard, setSubmitted }) {
           <div className="lux-form-group">
             <label>BUDGET RANGE</label>
             <select
-              ref={eventBudgetRef}
+              name="budget"
               required
-              defaultValue=""
+              value={formData.budget}
+              onChange={handleChange}
             >
               <option value="" disabled>Select Budget</option>
               <option value="5k_10k">5000-10000</option>

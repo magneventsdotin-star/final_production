@@ -12,6 +12,22 @@ export default function EventRegistrationPage() {
   const [submitted, setSubmitted] = useState(false)
   const [selectedArtistTypes, setSelectedArtistTypes] = useState([])
 
+  // Controlled form state
+  const [formData, setFormData] = useState({
+    name: '',
+    phone: '',
+    email: '',
+    eventType: '',
+    date: '',
+    location: '',
+    budget: ''
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
   const copyToClipboard = () => {
     const url = window.location.href;
     navigator.clipboard.writeText(url).then(() => {
@@ -21,25 +37,11 @@ export default function EventRegistrationPage() {
     });
   };
 
-  const eventNameRef = useRef(null)
-  const eventPhoneRef = useRef(null)
-  const eventEmailRef = useRef(null)
-  const eventTypeRef = useRef(null)
-  const eventDateRef = useRef(null)
-  const eventLocationRef = useRef(null)
-  const eventBudgetRef = useRef(null)
-
   const handleEventSubmit = async (e) => {
     e.preventDefault()
     const submissionData = {
-      name: eventNameRef.current?.value || '',
-      phone: eventPhoneRef.current?.value || '',
-      email: eventEmailRef.current?.value || '',
-      eventType: eventTypeRef.current?.value || '',
-      date: eventDateRef.current?.value || '',
-      location: eventLocationRef.current?.value || '',
+      ...formData,
       artistType: selectedArtistTypes,
-      budget: eventBudgetRef.current?.value || '',
     }
 
     const nameErr = validateName(submissionData.name);
@@ -86,6 +88,7 @@ export default function EventRegistrationPage() {
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
                   <p className="header-badge" style={{ background: 'rgba(255, 224, 50, 0.1)', color: '#FFE032', display: 'inline-block', padding: '4px 12px', borderRadius: '20px', fontSize: '12px', fontWeight: 'bold', margin: 0 }}>DIRECT SUPPORT</p>
                   <button 
+                    type="button"
                     onClick={copyToClipboard}
                     style={{ background: 'transparent', border: '1px solid rgba(255, 224, 50, 0.3)', color: '#FFE032', borderRadius: '12px', padding: '6px 14px', fontSize: '12px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px', transition: 'all 0.2s' }}
                     onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(255, 224, 50, 0.1)'; e.currentTarget.style.borderColor = '#FFE032'; }}
@@ -104,18 +107,20 @@ export default function EventRegistrationPage() {
                   <div className="lux-form-group">
                     <label style={{ display: 'block', fontSize: '12px', color: 'rgba(255,255,255,0.5)', marginBottom: '8px' }}>YOUR NAME</label>
                     <input
-                      ref={eventNameRef}
+                      name="name"
                       type="text" required placeholder="e.g. Arjun Sharma"
-                      defaultValue=""
+                      value={formData.name}
+                      onChange={handleChange}
                       style={{ width: '100%', padding: '12px', background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', color: '#fff' }}
                     />
                   </div>
                   <div className="lux-form-group">
                     <label style={{ display: 'block', fontSize: '12px', color: 'rgba(255,255,255,0.5)', marginBottom: '8px' }}>PHONE NUMBER</label>
                     <input
-                      ref={eventPhoneRef}
+                      name="phone"
                       type="tel" required placeholder="+91 9XXX-XXXXXX"
-                      defaultValue=""
+                      value={formData.phone}
+                      onChange={handleChange}
                       style={{ width: '100%', padding: '12px', background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', color: '#fff' }}
                     />
                   </div>
@@ -125,18 +130,20 @@ export default function EventRegistrationPage() {
                   <div className="lux-form-group">
                     <label style={{ display: 'block', fontSize: '12px', color: 'rgba(255,255,255,0.5)', marginBottom: '8px' }}>EMAIL ADDRESS</label>
                     <input
-                      ref={eventEmailRef}
+                      name="email"
                       type="email" required placeholder="name@email.com"
-                      defaultValue=""
+                      value={formData.email}
+                      onChange={handleChange}
                       style={{ width: '100%', padding: '12px', background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', color: '#fff' }}
                     />
                   </div>
                   <div className="lux-form-group">
                     <label style={{ display: 'block', fontSize: '12px', color: 'rgba(255,255,255,0.5)', marginBottom: '8px' }}>EVENT TYPE</label>
                     <select
-                      ref={eventTypeRef}
+                      name="eventType"
                       required
-                      defaultValue=""
+                      value={formData.eventType}
+                      onChange={handleChange}
                       style={{ width: '100%', padding: '12px', background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', color: '#fff', outline: 'none' }}
                     >
                       <option value="" disabled>Select event type...</option>
@@ -155,18 +162,20 @@ export default function EventRegistrationPage() {
                   <div className="lux-form-group">
                     <label style={{ display: 'block', fontSize: '12px', color: 'rgba(255,255,255,0.5)', marginBottom: '8px' }}>EVENT DATE</label>
                     <input
-                      ref={eventDateRef}
+                      name="date"
                       type="date" required
-                      defaultValue=""
+                      value={formData.date}
+                      onChange={handleChange}
                       style={{ width: '100%', padding: '12px', background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', color: '#fff', colorScheme: 'dark' }}
                     />
                   </div>
                   <div className="lux-form-group">
                     <label style={{ display: 'block', fontSize: '12px', color: 'rgba(255,255,255,0.5)', marginBottom: '8px' }}>LOCATION</label>
                     <input
-                      ref={eventLocationRef}
+                      name="location"
                       type="text" required placeholder="Delhi, Mumbai, Lucknow..."
-                      defaultValue=""
+                      value={formData.location}
+                      onChange={handleChange}
                       style={{ width: '100%', padding: '12px', background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', color: '#fff' }}
                     />
                   </div>
@@ -206,9 +215,10 @@ export default function EventRegistrationPage() {
                   <div className="lux-form-group" style={{ marginTop: '16px' }}>
                     <label style={{ display: 'block', fontSize: '12px', color: 'rgba(255,255,255,0.5)', marginBottom: '8px' }}>BUDGET RANGE</label>
                     <select
-                      ref={eventBudgetRef}
+                      name="budget"
                       required
-                      defaultValue=""
+                      value={formData.budget}
+                      onChange={handleChange}
                       style={{ width: '100%', padding: '12px', background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', color: '#fff' }}
                     >
                       <option value="" disabled>Select Budget</option>
