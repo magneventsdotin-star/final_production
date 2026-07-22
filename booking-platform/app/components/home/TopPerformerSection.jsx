@@ -96,17 +96,26 @@ function TopPerformerSection() {
       <div className="hp-aom-card">
         {loading ? (
           <>
-            <div className="hp-aom-img-wrap skeleton-pulse" style={{ background: 'rgba(255,255,255,0.05)' }}></div>
-            <div className="hp-aom-content" style={{ display: 'flex', flexDirection: 'column', padding: '40px' }}>
-               <div className="skeleton-pulse" style={{ height: '14px', width: '40%', background: 'rgba(255,255,255,0.05)', marginBottom: '16px', borderRadius: '4px' }}></div>
-               <div className="skeleton-pulse" style={{ height: '36px', width: '60%', background: 'rgba(255,255,255,0.05)', marginBottom: '40px', borderRadius: '6px' }}></div>
+            <div className="hp-aom-img-wrap skeleton-pulse" style={{ background: 'rgba(255,255,255,0.05)', minHeight: isMobile ? '350px' : '100%' }}></div>
+            <div className="hp-aom-content" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+               {/* Genres */}
+               <div className="skeleton-pulse" style={{ height: '12px', width: '30%', background: 'rgba(255,255,255,0.05)', marginBottom: '12px', borderRadius: '4px' }}></div>
+               {/* Name */}
+               <div className="skeleton-pulse" style={{ height: '32px', width: '50%', background: 'rgba(255,255,255,0.05)', marginBottom: '20px', borderRadius: '6px' }}></div>
                
-               <div className="skeleton-pulse" style={{ height: '48px', width: '100%', background: 'rgba(255,255,255,0.05)', marginBottom: '12px', borderRadius: '12px' }}></div>
-               <div className="skeleton-pulse" style={{ height: '48px', width: '100%', background: 'rgba(255,255,255,0.05)', marginBottom: '12px', borderRadius: '12px' }}></div>
-               <div className="skeleton-pulse" style={{ height: '48px', width: '100%', background: 'rgba(255,255,255,0.05)', marginBottom: '12px', borderRadius: '12px' }}></div>
-               <div className="skeleton-pulse" style={{ height: '48px', width: '100%', background: 'rgba(255,255,255,0.05)', marginBottom: '30px', borderRadius: '12px' }}></div>
+               {/* Stats Grid */}
+               <div className="hp-aom-stats-grid">
+                 <div className="skeleton-pulse" style={{ height: '40px', width: '100%', background: 'rgba(255,255,255,0.05)', borderRadius: '10px' }}></div>
+                 <div className="skeleton-pulse" style={{ height: '40px', width: '100%', background: 'rgba(255,255,255,0.05)', borderRadius: '10px' }}></div>
+                 <div className="skeleton-pulse" style={{ height: '40px', width: '100%', background: 'rgba(255,255,255,0.05)', borderRadius: '10px' }}></div>
+                 <div className="skeleton-pulse" style={{ height: '40px', width: '100%', background: 'rgba(255,255,255,0.05)', borderRadius: '10px' }}></div>
+               </div>
                
-               <div className="skeleton-pulse" style={{ height: '42px', width: '160px', background: 'rgba(255,255,255,0.05)', borderRadius: '10px' }}></div>
+               {/* Buttons */}
+               <div style={{ display: 'flex', gap: '15px', marginTop: '10px' }}>
+                 <div className="skeleton-pulse" style={{ height: '42px', flex: 1, background: 'rgba(255,255,255,0.05)', borderRadius: '8px' }}></div>
+                 <div className="skeleton-pulse" style={{ height: '42px', flex: 1, background: 'rgba(255,255,255,0.05)', borderRadius: '8px' }}></div>
+               </div>
             </div>
           </>
         ) : (

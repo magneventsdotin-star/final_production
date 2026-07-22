@@ -133,12 +133,21 @@ export default function EventRegistrationPage() {
                   </div>
                   <div className="lux-form-group">
                     <label style={{ display: 'block', fontSize: '12px', color: 'rgba(255,255,255,0.5)', marginBottom: '8px' }}>EVENT TYPE</label>
-                    <input
+                    <select
                       ref={eventTypeRef}
-                      type="text" required placeholder="Wedding, Sangeet, Corporate..."
+                      required
                       defaultValue=""
-                      style={{ width: '100%', padding: '12px', background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', color: '#fff' }}
-                    />
+                      style={{ width: '100%', padding: '12px', background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', color: '#fff', outline: 'none' }}
+                    >
+                      <option value="" disabled>Select event type...</option>
+                      <option value="Wedding">Wedding</option>
+                      <option value="Sangeet">Sangeet</option>
+                      <option value="Corporate">Corporate Event</option>
+                      <option value="College">College Fest</option>
+                      <option value="Private">Private Party</option>
+                      <option value="Concert">Concert / Festival</option>
+                      <option value="Other">Other</option>
+                    </select>
                   </div>
                 </div>
 

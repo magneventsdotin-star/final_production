@@ -307,12 +307,21 @@ export default function ContactModal() {
                 </div>
                 <div className="lux-form-group">
                   <label htmlFor="modal-event-type">Event Type</label>
-                  <input
+                  <select
                     id="modal-event-type"
-                    type="text" required placeholder="Wedding, Sangeet, Corporate..."
+                    required
                     value={selectedEventType}
                     onChange={(e) => setSelectedEventType(e.target.value)}
-                  />
+                  >
+                    <option value="" disabled>Select event type...</option>
+                    <option value="Wedding">Wedding</option>
+                    <option value="Sangeet">Sangeet</option>
+                    <option value="Corporate">Corporate Event</option>
+                    <option value="College">College Fest</option>
+                    <option value="Private">Private Party</option>
+                    <option value="Concert">Concert / Festival</option>
+                    <option value="Other">Other</option>
+                  </select>
                 </div>
               </div>
 

@@ -101,11 +101,20 @@ export default function EventForm({ copyToClipboard, setSubmitted }) {
           </div>
           <div className="lux-form-group">
             <label>EVENT TYPE</label>
-            <input
+            <select
               ref={eventTypeRef}
-              type="text" required placeholder="Wedding, Sangeet, Corporate..."
+              required
               defaultValue=""
-            />
+            >
+              <option value="" disabled>Select event type...</option>
+              <option value="Wedding">Wedding</option>
+              <option value="Sangeet">Sangeet</option>
+              <option value="Corporate">Corporate Event</option>
+              <option value="College">College Fest</option>
+              <option value="Private">Private Party</option>
+              <option value="Concert">Concert / Festival</option>
+              <option value="Other">Other</option>
+            </select>
           </div>
         </div>
 
