@@ -227,6 +227,21 @@
   color: #ffffff;
 }
 
+.lux-form-group input[type="date"] {
+  color-scheme: dark;
+  cursor: pointer;
+}
+
+.lux-form-group input[type="date"]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+}
+
+.lux-form-group input[type="date"]::-webkit-calendar-picker-indicator:hover {
+  opacity: 1;
+}
+
 .lux-modal-content.register .header-badge {
   color: #00d4ff;
 }

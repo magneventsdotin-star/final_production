@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { bookingService } from '@/app/services/bookingService';
 import { validateName, validateEmail, validatePhone } from '@helpers/validation';
 
@@ -6,6 +7,7 @@ export default function EventForm({ copyToClipboard, setSubmitted }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formError, setFormError] = useState('');
   const [selectedArtistTypes, setSelectedArtistTypes] = useState([]);
+  const router = useRouter();
 
   // Controlled form state
   const [formData, setFormData] = useState({
@@ -48,7 +50,7 @@ export default function EventForm({ copyToClipboard, setSubmitted }) {
         });
       }
       setIsSubmitting(false);
-      setSubmitted(true);
+      router.push('/thank-you');
     } catch (error) {
       console.error("Event registration error:", error);
       setIsSubmitting(false);
@@ -146,8 +148,11 @@ export default function EventForm({ copyToClipboard, setSubmitted }) {
               id="evt-date"
               name="date"
               type="date" required
+              min={new Date().toISOString().split('T')[0]}
+              max="2030-12-31"
               value={formData.date}
               onChange={handleChange}
+              onClick={(e) => e.target.showPicker && e.target.showPicker()}
             />
           </div>
           <div className="lux-form-group">

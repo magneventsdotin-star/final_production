@@ -179,8 +179,11 @@ export default function EventRegistrationPage() {
                       id="evtpg-date"
                       name="date"
                       type="date" required
+                      min={new Date().toISOString().split('T')[0]}
+                      max="2030-12-31"
                       value={formData.date}
                       onChange={handleChange}
+                      onClick={(e) => e.target.showPicker && e.target.showPicker()}
                       style={{ width: '100%', padding: '12px', background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', color: '#fff', colorScheme: 'dark' }}
                     />
                   </div>

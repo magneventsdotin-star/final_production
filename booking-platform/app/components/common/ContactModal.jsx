@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { useRouter } from 'next/navigation'
 import { bookingService } from '@/app/services/bookingService'
 import { validateName, validateEmail, validatePhone } from '@helpers/validation';
 import '@/app/styles/components/ContactModal.css'
@@ -162,6 +163,7 @@ export default function ContactModal() {
 }
 
 function InnerContactForm({ formType, initialArtist, initialPlan, initialService, onClose }) {
+  const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitted, setSubmitted] = useState(false)
   const [formError, setFormError] = useState('')
@@ -217,12 +219,7 @@ function InnerContactForm({ formType, initialArtist, initialPlan, initialService
     
     bookingService.submitRequest({ ...submissionData, formType }).then(() => {
       setSubmitted(true)
-      setTimeout(() => {
-        onClose()
-        setFormData({ name: '', phone: '', email: '', date: '', location: '' })
-        setSelectedEventType(''); setSelectedBudget(''); setSelectedArtistTypes([])
-        setSubmitted(false)
-      }, 1800)
+      router.push('/thank-you');
     }).catch(error => {
       console.error("Booking error:", error)
       setFormError('Failed to submit. Please try again.')
@@ -274,8 +271,8 @@ function InnerContactForm({ formType, initialArtist, initialPlan, initialService
       </div>
       <div className="lux-form-row">
         <div className="lux-form-group">
-          <label htmlFor="modal-date">Event Date</label>
-          <input id="modal-date" name="date" type="date" required value={formData.date} onChange={handleChange} />
+          <label htmlFor="modal-date" style={{ fontSize: '11px', color: '#8a8f98', marginBottom: '8px', display: 'block' }}>EVENT DATE</label>
+          <input id="modal-date" name="date" type="date" required value={formData.date} min={new Date().toISOString().split('T')[0]} max="2030-12-31" onChange={handleChange} onClick={(e) => e.target.showPicker && e.target.showPicker()} />
         </div>
         <div className="lux-form-group">
           <label htmlFor="modal-location">Location</label>
