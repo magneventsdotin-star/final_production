@@ -9,7 +9,6 @@ export default function EventForm({ copyToClipboard, setSubmitted }) {
   const [selectedArtistTypes, setSelectedArtistTypes] = useState([]);
   const router = useRouter();
 
-  // Controlled form state
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
@@ -50,7 +49,10 @@ export default function EventForm({ copyToClipboard, setSubmitted }) {
         });
       }
       setIsSubmitting(false);
-      router.push('/thank-you');
+      setSubmitted(true);
+      setTimeout(() => {
+        router.push('/thank-you');
+      }, 1500);
     } catch (error) {
       console.error("Event registration error:", error);
       setIsSubmitting(false);

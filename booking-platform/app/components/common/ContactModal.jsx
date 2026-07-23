@@ -223,8 +223,11 @@ function InnerContactForm({ formType, initialArtist, initialPlan, initialService
     }
     
     bookingService.submitRequest({ ...submissionData, formType }).then(() => {
-      onClose();
-      router.push('/thank-you');
+      setSubmitted(true);
+      setTimeout(() => {
+        onClose();
+        router.push('/thank-you');
+      }, 1500);
     }).catch(error => {
       console.error("Booking error:", error)
       setFormError('Failed to submit. Please try again.')
