@@ -49,10 +49,7 @@ export default function EventForm({ copyToClipboard, setSubmitted }) {
         });
       }
       setIsSubmitting(false);
-      setSubmitted(true);
-      setTimeout(() => {
-        router.push('/thank-you');
-      }, 1500);
+      router.push('/thank-you');
     } catch (error) {
       console.error("Event registration error:", error);
       setIsSubmitting(false);
