@@ -13,6 +13,11 @@ export default function ContactModal() {
   const [initialArtist, setInitialArtist] = useState(null)
   const [initialPlan, setInitialPlan] = useState(null)
   const [initialService, setInitialService] = useState(null)
+  const pathname = usePathname();
+
+  useEffect(() => {
+    setIsOpen(false);
+  }, [pathname]);
 
   const copyToClipboard = () => {
     let url = window.location.href;
@@ -218,7 +223,7 @@ function InnerContactForm({ formType, initialArtist, initialPlan, initialService
     }
     
     bookingService.submitRequest({ ...submissionData, formType }).then(() => {
-      setSubmitted(true)
+      onClose();
       router.push('/thank-you');
     }).catch(error => {
       console.error("Booking error:", error)
