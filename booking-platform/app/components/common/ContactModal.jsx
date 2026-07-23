@@ -276,7 +276,7 @@ function InnerContactForm({ formType, initialArtist, initialPlan, initialService
       </div>
       <div className="lux-form-row">
         <div className="lux-form-group">
-          <label htmlFor="modal-date" style={{ fontSize: '11px', color: '#8a8f98', marginBottom: '8px', display: 'block' }}>EVENT DATE</label>
+          <label htmlFor="modal-date">Event Date</label>
           <input id="modal-date" name="date" type="date" required value={formData.date} min={new Date().toISOString().split('T')[0]} max="2030-12-31" onChange={handleChange} onClick={(e) => e.target.showPicker && e.target.showPicker()} />
         </div>
         <div className="lux-form-group">

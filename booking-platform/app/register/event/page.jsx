@@ -174,7 +174,7 @@ export default function EventRegistrationPage() {
 
                 <div className="lux-form-row" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '16px' }}>
                   <div className="lux-form-group">
-                    <label htmlFor="evtpg-date" style={{ display: 'block', fontSize: '12px', color: 'rgba(255,255,255,0.5)', marginBottom: '8px' }}>EVENT DATE</label>
+                    <label htmlFor="evtpg-date">Event Date</label>
                     <input
                       id="evtpg-date"
                       name="date"
