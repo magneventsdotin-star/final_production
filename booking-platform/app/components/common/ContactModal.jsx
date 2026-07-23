@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { useRouter } from 'next/navigation'
+import { useRouter, usePathname } from 'next/navigation'
 import { bookingService } from '@/app/services/bookingService'
 import { validateName, validateEmail, validatePhone } from '@helpers/validation';
 import '@/app/styles/components/ContactModal.css'
