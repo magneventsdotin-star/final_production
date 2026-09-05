@@ -1,5 +1,6 @@
 import { notFound, redirect } from 'next/navigation';
 import SEOLandingPage from '@/app/components/common/SEOLandingPage';
+import { generateOverview, generateServices, generateFAQs, generateRelatedLinks } from '@/app/utils/seoTemplates';
 
 export async function generateMetadata({ params }) {
   // Await params in Next.js 15 before using properties
@@ -60,13 +61,32 @@ export default async function LocationServicePage({ params }) {
     parsedCity = cityStr.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
   }
 
-  const schema = {
-    "@context": "https://schema.org",
-    "@type": "CollectionPage",
-    "name": `Best ${formattedTitle}`,
-    "description": `Book verified ${formattedTitle} for your next event.`,
-    "url": `https://www.magnevents.in/${location_slug}`
-  };
+  const overviewHtml = generateOverview(parsedCategory, parsedCity);
+  const services = generateServices(parsedCategory, parsedCity);
+  const faqs = generateFAQs(parsedCategory, parsedCity);
+  const relatedLinks = generateRelatedLinks(parsedCategory, parsedCity);
+
+  const schema = [
+    {
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      "name": `Best ${formattedTitle}`,
+      "description": `Book verified ${formattedTitle} for your next event.`,
+      "url": `https://www.magnevents.in/${location_slug}`
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": faqs.map(faq => ({
+        "@type": "Question",
+        "name": faq.question,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": faq.answer
+        }
+      }))
+    }
+  ];
 
   return (
     <SEOLandingPage 
@@ -75,6 +95,10 @@ export default async function LocationServicePage({ params }) {
       schema={schema}
       category={parsedCategory}
       city={parsedCity}
+      overviewHtml={overviewHtml}
+      services={services}
+      faqs={faqs}
+      relatedLinks={relatedLinks}
     />
   );
 }

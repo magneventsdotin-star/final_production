@@ -1,4 +1,5 @@
 import { supabase } from '@database/connection/supabase';
+import { footerSeoKeywords } from '@/app/constants/seoKeywords';
 
 export default async function sitemap() {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.magnevents.in';
@@ -330,5 +331,15 @@ export default async function sitemap() {
     console.error('Error fetching dynamic routes for sitemap', error);
   }
 
-  return [...staticRoutes, ...dynamicRoutes];
+  const footerKeywordRoutes = footerSeoKeywords.map((keyword) => {
+    const slug = keyword.replace(/ /g, '-');
+    return {
+      url: `${baseUrl}/${slug}`,
+      lastModified: new Date().toISOString(),
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    };
+  });
+
+  return [...staticRoutes, ...dynamicRoutes, ...footerKeywordRoutes];
 }

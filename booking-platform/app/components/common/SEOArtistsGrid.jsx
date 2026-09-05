@@ -17,7 +17,7 @@ export default function SEOArtistsGrid({ category = 'All', city = 'All Cities' }
   }, [currentPage, category, city, fetchArtists]);
 
   const handleBook = (name) => {
-    router.push(/book?artist=);
+    router.push(`/book?artist=${encodeURIComponent(name)}`);
   };
 
   return (

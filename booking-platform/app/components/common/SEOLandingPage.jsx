@@ -2,15 +2,23 @@
 
 import CategoriesSection from '@/app/components/home/CategoriesSection'
 import SEOArtistsGrid from '@/app/components/common/SEOArtistsGrid'
+import SEODynamicContent from '@/app/components/common/SEODynamicContent'
 import VideoGridSection from '@/app/components/home/VideoGridSection'
-import HowToBookSection from '@/app/components/home/HowToBookSection'
-import FaqSection from '@/app/components/home/FaqSection'
-import InfoCards from '@/app/components/home/InfoCards'
 import ContactSection from '@/app/components/home/ContactSection'
 import '@/app/styles/pages/HomePage.css'
 import Link from 'next/link'
 
-export default function SEOLandingPage({ heroTitle, heroSubtitle, schema, category, city }) {
+export default function SEOLandingPage({ 
+  heroTitle, 
+  heroSubtitle, 
+  schema, 
+  category, 
+  city,
+  overviewHtml,
+  services,
+  faqs,
+  relatedLinks
+}) {
   return (
     <>
       <script
@@ -46,9 +54,18 @@ export default function SEOLandingPage({ heroTitle, heroSubtitle, schema, catego
         <VideoGridSection />
         <CategoriesSection />
         <SEOArtistsGrid category={category} city={city} />
-        <HowToBookSection />
-        <FaqSection />
-        <InfoCards />
+        
+        {overviewHtml && services && faqs && relatedLinks ? (
+          <SEODynamicContent 
+            category={category}
+            city={city}
+            overviewHtml={overviewHtml}
+            services={services}
+            faqs={faqs}
+            relatedLinks={relatedLinks}
+          />
+        ) : null}
+
         <ContactSection />
       </div>
     </>
