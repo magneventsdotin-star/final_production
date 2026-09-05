@@ -51,10 +51,6 @@ export default function SEOLandingPage({
           </div>
         </section>
 
-        <VideoGridSection />
-        <CategoriesSection />
-        <SEOArtistsGrid category={category} city={city} />
-        
         {overviewHtml && services && faqs && relatedLinks ? (
           <SEODynamicContent 
             category={category}
@@ -65,6 +61,8 @@ export default function SEOLandingPage({
             relatedLinks={relatedLinks}
           />
         ) : null}
+
+        <SEOArtistsGrid category={category} city={city} />
 
         <ContactSection />
       </div>
