@@ -1,7 +1,7 @@
 "use client";
 
 import CategoriesSection from '@/app/components/home/CategoriesSection'
-import FeaturedArtistsSection from '@/app/components/home/FeaturedArtistsSection'
+import SEOArtistsGrid from '@/app/components/common/SEOArtistsGrid'
 import VideoGridSection from '@/app/components/home/VideoGridSection'
 import HowToBookSection from '@/app/components/home/HowToBookSection'
 import FaqSection from '@/app/components/home/FaqSection'
@@ -10,7 +10,7 @@ import ContactSection from '@/app/components/home/ContactSection'
 import '@/app/styles/pages/HomePage.css'
 import Link from 'next/link'
 
-export default function SEOLandingPage({ heroTitle, heroSubtitle, schema }) {
+export default function SEOLandingPage({ heroTitle, heroSubtitle, schema, category, city }) {
   return (
     <>
       <script
@@ -45,7 +45,7 @@ export default function SEOLandingPage({ heroTitle, heroSubtitle, schema }) {
 
         <VideoGridSection />
         <CategoriesSection />
-        <FeaturedArtistsSection />
+        <SEOArtistsGrid category={category} city={city} />
         <HowToBookSection />
         <FaqSection />
         <InfoCards />

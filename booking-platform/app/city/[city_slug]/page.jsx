@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 import { supabase } from '@database/connection/supabase';
 import Link from 'next/link';
 import { Mic2 } from 'lucide-react';
+import SEOArtistsGrid from '@/app/components/common/SEOArtistsGrid';
 import '../../seo-pages.css';
 
 function slugToName(slug) {
@@ -143,6 +144,10 @@ export default async function CityLandingPage({ params }) {
               ) : (
                 <p className="no-blogs">More exciting content coming soon!</p>
               )}
+            </div>
+
+            <div style={{ marginTop: '40px' }}>
+              <SEOArtistsGrid category="All" city={city.name} />
             </div>
           </div>
         </div>

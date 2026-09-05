@@ -44,6 +44,22 @@ export default async function LocationServicePage({ params }) {
 
   const formattedTitle = location_slug.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
 
+  let parsedCategory = 'All';
+  let parsedCity = 'All Cities';
+  const slugLower = location_slug.toLowerCase();
+  
+  if (slugLower.includes('band')) parsedCategory = 'Live band';
+  else if (slugLower.includes('musician') || slugLower.includes('music')) parsedCategory = 'Musician';
+  else if (slugLower.includes('dj')) parsedCategory = 'Dj';
+  else if (slugLower.includes('comedian')) parsedCategory = 'Comedian';
+  else if (slugLower.includes('singer') || slugLower.includes('artist')) parsedCategory = 'Singer';
+
+  const parts = slugLower.split('-in-');
+  if (parts.length > 1) {
+    const cityStr = parts[1].replace(/-/g, ' ');
+    parsedCity = cityStr.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+  }
+
   const schema = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
@@ -57,6 +73,8 @@ export default async function LocationServicePage({ params }) {
       heroTitle={`Top ${formattedTitle}`}
       heroSubtitle={`Book verified performers directly for your next grand event.`}
       schema={schema}
+      category={parsedCategory}
+      city={parsedCity}
     />
   );
 }

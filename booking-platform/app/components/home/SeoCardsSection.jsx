@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { MapPin, Music, Sparkles } from 'lucide-react';
 import './seo-cards.css';
 
-const seoCards = [
+export const seoCards = [
   {
     "title": "Wedding Band in Mumbai",
     "link": "/wedding-band-in-mumbai",
