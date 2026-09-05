@@ -1,4 +1,4 @@
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 import SEOLandingPage from '@/app/components/common/SEOLandingPage';
 
 export async function generateMetadata({ params }) {
@@ -22,9 +22,23 @@ export default async function LocationServicePage({ params }) {
   const { location_slug } = awaitedParams;
   
   const validKeywords = ['singer', 'band', 'dj', 'comedian', 'anchor', 'dancer', 'magician', 'guitarist', 'music', 'artist'];
-  const isValid = validKeywords.some(kw => location_slug.toLowerCase().includes(kw));
+  const isValidKeyword = validKeywords.some(kw => location_slug.toLowerCase().includes(kw));
 
-  if (!isValid) {
+  const majorCities = [
+    'delhi', 'new-delhi', 'noida', 'gurgaon', 'gurugram', 'faridabad', 'ghaziabad',
+    'mumbai', 'bangalore', 'bengaluru', 'pune', 'hyderabad', 'chennai', 'kolkata', 'ahmedabad',
+    'chandigarh', 'jaipur', 'lucknow', 'surat', 'indore', 'patna', 'bhopal', 'agra',
+    'kanpur', 'nagpur', 'thane', 'visakhapatnam', 'vadodara', 'ludhiana', 'nashik',
+    'meerut', 'rajkot', 'varanasi', 'srinagar', 'aurangabad', 'dhanbad', 'amritsar',
+    'allahabad', 'ranchi', 'howrah', 'coimbatore', 'jabalpur', 'gwalior', 'vijayawada',
+    'jodhpur', 'madurai', 'raipur', 'kota', 'guwahati', 'chandigarh', 'thiruvananthapuram'
+  ];
+
+  if (majorCities.includes(location_slug.toLowerCase())) {
+    redirect(`/city/${location_slug.toLowerCase()}`);
+  }
+
+  if (!isValidKeyword) {
     notFound();
   }
 

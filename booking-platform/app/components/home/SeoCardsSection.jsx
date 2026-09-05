@@ -8,1483 +8,1483 @@ import './seo-cards.css';
 const seoCards = [
   {
     "title": "Wedding Band in Mumbai",
-    "link": "/artists?category=Live%20band&city=Mumbai",
+    "link": "/wedding-band-in-mumbai",
     "type": "wedding",
     "subtext": ""
   },
   {
     "title": "Live Band in Delhi",
-    "link": "/artists?category=Live%20band&city=Delhi",
+    "link": "/live-band-in-delhi",
     "type": "live",
     "subtext": ""
   },
   {
     "title": "Corporate Musician in Bangalore",
-    "link": "/artists?category=Musician&city=Bangalore",
+    "link": "/corporate-musician-in-bangalore",
     "type": "corporate",
     "subtext": ""
   },
   {
     "title": "Wedding Band in Hyderabad",
-    "link": "/artists?category=Live%20band&city=Hyderabad",
+    "link": "/wedding-band-in-hyderabad",
     "type": "wedding",
     "subtext": ""
   },
   {
     "title": "House Party Singer in Ahmedabad",
-    "link": "/artists?category=Singer&city=Ahmedabad",
+    "link": "/house-party-singer-in-ahmedabad",
     "type": "party",
     "subtext": ""
   },
   {
     "title": "Wedding Singer in Chennai",
-    "link": "/artists?category=Singer&city=Chennai",
+    "link": "/wedding-singer-in-chennai",
     "type": "wedding",
     "subtext": ""
   },
   {
     "title": "Sufi Singer in Kolkata",
-    "link": "/artists?category=Singer&city=Kolkata",
+    "link": "/sufi-singer-in-kolkata",
     "type": "live",
     "subtext": ""
   },
   {
     "title": "Wedding Musicians in Surat",
-    "link": "/artists?category=Musician&city=Surat",
+    "link": "/wedding-musicians-in-surat",
     "type": "wedding",
     "subtext": ""
   },
   {
     "title": "Wedding Singer in Pune",
-    "link": "/artists?category=Singer&city=Pune",
+    "link": "/wedding-singer-in-pune",
     "type": "wedding",
     "subtext": ""
   },
   {
     "title": "Corporate Singer in Jaipur",
-    "link": "/artists?category=Singer&city=Jaipur",
+    "link": "/corporate-singer-in-jaipur",
     "type": "corporate",
     "subtext": ""
   },
   {
     "title": "Corporate Musician in Lucknow",
-    "link": "/artists?category=Musician&city=Lucknow",
+    "link": "/corporate-musician-in-lucknow",
     "type": "corporate",
     "subtext": ""
   },
   {
     "title": "Live Singer in Kanpur",
-    "link": "/artists?category=Singer&city=Kanpur",
+    "link": "/live-singer-in-kanpur",
     "type": "live",
     "subtext": ""
   },
   {
     "title": "Wedding Singer in Nagpur",
-    "link": "/artists?category=Singer&city=Nagpur",
+    "link": "/wedding-singer-in-nagpur",
     "type": "wedding",
     "subtext": ""
   },
   {
     "title": "Private Event Singer in Indore",
-    "link": "/artists?category=Singer&city=Indore",
+    "link": "/private-event-singer-in-indore",
     "type": "party",
     "subtext": ""
   },
   {
     "title": "House Party Singer in Thane",
-    "link": "/artists?category=Singer&city=Thane",
+    "link": "/house-party-singer-in-thane",
     "type": "party",
     "subtext": ""
   },
   {
     "title": "Shaadi Singer in Bhopal",
-    "link": "/artists?category=Singer&city=Bhopal",
+    "link": "/shaadi-singer-in-bhopal",
     "type": "wedding",
     "subtext": ""
   },
   {
     "title": "Sufi Singer in Visakhapatnam",
-    "link": "/artists?category=Singer&city=Visakhapatnam",
+    "link": "/sufi-singer-in-visakhapatnam",
     "type": "live",
     "subtext": ""
   },
   {
     "title": "Bollywood Singer in Pimpri-Chinchwad",
-    "link": "/artists?category=Singer&city=Pimpri%20Chinchwad",
+    "link": "/bollywood-singer-in-pimpri-chinchwad",
     "type": "party",
     "subtext": ""
   },
   {
     "title": "Birthday Singer in Patna",
-    "link": "/artists?category=Singer&city=Patna",
+    "link": "/birthday-singer-in-patna",
     "type": "party",
     "subtext": ""
   },
   {
     "title": "Corporate Singer in Vadodara",
-    "link": "/artists?category=Singer&city=Vadodara",
+    "link": "/corporate-singer-in-vadodara",
     "type": "corporate",
     "subtext": ""
   },
   {
     "title": "Shaadi Singer in Ghaziabad",
-    "link": "/artists?category=Singer&city=Ghaziabad",
+    "link": "/shaadi-singer-in-ghaziabad",
     "type": "wedding",
     "subtext": ""
   },
   {
     "title": "Sangeet Singer in Ludhiana",
-    "link": "/artists?category=Singer&city=Ludhiana",
+    "link": "/sangeet-singer-in-ludhiana",
     "type": "wedding",
     "subtext": ""
   },
   {
     "title": "Corporate Singer in Agra",
-    "link": "/artists?category=Singer&city=Agra",
+    "link": "/corporate-singer-in-agra",
     "type": "corporate",
     "subtext": ""
   },
   {
     "title": "Ghazal Singer in Nashik",
-    "link": "/artists?category=Singer&city=Nashik",
+    "link": "/ghazal-singer-in-nashik",
     "type": "live",
     "subtext": ""
   },
   {
     "title": "Live Band in Ranchi",
-    "link": "/artists?category=Live%20band&city=Ranchi",
+    "link": "/live-band-in-ranchi",
     "type": "live",
     "subtext": ""
   },
   {
     "title": "House Party Singer in Faridabad",
-    "link": "/artists?category=Singer&city=Faridabad",
+    "link": "/house-party-singer-in-faridabad",
     "type": "party",
     "subtext": ""
   },
   {
     "title": "Live Singer in Meerut",
-    "link": "/artists?category=Singer&city=Meerut",
+    "link": "/live-singer-in-meerut",
     "type": "live",
     "subtext": ""
   },
   {
     "title": "Acoustic Singer in Rajkot",
-    "link": "/artists?category=Singer&city=Rajkot",
+    "link": "/acoustic-singer-in-rajkot",
     "type": "live",
     "subtext": ""
   },
   {
     "title": "Corporate Event Singer in Kalyan-Dombivli",
-    "link": "/artists?category=Singer&city=Kalyan%20Dombivli",
+    "link": "/corporate-event-singer-in-kalyan-dombivli",
     "type": "corporate",
     "subtext": ""
   },
   {
     "title": "Acoustic Singer in Vasai-Virar",
-    "link": "/artists?category=Singer&city=Vasai%20Virar",
+    "link": "/acoustic-singer-in-vasai-virar",
     "type": "live",
     "subtext": ""
   },
   {
     "title": "Live Band in Varanasi",
-    "link": "/artists?category=Live%20band&city=Varanasi",
+    "link": "/live-band-in-varanasi",
     "type": "live",
     "subtext": ""
   },
   {
     "title": "Corporate Singer in Srinagar",
-    "link": "/artists?category=Singer&city=Srinagar",
+    "link": "/corporate-singer-in-srinagar",
     "type": "corporate",
     "subtext": ""
   },
   {
     "title": "Bollywood Singer in Aurangabad",
-    "link": "/artists?category=Singer&city=Aurangabad",
+    "link": "/bollywood-singer-in-aurangabad",
     "type": "party",
     "subtext": ""
   },
   {
     "title": "Corporate Event Singer in Dhanbad",
-    "link": "/artists?category=Singer&city=Dhanbad",
+    "link": "/corporate-event-singer-in-dhanbad",
     "type": "corporate",
     "subtext": ""
   },
   {
     "title": "Acoustic Singer in Amritsar",
-    "link": "/artists?category=Singer&city=Amritsar",
+    "link": "/acoustic-singer-in-amritsar",
     "type": "live",
     "subtext": ""
   },
   {
     "title": "Punjabi Singer in Navi Mumbai",
-    "link": "/artists?category=Singer&city=Navi%20Mumbai",
+    "link": "/punjabi-singer-in-navi-mumbai",
     "type": "party",
     "subtext": ""
   },
   {
     "title": "Live Singer in Allahabad",
-    "link": "/artists?category=Singer&city=Allahabad",
+    "link": "/live-singer-in-allahabad",
     "type": "live",
     "subtext": ""
   },
   {
     "title": "Corporate Musician in Howrah",
-    "link": "/artists?category=Musician&city=Howrah",
+    "link": "/corporate-musician-in-howrah",
     "type": "corporate",
     "subtext": ""
   },
   {
     "title": "Birthday Singer in Gwalior",
-    "link": "/artists?category=Singer&city=Gwalior",
+    "link": "/birthday-singer-in-gwalior",
     "type": "party",
     "subtext": ""
   },
   {
     "title": "Birthday Singer in Jabalpur",
-    "link": "/artists?category=Singer&city=Jabalpur",
+    "link": "/birthday-singer-in-jabalpur",
     "type": "party",
     "subtext": ""
   },
   {
     "title": "House Party Singer in Coimbatore",
-    "link": "/artists?category=Singer&city=Coimbatore",
+    "link": "/house-party-singer-in-coimbatore",
     "type": "party",
     "subtext": ""
   },
   {
     "title": "Live Singer in Vijayawada",
-    "link": "/artists?category=Singer&city=Vijayawada",
+    "link": "/live-singer-in-vijayawada",
     "type": "live",
     "subtext": ""
   },
   {
     "title": "Corporate Musician in Jodhpur",
-    "link": "/artists?category=Musician&city=Jodhpur",
+    "link": "/corporate-musician-in-jodhpur",
     "type": "corporate",
     "subtext": ""
   },
   {
     "title": "Corporate Musician in Madurai",
-    "link": "/artists?category=Musician&city=Madurai",
+    "link": "/corporate-musician-in-madurai",
     "type": "corporate",
     "subtext": ""
   },
   {
     "title": "Live Singer in Raipur",
-    "link": "/artists?category=Singer&city=Raipur",
+    "link": "/live-singer-in-raipur",
     "type": "live",
     "subtext": ""
   },
   {
     "title": "Corporate Musician in Kota",
-    "link": "/artists?category=Musician&city=Kota",
+    "link": "/corporate-musician-in-kota",
     "type": "corporate",
     "subtext": ""
   },
   {
     "title": "Corporate Musician in Chandigarh",
-    "link": "/artists?category=Musician&city=Chandigarh",
+    "link": "/corporate-musician-in-chandigarh",
     "type": "corporate",
     "subtext": ""
   },
   {
     "title": "Corporate Event Singer in Guwahati",
-    "link": "/artists?category=Singer&city=Guwahati",
+    "link": "/corporate-event-singer-in-guwahati",
     "type": "corporate",
     "subtext": ""
   },
   {
     "title": "Ghazal Singer in Solapur",
-    "link": "/artists?category=Singer&city=Solapur",
+    "link": "/ghazal-singer-in-solapur",
     "type": "live",
     "subtext": ""
   },
   {
     "title": "Corporate Event Singer in Hubli-Dharwad",
-    "link": "/artists?category=Singer&city=Hubli%20Dharwad",
+    "link": "/corporate-event-singer-in-hubli-dharwad",
     "type": "corporate",
     "subtext": ""
   },
   {
     "title": "Live Band in Mysore",
-    "link": "/artists?category=Live%20band&city=Mysore",
+    "link": "/live-band-in-mysore",
     "type": "live",
     "subtext": ""
   },
   {
     "title": "Corporate Musician in Tiruchirappalli",
-    "link": "/artists?category=Musician&city=Tiruchirappalli",
+    "link": "/corporate-musician-in-tiruchirappalli",
     "type": "corporate",
     "subtext": ""
   },
   {
     "title": "Live Singer in Bareilly",
-    "link": "/artists?category=Singer&city=Bareilly",
+    "link": "/live-singer-in-bareilly",
     "type": "live",
     "subtext": ""
   },
   {
     "title": "Corporate Event Singer in Aligarh",
-    "link": "/artists?category=Singer&city=Aligarh",
+    "link": "/corporate-event-singer-in-aligarh",
     "type": "corporate",
     "subtext": ""
   },
   {
     "title": "Live Band in Tiruppur",
-    "link": "/artists?category=Live%20band&city=Tiruppur",
+    "link": "/live-band-in-tiruppur",
     "type": "live",
     "subtext": ""
   },
   {
     "title": "Corporate Event Singer in Gurgaon",
-    "link": "/artists?category=Singer&city=Gurgaon",
+    "link": "/corporate-event-singer-in-gurgaon",
     "type": "corporate",
     "subtext": ""
   },
   {
     "title": "Punjabi Singer in Moradabad",
-    "link": "/artists?category=Singer&city=Moradabad",
+    "link": "/punjabi-singer-in-moradabad",
     "type": "party",
     "subtext": ""
   },
   {
     "title": "Corporate Singer in Jalandhar",
-    "link": "/artists?category=Singer&city=Jalandhar",
+    "link": "/corporate-singer-in-jalandhar",
     "type": "corporate",
     "subtext": ""
   },
   {
     "title": "Ghazal Singer in Bhubaneswar",
-    "link": "/artists?category=Singer&city=Bhubaneswar",
+    "link": "/ghazal-singer-in-bhubaneswar",
     "type": "live",
     "subtext": ""
   },
   {
     "title": "Punjabi Singer in Salem",
-    "link": "/artists?category=Singer&city=Salem",
+    "link": "/punjabi-singer-in-salem",
     "type": "party",
     "subtext": ""
   },
   {
     "title": "Wedding Band in Warangal",
-    "link": "/artists?category=Live%20band&city=Warangal",
+    "link": "/wedding-band-in-warangal",
     "type": "wedding",
     "subtext": ""
   },
   {
     "title": "Shaadi Singer in Mira-Bhayandar",
-    "link": "/artists?category=Singer&city=Mira%20Bhayandar",
+    "link": "/shaadi-singer-in-mira-bhayandar",
     "type": "wedding",
     "subtext": ""
   },
   {
     "title": "Bollywood Singer in Jalgaon",
-    "link": "/artists?category=Singer&city=Jalgaon",
+    "link": "/bollywood-singer-in-jalgaon",
     "type": "party",
     "subtext": ""
   },
   {
     "title": "Acoustic Singer in Guntur",
-    "link": "/artists?category=Singer&city=Guntur",
+    "link": "/acoustic-singer-in-guntur",
     "type": "live",
     "subtext": ""
   },
   {
     "title": "Corporate Singer in Thiruvananthapuram",
-    "link": "/artists?category=Singer&city=Thiruvananthapuram",
+    "link": "/corporate-singer-in-thiruvananthapuram",
     "type": "corporate",
     "subtext": ""
   },
   {
     "title": "Wedding Band in Bhiwandi",
-    "link": "/artists?category=Live%20band&city=Bhiwandi",
+    "link": "/wedding-band-in-bhiwandi",
     "type": "wedding",
     "subtext": ""
   },
   {
     "title": "Sufi Singer in Saharanpur",
-    "link": "/artists?category=Singer&city=Saharanpur",
+    "link": "/sufi-singer-in-saharanpur",
     "type": "live",
     "subtext": ""
   },
   {
     "title": "Live Band in Gorakhpur",
-    "link": "/artists?category=Live%20band&city=Gorakhpur",
+    "link": "/live-band-in-gorakhpur",
     "type": "live",
     "subtext": ""
   },
   {
     "title": "Wedding Musicians in Bikaner",
-    "link": "/artists?category=Musician&city=Bikaner",
+    "link": "/wedding-musicians-in-bikaner",
     "type": "wedding",
     "subtext": ""
   },
   {
     "title": "Shaadi Singer in Amravati",
-    "link": "/artists?category=Singer&city=Amravati",
+    "link": "/shaadi-singer-in-amravati",
     "type": "wedding",
     "subtext": ""
   },
   {
     "title": "Corporate Musician in Noida",
-    "link": "/artists?category=Musician&city=Noida",
+    "link": "/corporate-musician-in-noida",
     "type": "corporate",
     "subtext": ""
   },
   {
     "title": "House Party Singer in Jamshedpur",
-    "link": "/artists?category=Singer&city=Jamshedpur",
+    "link": "/house-party-singer-in-jamshedpur",
     "type": "party",
     "subtext": ""
   },
   {
     "title": "Live Singer in Bhilai",
-    "link": "/artists?category=Singer&city=Bhilai",
+    "link": "/live-singer-in-bhilai",
     "type": "live",
     "subtext": ""
   },
   {
     "title": "Live Music in Cuttack",
-    "link": "/artists?category=Singer&city=Cuttack",
+    "link": "/live-music-in-cuttack",
     "type": "live",
     "subtext": ""
   },
   {
     "title": "Bollywood Singer in Firozabad",
-    "link": "/artists?category=Singer&city=Firozabad",
+    "link": "/bollywood-singer-in-firozabad",
     "type": "party",
     "subtext": ""
   },
   {
     "title": "Corporate Event Singer in Kochi",
-    "link": "/artists?category=Singer&city=Kochi",
+    "link": "/corporate-event-singer-in-kochi",
     "type": "corporate",
     "subtext": ""
   },
   {
     "title": "Shaadi Singer in Nellore",
-    "link": "/artists?category=Singer&city=Nellore",
+    "link": "/shaadi-singer-in-nellore",
     "type": "wedding",
     "subtext": ""
   },
   {
     "title": "Sangeet Singer in Bhavnagar",
-    "link": "/artists?category=Singer&city=Bhavnagar",
+    "link": "/sangeet-singer-in-bhavnagar",
     "type": "wedding",
     "subtext": ""
   },
   {
     "title": "Sangeet Singer in Dehradun",
-    "link": "/artists?category=Singer&city=Dehradun",
+    "link": "/sangeet-singer-in-dehradun",
     "type": "wedding",
     "subtext": ""
   },
   {
     "title": "Singer for Events in Durgapur",
-    "link": "/artists?category=Singer&city=Durgapur",
+    "link": "/singer-for-events-in-durgapur",
     "type": "corporate",
     "subtext": ""
   },
   {
     "title": "Shaadi Singer in Asansol",
-    "link": "/artists?category=Singer&city=Asansol",
+    "link": "/shaadi-singer-in-asansol",
     "type": "wedding",
     "subtext": ""
   },
   {
     "title": "Birthday Singer in Rourkela",
-    "link": "/artists?category=Singer&city=Rourkela",
+    "link": "/birthday-singer-in-rourkela",
     "type": "party",
     "subtext": ""
   },
   {
     "title": "Shaadi Singer in Nanded",
-    "link": "/artists?category=Singer&city=Nanded",
+    "link": "/shaadi-singer-in-nanded",
     "type": "wedding",
     "subtext": ""
   },
   {
     "title": "Corporate Musician in Kolhapur",
-    "link": "/artists?category=Musician&city=Kolhapur",
+    "link": "/corporate-musician-in-kolhapur",
     "type": "corporate",
     "subtext": ""
   },
   {
     "title": "Punjabi Singer in Ajmer",
-    "link": "/artists?category=Singer&city=Ajmer",
+    "link": "/punjabi-singer-in-ajmer",
     "type": "party",
     "subtext": ""
   },
   {
     "title": "Wedding Musicians in Akola",
-    "link": "/artists?category=Musician&city=Akola",
+    "link": "/wedding-musicians-in-akola",
     "type": "wedding",
     "subtext": ""
   },
   {
     "title": "Singer for Events in Gulbarga",
-    "link": "/artists?category=Singer&city=Gulbarga",
+    "link": "/singer-for-events-in-gulbarga",
     "type": "corporate",
     "subtext": ""
   },
   {
     "title": "Live Singer in Jamnagar",
-    "link": "/artists?category=Singer&city=Jamnagar",
+    "link": "/live-singer-in-jamnagar",
     "type": "live",
     "subtext": ""
   },
   {
     "title": "Birthday Singer in Ujjain",
-    "link": "/artists?category=Singer&city=Ujjain",
+    "link": "/birthday-singer-in-ujjain",
     "type": "party",
     "subtext": ""
   },
   {
     "title": "Birthday Singer in Loni",
-    "link": "/artists?category=Singer&city=Loni",
+    "link": "/birthday-singer-in-loni",
     "type": "party",
     "subtext": ""
   },
   {
     "title": "Bollywood Singer in Siliguri",
-    "link": "/artists?category=Singer&city=Siliguri",
+    "link": "/bollywood-singer-in-siliguri",
     "type": "party",
     "subtext": ""
   },
   {
     "title": "Live Band in Jhansi",
-    "link": "/artists?category=Live%20band&city=Jhansi",
+    "link": "/live-band-in-jhansi",
     "type": "live",
     "subtext": ""
   },
   {
     "title": "Live Singer in Ulhasnagar",
-    "link": "/artists?category=Singer&city=Ulhasnagar",
+    "link": "/live-singer-in-ulhasnagar",
     "type": "live",
     "subtext": ""
   },
   {
     "title": "Corporate Musician in Jammu",
-    "link": "/artists?category=Musician&city=Jammu",
+    "link": "/corporate-musician-in-jammu",
     "type": "corporate",
     "subtext": ""
   },
   {
     "title": "Live Music in Sangli-Miraj & Kupwad",
-    "link": "/artists?category=Singer&city=Sangli%20Miraj%20And%20Kupwad",
+    "link": "/live-music-in-sangli-miraj-kupwad",
     "type": "live",
     "subtext": ""
   },
   {
     "title": "Wedding Band in Mangalore",
-    "link": "/artists?category=Live%20band&city=Mangalore",
+    "link": "/wedding-band-in-mangalore",
     "type": "wedding",
     "subtext": ""
   },
   {
     "title": "Acoustic Singer in Erode",
-    "link": "/artists?category=Singer&city=Erode",
+    "link": "/acoustic-singer-in-erode",
     "type": "live",
     "subtext": ""
   },
   {
     "title": "Wedding Singer in Belgaum",
-    "link": "/artists?category=Singer&city=Belgaum",
+    "link": "/wedding-singer-in-belgaum",
     "type": "wedding",
     "subtext": ""
   },
   {
     "title": "House Party Singer in Ambattur",
-    "link": "/artists?category=Singer&city=Ambattur",
+    "link": "/house-party-singer-in-ambattur",
     "type": "party",
     "subtext": ""
   },
   {
     "title": "Sangeet Singer in Tirunelveli",
-    "link": "/artists?category=Singer&city=Tirunelveli",
+    "link": "/sangeet-singer-in-tirunelveli",
     "type": "wedding",
     "subtext": ""
   },
   {
     "title": "Live Band in Malegaon",
-    "link": "/artists?category=Live%20band&city=Malegaon",
+    "link": "/live-band-in-malegaon",
     "type": "live",
     "subtext": ""
   },
   {
     "title": "Singer for Events in Gaya",
-    "link": "/artists?category=Singer&city=Gaya",
+    "link": "/singer-for-events-in-gaya",
     "type": "corporate",
     "subtext": ""
   },
   {
     "title": "Wedding Singer in Udaipur",
-    "link": "/artists?category=Singer&city=Udaipur",
+    "link": "/wedding-singer-in-udaipur",
     "type": "wedding",
     "subtext": ""
   },
   {
     "title": "Live Singer in Maheshtala",
-    "link": "/artists?category=Singer&city=Maheshtala",
+    "link": "/live-singer-in-maheshtala",
     "type": "live",
     "subtext": ""
   },
   {
     "title": "Corporate Singer in Davanagere",
-    "link": "/artists?category=Singer&city=Davanagere",
+    "link": "/corporate-singer-in-davanagere",
     "type": "corporate",
     "subtext": ""
   },
   {
     "title": "House Party Singer in Kozhikode",
-    "link": "/artists?category=Singer&city=Kozhikode",
+    "link": "/house-party-singer-in-kozhikode",
     "type": "party",
     "subtext": ""
   },
   {
     "title": "Wedding Musicians in Kurnool",
-    "link": "/artists?category=Musician&city=Kurnool",
+    "link": "/wedding-musicians-in-kurnool",
     "type": "wedding",
     "subtext": ""
   },
   {
     "title": "Corporate Event Singer in Rajpur Sonarpur",
-    "link": "/artists?category=Singer&city=Rajpur%20Sonarpur",
+    "link": "/corporate-event-singer-in-rajpur-sonarpur",
     "type": "corporate",
     "subtext": ""
   },
   {
     "title": "Wedding Band in Rajahmundry",
-    "link": "/artists?category=Live%20band&city=Rajahmundry",
+    "link": "/wedding-band-in-rajahmundry",
     "type": "wedding",
     "subtext": ""
   },
   {
     "title": "Corporate Musician in Bokaro",
-    "link": "/artists?category=Musician&city=Bokaro",
+    "link": "/corporate-musician-in-bokaro",
     "type": "corporate",
     "subtext": ""
   },
   {
     "title": "Corporate Musician in South Dumdum",
-    "link": "/artists?category=Musician&city=South%20Dumdum",
+    "link": "/corporate-musician-in-south-dumdum",
     "type": "corporate",
     "subtext": ""
   },
   {
     "title": "Wedding Musicians in Bellary",
-    "link": "/artists?category=Musician&city=Bellary",
+    "link": "/wedding-musicians-in-bellary",
     "type": "wedding",
     "subtext": ""
   },
   {
     "title": "Bollywood Singer in Patiala",
-    "link": "/artists?category=Singer&city=Patiala",
+    "link": "/bollywood-singer-in-patiala",
     "type": "party",
     "subtext": ""
   },
   {
     "title": "Corporate Event Singer in Gopalpur",
-    "link": "/artists?category=Singer&city=Gopalpur",
+    "link": "/corporate-event-singer-in-gopalpur",
     "type": "corporate",
     "subtext": ""
   },
   {
     "title": "Sangeet Singer in Agartala",
-    "link": "/artists?category=Singer&city=Agartala",
+    "link": "/sangeet-singer-in-agartala",
     "type": "wedding",
     "subtext": ""
   },
   {
     "title": "Corporate Musician in Bhagalpur",
-    "link": "/artists?category=Musician&city=Bhagalpur",
+    "link": "/corporate-musician-in-bhagalpur",
     "type": "corporate",
     "subtext": ""
   },
   {
     "title": "Wedding Band in Muzaffarnagar",
-    "link": "/artists?category=Live%20band&city=Muzaffarnagar",
+    "link": "/wedding-band-in-muzaffarnagar",
     "type": "wedding",
     "subtext": ""
   },
   {
     "title": "House Party Singer in Bhatpara",
-    "link": "/artists?category=Singer&city=Bhatpara",
+    "link": "/house-party-singer-in-bhatpara",
     "type": "party",
     "subtext": ""
   },
   {
     "title": "Shaadi Singer in Panihati",
-    "link": "/artists?category=Singer&city=Panihati",
+    "link": "/shaadi-singer-in-panihati",
     "type": "wedding",
     "subtext": ""
   },
   {
     "title": "Live Music in Latur",
-    "link": "/artists?category=Singer&city=Latur",
+    "link": "/live-music-in-latur",
     "type": "live",
     "subtext": ""
   },
   {
     "title": "Singer for Events in Dhule",
-    "link": "/artists?category=Singer&city=Dhule",
+    "link": "/singer-for-events-in-dhule",
     "type": "corporate",
     "subtext": ""
   },
   {
     "title": "Punjabi Singer in Tirupati",
-    "link": "/artists?category=Singer&city=Tirupati",
+    "link": "/punjabi-singer-in-tirupati",
     "type": "party",
     "subtext": ""
   },
   {
     "title": "Singer for Events in Rohtak",
-    "link": "/artists?category=Singer&city=Rohtak",
+    "link": "/singer-for-events-in-rohtak",
     "type": "corporate",
     "subtext": ""
   },
   {
     "title": "Private Event Singer in Korba",
-    "link": "/artists?category=Singer&city=Korba",
+    "link": "/private-event-singer-in-korba",
     "type": "party",
     "subtext": ""
   },
   {
     "title": "Sangeet Singer in Bhilwara",
-    "link": "/artists?category=Singer&city=Bhilwara",
+    "link": "/sangeet-singer-in-bhilwara",
     "type": "wedding",
     "subtext": ""
   },
   {
     "title": "House Party Singer in Berhampur",
-    "link": "/artists?category=Singer&city=Berhampur",
+    "link": "/house-party-singer-in-berhampur",
     "type": "party",
     "subtext": ""
   },
   {
     "title": "Acoustic Singer in Muzaffarpur",
-    "link": "/artists?category=Singer&city=Muzaffarpur",
+    "link": "/acoustic-singer-in-muzaffarpur",
     "type": "live",
     "subtext": ""
   },
   {
     "title": "Corporate Event Singer in Ahmednagar",
-    "link": "/artists?category=Singer&city=Ahmednagar",
+    "link": "/corporate-event-singer-in-ahmednagar",
     "type": "corporate",
     "subtext": ""
   },
   {
     "title": "Punjabi Singer in Mathura",
-    "link": "/artists?category=Singer&city=Mathura",
+    "link": "/punjabi-singer-in-mathura",
     "type": "party",
     "subtext": ""
   },
   {
     "title": "Private Event Singer in Kollam",
-    "link": "/artists?category=Singer&city=Kollam",
+    "link": "/private-event-singer-in-kollam",
     "type": "party",
     "subtext": ""
   },
   {
     "title": "Acoustic Singer in Avadi",
-    "link": "/artists?category=Singer&city=Avadi",
+    "link": "/acoustic-singer-in-avadi",
     "type": "live",
     "subtext": ""
   },
   {
     "title": "Live Singer in Kadapa",
-    "link": "/artists?category=Singer&city=Kadapa",
+    "link": "/live-singer-in-kadapa",
     "type": "live",
     "subtext": ""
   },
   {
     "title": "Wedding Singer in Kamarhati",
-    "link": "/artists?category=Singer&city=Kamarhati",
+    "link": "/wedding-singer-in-kamarhati",
     "type": "wedding",
     "subtext": ""
   },
   {
     "title": "Corporate Musician in Sambalpur",
-    "link": "/artists?category=Musician&city=Sambalpur",
+    "link": "/corporate-musician-in-sambalpur",
     "type": "corporate",
     "subtext": ""
   },
   {
     "title": "Corporate Musician in Bilaspur",
-    "link": "/artists?category=Musician&city=Bilaspur",
+    "link": "/corporate-musician-in-bilaspur",
     "type": "corporate",
     "subtext": ""
   },
   {
     "title": "Bollywood Singer in Shahjahanpur",
-    "link": "/artists?category=Singer&city=Shahjahanpur",
+    "link": "/bollywood-singer-in-shahjahanpur",
     "type": "party",
     "subtext": ""
   },
   {
     "title": "Ghazal Singer in Satara",
-    "link": "/artists?category=Singer&city=Satara",
+    "link": "/ghazal-singer-in-satara",
     "type": "live",
     "subtext": ""
   },
   {
     "title": "Wedding Musicians in Bijapur",
-    "link": "/artists?category=Musician&city=Bijapur",
+    "link": "/wedding-musicians-in-bijapur",
     "type": "wedding",
     "subtext": ""
   },
   {
     "title": "Punjabi Singer in Rampur",
-    "link": "/artists?category=Singer&city=Rampur",
+    "link": "/punjabi-singer-in-rampur",
     "type": "party",
     "subtext": ""
   },
   {
     "title": "Shaadi Singer in Shivamogga",
-    "link": "/artists?category=Singer&city=Shivamogga",
+    "link": "/shaadi-singer-in-shivamogga",
     "type": "wedding",
     "subtext": ""
   },
   {
     "title": "House Party Singer in Chandrapur",
-    "link": "/artists?category=Singer&city=Chandrapur",
+    "link": "/house-party-singer-in-chandrapur",
     "type": "party",
     "subtext": ""
   },
   {
     "title": "Wedding Band in Junagadh",
-    "link": "/artists?category=Live%20band&city=Junagadh",
+    "link": "/wedding-band-in-junagadh",
     "type": "wedding",
     "subtext": ""
   },
   {
     "title": "Private Event Singer in Thrissur",
-    "link": "/artists?category=Singer&city=Thrissur",
+    "link": "/private-event-singer-in-thrissur",
     "type": "party",
     "subtext": ""
   },
   {
     "title": "Acoustic Singer in Alwar",
-    "link": "/artists?category=Singer&city=Alwar",
+    "link": "/acoustic-singer-in-alwar",
     "type": "live",
     "subtext": ""
   },
   {
     "title": "Shaadi Singer in Bardhaman",
-    "link": "/artists?category=Singer&city=Bardhaman",
+    "link": "/shaadi-singer-in-bardhaman",
     "type": "wedding",
     "subtext": ""
   },
   {
     "title": "Wedding Band in Kulti",
-    "link": "/artists?category=Live%20band&city=Kulti",
+    "link": "/wedding-band-in-kulti",
     "type": "wedding",
     "subtext": ""
   },
   {
     "title": "Corporate Singer in Kakinada",
-    "link": "/artists?category=Singer&city=Kakinada",
+    "link": "/corporate-singer-in-kakinada",
     "type": "corporate",
     "subtext": ""
   },
   {
     "title": "Live Music in Nizamabad",
-    "link": "/artists?category=Singer&city=Nizamabad",
+    "link": "/live-music-in-nizamabad",
     "type": "live",
     "subtext": ""
   },
   {
     "title": "Sufi Singer in Parbhani",
-    "link": "/artists?category=Singer&city=Parbhani",
+    "link": "/sufi-singer-in-parbhani",
     "type": "live",
     "subtext": ""
   },
   {
     "title": "House Party Singer in Tumkur",
-    "link": "/artists?category=Singer&city=Tumkur",
+    "link": "/house-party-singer-in-tumkur",
     "type": "party",
     "subtext": ""
   },
   {
     "title": "Shaadi Singer in Khammam",
-    "link": "/artists?category=Singer&city=Khammam",
+    "link": "/shaadi-singer-in-khammam",
     "type": "wedding",
     "subtext": ""
   },
   {
     "title": "Singer for Events in Ozhukarai",
-    "link": "/artists?category=Singer&city=Ozhukarai",
+    "link": "/singer-for-events-in-ozhukarai",
     "type": "corporate",
     "subtext": ""
   },
   {
     "title": "Corporate Event Singer in Bihar Sharif",
-    "link": "/artists?category=Singer&city=Bihar%20Sharif",
+    "link": "/corporate-event-singer-in-bihar-sharif",
     "type": "corporate",
     "subtext": ""
   },
   {
     "title": "Wedding Singer in Panipat",
-    "link": "/artists?category=Singer&city=Panipat",
+    "link": "/wedding-singer-in-panipat",
     "type": "wedding",
     "subtext": ""
   },
   {
     "title": "Live Band in Darbhanga",
-    "link": "/artists?category=Live%20band&city=Darbhanga",
+    "link": "/live-band-in-darbhanga",
     "type": "live",
     "subtext": ""
   },
   {
     "title": "House Party Singer in Bally",
-    "link": "/artists?category=Singer&city=Bally",
+    "link": "/house-party-singer-in-bally",
     "type": "party",
     "subtext": ""
   },
   {
     "title": "Live Band in Aizawl",
-    "link": "/artists?category=Live%20band&city=Aizawl",
+    "link": "/live-band-in-aizawl",
     "type": "live",
     "subtext": ""
   },
   {
     "title": "Wedding Musicians in Dewas",
-    "link": "/artists?category=Musician&city=Dewas",
+    "link": "/wedding-musicians-in-dewas",
     "type": "wedding",
     "subtext": ""
   },
   {
     "title": "Singer for Events in Ichalkaranji",
-    "link": "/artists?category=Singer&city=Ichalkaranji",
+    "link": "/singer-for-events-in-ichalkaranji",
     "type": "corporate",
     "subtext": ""
   },
   {
     "title": "Corporate Event Singer in Karnal",
-    "link": "/artists?category=Singer&city=Karnal",
+    "link": "/corporate-event-singer-in-karnal",
     "type": "corporate",
     "subtext": ""
   },
   {
     "title": "Corporate Event Singer in Bathinda",
-    "link": "/artists?category=Singer&city=Bathinda",
+    "link": "/corporate-event-singer-in-bathinda",
     "type": "corporate",
     "subtext": ""
   },
   {
     "title": "Corporate Musician in Jalna",
-    "link": "/artists?category=Musician&city=Jalna",
+    "link": "/corporate-musician-in-jalna",
     "type": "corporate",
     "subtext": ""
   },
   {
     "title": "Wedding Singer in Eluru",
-    "link": "/artists?category=Singer&city=Eluru",
+    "link": "/wedding-singer-in-eluru",
     "type": "wedding",
     "subtext": ""
   },
   {
     "title": "Singer for Events in Barasat",
-    "link": "/artists?category=Singer&city=Barasat",
+    "link": "/singer-for-events-in-barasat",
     "type": "corporate",
     "subtext": ""
   },
   {
     "title": "Wedding Singer in Kirari Suleman Nagar",
-    "link": "/artists?category=Singer&city=Kirari%20Suleman%20Nagar",
+    "link": "/wedding-singer-in-kirari-suleman-nagar",
     "type": "wedding",
     "subtext": ""
   },
   {
     "title": "Live Band in Purnia",
-    "link": "/artists?category=Live%20band&city=Purnia",
+    "link": "/live-band-in-purnia",
     "type": "live",
     "subtext": ""
   },
   {
     "title": "Birthday Singer in Satna",
-    "link": "/artists?category=Singer&city=Satna",
+    "link": "/birthday-singer-in-satna",
     "type": "party",
     "subtext": ""
   },
   {
     "title": "Corporate Event Singer in Mau",
-    "link": "/artists?category=Singer&city=Mau",
+    "link": "/corporate-event-singer-in-mau",
     "type": "corporate",
     "subtext": ""
   },
   {
     "title": "Sangeet Singer in Sonipat",
-    "link": "/artists?category=Singer&city=Sonipat",
+    "link": "/sangeet-singer-in-sonipat",
     "type": "wedding",
     "subtext": ""
   },
   {
     "title": "Wedding Singer in Farrukhabad",
-    "link": "/artists?category=Singer&city=Farrukhabad",
+    "link": "/wedding-singer-in-farrukhabad",
     "type": "wedding",
     "subtext": ""
   },
   {
     "title": "Private Event Singer in Sagar",
-    "link": "/artists?category=Singer&city=Sagar",
+    "link": "/private-event-singer-in-sagar",
     "type": "party",
     "subtext": ""
   },
   {
     "title": "Corporate Singer in Durg",
-    "link": "/artists?category=Singer&city=Durg",
+    "link": "/corporate-singer-in-durg",
     "type": "corporate",
     "subtext": ""
   },
   {
     "title": "Shaadi Singer in Imphal",
-    "link": "/artists?category=Singer&city=Imphal",
+    "link": "/shaadi-singer-in-imphal",
     "type": "wedding",
     "subtext": ""
   },
   {
     "title": "Wedding Singer in Ratlam",
-    "link": "/artists?category=Singer&city=Ratlam",
+    "link": "/wedding-singer-in-ratlam",
     "type": "wedding",
     "subtext": ""
   },
   {
     "title": "Bollywood Singer in Hapur",
-    "link": "/artists?category=Singer&city=Hapur",
+    "link": "/bollywood-singer-in-hapur",
     "type": "party",
     "subtext": ""
   },
   {
     "title": "Live Band in Anantapur",
-    "link": "/artists?category=Live%20band&city=Anantapur",
+    "link": "/live-band-in-anantapur",
     "type": "live",
     "subtext": ""
   },
   {
     "title": "Private Event Singer in Arrah",
-    "link": "/artists?category=Singer&city=Arrah",
+    "link": "/private-event-singer-in-arrah",
     "type": "party",
     "subtext": ""
   },
   {
     "title": "Live Music in Karimnagar",
-    "link": "/artists?category=Singer&city=Karimnagar",
+    "link": "/live-music-in-karimnagar",
     "type": "live",
     "subtext": ""
   },
   {
     "title": "Wedding Singer in Etawah",
-    "link": "/artists?category=Singer&city=Etawah",
+    "link": "/wedding-singer-in-etawah",
     "type": "wedding",
     "subtext": ""
   },
   {
     "title": "Private Event Singer in Ambernath",
-    "link": "/artists?category=Singer&city=Ambernath",
+    "link": "/private-event-singer-in-ambernath",
     "type": "party",
     "subtext": ""
   },
   {
     "title": "Singer for Events in North Dumdum",
-    "link": "/artists?category=Singer&city=North%20Dumdum",
+    "link": "/singer-for-events-in-north-dumdum",
     "type": "corporate",
     "subtext": ""
   },
   {
     "title": "Live Singer in Bharatpur",
-    "link": "/artists?category=Singer&city=Bharatpur",
+    "link": "/live-singer-in-bharatpur",
     "type": "live",
     "subtext": ""
   },
   {
     "title": "Singer for Events in Begusarai",
-    "link": "/artists?category=Singer&city=Begusarai",
+    "link": "/singer-for-events-in-begusarai",
     "type": "corporate",
     "subtext": ""
   },
   {
     "title": "Shaadi Singer in New Delhi",
-    "link": "/artists?category=Singer&city=New%20Delhi",
+    "link": "/shaadi-singer-in-new-delhi",
     "type": "wedding",
     "subtext": ""
   },
   {
     "title": "Corporate Singer in Gandhidham",
-    "link": "/artists?category=Singer&city=Gandhidham",
+    "link": "/corporate-singer-in-gandhidham",
     "type": "corporate",
     "subtext": ""
   },
   {
     "title": "Corporate Singer in Baranagar",
-    "link": "/artists?category=Singer&city=Baranagar",
+    "link": "/corporate-singer-in-baranagar",
     "type": "corporate",
     "subtext": ""
   },
   {
     "title": "Singer for Events in Tiruvottiyur",
-    "link": "/artists?category=Singer&city=Tiruvottiyur",
+    "link": "/singer-for-events-in-tiruvottiyur",
     "type": "corporate",
     "subtext": ""
   },
   {
     "title": "Live Band in Puducherry",
-    "link": "/artists?category=Live%20band&city=Puducherry",
+    "link": "/live-band-in-puducherry",
     "type": "live",
     "subtext": ""
   },
   {
     "title": "Corporate Event Singer in Sikar",
-    "link": "/artists?category=Singer&city=Sikar",
+    "link": "/corporate-event-singer-in-sikar",
     "type": "corporate",
     "subtext": ""
   },
   {
     "title": "House Party Singer in Thoothukudi",
-    "link": "/artists?category=Singer&city=Thoothukudi",
+    "link": "/house-party-singer-in-thoothukudi",
     "type": "party",
     "subtext": ""
   },
   {
     "title": "Singer for Events in Rewa",
-    "link": "/artists?category=Singer&city=Rewa",
+    "link": "/singer-for-events-in-rewa",
     "type": "corporate",
     "subtext": ""
   },
   {
     "title": "Corporate Singer in Mirzapur",
-    "link": "/artists?category=Singer&city=Mirzapur",
+    "link": "/corporate-singer-in-mirzapur",
     "type": "corporate",
     "subtext": ""
   },
   {
     "title": "Wedding Singer in Raichur",
-    "link": "/artists?category=Singer&city=Raichur",
+    "link": "/wedding-singer-in-raichur",
     "type": "wedding",
     "subtext": ""
   },
   {
     "title": "Corporate Event Singer in Pali",
-    "link": "/artists?category=Singer&city=Pali",
+    "link": "/corporate-event-singer-in-pali",
     "type": "corporate",
     "subtext": ""
   },
   {
     "title": "Corporate Event Singer in Ramagundam",
-    "link": "/artists?category=Singer&city=Ramagundam",
+    "link": "/corporate-event-singer-in-ramagundam",
     "type": "corporate",
     "subtext": ""
   },
   {
     "title": "Singer for Events in Silchar",
-    "link": "/artists?category=Singer&city=Silchar",
+    "link": "/singer-for-events-in-silchar",
     "type": "corporate",
     "subtext": ""
   },
   {
     "title": "Corporate Event Singer in Haridwar",
-    "link": "/artists?category=Singer&city=Haridwar",
+    "link": "/corporate-event-singer-in-haridwar",
     "type": "corporate",
     "subtext": ""
   },
   {
     "title": "Live Band in Vijayanagaram",
-    "link": "/artists?category=Live%20band&city=Vijayanagaram",
+    "link": "/live-band-in-vijayanagaram",
     "type": "live",
     "subtext": ""
   },
   {
     "title": "Corporate Event Singer in Tenali",
-    "link": "/artists?category=Singer&city=Tenali",
+    "link": "/corporate-event-singer-in-tenali",
     "type": "corporate",
     "subtext": ""
   },
   {
     "title": "House Party Singer in Nagercoil",
-    "link": "/artists?category=Singer&city=Nagercoil",
+    "link": "/house-party-singer-in-nagercoil",
     "type": "party",
     "subtext": ""
   },
   {
     "title": "Sangeet Singer in Sri Ganganagar",
-    "link": "/artists?category=Singer&city=Sri%20Ganganagar",
+    "link": "/sangeet-singer-in-sri-ganganagar",
     "type": "wedding",
     "subtext": ""
   },
   {
     "title": "Sangeet Singer in Karawal Nagar",
-    "link": "/artists?category=Singer&city=Karawal%20Nagar",
+    "link": "/sangeet-singer-in-karawal-nagar",
     "type": "wedding",
     "subtext": ""
   },
   {
     "title": "Live Music in Mango",
-    "link": "/artists?category=Singer&city=Mango",
+    "link": "/live-music-in-mango",
     "type": "live",
     "subtext": ""
   },
   {
     "title": "Punjabi Singer in Thanjavur",
-    "link": "/artists?category=Singer&city=Thanjavur",
+    "link": "/punjabi-singer-in-thanjavur",
     "type": "party",
     "subtext": ""
   },
   {
     "title": "Sufi Singer in Bulandshahr",
-    "link": "/artists?category=Singer&city=Bulandshahr",
+    "link": "/sufi-singer-in-bulandshahr",
     "type": "live",
     "subtext": ""
   },
   {
     "title": "Corporate Musician in Uluberia",
-    "link": "/artists?category=Musician&city=Uluberia",
+    "link": "/corporate-musician-in-uluberia",
     "type": "corporate",
     "subtext": ""
   },
   {
     "title": "Ghazal Singer in Katni",
-    "link": "/artists?category=Singer&city=Katni",
+    "link": "/ghazal-singer-in-katni",
     "type": "live",
     "subtext": ""
   },
   {
     "title": "Live Music in Sambhal",
-    "link": "/artists?category=Singer&city=Sambhal",
+    "link": "/live-music-in-sambhal",
     "type": "live",
     "subtext": ""
   },
   {
     "title": "House Party Singer in Singrauli",
-    "link": "/artists?category=Singer&city=Singrauli",
+    "link": "/house-party-singer-in-singrauli",
     "type": "party",
     "subtext": ""
   },
   {
     "title": "Singer for Events in Nadiad",
-    "link": "/artists?category=Singer&city=Nadiad",
+    "link": "/singer-for-events-in-nadiad",
     "type": "corporate",
     "subtext": ""
   },
   {
     "title": "Birthday Singer in Secunderabad",
-    "link": "/artists?category=Singer&city=Secunderabad",
+    "link": "/birthday-singer-in-secunderabad",
     "type": "party",
     "subtext": ""
   },
   {
     "title": "Live Band in Naihati",
-    "link": "/artists?category=Live%20band&city=Naihati",
+    "link": "/live-band-in-naihati",
     "type": "live",
     "subtext": ""
   },
   {
     "title": "Live Singer in Yamunanagar",
-    "link": "/artists?category=Singer&city=Yamunanagar",
+    "link": "/live-singer-in-yamunanagar",
     "type": "live",
     "subtext": ""
   },
   {
     "title": "Corporate Singer in Bidhannagar",
-    "link": "/artists?category=Singer&city=Bidhannagar",
+    "link": "/corporate-singer-in-bidhannagar",
     "type": "corporate",
     "subtext": ""
   },
   {
     "title": "Live Band in Pallavaram",
-    "link": "/artists?category=Live%20band&city=Pallavaram",
+    "link": "/live-band-in-pallavaram",
     "type": "live",
     "subtext": ""
   },
   {
     "title": "Wedding Band in Bidar",
-    "link": "/artists?category=Live%20band&city=Bidar",
+    "link": "/wedding-band-in-bidar",
     "type": "wedding",
     "subtext": ""
   },
   {
     "title": "Sufi Singer in Munger",
-    "link": "/artists?category=Singer&city=Munger",
+    "link": "/sufi-singer-in-munger",
     "type": "live",
     "subtext": ""
   },
   {
     "title": "Live Singer in Panchkula",
-    "link": "/artists?category=Singer&city=Panchkula",
+    "link": "/live-singer-in-panchkula",
     "type": "live",
     "subtext": ""
   },
   {
     "title": "Wedding Musicians in Burhanpur",
-    "link": "/artists?category=Musician&city=Burhanpur",
+    "link": "/wedding-musicians-in-burhanpur",
     "type": "wedding",
     "subtext": ""
   },
   {
     "title": "Live Music in Raurkela Industrial Township",
-    "link": "/artists?category=Singer&city=Raurkela%20Industrial%20Township",
+    "link": "/live-music-in-raurkela-industrial-township",
     "type": "live",
     "subtext": ""
   },
   {
     "title": "House Party Singer in Kharagpur",
-    "link": "/artists?category=Singer&city=Kharagpur",
+    "link": "/house-party-singer-in-kharagpur",
     "type": "party",
     "subtext": ""
   },
   {
     "title": "Wedding Singer in Dindigul",
-    "link": "/artists?category=Singer&city=Dindigul",
+    "link": "/wedding-singer-in-dindigul",
     "type": "wedding",
     "subtext": ""
   },
   {
     "title": "Shaadi Singer in Gandhinagar",
-    "link": "/artists?category=Singer&city=Gandhinagar",
+    "link": "/shaadi-singer-in-gandhinagar",
     "type": "wedding",
     "subtext": ""
   },
   {
     "title": "Corporate Singer in Hospet",
-    "link": "/artists?category=Singer&city=Hospet",
+    "link": "/corporate-singer-in-hospet",
     "type": "corporate",
     "subtext": ""
   },
   {
     "title": "Corporate Musician in Nangloi Jat",
-    "link": "/artists?category=Musician&city=Nangloi%20Jat",
+    "link": "/corporate-musician-in-nangloi-jat",
     "type": "corporate",
     "subtext": ""
   },
   {
     "title": "Corporate Event Singer in Malda",
-    "link": "/artists?category=Singer&city=Malda",
+    "link": "/corporate-event-singer-in-malda",
     "type": "corporate",
     "subtext": ""
   },
   {
     "title": "Ghazal Singer in Ongole",
-    "link": "/artists?category=Singer&city=Ongole",
+    "link": "/ghazal-singer-in-ongole",
     "type": "live",
     "subtext": ""
   },
   {
     "title": "Acoustic Singer in Deoghar",
-    "link": "/artists?category=Singer&city=Deoghar",
+    "link": "/acoustic-singer-in-deoghar",
     "type": "live",
     "subtext": ""
   },
   {
     "title": "Wedding Band in Chapra",
-    "link": "/artists?category=Live%20band&city=Chapra",
+    "link": "/wedding-band-in-chapra",
     "type": "wedding",
     "subtext": ""
   },
   {
     "title": "Live Singer in Haldia",
-    "link": "/artists?category=Singer&city=Haldia",
+    "link": "/live-singer-in-haldia",
     "type": "live",
     "subtext": ""
   },
   {
     "title": "Bollywood Singer in Khandwa",
-    "link": "/artists?category=Singer&city=Khandwa",
+    "link": "/bollywood-singer-in-khandwa",
     "type": "party",
     "subtext": ""
   },
   {
     "title": "Sangeet Singer in Nandyal",
-    "link": "/artists?category=Singer&city=Nandyal",
+    "link": "/sangeet-singer-in-nandyal",
     "type": "wedding",
     "subtext": ""
   },
   {
     "title": "Corporate Event Singer in Morena",
-    "link": "/artists?category=Singer&city=Morena",
+    "link": "/corporate-event-singer-in-morena",
     "type": "corporate",
     "subtext": ""
   },
   {
     "title": "Sangeet Singer in Amroha",
-    "link": "/artists?category=Singer&city=Amroha",
+    "link": "/sangeet-singer-in-amroha",
     "type": "wedding",
     "subtext": ""
   },
   {
     "title": "Sangeet Singer in Anand",
-    "link": "/artists?category=Singer&city=Anand",
+    "link": "/sangeet-singer-in-anand",
     "type": "wedding",
     "subtext": ""
   },
   {
     "title": "Wedding Singer in Bhind",
-    "link": "/artists?category=Singer&city=Bhind",
+    "link": "/wedding-singer-in-bhind",
     "type": "wedding",
     "subtext": ""
   },
   {
     "title": "Wedding Band in Bhalswa Jahangir Pur",
-    "link": "/artists?category=Live%20band&city=Bhalswa%20Jahangir%20Pur",
+    "link": "/wedding-band-in-bhalswa-jahangir-pur",
     "type": "wedding",
     "subtext": ""
   },
   {
     "title": "Private Event Singer in Madhyamgram",
-    "link": "/artists?category=Singer&city=Madhyamgram",
+    "link": "/private-event-singer-in-madhyamgram",
     "type": "party",
     "subtext": ""
   },
   {
     "title": "Punjabi Singer in Bhiwani",
-    "link": "/artists?category=Singer&city=Bhiwani",
+    "link": "/punjabi-singer-in-bhiwani",
     "type": "party",
     "subtext": ""
   },
   {
     "title": "Live Music in Berhampore",
-    "link": "/artists?category=Singer&city=Berhampore",
+    "link": "/live-music-in-berhampore",
     "type": "live",
     "subtext": ""
   },
   {
     "title": "House Party Singer in Ambala",
-    "link": "/artists?category=Singer&city=Ambala",
+    "link": "/house-party-singer-in-ambala",
     "type": "party",
     "subtext": ""
   },
   {
     "title": "Live Singer in Morbi",
-    "link": "/artists?category=Singer&city=Morbi",
+    "link": "/live-singer-in-morbi",
     "type": "live",
     "subtext": ""
   },
   {
     "title": "Wedding Singer in Fatehpur",
-    "link": "/artists?category=Singer&city=Fatehpur",
+    "link": "/wedding-singer-in-fatehpur",
     "type": "wedding",
     "subtext": ""
   },
   {
     "title": "Wedding Singer in Raebareli",
-    "link": "/artists?category=Singer&city=Raebareli",
+    "link": "/wedding-singer-in-raebareli",
     "type": "wedding",
     "subtext": ""
   },
   {
     "title": "Corporate Singer in Khora",
-    "link": "/artists?category=Singer&city=Khora",
+    "link": "/corporate-singer-in-khora",
     "type": "corporate",
     "subtext": ""
   },
   {
     "title": "Live Band in Chittoor",
-    "link": "/artists?category=Live%20band&city=Chittoor",
+    "link": "/live-band-in-chittoor",
     "type": "live",
     "subtext": ""
   },
   {
     "title": "Birthday Singer in Bhusawal",
-    "link": "/artists?category=Singer&city=Bhusawal",
+    "link": "/birthday-singer-in-bhusawal",
     "type": "party",
     "subtext": ""
   }
