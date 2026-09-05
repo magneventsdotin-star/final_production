@@ -1,6 +1,7 @@
 "use client";
 
 import React from 'react';
+import Link from 'next/link';
 
 const keywords = [
   "book a singer for house party in mumbai",
@@ -38,7 +39,9 @@ export default function SeoKeywordFooter() {
       <div className="seo-keyword-container">
         {keywords.map((keyword, index) => (
           <React.Fragment key={index}>
-            <span className="seo-keyword">{keyword}</span>
+            <Link href={`/${keyword.replace(/ /g, '-')}`} className="seo-keyword">
+              {keyword}
+            </Link>
             {index < keywords.length - 1 && <span className="seo-separator">|</span>}
           </React.Fragment>
         ))}
