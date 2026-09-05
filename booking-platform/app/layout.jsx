@@ -81,9 +81,10 @@ export const metadata = {
     siteName: 'Magnevents',
     images: [
       {
-        url: '/icon-512.png',
-        width: 512,
-        height: 512,
+        url: '/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Magnevents - Premium Live Artist Booking'
       },
     ],
     locale: 'en_IN',
@@ -93,13 +94,13 @@ export const metadata = {
     card: 'summary_large_image',
     title: 'Book a Singer for House Party in Delhi-NCR, Weddings & Events | Magnevents',
     description: 'Book a live singer, bands, and artists for house parties in Delhi-NCR, weddings, corporate nights, and private events in India. Verified artists, direct booking, transparent pricing.',
-    images: ['/icon-512.png'],
+    images: ['/og-image.jpg'],
   },
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={inter.variable}>
+    <html lang="en-IN" className={inter.variable}>
       <head>
         <meta name="mobile-web-app-capable" content="yes" />
         <script

@@ -314,6 +314,26 @@ export default function ArtistProfilePage({ params }) {
 
   return (
     <main className="artist-profile-wrapper">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Person",
+            "name": name,
+            "description": artist.bio || `Hire ${name}, a professional ${artist.category || 'artist'} from ${artist.city || 'India'} for your next event.`,
+            "image": coverImage,
+            "jobTitle": artist.category || "Live Performer",
+            "url": typeof window !== 'undefined' ? window.location.href : '',
+            "sameAs": [],
+            "aggregateRating": artist.successful_bookings > 0 ? {
+              "@type": "AggregateRating",
+              "ratingValue": (artist.rating || 4.5).toFixed(1),
+              "reviewCount": artist.successful_bookings || 10
+            } : undefined
+          })
+        }}
+      />
       <div className="artist-container">
         
         <section className="artist-hero-card">

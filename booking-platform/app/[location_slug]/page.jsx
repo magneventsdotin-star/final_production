@@ -85,6 +85,29 @@ export default async function LocationServicePage({ params }) {
           "text": faq.answer
         }
       }))
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://www.magnevents.in"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": parsedCity,
+          "item": `https://www.magnevents.in/city/${parsedCity.toLowerCase().replace(/ /g, '-')}`
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": `Book ${parsedCategory} in ${parsedCity}`
+        }
+      ]
     }
   ];
 
