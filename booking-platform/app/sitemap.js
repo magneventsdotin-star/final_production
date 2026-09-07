@@ -308,7 +308,6 @@ export default async function sitemap() {
       dynamicRoutes = [...dynamicRoutes, ...cityRoutes];
     }
 
-    // Fetch SEO Blogs
     const { data: blogs } = await supabase
       .from('seo_blogs')
       .select('slug, updated_at, seo_cities!inner(slug)')
