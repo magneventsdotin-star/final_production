@@ -87,7 +87,7 @@ const nextConfig = {
       },
     ];
 
-    if (process.env.VERCEL_ENV !== 'production') {
+    if (process.env.VERCEL_ENV === 'preview' || process.env.VERCEL_ENV === 'development') {
       headers.push({
         headers: [
           {

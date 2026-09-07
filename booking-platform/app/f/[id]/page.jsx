@@ -15,7 +15,7 @@ export default function ClientFormPage({ params }) {
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState(null);
-  const { id } = params;
+  const id = params?.id || (typeof React !== 'undefined' && typeof React.use === 'function' && params ? React.use(params)?.id : params?.id);
   const router = useRouter();
 
   useEffect(() => {

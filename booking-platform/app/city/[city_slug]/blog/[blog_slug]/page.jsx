@@ -4,7 +4,8 @@ import Link from 'next/link';
 import '../../../../seo-pages.css';
 
 export async function generateMetadata({ params }) {
-  const { city_slug, blog_slug } = params;
+  const awaitedParams = await params;
+  const { city_slug, blog_slug } = awaitedParams;
   
   const { data: blog } = await supabase
     .from('seo_blogs')
@@ -21,13 +22,14 @@ export async function generateMetadata({ params }) {
     title: blog.seo_title || blog.title,
     description: blog.meta_description,
     alternates: {
-      canonical: `https://www.magnevents.in/city/${city_slug}/blog/${blog.slug}`,
+      canonical: `/city/${city_slug}/blog/${blog.slug}`,
     }
   };
 }
 
 export default async function CityBlogPage({ params }) {
-  const { city_slug, blog_slug } = params;
+  const awaitedParams = await params;
+  const { city_slug, blog_slug } = awaitedParams;
 
   const { data: blog } = await supabase
     .from('seo_blogs')

@@ -10,7 +10,8 @@ function slugToName(slug) {
 }
 
 export async function generateMetadata({ params }) {
-  const { city_slug } = params;
+  const awaitedParams = await params;
+  const { city_slug } = awaitedParams;
   
   const { data: city } = await supabase
     .from('seo_cities')
@@ -25,13 +26,14 @@ export async function generateMetadata({ params }) {
     title: city?.seo_title || `Hire Best Singers in ${cityName} | Magnevents`,
     description: city?.meta_description || `Find and book top-rated live singers, bands, and musicians for weddings, corporate events, and parties in ${cityName}.`,
     alternates: {
-      canonical: `https://www.magnevents.in/city/${city_slug}`,
+      canonical: `/city/${city_slug}`,
     }
   };
 }
 
 export default async function CityLandingPage({ params }) {
-  const { city_slug } = params;
+  const awaitedParams = await params;
+  const { city_slug } = awaitedParams;
 
   // 1. Fetch City
   let { data: city } = await supabase

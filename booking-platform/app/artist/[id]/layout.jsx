@@ -1,7 +1,9 @@
 import { supabase } from '@database/connection/supabase';
 
 export async function generateMetadata({ params }) {
-  const decodedId = decodeURIComponent(params.id);
+  const awaitedParams = await params;
+  const { id } = awaitedParams;
+  const decodedId = decodeURIComponent(id);
   const isUUID = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/.test(decodedId);
   
   let query = supabase.from('artists').select('name, alias, bio, artist_images(image_url)').eq('is_live', true);
@@ -22,13 +24,13 @@ export async function generateMetadata({ params }) {
     title: `${name} | Book Live Singer | Magnevents`,
     description,
     alternates: {
-      canonical: `/artist/${params.id}`,
+      canonical: `/artist/${id}`,
     },
     openGraph: {
       title: `${name} | Book Live Singer | Magnevents`,
       description,
       images: [image],
-      url: `/artist/${params.id}`,
+      url: `/artist/${id}`,
     },
     twitter: {
       card: 'summary_large_image',
@@ -40,7 +42,9 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function ArtistLayout({ children, params }) {
-  const decodedId = decodeURIComponent(params.id);
+  const awaitedParams = await params;
+  const { id } = awaitedParams;
+  const decodedId = decodeURIComponent(id);
   const isUUID = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/.test(decodedId);
   
   let query = supabase.from('artists').select('name, alias, bio, artist_images(image_url), category, city').eq('is_live', true);
@@ -62,7 +66,7 @@ export default async function ArtistLayout({ children, params }) {
     "description": data?.bio || "Live performer available for booking",
     "image": image,
     "jobTitle": data?.category || "Artist",
-    "url": `https://www.magnevents.in/artist/${params.id}`
+    "url": `https://www.magnevents.in/artist/${id}`
   };
 
   return (

@@ -151,7 +151,8 @@ export default function ArtistProfilePage({ params }) {
   const [loading, setLoading] = useState(true);
   const [selectedImage, setSelectedImage] = useState(null);
 
-  const decodedId = decodeURIComponent(params.id);
+  const rawId = params?.id || (typeof React.use === 'function' && params ? React.use(params)?.id : params?.id) || '';
+  const decodedId = decodeURIComponent(rawId);
 
   useEffect(() => {
     if (selectedImage) {

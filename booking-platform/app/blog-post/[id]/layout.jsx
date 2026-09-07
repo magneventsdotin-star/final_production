@@ -2,7 +2,8 @@ import { supabase } from '@database/connection/supabase';
 import { defaultBlogs } from '../data';
 
 export async function generateMetadata({ params }) {
-  const { id } = params;
+  const awaitedParams = await params;
+  const { id } = awaitedParams;
   const staticBlog = defaultBlogs.find(b => b.slug === id || b.id === id);
   
   let title = 'Blog | Magnevents';
@@ -25,10 +26,14 @@ export async function generateMetadata({ params }) {
   return {
     title,
     description,
+    alternates: {
+      canonical: `/blog-post/${id}`,
+    },
     openGraph: {
       title,
       description,
       images: [image],
+      url: `/blog-post/${id}`,
     },
     twitter: {
       card: 'summary_large_image',
@@ -40,7 +45,8 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function BlogLayout({ children, params }) {
-  const { id } = params;
+  const awaitedParams = await params;
+  const { id } = awaitedParams;
   const staticBlog = defaultBlogs.find(b => b.slug === id || b.id === id);
   
   let title = 'Blog Post';

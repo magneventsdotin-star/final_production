@@ -1,10 +1,9 @@
 import { supabase } from '@database/connection/supabase';
-import { footerSeoKeywords } from '@/app/constants/seoKeywords';
 
 export default async function sitemap() {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.magnevents.in';
 
-  // Ensure no trailing slashes in static routes to prevent canonical issues
+
   const staticRoutes = [
     '',
     '/artists',
@@ -283,7 +282,6 @@ export default async function sitemap() {
     if (artists) {
       const artistRoutes = artists.map((artist) => {
         const rawName = artist.alias || artist.name || artist.id;
-        // Generate a clean SEO slug (e.g., "Neha Kakkar" -> "neha-kakkar")
         const slug = encodeURIComponent(rawName.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, ''));
         return {
           url: `${baseUrl}/artist/${slug}`,
@@ -295,7 +293,6 @@ export default async function sitemap() {
       dynamicRoutes = [...dynamicRoutes, ...artistRoutes];
     }
     
-    // Fetch SEO Cities
     const { data: cities } = await supabase
       .from('seo_cities')
       .select('slug, updated_at')
@@ -324,22 +321,10 @@ export default async function sitemap() {
         changeFrequency: 'weekly',
         priority: 0.8,
       }));
-      dynamicRoutes = [...dynamicRoutes, ...blogRoutes];
     }
-
   } catch (error) {
     console.error('Error fetching dynamic routes for sitemap', error);
   }
 
-  const footerKeywordRoutes = footerSeoKeywords.map((keyword) => {
-    const slug = keyword.replace(/ /g, '-');
-    return {
-      url: `${baseUrl}/${slug}`,
-      lastModified: new Date().toISOString(),
-      changeFrequency: 'weekly',
-      priority: 0.8,
-    };
-  });
-
-  return [...staticRoutes, ...dynamicRoutes, ...footerKeywordRoutes];
+  return [...staticRoutes, ...dynamicRoutes];
 }

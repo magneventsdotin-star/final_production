@@ -7,10 +7,8 @@ export default function robots() {
       disallow: [
         '/api/', 
         '/admin/', 
-        '/_next/', 
         '/private/', 
         '/preview/', 
-        '/*?*' // Disallow URLs with query parameters to avoid duplicate content
       ],
     },
     sitemap: `${baseUrl}/sitemap.xml`,
