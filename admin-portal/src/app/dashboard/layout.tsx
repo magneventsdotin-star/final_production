@@ -133,10 +133,25 @@ export default function DashboardLayout({
         <Sidebar onClose={() => setSidebarOpen(false)} userRole={userRole} />
       </aside>
 
+      {/* Mobile Left-Edge Tap Strip */}
+      {!sidebarOpen && (
+        <div
+          onClick={() => setSidebarOpen(true)}
+          className="fixed top-0 left-0 bottom-0 w-4 z-40 lg:hidden cursor-pointer hover:bg-sky-500/20 active:bg-sky-500/30 transition-all group"
+          title="Open Menu"
+        >
+          <div className="w-1 h-12 bg-sky-500/50 rounded-r-full absolute top-1/2 left-0 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity" />
+        </div>
+      )}
+
       <div className="flex flex-col min-h-screen lg:pl-[240px] overflow-x-hidden relative">
 
         <header className="lg:hidden h-16 bg-[#BAE6FD] border-b border-sky-300/50 flex items-center justify-between px-4 sticky top-0 z-30">
-          <div className="flex items-center gap-2.5">
+          <div
+            onClick={() => setSidebarOpen(true)}
+            className="flex items-center gap-2.5 cursor-pointer hover:opacity-85 active:scale-95 transition-all p-1.5 -ml-1.5 rounded-xl hover:bg-white/30"
+            title="Open Menu"
+          >
             <div className="h-8 w-auto flex-shrink-0">
                <img
                 src="/logo.webp"
