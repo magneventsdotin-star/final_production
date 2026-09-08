@@ -55,6 +55,7 @@ function ArtistRequestsContent() {
   const [selectedRequest, setSelectedRequest] = useState<any | null>(null);
   const [detailOpen, setDetailOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(50);
   const [sortBy, setSortBy] = useState('created_at');
   const [sortOrder, setSortOrder] = useState('desc');
 
@@ -189,11 +190,11 @@ function ArtistRequestsContent() {
     }
   }, [replyId, actionType, requests, router]);
 
-  const totalPages = Math.max(1, Math.ceil(requests.length / ITEMS_PER_PAGE));
-  const paginatedRequests = requests.slice(
-    (currentPage - 1) * ITEMS_PER_PAGE,
-    currentPage * ITEMS_PER_PAGE
-  );
+  const effectiveItemsPerPage = itemsPerPage === -1 ? (requests.length || 1) : itemsPerPage;
+  const totalPages = Math.max(1, Math.ceil(requests.length / effectiveItemsPerPage));
+  const paginatedRequests = itemsPerPage === -1
+    ? requests
+    : requests.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
   const handleUpdateStatus = async (id: string, newStatus: string) => {
     try {
@@ -708,25 +709,77 @@ function ArtistRequestsContent() {
           </div>
         )}
         
-        {totalPages > 1 && (
-          <div className="flex items-center justify-between px-6 py-4 border-t border-slate-100 bg-slate-50 mt-4 rounded-b-xl">
-            <button
-              onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
-              disabled={currentPage === 1}
-              className="flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold text-slate-600 bg-white border border-slate-200 hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
-            >
-              <ChevronLeft size={16} /> Previous
-            </button>
-            <span className="text-xs font-bold text-slate-500 uppercase tracking-widest">
-              Page {currentPage} of {totalPages}
-            </span>
-            <button
-              onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
-              disabled={currentPage === totalPages}
-              className="flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold text-slate-600 bg-white border border-slate-200 hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
-            >
-              Next <ChevronRight size={16} />
-            </button>
+        {/* Pagination Bar */}
+        {requests.length > 0 && (
+          <div className="flex flex-col sm:flex-row items-center justify-between px-6 py-4 border-t border-slate-200/80 bg-slate-50/90 gap-4 rounded-b-xl">
+            <div className="flex items-center gap-3 text-xs font-medium text-slate-600 flex-wrap">
+              <span>
+                Showing <strong className="font-bold text-slate-900">{requests.length === 0 ? 0 : (currentPage - 1) * (itemsPerPage === -1 ? requests.length : itemsPerPage) + 1}</strong>–<strong className="font-bold text-slate-900">{Math.min(currentPage * (itemsPerPage === -1 ? requests.length : itemsPerPage), requests.length)}</strong> of <strong className="font-bold text-slate-900">{requests.length}</strong> artist requests
+              </span>
+              <div className="h-4 w-px bg-slate-300 hidden sm:block" />
+              <div className="flex items-center gap-2">
+                <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Per page:</span>
+                <select
+                  value={itemsPerPage}
+                  onChange={(e) => {
+                    setItemsPerPage(Number(e.target.value));
+                    setCurrentPage(1);
+                  }}
+                  className="bg-white border border-slate-200 text-slate-700 text-xs font-bold rounded-lg px-2.5 py-1.5 focus:outline-none focus:ring-2 focus:ring-sky-500 cursor-pointer shadow-sm"
+                >
+                  <option value={10}>10</option>
+                  <option value={25}>25</option>
+                  <option value={50}>50</option>
+                  <option value={100}>100</option>
+                  <option value={-1}>All</option>
+                </select>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                disabled={currentPage === 1 || itemsPerPage === -1}
+                className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold text-slate-700 bg-white border border-slate-200 hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed transition-all shadow-sm active:scale-95"
+              >
+                <ChevronLeft size={16} /> Previous
+              </button>
+
+              {itemsPerPage !== -1 && totalPages > 1 && (
+                <div className="flex items-center gap-1">
+                  {Array.from({ length: totalPages }, (_, i) => i + 1)
+                    .filter(page => page === 1 || page === totalPages || Math.abs(page - currentPage) <= 1)
+                    .map((page, idx, arr) => {
+                      const prevPage = arr[idx - 1];
+                      const showEllipsis = prevPage && page - prevPage > 1;
+                      return (
+                        <div key={page} className="flex items-center gap-1">
+                          {showEllipsis && <span className="text-slate-400 text-xs px-1">...</span>}
+                          <button
+                            onClick={() => setCurrentPage(page)}
+                            className={cn(
+                              "w-8 h-8 rounded-xl text-xs font-bold transition-all shadow-sm flex items-center justify-center",
+                              currentPage === page
+                                ? "bg-sky-600 text-white shadow-sky-500/20"
+                                : "bg-white text-slate-700 border border-slate-200 hover:bg-slate-100"
+                            )}
+                          >
+                            {page}
+                          </button>
+                        </div>
+                      );
+                    })}
+                </div>
+              )}
+
+              <button
+                onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+                disabled={currentPage === totalPages || itemsPerPage === -1}
+                className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold text-slate-700 bg-white border border-slate-200 hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed transition-all shadow-sm active:scale-95"
+              >
+                Next <ChevronRight size={16} />
+              </button>
+            </div>
           </div>
         )}
       </div>
