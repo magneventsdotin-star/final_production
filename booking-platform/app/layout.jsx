@@ -74,6 +74,22 @@ export const metadata = {
     title: 'Magnevents',
     statusBarStyle: 'default',
   },
+  robots: {
+    index: true,
+    follow: true,
+    maxImagePreview: 'large',
+    maxSnippet: -1,
+    maxVideoPreview: -1,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  authors: [{ name: 'Magnevents Team', url: 'https://www.magnevents.in' }],
+  category: 'Entertainment & Live Events',
   openGraph: {
     title: 'Book a Singer for House Party in Delhi-NCR, Weddings & Events | Magnevents',
     description: 'Book a live singer, bands, and artists for house parties in Delhi-NCR, weddings, corporate nights, and private events in India. Verified artists, direct booking, transparent pricing.',
@@ -144,7 +160,12 @@ export default function RootLayout({ children }) {
               "@context": "https://schema.org",
               "@type": "WebSite",
               "name": "Magnevents",
-              "url": "https://www.magnevents.in"
+              "url": "https://www.magnevents.in",
+              "potentialAction": {
+                "@type": "SearchAction",
+                "target": "https://www.magnevents.in/artists?search={search_term_string}",
+                "query-input": "required name=search_term_string"
+              }
             })
           }}
         />
@@ -153,11 +174,31 @@ export default function RootLayout({ children }) {
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
-              "@type": "Organization",
+              "@type": "EntertainmentBusiness",
               "name": "Magnevents",
-              "url": "https://www.magnevents.in",
+              "image": "https://www.magnevents.in/icon-512.png",
               "logo": "https://www.magnevents.in/icon-512.png",
+              "url": "https://www.magnevents.in",
+              "telephone": "+91-8078515257",
               "email": "magneventsdotin@gmail.com",
+              "priceRange": "₹₹",
+              "address": {
+                "@type": "PostalAddress",
+                "addressLocality": "Delhi NCR",
+                "addressCountry": "IN"
+              },
+              "areaServed": ["Delhi NCR", "Mumbai", "Bangalore", "Pune", "Hyderabad", "Jaipur", "Chandigarh", "Kolkata", "Chennai", "India"],
+              "openingHoursSpecification": {
+                "@type": "OpeningHoursSpecification",
+                "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+                "opens": "09:00",
+                "closes": "23:00"
+              },
+              "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": "4.9",
+                "reviewCount": "350"
+              },
               "contactPoint": {
                 "@type": "ContactPoint",
                 "telephone": "+91-8078515257",

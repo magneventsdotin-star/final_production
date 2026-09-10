@@ -182,8 +182,8 @@ export default function FormsPage() {
       </div>
 
       <Dialog open={sendModalOpen} onOpenChange={setSendModalOpen}>
-        <DialogContent className="max-w-md rounded-[32px] border-none shadow-2xl p-0 overflow-hidden">
-          <div className="bg-indigo-900 p-8 text-white relative text-center">
+        <DialogContent className="max-w-md rounded-[32px] border-none shadow-2xl p-0 max-h-[90dvh] overflow-y-auto">
+          <div className="bg-indigo-900 p-8 text-white relative text-center rounded-t-[32px]">
             <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-500/30 rounded-full -translate-y-1/2 translate-x-1/2 blur-2xl" />
             <div className="mx-auto w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center mb-4">
               <Send size={28} className="text-indigo-200" />

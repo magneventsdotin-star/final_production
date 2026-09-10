@@ -719,7 +719,7 @@ function ClientRequestsContent() {
       </div>
 
       <Dialog open={detailOpen} onOpenChange={setDetailOpen}>
-        <DialogContent className="max-w-2xl rounded-[32px] border-none shadow-2xl p-0 overflow-hidden">
+        <DialogContent className="max-w-2xl rounded-[32px] border-none shadow-2xl p-0 max-h-[90dvh] overflow-y-auto">
           {exportMode !== 'select' && (
             <button 
               onClick={() => setExportMode('select')}
@@ -731,7 +731,7 @@ function ClientRequestsContent() {
 
           {selectedRequest && (
             <>
-              <div className="bg-slate-900 p-8 text-white relative">
+              <div className="bg-slate-900 p-8 text-white relative rounded-t-[32px]">
                  <div className="absolute top-0 right-0 w-32 h-32 bg-sky-500/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-2xl" />
                  <DialogTitle className="text-2xl font-black mb-1">Inquiry Details</DialogTitle>
                  <DialogDescription className="text-slate-400 font-medium font-display">Manage the client's direct booking request.</DialogDescription>
@@ -830,8 +830,8 @@ function ClientRequestsContent() {
       </Dialog>
 
       <Dialog open={deleteModalOpen} onOpenChange={setDeleteModalOpen}>
-        <DialogContent className="max-w-md rounded-[32px] border-none shadow-2xl p-0 overflow-hidden">
-          <div className="bg-slate-900 p-8 text-white relative text-center">
+        <DialogContent className="max-w-md rounded-[32px] border-none shadow-2xl p-0 max-h-[90dvh] overflow-y-auto">
+          <div className="bg-slate-900 p-8 text-white relative text-center rounded-t-[32px]">
             <div className="mx-auto w-16 h-16 bg-rose-500/20 rounded-full flex items-center justify-center mb-4">
               <Trash2 size={32} className="text-rose-500" />
             </div>
@@ -855,10 +855,10 @@ function ClientRequestsContent() {
       </Dialog>
 
       <Dialog open={emailModalOpen} onOpenChange={setEmailModalOpen}>
-        <DialogContent className="max-w-2xl rounded-[32px] border-none shadow-2xl p-0 overflow-hidden">
+        <DialogContent className="max-w-2xl rounded-[32px] border-none shadow-2xl p-0 max-h-[90dvh] overflow-y-auto">
           {selectedRequest && (
             <>
-              <div className="bg-indigo-900 p-8 text-white relative">
+              <div className="bg-indigo-900 p-8 text-white relative rounded-t-[32px]">
                  <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-500/30 rounded-full -translate-y-1/2 translate-x-1/2 blur-2xl" />
                  <DialogTitle className="text-2xl font-black mb-1">Custom Reply</DialogTitle>
                  <DialogDescription className="text-indigo-200 font-medium font-display">Send a custom email directly to {selectedRequest.client_name}.</DialogDescription>
@@ -891,8 +891,8 @@ function ClientRequestsContent() {
       </Dialog>
 
       <Dialog open={confirmModalOpen} onOpenChange={setConfirmModalOpen}>
-        <DialogContent className="max-w-md rounded-[32px] border-none shadow-2xl p-0 overflow-hidden">
-          <div className="bg-slate-900 p-8 text-white relative text-center">
+        <DialogContent className="max-w-md rounded-[32px] border-none shadow-2xl p-0 max-h-[90dvh] overflow-y-auto">
+          <div className="bg-slate-900 p-8 text-white relative text-center rounded-t-[32px]">
             <div className="mx-auto w-16 h-16 bg-amber-500/20 rounded-full flex items-center justify-center mb-4">
               <AlertCircle size={32} className="text-amber-500" />
             </div>
@@ -913,7 +913,7 @@ function ClientRequestsContent() {
       </Dialog>
 
       <Dialog open={exportModalOpen} onOpenChange={(open) => { setExportModalOpen(open); if(!open) setExportMode('select'); }}>
-        <DialogContent className="max-w-md rounded-[32px] border-none shadow-2xl p-0 overflow-hidden">
+        <DialogContent className="max-w-md rounded-[32px] border-none shadow-2xl p-0 max-h-[90dvh] overflow-y-auto">
           <div className="bg-emerald-600 p-8 text-white relative text-center">
             <div className="mx-auto w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mb-4">
               <Download size={32} className="text-white" />

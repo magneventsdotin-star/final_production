@@ -506,7 +506,7 @@ ${plainTextBody}`;
       </div>
 
       <Dialog open={modalOpen} onOpenChange={setModalOpen}>
-        <DialogContent className="max-w-3xl rounded-[24px] shadow-2xl p-0 overflow-hidden bg-slate-50 border-none">
+        <DialogContent className="max-w-3xl rounded-[24px] shadow-2xl p-0 max-h-[90dvh] overflow-y-auto bg-slate-50 border-none">
           {exportMode !== 'select' && (
             <button 
               onClick={() => setExportMode('select')}
@@ -518,7 +518,7 @@ ${plainTextBody}`;
 
           {selectedEmail && (
             <div className="flex flex-col h-[80vh]">
-              <div className="bg-slate-900 p-6 text-white flex justify-between items-start flex-shrink-0">
+              <div className="bg-slate-900 p-6 text-white flex justify-between items-start flex-shrink-0 rounded-t-[24px]">
                 <div>
                   <DialogTitle className="text-xl font-black mb-2">{selectedEmail.subject}</DialogTitle>
                   <DialogDescription className="text-slate-400 text-sm font-medium flex flex-wrap items-center gap-3">
@@ -575,8 +575,8 @@ ${plainTextBody}`;
       </Dialog>
 
       <Dialog open={deleteModalOpen} onOpenChange={setDeleteModalOpen}>
-        <DialogContent className="max-w-md rounded-[32px] border-none shadow-2xl p-0 overflow-hidden">
-          <div className="bg-slate-900 p-8 text-white relative text-center">
+        <DialogContent className="max-w-md rounded-[32px] border-none shadow-2xl p-0 max-h-[90dvh] overflow-y-auto">
+          <div className="bg-slate-900 p-8 text-white relative text-center rounded-t-[32px]">
             <div className="mx-auto w-16 h-16 bg-rose-500/20 rounded-full flex items-center justify-center mb-4">
               <Trash2 size={32} className="text-rose-500" />
             </div>
@@ -600,7 +600,7 @@ ${plainTextBody}`;
       </Dialog>
 
       <Dialog open={exportModalOpen} onOpenChange={(open) => { setExportModalOpen(open); if(!open) setExportMode('select'); }}>
-        <DialogContent className="max-w-md rounded-[32px] border-none shadow-2xl p-0 overflow-hidden">
+        <DialogContent className="max-w-md rounded-[32px] border-none shadow-2xl p-0 max-h-[90dvh] overflow-y-auto">
           <div className="bg-emerald-600 p-8 text-white relative text-center">
             <div className="mx-auto w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mb-4">
               <Download size={32} className="text-white" />

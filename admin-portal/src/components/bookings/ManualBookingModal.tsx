@@ -163,7 +163,7 @@ export function ManualBookingModal({ open, onOpenChange, onSuccess, initialArtis
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-2xl max-h-[90vh] overflow-hidden rounded-[28px] border-none shadow-2xl p-0 flex flex-col">
+      <DialogContent className="max-w-2xl max-h-[90dvh] overflow-y-auto rounded-[28px] border-none shadow-2xl p-0 flex flex-col">
         <div className="flex-1 overflow-y-auto">
           <div className="bg-slate-900 p-8 sm:p-10 relative overflow-hidden">
           <div className="absolute top-0 right-0 w-32 h-32 bg-sky-500/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-2xl" />

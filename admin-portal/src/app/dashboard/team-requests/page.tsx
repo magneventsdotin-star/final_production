@@ -947,7 +947,7 @@ export default function TeamRequestsPage() {
 
       {/* Export Modal */}
       <Dialog open={exportModalOpen} onOpenChange={(open) => { setExportModalOpen(open); if(!open) setExportMode('select'); }}>
-        <DialogContent className="max-w-md rounded-[32px] border-none shadow-2xl p-0 overflow-hidden">
+        <DialogContent className="max-w-md rounded-[32px] border-none shadow-2xl p-0 max-h-[90dvh] overflow-y-auto">
           {exportMode !== 'select' && (
             <button 
               onClick={() => setExportMode('select')}

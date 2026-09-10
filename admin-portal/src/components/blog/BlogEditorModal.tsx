@@ -61,7 +61,7 @@ export function BlogEditorModal({ isOpen, onClose, onSave, initialData }: BlogEd
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="sm:max-w-[760px] p-0 border-slate-200 shadow-xl rounded-2xl bg-white overflow-hidden flex flex-col max-h-[92vh]">
+      <DialogContent className="sm:max-w-[760px] p-0 border-slate-200 shadow-xl rounded-2xl bg-white max-h-[90dvh] overflow-y-auto flex flex-col">
         
         <DialogHeader className="px-8 py-6 border-b border-slate-100 bg-white/50 backdrop-blur-sm sticky top-0 z-10">
           <DialogTitle className="text-xl font-bold text-slate-900 tracking-tight flex items-center gap-2.5">
