@@ -320,6 +320,7 @@ export default async function sitemap() {
         changeFrequency: 'weekly',
         priority: 0.8,
       }));
+      dynamicRoutes = [...dynamicRoutes, ...blogRoutes];
     }
   } catch (error) {
     console.error('Error fetching dynamic routes for sitemap', error);
