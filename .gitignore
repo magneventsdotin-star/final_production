@@ -33,3 +33,8 @@ yarn-error.log*
 
 # Local config
 .gemini/
+
+# Client data exports
+client data/
+client-data/
+*.xlsx

@@ -1,6 +1,7 @@
 import { notFound, redirect } from 'next/navigation';
 import SEOLandingPage from '@/app/components/common/SEOLandingPage';
 import { generateOverview, generateServices, generateFAQs, generateRelatedLinks } from '@/app/utils/seoTemplates';
+import { getTopArtistsForSEO } from '@/app/utils/fetchTopArtists';
 
 export async function generateMetadata({ params }) {
   // Await params in Next.js 15 before using properties
@@ -22,7 +23,7 @@ export default async function LocationServicePage({ params }) {
   const awaitedParams = await params;
   const { location_slug } = awaitedParams;
   
-  const validKeywords = ['singer', 'band', 'dj', 'comedian', 'anchor', 'dancer', 'magician', 'guitarist', 'music', 'artist'];
+  const validKeywords = ['singer', 'band', 'dj', 'comedian', 'anchor', 'dancer', 'magician', 'guitarist', 'music', 'artist', 'ghazal', 'gazal', 'sufi'];
   const isValidKeyword = validKeywords.some(kw => location_slug.toLowerCase().includes(kw));
 
   const majorCities = [
@@ -46,6 +47,7 @@ export default async function LocationServicePage({ params }) {
   const formattedTitle = location_slug.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
 
   let parsedCategory = 'All';
+  let parsedSubCategory = '';
   let parsedCity = 'All Cities';
   const slugLower = location_slug.toLowerCase();
   
@@ -53,13 +55,29 @@ export default async function LocationServicePage({ params }) {
   else if (slugLower.includes('musician') || slugLower.includes('music')) parsedCategory = 'Musician';
   else if (slugLower.includes('dj')) parsedCategory = 'Dj';
   else if (slugLower.includes('comedian')) parsedCategory = 'Comedian';
-  else if (slugLower.includes('singer') || slugLower.includes('artist')) parsedCategory = 'Singer';
+  else if (slugLower.includes('singer') || slugLower.includes('artist') || slugLower.includes('ghazal') || slugLower.includes('gazal') || slugLower.includes('sufi')) parsedCategory = 'Singer';
+
+  if (slugLower.includes('ghazal') || slugLower.includes('gazal')) parsedSubCategory = 'Gazals';
+  else if (slugLower.includes('sufi')) parsedSubCategory = 'Sufi';
+  else if (slugLower.includes('retro')) parsedSubCategory = 'Retro';
+  else if (slugLower.includes('punjabi')) parsedSubCategory = 'Punjabi';
+  else if (slugLower.includes('bollywood')) parsedSubCategory = 'Bollywood';
+  else if (slugLower.includes('rock')) parsedSubCategory = 'Rock';
+  else if (slugLower.includes('classical')) parsedSubCategory = 'Classical';
 
   const parts = slugLower.split('-in-');
   if (parts.length > 1) {
     const cityStr = parts[1].replace(/-/g, ' ');
     parsedCity = cityStr.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
   }
+
+  // Fetch top 5 curated artists from the database for this category & city
+  const topArtists = await getTopArtistsForSEO({
+    category: parsedCategory,
+    subCategory: parsedSubCategory,
+    city: parsedCity,
+    limit: 5
+  });
 
   const overviewHtml = generateOverview(parsedCategory, parsedCity);
   const services = generateServices(parsedCategory, parsedCity);
@@ -118,6 +136,8 @@ export default async function LocationServicePage({ params }) {
       schema={schema}
       category={parsedCategory}
       city={parsedCity}
+      subCategory={parsedSubCategory}
+      topArtists={topArtists}
       overviewHtml={overviewHtml}
       services={services}
       faqs={faqs}
