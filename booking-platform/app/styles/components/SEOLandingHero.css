@@ -6,7 +6,7 @@
   position: relative;
   width: 100%;
   min-height: 90vh;
-  padding: 130px 20px 60px;
+  padding: 175px 20px 60px;
   background: 
     radial-gradient(ellipse 90% 60% at 50% -10%, rgba(255, 224, 50, 0.12) 0%, transparent 60%),
     radial-gradient(circle at 80% 20%, rgba(255, 140, 0, 0.06) 0%, transparent 50%),
@@ -38,7 +38,92 @@
   z-index: 2;
   display: flex;
   flex-direction: column;
-  gap: 40px;
+  gap: 36px;
+}
+
+/* ==========================================================================
+   5k+ Events Done Across India Banner & Avatar Stack
+   ========================================================================== */
+.seo-5k-badge-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.seo-5k-events-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 224, 50, 0.35);
+  border-radius: 999px;
+  padding: 8px 22px 8px 10px;
+  box-shadow: 0 6px 30px rgba(255, 224, 50, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  transition: transform 0.2s ease;
+}
+
+.seo-5k-events-badge:hover {
+  transform: scale(1.02);
+  border-color: rgba(255, 224, 50, 0.55);
+}
+
+.seo-avatar-stack {
+  display: flex;
+  align-items: center;
+}
+
+.seo-stack-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2.5px solid #FFE032;
+  object-fit: cover;
+  margin-left: -12px;
+  background: #141416;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+}
+
+.seo-stack-avatar:first-child {
+  margin-left: 0;
+}
+
+.seo-avatar-count {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #FFE032 0%, #F59E0B 100%);
+  color: #0b0b0d;
+  font-weight: 900;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: -12px;
+  border: 2.5px solid #141416;
+  box-shadow: 0 4px 10px rgba(255, 224, 50, 0.4);
+}
+
+.seo-5k-text {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  line-height: 1.28;
+}
+
+.seo-5k-text strong {
+  font-size: 14.5px;
+  color: #ffffff;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+}
+
+.seo-5k-text span {
+  font-size: 12px;
+  color: #FFE032;
+  font-weight: 600;
 }
 
 /* Top Trust & Location Chip Strip */
@@ -48,7 +133,7 @@
   align-items: center;
   justify-content: center;
   gap: 12px;
-  margin-bottom: -10px;
+  margin-bottom: -6px;
 }
 
 .seo-pill-badge {
@@ -97,7 +182,7 @@
 /* Header Text */
 .seo-hero-header {
   text-align: center;
-  max-width: 960px;
+  max-width: 980px;
   margin: 0 auto;
 }
 
@@ -105,9 +190,9 @@
   font-family: var(--font-display, "Playfair Display", serif);
   font-size: clamp(2.4rem, 5.5vw, 4.4rem);
   font-weight: 800;
-  line-height: 1.12;
+  line-height: 1.15;
   letter-spacing: -0.02em;
-  margin: 0 0 18px 0;
+  margin: 0 0 16px 0;
   color: #ffffff;
 }
 
@@ -121,10 +206,10 @@
 
 .seo-hero-subtitle {
   font-size: clamp(1.05rem, 1.8vw, 1.28rem);
-  color: rgba(255, 255, 255, 0.78);
+  color: rgba(255, 255, 255, 0.82);
   line-height: 1.6;
-  max-width: 780px;
-  margin: 0 auto 20px;
+  max-width: 800px;
+  margin: 0 auto 18px;
 }
 
 /* Live Social Proof Strip */
@@ -136,7 +221,7 @@
   border: 1px solid rgba(255, 224, 50, 0.25);
   border-radius: 30px;
   padding: 6px 18px;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
 }
 
 .seo-live-dot {
@@ -166,7 +251,7 @@
   justify-content: center;
   align-items: center;
   gap: 10px;
-  margin-top: 8px;
+  margin-top: 4px;
 }
 
 .seo-query-chip {
@@ -198,6 +283,301 @@
   color: #000;
   font-weight: 700;
   box-shadow: 0 4px 20px rgba(255, 224, 50, 0.3);
+}
+
+/* ==========================================================================
+   Top 5 Verified Artists Showcase Section (PLACED FIRST!)
+   ========================================================================== */
+.seo-top-artists-section {
+  width: 100%;
+}
+
+.seo-section-head-v2 {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 22px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.seo-section-head-v2 .badge {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #FFE032;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.seo-section-head-v2 h2 {
+  font-size: clamp(1.8rem, 3.2vw, 2.5rem);
+  font-weight: 800;
+  color: #fff;
+  margin: 0;
+  font-family: var(--font-display, "Playfair Display", serif);
+}
+
+.seo-section-head-v2 p {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.95rem;
+  margin: 4px 0 0 0;
+}
+
+.seo-browse-all-link {
+  color: #FFE032;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: gap 0.2s ease;
+}
+
+.seo-browse-all-link:hover {
+  gap: 10px;
+  text-decoration: underline;
+}
+
+/* 5 Artists Grid / Carousel */
+.seo-artists-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 18px;
+  width: 100%;
+}
+
+@media (max-width: 1200px) {
+  .seo-artists-cards-grid {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .seo-artists-cards-grid {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 16px;
+    padding-bottom: 16px;
+    -webkit-overflow-scrolling: touch;
+  }
+  .seo-artist-card {
+    min-width: 250px;
+    scroll-snap-align: start;
+    flex-shrink: 0;
+  }
+}
+
+/* Individual Artist Card */
+.seo-artist-card {
+  background: rgba(18, 18, 22, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
+  cursor: pointer;
+}
+
+.seo-artist-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(255, 224, 50, 0.45);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8), 0 0 25px rgba(255, 224, 50, 0.2);
+}
+
+.seo-artist-card.is-active-selection {
+  border: 2px solid #FFE032;
+  box-shadow: 0 0 30px rgba(255, 224, 50, 0.3);
+}
+
+/* Card Image Area */
+.seo-card-img-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1.15;
+  background: #141416;
+  overflow: hidden;
+}
+
+.seo-card-img-wrap img {
+  transition: transform 0.5s ease;
+}
+
+.seo-artist-card:hover .seo-card-img-wrap img {
+  transform: scale(1.06);
+}
+
+.seo-card-gradient-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(12, 12, 15, 0.95) 0%, rgba(12, 12, 15, 0.35) 40%, transparent 80%);
+  pointer-events: none;
+}
+
+/* Badges on image */
+.seo-card-floating-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 2;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.seo-card-floating-badge.local {
+  background: rgba(34, 197, 94, 0.25);
+  border-color: rgba(34, 197, 94, 0.5);
+  color: #4ade80;
+}
+
+.seo-card-floating-badge.travel {
+  background: rgba(255, 224, 50, 0.2);
+  border-color: rgba(255, 224, 50, 0.4);
+  color: #FFE032;
+}
+
+.seo-card-rating-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 2;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 224, 50, 0.3);
+  color: #FFE032;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 4px 8px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Card Content Area */
+.seo-card-body {
+  padding: 16px 18px 18px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: space-between;
+  gap: 12px;
+  background: rgba(18, 18, 22, 0.95);
+}
+
+.seo-card-category-tag {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #FFE032;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.seo-card-name {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 3px 0 2px 0;
+  line-height: 1.25;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.seo-card-city {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.seo-card-price-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 10px 0 4px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.seo-card-price-label {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.seo-card-price-val {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #FFE032;
+}
+
+/* Card Action Buttons */
+.seo-card-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.seo-card-btn-book {
+  flex: 1;
+  background: #FFE032;
+  color: #0d0b09;
+  font-weight: 700;
+  font-size: 12px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  transition: all 0.2s ease;
+}
+
+.seo-card-btn-book:hover {
+  background: #ffffff;
+  transform: translateY(-1px);
+}
+
+.seo-card-btn-profile {
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 10px 12px;
+  border-radius: 10px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.seo-card-btn-profile:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
 }
 
 /* ==========================================================================
@@ -519,7 +899,7 @@
    ========================================================================== */
 .seo-pricing-guide-section {
   width: 100%;
-  margin-top: 10px;
+  margin-top: 6px;
 }
 
 .seo-pricing-cards-grid {
@@ -640,302 +1020,6 @@
 }
 
 /* ==========================================================================
-   Top 5 Verified Artists Showcase Section
-   ========================================================================== */
-.seo-top-artists-section {
-  width: 100%;
-  margin-top: 10px;
-}
-
-.seo-section-head-v2 {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  margin-bottom: 24px;
-  flex-wrap: wrap;
-  gap: 16px;
-}
-
-.seo-section-head-v2 .badge {
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: #FFE032;
-  margin-bottom: 6px;
-  display: block;
-}
-
-.seo-section-head-v2 h2 {
-  font-size: clamp(1.8rem, 3.2vw, 2.5rem);
-  font-weight: 800;
-  color: #fff;
-  margin: 0;
-  font-family: var(--font-display, "Playfair Display", serif);
-}
-
-.seo-section-head-v2 p {
-  color: rgba(255, 255, 255, 0.65);
-  font-size: 0.95rem;
-  margin: 4px 0 0 0;
-}
-
-.seo-browse-all-link {
-  color: #FFE032;
-  font-size: 14px;
-  font-weight: 700;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  transition: gap 0.2s ease;
-}
-
-.seo-browse-all-link:hover {
-  gap: 10px;
-  text-decoration: underline;
-}
-
-/* 5 Artists Grid / Carousel */
-.seo-artists-cards-grid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 20px;
-  width: 100%;
-}
-
-@media (max-width: 1200px) {
-  .seo-artists-cards-grid {
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  }
-}
-
-@media (max-width: 768px) {
-  .seo-artists-cards-grid {
-    display: flex;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    gap: 16px;
-    padding-bottom: 16px;
-    -webkit-overflow-scrolling: touch;
-  }
-  .seo-artist-card {
-    min-width: 260px;
-    scroll-snap-align: start;
-    flex-shrink: 0;
-  }
-}
-
-/* Individual Artist Card */
-.seo-artist-card {
-  background: rgba(18, 18, 22, 0.9);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 20px;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
-  cursor: pointer;
-}
-
-.seo-artist-card:hover {
-  transform: translateY(-6px);
-  border-color: rgba(255, 224, 50, 0.4);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8), 0 0 25px rgba(255, 224, 50, 0.15);
-}
-
-.seo-artist-card.is-active-selection {
-  border: 2px solid #FFE032;
-  box-shadow: 0 0 30px rgba(255, 224, 50, 0.25);
-}
-
-/* Card Image Area */
-.seo-card-img-wrap {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 1 / 1.15;
-  background: #141416;
-  overflow: hidden;
-}
-
-.seo-card-img-wrap img {
-  transition: transform 0.5s ease;
-}
-
-.seo-artist-card:hover .seo-card-img-wrap img {
-  transform: scale(1.06);
-}
-
-.seo-card-gradient-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(12, 12, 15, 0.95) 0%, rgba(12, 12, 15, 0.4) 40%, transparent 80%);
-  pointer-events: none;
-}
-
-/* Badges on image */
-.seo-card-floating-badge {
-  position: absolute;
-  top: 12px;
-  left: 12px;
-  z-index: 2;
-  background: rgba(0, 0, 0, 0.65);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: #fff;
-  font-size: 11px;
-  font-weight: 700;
-  padding: 4px 10px;
-  border-radius: 999px;
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-}
-
-.seo-card-floating-badge.local {
-  background: rgba(34, 197, 94, 0.25);
-  border-color: rgba(34, 197, 94, 0.5);
-  color: #4ade80;
-}
-
-.seo-card-floating-badge.travel {
-  background: rgba(255, 224, 50, 0.2);
-  border-color: rgba(255, 224, 50, 0.4);
-  color: #FFE032;
-}
-
-.seo-card-rating-badge {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  z-index: 2;
-  background: rgba(0, 0, 0, 0.7);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 224, 50, 0.3);
-  color: #FFE032;
-  font-size: 11px;
-  font-weight: 800;
-  padding: 4px 8px;
-  border-radius: 8px;
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-}
-
-/* Card Content Area */
-.seo-card-body {
-  padding: 16px 18px 18px;
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  justify-content: space-between;
-  gap: 12px;
-  background: rgba(18, 18, 22, 0.95);
-}
-
-.seo-card-category-tag {
-  font-size: 11px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: #FFE032;
-  display: block;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.seo-card-name {
-  font-size: 1.15rem;
-  font-weight: 800;
-  color: #ffffff;
-  margin: 3px 0 2px 0;
-  line-height: 1.25;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.seo-card-city {
-  font-size: 12px;
-  color: rgba(255, 255, 255, 0.6);
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.seo-card-price-row {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  padding: 10px 0 4px;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.seo-card-price-label {
-  font-size: 11px;
-  color: rgba(255, 255, 255, 0.5);
-  text-transform: uppercase;
-  font-weight: 600;
-}
-
-.seo-card-price-val {
-  font-size: 1.05rem;
-  font-weight: 800;
-  color: #FFE032;
-}
-
-/* Card Action Buttons */
-.seo-card-actions {
-  display: flex;
-  gap: 8px;
-}
-
-.seo-card-btn-book {
-  flex: 1;
-  background: #FFE032;
-  color: #0d0b09;
-  font-weight: 700;
-  font-size: 12px;
-  padding: 10px 12px;
-  border-radius: 10px;
-  border: none;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 5px;
-  transition: all 0.2s ease;
-}
-
-.seo-card-btn-book:hover {
-  background: #ffffff;
-  transform: translateY(-1px);
-}
-
-.seo-card-btn-profile {
-  background: rgba(255, 255, 255, 0.07);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  color: #ffffff;
-  font-size: 12px;
-  font-weight: 600;
-  padding: 10px 12px;
-  border-radius: 10px;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s ease;
-}
-
-.seo-card-btn-profile:hover {
-  background: rgba(255, 255, 255, 0.15);
-  border-color: rgba(255, 255, 255, 0.3);
-}
-
-/* ==========================================================================
    Trust & Guarantee Bar (Bottom of Hero)
    ========================================================================== */
 .seo-guarantee-bar {
@@ -1041,9 +1125,9 @@
 }
 
 /* Responsive tweaks */
-@media (max-width: 640px) {
+@media (max-width: 768px) {
   .seo-hero-root {
-    padding: 100px 14px 40px;
+    padding: 145px 14px 40px;
   }
   .seo-interactive-booking-card {
     padding: 22px 16px;
@@ -1067,5 +1151,18 @@
   .seo-pill-badge {
     font-size: 11px;
     padding: 5px 12px;
+  }
+  .seo-5k-events-badge {
+    padding: 6px 16px 6px 8px;
+  }
+  .seo-stack-avatar, .seo-avatar-count {
+    width: 34px;
+    height: 34px;
+  }
+  .seo-5k-text strong {
+    font-size: 13px;
+  }
+  .seo-5k-text span {
+    font-size: 11px;
   }
 }

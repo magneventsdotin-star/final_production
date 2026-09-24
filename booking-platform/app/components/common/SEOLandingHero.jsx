@@ -116,7 +116,7 @@ export default function SEOLandingHero({
       setIsSubmitted(true);
     } catch (err) {
       console.error("Booking submission error:", err);
-      setIsSubmitted(true); // Still treat as submitted to not lose user
+      setIsSubmitted(true);
     } finally {
       setIsSubmitting(false);
     }
@@ -153,14 +153,42 @@ export default function SEOLandingHero({
       <div className="seo-hero-backdrop-glow" aria-hidden="true" />
 
       <div className="seo-hero-container">
-        {/* Trust & Location Chip Strip */}
+        {/* ==========================================================================
+           1. Top Trust & Social Proof: 5,000+ Events Done Across India Banner
+           ========================================================================== */}
+        <div className="seo-5k-badge-wrap">
+          <div className="seo-5k-events-badge">
+            <div className="seo-avatar-stack">
+              {topArtists && topArtists.length > 0 ? (
+                topArtists.slice(0, 4).map((a, i) => (
+                  <img
+                    key={a.id || i}
+                    src={a.img || DEFAULT_FALLBACK_IMAGE}
+                    alt={a.name}
+                    className="seo-stack-avatar"
+                  />
+                ))
+              ) : (
+                <img
+                  src={DEFAULT_FALLBACK_IMAGE}
+                  alt="Artist"
+                  className="seo-stack-avatar"
+                />
+              )}
+              <span className="seo-avatar-count">+5k</span>
+            </div>
+            <div className="seo-5k-text">
+              <strong>We Have Done 5,000+ Events Across India</strong>
+              <span>⭐ 4.9/5 Rating (5,000+ Live Bookings) · Verified Performers</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Location & Trust Badges */}
         <div className="seo-trust-strip">
           <span className="seo-pill-badge highlight">
             <span className="seo-pill-pulse" />
             Verified Performers · {city}
-          </span>
-          <span className="seo-pill-badge">
-            ⭐ 4.9/5 Rating (2,400+ Events)
           </span>
           <span className="seo-pill-badge verified">
             ✓ 100% Artist Arrival Guarantee
@@ -176,7 +204,7 @@ export default function SEOLandingHero({
             <span className="seo-hero-gradient-text">{heroTitle}</span>
           </h1>
           <p className="seo-hero-subtitle">
-            {heroSubtitle || `Book verified, celebrated ${category}s directly for weddings, private mehfils, corporate galas & celebrations in ${city}. Transparent pricing, managed sound acoustics, and guaranteed performance.`}
+            {heroSubtitle || `Book verified, celebrated ${category}s directly for weddings, private mehfils, corporate galas & celebrations in ${city}. Over 5,000+ live events successfully executed across India.`}
           </p>
 
           {/* Social Proof & Urgency Bar */}
@@ -204,7 +232,118 @@ export default function SEOLandingHero({
         </div>
 
         {/* ==========================================================================
-           Direct Inline Lead Engine (NO MODAL NEEDED TO SUBMIT!)
+           2. Top 5 Verified Artists Showcase Section (SHOWN AT THE TOP FIRST WITH IMAGES!)
+           ========================================================================== */}
+        {topArtists && topArtists.length > 0 && (
+          <div className="seo-top-artists-section">
+            <div className="seo-section-head-v2">
+              <div>
+                <span className="badge">👑 TOP 5 CURATED PERFORMERS</span>
+                <h2>Top 5 Verified {category}s for {city}</h2>
+                <p>Browse real photos, audience ratings & live booking fees from our active database.</p>
+              </div>
+              <Link href="/artists" className="seo-browse-all-link">
+                <span>Browse All 500+ Artists</span>
+                <span>→</span>
+              </Link>
+            </div>
+
+            {/* 5 Cards Grid with Images */}
+            <div className="seo-artists-cards-grid">
+              {topArtists.map((artist, idx) => {
+                const isSelected = selectedArtist?.id === artist.id;
+                const imgSrc = (imageErrors[artist.id] || !artist.img)
+                  ? DEFAULT_FALLBACK_IMAGE
+                  : artist.img;
+
+                return (
+                  <article
+                    key={artist.id || idx}
+                    className={`seo-artist-card ${isSelected ? 'is-active-selection' : ''}`}
+                    onClick={() => handleSelectArtist(artist)}
+                  >
+                    {/* Image Area */}
+                    <div className="seo-card-img-wrap">
+                      <Image
+                        src={imgSrc}
+                        alt={`Photo of ${artist.name}`}
+                        fill
+                        sizes="(max-width: 768px) 260px, (max-width: 1200px) 25vw, 20vw"
+                        style={{ objectFit: 'cover' }}
+                        onError={() => handleImageError(artist.id)}
+                        loading={idx < 3 ? "eager" : "lazy"}
+                      />
+                      <div className="seo-card-gradient-overlay" />
+
+                      {/* Floating City / Travel Tag */}
+                      <span className={`seo-card-floating-badge ${artist.isFromCity ? 'local' : 'travel'}`}>
+                        {artist.isFromCity ? `📍 In ${city}` : `✈️ Performs in ${city}`}
+                      </span>
+
+                      {/* Floating Rating Badge */}
+                      <span className="seo-card-rating-badge">
+                        <span>★</span>
+                        <span>{Number(artist.rating || 5).toFixed(1)}</span>
+                      </span>
+                    </div>
+
+                    {/* Card Body */}
+                    <div className="seo-card-body">
+                      <div>
+                        <span className="seo-card-category-tag" title={artist.subCategory || artist.category}>
+                          {artist.subCategory ? artist.subCategory.split(',').slice(0, 2).join(' · ') : artist.category}
+                        </span>
+                        <h3 className="seo-card-name" title={artist.name}>
+                          {artist.name}
+                        </h3>
+                        <div className="seo-card-city">
+                          <span>📍 {artist.city || 'India'}</span>
+                          <span>·</span>
+                          <span>{artist.successful_bookings || 15}+ Events</span>
+                        </div>
+                      </div>
+
+                      {/* Price Row */}
+                      <div className="seo-card-price-row">
+                        <span className="seo-card-price-label">Starting Fee</span>
+                        <span className="seo-card-price-val">
+                          ₹{artist.price_min ? artist.price_min.toLocaleString('en-IN') : '10,000'}
+                        </span>
+                      </div>
+
+                      {/* Actions */}
+                      <div className="seo-card-actions">
+                        <button
+                          type="button"
+                          className="seo-card-btn-book"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleSelectArtist(artist);
+                          }}
+                        >
+                          <span>⚡ Book</span>
+                        </button>
+
+                        <Link
+                          href={`/artist/${artist.slug}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="seo-card-btn-profile"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          Profile
+                        </Link>
+                      </div>
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        {/* ==========================================================================
+           3. Direct 1-Step Lead Engine (NO MODAL NEEDED TO SUBMIT!)
            ========================================================================== */}
         <div ref={formRef} id="seo-lead-form" className="seo-interactive-booking-card">
           {!isSubmitted ? (
@@ -382,7 +521,7 @@ export default function SEOLandingHero({
         </div>
 
         {/* ==========================================================================
-           Interactive 3-Tier Price Guide (Answers "How much does it cost?")
+           4. Interactive 3-Tier Price Guide (Answers "How much does it cost?")
            ========================================================================== */}
         <div className="seo-pricing-guide-section">
           <div className="seo-section-head-v2" style={{ textAlign: 'center', justifyContent: 'center' }}>
@@ -425,118 +564,7 @@ export default function SEOLandingHero({
         </div>
 
         {/* ==========================================================================
-           Top 5 Verified Artists Showcase Section (From DB)
-           ========================================================================== */}
-        {topArtists && topArtists.length > 0 && (
-          <div className="seo-top-artists-section">
-            <div className="seo-section-head-v2">
-              <div>
-                <span className="badge">👑 TOP 5 CURATED PERFORMERS</span>
-                <h2>Top 5 Verified {category}s for {city}</h2>
-                <p>Curated from our verified artist database based on customer feedback and live performance excellence.</p>
-              </div>
-              <Link href="/artists" className="seo-browse-all-link">
-                <span>Browse All 500+ Artists</span>
-                <span>→</span>
-              </Link>
-            </div>
-
-            {/* 5 Cards Grid */}
-            <div className="seo-artists-cards-grid">
-              {topArtists.map((artist, idx) => {
-                const isSelected = selectedArtist?.id === artist.id;
-                const imgSrc = (imageErrors[artist.id] || !artist.img)
-                  ? DEFAULT_FALLBACK_IMAGE
-                  : artist.img;
-
-                return (
-                  <article
-                    key={artist.id || idx}
-                    className={`seo-artist-card ${isSelected ? 'is-active-selection' : ''}`}
-                    onClick={() => handleSelectArtist(artist)}
-                  >
-                    {/* Image Area */}
-                    <div className="seo-card-img-wrap">
-                      <Image
-                        src={imgSrc}
-                        alt={`Photo of ${artist.name}`}
-                        fill
-                        sizes="(max-width: 768px) 260px, (max-width: 1200px) 25vw, 20vw"
-                        style={{ objectFit: 'cover' }}
-                        onError={() => handleImageError(artist.id)}
-                        loading={idx < 2 ? "eager" : "lazy"}
-                      />
-                      <div className="seo-card-gradient-overlay" />
-
-                      {/* Floating City / Travel Tag */}
-                      <span className={`seo-card-floating-badge ${artist.isFromCity ? 'local' : 'travel'}`}>
-                        {artist.isFromCity ? `📍 In ${city}` : `✈️ Performs in ${city}`}
-                      </span>
-
-                      {/* Floating Rating Badge */}
-                      <span className="seo-card-rating-badge">
-                        <span>★</span>
-                        <span>{Number(artist.rating || 5).toFixed(1)}</span>
-                      </span>
-                    </div>
-
-                    {/* Card Body */}
-                    <div className="seo-card-body">
-                      <div>
-                        <span className="seo-card-category-tag" title={artist.subCategory || artist.category}>
-                          {artist.subCategory ? artist.subCategory.split(',').slice(0, 2).join(' · ') : artist.category}
-                        </span>
-                        <h3 className="seo-card-name" title={artist.name}>
-                          {artist.name}
-                        </h3>
-                        <div className="seo-card-city">
-                          <span>📍 {artist.city || 'India'}</span>
-                          <span>·</span>
-                          <span>{artist.successful_bookings || 15}+ Events</span>
-                        </div>
-                      </div>
-
-                      {/* Price Row */}
-                      <div className="seo-card-price-row">
-                        <span className="seo-card-price-label">Starting Fee</span>
-                        <span className="seo-card-price-val">
-                          ₹{artist.price_min ? artist.price_min.toLocaleString('en-IN') : '10,000'}
-                        </span>
-                      </div>
-
-                      {/* Actions */}
-                      <div className="seo-card-actions">
-                        <button
-                          type="button"
-                          className="seo-card-btn-book"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleSelectArtist(artist);
-                          }}
-                        >
-                          <span>⚡ Book</span>
-                        </button>
-
-                        <Link
-                          href={`/artist/${artist.slug}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="seo-card-btn-profile"
-                          onClick={(e) => e.stopPropagation()}
-                        >
-                          Profile
-                        </Link>
-                      </div>
-                    </div>
-                  </article>
-                );
-              })}
-            </div>
-          </div>
-        )}
-
-        {/* ==========================================================================
-           Trust & Guarantee Bar
+           5. Trust & Guarantee Bar
            ========================================================================== */}
         <div className="seo-guarantee-bar">
           <div className="seo-guarantee-item">
@@ -575,7 +603,7 @@ export default function SEOLandingHero({
       </div>
 
       {/* ==========================================================================
-         Mobile Sticky Action Bar (Ensures visitors never scroll past conversion)
+         6. Mobile Sticky Action Bar
          ========================================================================== */}
       <div className="seo-mobile-sticky-bar">
         <button
