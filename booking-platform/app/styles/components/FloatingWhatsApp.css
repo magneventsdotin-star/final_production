@@ -44,17 +44,19 @@
 
 .whatsapp-tooltip-glow {
   position: absolute;
-  right: 70px;
-  background: rgba(10, 10, 10, 0.85);
-  border: 1px solid rgba(37, 211, 102, 0.25);
-  border-radius: 12px;
-  padding: 8px 14px;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  right: auto;
+  background: rgba(10, 10, 10, 0.88);
+  border: 1px solid rgba(37, 211, 102, 0.35);
+  border-radius: 10px;
+  padding: 6px 12px;
   display: flex;
   align-items: center;
   gap: 8px;
   backdrop-filter: blur(12px);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
-  transform: translateX(15px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+  transform: translateX(-50%) translateY(6px);
   opacity: 0;
   pointer-events: none;
   transition: all 0.3s ease;
@@ -83,7 +85,7 @@
 }
 
 .lux-floating-whatsapp-root:hover .whatsapp-tooltip-glow {
-  transform: translateX(0);
+  transform: translateX(-50%) translateY(0);
   opacity: 1;
 }
 
