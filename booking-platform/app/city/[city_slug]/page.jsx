@@ -3,6 +3,7 @@ import { supabase } from '@database/connection/supabase';
 import Link from 'next/link';
 import { Mic2 } from 'lucide-react';
 import SEOArtistsGrid from '@/app/components/common/SEOArtistsGrid';
+import AISingerBookingCard from '@/app/components/home/AISingerBookingCard';
 import '../../seo-pages.css';
 
 function slugToName(slug) {
@@ -105,10 +106,40 @@ export default async function CityLandingPage({ params }) {
       />
       <div className="city-landing-page">
         <div className="city-hero">
-          <h1>{city.h1 || `Book the Best Singers in ${city.name}`}</h1>
-          <p className="city-subtitle">
-            Make your events in {city.name} unforgettable with top live music entertainment.
-          </p>
+          <div className="city-hero-inner">
+            <div className="city-hero-left">
+              <div className="city-ai-pill">
+                <span className="sparkle-icon">✨</span>
+                <span>AI-POWERED LIVE ARTIST SEARCH · {city.name.toUpperCase()}</span>
+              </div>
+              
+              <h1>{city.h1 || `Book the Best Singers in ${city.name}`}</h1>
+              
+              <p className="city-subtitle">
+                Make your events in {city.name} unforgettable with verified live singers, bands &amp; musicians. Instant quotes &amp; 0% booking markup.
+              </p>
+
+              <div className="city-hero-cta-row">
+                <Link href={`/ai-search?q=${encodeURIComponent(`Top singer in ${city.name} for event`)}`} className="city-hero-ai-btn">
+                  <span>✨ Try AI Search for {city.name}</span>
+                  <span className="arrow">➔</span>
+                </Link>
+                <Link href="/artists" className="city-hero-browse-btn">
+                  Browse All Artists
+                </Link>
+              </div>
+
+              <div className="city-hero-trust-badges">
+                <div className="city-trust-tag">🛡️ 100% Arrival Guarantee</div>
+                <div className="city-trust-tag">⚡ Direct 0% Commission</div>
+                <div className="city-trust-tag">⭐ 4.9★ Verified Reviews</div>
+              </div>
+            </div>
+
+            <div className="city-hero-right">
+              <AISingerBookingCard />
+            </div>
+          </div>
         </div>
 
         <div className="city-content-container">

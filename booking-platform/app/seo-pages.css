@@ -8,35 +8,177 @@
   padding-top: 80px;
 }
 .city-hero {
-  text-align: center;
-  padding: 100px 20px 80px;
-  background: radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.15) 0%, #000 70%);
-  border-bottom: 1px solid rgba(255,255,255,0.05);
+  text-align: left;
+  padding: 80px 24px 60px;
+  background: radial-gradient(circle at 30% 0%, rgba(99, 102, 241, 0.18) 0%, rgba(255, 46, 147, 0.08) 40%, #000 80%);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
   position: relative;
   overflow: hidden;
 }
+
 .city-hero::before {
   content: '';
   position: absolute;
-  top: 0; left: 0; right: 0; height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(99,102,241,0.5), transparent);
+  top: 0; left: 0; right: 0; height: 1.5px;
+  background: linear-gradient(90deg, transparent, rgba(255,224,50,0.5) 30%, rgba(168,85,247,0.5) 70%, transparent);
 }
+
+.city-hero-inner {
+  max-width: 1240px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 40px;
+  align-items: center;
+}
+
+.city-hero-left {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.city-ai-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 224, 50, 0.08);
+  border: 1px solid rgba(255, 224, 50, 0.3);
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: #FFE032;
+  text-transform: uppercase;
+  width: fit-content;
+  box-shadow: 0 4px 15px rgba(255, 224, 50, 0.15);
+}
+
+.city-ai-pill .sparkle-icon {
+  font-size: 13px;
+}
+
 .city-hero h1 {
-  font-size: clamp(36px, 6vw, 64px);
+  font-size: clamp(32px, 4.2vw, 54px);
   font-weight: 900;
-  margin-bottom: 24px;
-  background: linear-gradient(135deg, #fff 0%, #a5b4fc 100%);
+  margin: 0;
+  background: linear-gradient(135deg, #ffffff 0%, #FFF5D0 40%, #E2B43B 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  line-height: 1.1;
-  letter-spacing: -1px;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
 }
+
 .city-subtitle {
-  font-size: 18px;
+  font-size: 16.5px;
   color: #a1a1aa;
-  max-width: 600px;
-  margin: 0 auto;
+  max-width: 620px;
+  line-height: 1.6;
+  margin: 0;
 }
+
+.city-hero-cta-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 6px;
+  flex-wrap: wrap;
+}
+
+.city-hero-ai-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #FFE032 0%, #FFA500 100%);
+  color: #0c0a14;
+  font-size: 14px;
+  font-weight: 800;
+  padding: 13px 22px;
+  border-radius: 12px;
+  text-decoration: none;
+  box-shadow: 0 6px 20px rgba(255, 224, 50, 0.35);
+  transition: all 0.25s ease;
+}
+
+.city-hero-ai-btn:hover {
+  transform: translateY(-2px);
+  background: #ffffff;
+  box-shadow: 0 8px 25px rgba(255, 224, 50, 0.5);
+}
+
+.city-hero-ai-btn .arrow {
+  transition: transform 0.2s ease;
+}
+
+.city-hero-ai-btn:hover .arrow {
+  transform: translateX(3px);
+}
+
+.city-hero-browse-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 13px 20px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.city-hero-browse-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
+}
+
+.city-hero-trust-badges {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+.city-trust-tag {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 600;
+}
+
+.city-hero-right {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+@media (max-width: 960px) {
+  .city-hero {
+    padding: 60px 16px 40px;
+    text-align: center;
+  }
+  .city-hero-inner {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .city-hero-left {
+    align-items: center;
+  }
+  .city-subtitle {
+    margin: 0 auto;
+  }
+  .city-hero-cta-row {
+    justify-content: center;
+  }
+  .city-hero-trust-badges {
+    justify-content: center;
+  }
+}
+
 .city-content-container {
   max-width: 1200px;
   margin: 0 auto;

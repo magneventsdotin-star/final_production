@@ -385,15 +385,15 @@
   .lux-modal-root {
     position: fixed !important;
     inset: 0 !important;
-    padding: 12px 12px 24px 12px !important;
+    padding: 16px 12px 32px 12px !important;
     display: flex !important;
-    align-items: center !important;
+    align-items: flex-start !important;
     justify-content: center !important;
     overflow-y: auto !important;
     -webkit-overflow-scrolling: touch !important;
     touch-action: pan-y !important;
     z-index: 100000 !important;
-    width: 100vw !important;
+    width: 100% !important;
     box-sizing: border-box !important;
   }
   .lux-modal-content {
@@ -401,12 +401,12 @@
     max-width: 100% !important;
     height: auto !important;
     min-height: auto !important;
-    max-height: 96dvh !important;
-    overflow-y: auto !important;
-    border-radius: 24px !important;
+    max-height: none !important;
+    overflow: visible !important;
+    border-radius: 20px !important;
     border: 1px solid rgba(255, 255, 255, 0.18) !important;
-    padding: 24px 20px 24px 20px !important;
-    margin: 0 auto !important;
+    padding: 22px 16px 20px 16px !important;
+    margin: auto 0 !important;
     box-sizing: border-box !important;
     touch-action: pan-y !important;
     background: rgba(12, 14, 18, 0.98) !important;
@@ -431,14 +431,14 @@
     border-radius: 20px !important;
   }
   .lux-modal-header {
-    margin-bottom: 16px !important;
+    margin-bottom: 14px !important;
     padding-top: 4px !important;
   }
   .lux-modal-header.lead-header {
-    padding-top: 8px;
+    padding-top: 6px;
   }
   .lux-modal-header h3 {
-    font-size: 26px !important;
+    font-size: 24px !important;
     font-weight: 800 !important;
     color: #FFFFFF !important;
     margin-top: 4px !important;
@@ -448,17 +448,17 @@
     letter-spacing: -0.01em !important;
   }
   .lux-modal-header h3.lead-title {
-    font-size: 24px !important;
+    font-size: 22px !important;
     margin-top: 4px !important;
     margin-bottom: 6px !important;
   }
   .lux-modal-header p,
   .lux-modal-header p.lead-subtitle {
-    font-size: 13.5px !important;
+    font-size: 13px !important;
     color: rgba(255, 255, 255, 0.8) !important;
-    margin-bottom: 8px !important;
+    margin-bottom: 6px !important;
     margin-top: 2px !important;
-    line-height: 1.45 !important;
+    line-height: 1.4 !important;
   }
   .lux-modal-form,
   .lux-modal-header,
@@ -467,45 +467,65 @@
     touch-action: pan-y !important;
   }
   .lux-modal-form {
-    gap: 14px !important;
+    gap: 12px !important;
     display: flex !important;
     flex-direction: column !important;
     flex: 1 !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
   }
   .lux-form-row {
     display: flex !important;
     flex-direction: column !important;
-    gap: 14px !important;
+    gap: 12px !important;
   }
   .lux-form-row.horizontal-row {
     display: grid !important;
     grid-template-columns: 1fr 1fr !important;
-    gap: 12px !important;
+    gap: 10px !important;
   }
   .form-type-switcher button {
     font-size: 12px;
     padding: 8px 6px;
   }
-  .lux-form-group input,
-  .lux-form-group select,
-  .lux-form-group textarea {
+  .lux-form-group input:not(.ai-lux-input),
+  .lux-form-group select {
     padding: 12px 14px !important;
     font-size: 14.5px !important;
-    height: 46px !important;
+    height: 48px !important;
     border-radius: 12px !important;
     background: rgba(255, 255, 255, 0.06) !important;
     border: 1px solid rgba(255, 255, 255, 0.18) !important;
     color: #FFFFFF !important;
     font-family: system-ui, -apple-system, sans-serif !important;
+    box-sizing: border-box !important;
   }
-  .lux-form-group textarea {
-    height: 64px !important;
+  .ai-lux-input {
+    padding: 12px 14px 12px 44px !important;
+    font-size: 14.5px !important;
+    height: 48px !important;
+    border-radius: 12px !important;
+    background: rgba(255, 255, 255, 0.06) !important;
+    border: 1px solid rgba(255, 255, 255, 0.18) !important;
+    color: #FFFFFF !important;
+    font-family: system-ui, -apple-system, sans-serif !important;
+    box-sizing: border-box !important;
+  }
+  .ai-lux-input.with-prefix {
+    padding-left: 84px !important;
+  }
+  .ai-lux-textarea {
+    height: auto !important;
+    min-height: 64px !important;
+    padding: 10px 12px !important;
+    font-size: 13.5px !important;
+    box-sizing: border-box !important;
   }
   .lux-form-group label {
     font-size: 11.5px !important;
     font-weight: 700 !important;
     color: #CBD5E1 !important;
-    margin-bottom: 5px !important;
+    margin-bottom: 4px !important;
     letter-spacing: 0.06em !important;
     text-transform: uppercase !important;
     font-family: system-ui, -apple-system, sans-serif !important;
@@ -540,23 +560,23 @@
     min-width: 24px !important;
   }
   .btn-submit-premium {
-    height: 56px !important;
-    padding: 16px 24px !important;
+    height: 52px !important;
+    padding: 14px 20px !important;
     border-radius: 14px !important;
     background: linear-gradient(135deg, #FFE032 0%, #E5A900 100%) !important;
     color: #05070A !important;
     font-weight: 900 !important;
     box-shadow: 0 10px 30px rgba(255, 224, 50, 0.45) !important;
-    margin-top: 8px !important;
+    margin-top: 6px !important;
   }
   .btn-submit-premium .btn-text {
-    font-size: 18px !important;
+    font-size: 16px !important;
     font-weight: 900 !important;
     letter-spacing: 0.03em !important;
   }
   .lux-modal-close {
-    top: 14px !important;
-    right: 14px !important;
+    top: 12px !important;
+    right: 12px !important;
     padding: 8px !important;
   }
 }
@@ -828,7 +848,9 @@
 
 .ai-field-icon {
   position: absolute;
-  left: 16px;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
   font-size: 16px;
   pointer-events: none;
   opacity: 0.75;
@@ -837,6 +859,7 @@
 
 .ai-lux-input {
   width: 100%;
+  box-sizing: border-box !important;
   background: rgba(255, 255, 255, 0.05) !important;
   border: 1px solid rgba(255, 255, 255, 0.12) !important;
   border-radius: 12px !important;
@@ -855,15 +878,18 @@
 
 .phone-field-wrap .ai-phone-prefix {
   position: absolute;
-  left: 12px;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
   z-index: 2;
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.08);
   padding: 4px 8px;
   border-radius: 6px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  pointer-events: none;
 }
 
 .phone-field-wrap .ai-phone-prefix .flag {
@@ -1140,7 +1166,9 @@
 @media (max-width: 680px) {
   .ai-lead-modal-card {
     padding: 20px 16px 20px 16px !important;
-    max-height: 94dvh !important;
+    max-height: none !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
   }
   .ai-gradient-title {
     font-size: 24px !important;

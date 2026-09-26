@@ -64,10 +64,10 @@ export default function BottomNav() {
         <div className="bnav-glow-line" />
 
         {/* Home */}
-        <Tab path="/" icon={(c) => <HomeIcon color={c} />} label="Home" isActive={active('/')} />
+        <Tab path="/" icon={(c) => <HomeIcon color={c} size={22} />} label="Home" isActive={active('/')} />
 
         {/* Artists */}
-        <Tab path="/artists" icon={(c) => <ArtistsIcon color={c} />} label="Artists" isActive={active('/artists')} />
+        <Tab path="/artists" icon={(c) => <ArtistsIcon color={c} size={22} />} label="Artists" isActive={active('/artists')} />
 
         {/* Center FAB — Book */}
         <div className="bnav-fab-slot">
@@ -78,7 +78,7 @@ export default function BottomNav() {
             aria-label="Book Now"
           >
             <span className="bnav-fab-ring" />
-            <PhoneIcon color="#fff" />
+            <PhoneIcon color="#fff" size={20} />
             <span className="bnav-fab-label">BOOK</span>
           </button>
         </div>
@@ -86,7 +86,7 @@ export default function BottomNav() {
         {/* AI Search */}
         <Tab
           path="/ai-search"
-          icon={(c) => <AIIcon color={c} />}
+          icon={(c) => <AIIcon color={c} size={22} />}
           label="AI Search"
           isActive={active('/ai-search')}
           isHighlight={true}
@@ -97,7 +97,7 @@ export default function BottomNav() {
         {/* Pricing */}
         <Tab
           path="/pricing"
-          icon={(c) => <PricingIcon color={c} />}
+          icon={(c) => <PricingIcon color={c} size={22} />}
           label="Pricing"
           isActive={active('/pricing')}
         />

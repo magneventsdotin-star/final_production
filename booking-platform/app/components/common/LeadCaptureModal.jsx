@@ -126,7 +126,7 @@ function InnerLeadForm({ onClose }) {
     }
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault()
     setFormError('')
     
@@ -143,55 +143,52 @@ function InnerLeadForm({ onClose }) {
       return
     }
 
-    setIsSubmitting(true)
-
     let deviceType = 'D';
     if (typeof window !== 'undefined') {
       if (window.innerWidth <= 768) deviceType = 'M';
       else if (window.innerWidth <= 1024) deviceType = 'T';
     }
 
-    try {
-      await bookingService.submitRequest({ 
-        name: trimmedName,
-        phone: cleanPhone,
-        message: formData.requirement || 'Requested quote via Quick Inquiry Modal',
-        eventType: 'Live Artist Booking',
-        deviceType: deviceType,
-        formName: 'Lead Capture Modal',
-        formType: 'inquiry',
-        formLink: typeof window !== 'undefined' ? `${window.location.origin}${window.location.pathname}${window.location.search || ''}#inquiry` : '',
-        keywords: formData.requirement,
-        pageUrl: typeof window !== 'undefined' ? window.location.href : '',
-        pagePath: typeof window !== 'undefined' ? window.location.pathname : '',
-        referrer: typeof document !== 'undefined' ? (document.referrer || 'Direct') : '',
-        latitude: geoData.latitude,
-        longitude: geoData.longitude,
-        detectedLocation: geoData.detectedLocation
-      })
-
-      if (typeof window !== 'undefined') {
-        localStorage.setItem('magnevents-form-filled', 'true');
-        window.dispatchEvent(new Event('form-filled'));
-        if (typeof window.gtag === 'function') {
-          window.gtag('event', 'conversion', {
-            'send_to': 'AW-16657289873/9sBzCMry1eocEJGl6IY-',
-            'value': 1.0,
-            'currency': 'INR'
-          });
-        }
+    // Instantly track conversion and mark form filled
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('magnevents-form-filled', 'true');
+      window.dispatchEvent(new Event('form-filled'));
+      if (typeof window.gtag === 'function') {
+        window.gtag('event', 'generate_lead', { event_category: 'form', event_label: 'lead_capture_modal_submit' });
+        window.gtag('event', 'conversion', {
+          'send_to': 'AW-16657289873/9sBzCMry1eocEJGl6IY-',
+          'value': 1.0,
+          'currency': 'INR'
+        });
       }
-
-      setSubmitted(true)
-      setTimeout(() => {
-        onClose()
-      }, 2400)
-    } catch (error) {
-      console.error("Booking error:", error)
-      setFormError('Unable to submit inquiry. Please check your connection and try again.')
-    } finally {
-      setIsSubmitting(false)
     }
+
+    // Instant optimistic transition - zero user waiting time
+    setSubmitted(true);
+    setTimeout(() => {
+      onClose();
+    }, 2400);
+
+    // Fire background request asynchronously
+    bookingService.submitRequest({ 
+      name: trimmedName,
+      phone: cleanPhone,
+      message: formData.requirement || 'Requested quote via Quick Inquiry Modal',
+      eventType: 'Live Artist Booking',
+      deviceType: deviceType,
+      formName: 'Lead Capture Modal',
+      formType: 'inquiry',
+      formLink: typeof window !== 'undefined' ? `${window.location.origin}${window.location.pathname}${window.location.search || ''}#inquiry` : '',
+      keywords: formData.requirement,
+      pageUrl: typeof window !== 'undefined' ? window.location.href : '',
+      pagePath: typeof window !== 'undefined' ? window.location.pathname : '',
+      referrer: typeof document !== 'undefined' ? (document.referrer || 'Direct') : '',
+      latitude: geoData.latitude,
+      longitude: geoData.longitude,
+      detectedLocation: geoData.detectedLocation
+    }).catch((error) => {
+      console.error("Background booking error:", error);
+    });
   }
 
   if (submitted) {
@@ -341,7 +338,7 @@ function InnerLeadForm({ onClose }) {
                 <span className="ai-spinner-dot" /> Submitting...
               </span>
             ) : (
-              '⚡ Get Free Quotes Now'
+              '⚡ Request Free Quotes'
             )}
           </span>
           <div className="btn-glow" />

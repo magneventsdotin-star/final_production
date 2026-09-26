@@ -4,7 +4,7 @@
 
 /* ── Spacer ── */
 .bnav-spacer {
-  height: calc(52px + env(safe-area-inset-bottom, 0px));
+  height: calc(64px + env(safe-area-inset-bottom, 0px));
 }
 
 /* ── Bar shell ── */
@@ -24,7 +24,7 @@
   -webkit-backdrop-filter: blur(24px) saturate(180%);
   border-radius: 16px 16px 0 0;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
-  height: 52px;
+  height: 64px;
 }
 
 /* ── Top glow accent ── */
@@ -45,14 +45,14 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 2px;
-  padding: 4px 1px;
+  gap: 3px;
+  padding: 6px 1px 4px;
   cursor: pointer;
   position: relative;
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
   transition: opacity 150ms ease;
-  height: 52px;
+  height: 64px;
   text-decoration: none;
 }
 
@@ -63,12 +63,12 @@
 /* ── Active background pill ── */
 .bnav-active-pill {
   position: absolute;
-  top: 4px;
+  top: 6px;
   left: 50%;
   transform: translateX(-50%);
-  width: 38px;
-  height: 28px;
-  border-radius: 10px;
+  width: 44px;
+  height: 32px;
+  border-radius: 12px;
   background: rgba(255, 224, 50, 0.12);
   border: 1px solid rgba(255, 224, 50, 0.22);
 }
@@ -80,18 +80,18 @@
   justify-content: center;
   position: relative;
   z-index: 1;
-  height: 22px;
+  height: 24px;
 }
 
 /* ── Badge ── */
 .bnav-badge {
   position: absolute;
-  top: -5px;
-  right: -9px;
+  top: -4px;
+  right: -8px;
   color: #fff;
-  font-size: 7px;
+  font-size: 7.5px;
   font-weight: 900;
-  padding: 1px 3.5px;
+  padding: 1px 4px;
   border-radius: 5px;
   letter-spacing: 0.03em;
   box-shadow: 0 0 6px rgba(255,46,147,0.5);
@@ -101,7 +101,7 @@
 
 /* ── Label ── */
 .bnav-label {
-  font-size: 8.5px;
+  font-size: 9.5px;
   font-weight: 700;
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -116,12 +116,12 @@
 .bnav-tab.is-active .bnav-label::after {
   content: '';
   display: block;
-  width: 3px;
-  height: 3px;
+  width: 3.5px;
+  height: 3.5px;
   border-radius: 50%;
   background: #FFE032;
   box-shadow: 0 0 5px #FFE032;
-  margin: 2px auto -1px;
+  margin: 3px auto -1px;
 }
 
 /* AI tab glow */
@@ -136,14 +136,14 @@
   align-items: center;
   justify-content: center;
   position: relative;
-  margin-top: -14px;
+  margin-top: -18px;
 }
 
 /* ── FAB button ── */
 .bnav-fab {
   position: relative;
-  width: 44px;
-  height: 44px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   border: none;
   background: linear-gradient(135deg, #FF2E93 0%, #FF8A00 100%);
@@ -155,7 +155,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 1px;
+  gap: 2px;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
@@ -179,7 +179,7 @@
 }
 
 .bnav-fab-label {
-  font-size: 7px;
+  font-size: 7.5px;
   font-weight: 900;
   color: #fff;
   letter-spacing: 0.08em;
