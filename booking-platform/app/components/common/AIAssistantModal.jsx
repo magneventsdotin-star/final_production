@@ -2,6 +2,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { bookingService } from '@/app/services/bookingService';
+import { AIIcon } from '@/app/components/icons/NavigationIcons';
 import '@/app/styles/components/AIAssistantModal.css';
 
 // ─── Conversational lead capture steps ────────────────────────────────────────
@@ -271,7 +272,9 @@ export default function AIAssistantModal() {
             {/* Header */}
             <div className="lux-ai-chat-header">
               <div className="lux-ai-header-info">
-                <div className="lux-ai-avatar-wrap">🤖</div>
+                <div className="lux-ai-avatar-wrap">
+                  <AIIcon color="#ffffff" size={24} />
+                </div>
                 <div className="lux-ai-header-text">
                   <h3><span>AI Search Concierge</span></h3>
                   <div className="lux-ai-status-row">

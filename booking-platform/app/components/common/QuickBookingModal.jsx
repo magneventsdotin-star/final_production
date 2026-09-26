@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation'
 import { validateName, validatePhone } from '@helpers/validation'
 import { bookingService } from '@/app/services/bookingService'
 import { getUserGeolocation, getCachedGeolocation, getSilentLocationIfGranted } from '@/app/utils/geolocation'
+import { AIIcon } from '@/app/components/icons/NavigationIcons'
 import '@/app/styles/components/ContactModal.css'
 
 export default function QuickBookingModal() {
@@ -209,12 +210,12 @@ function InnerQuickBookingForm({ onClose }) {
         <div className="ai-chatbot-magnetic-glow" aria-hidden="true" />
         <div className="ai-chatbot-magnetic-left">
           <div className="ai-chatbot-magnetic-avatar">
-            <span className="ai-avatar-sparkle">✨</span>
+            <AIIcon color="#ffffff" size={22} />
             <span className="ai-avatar-dot" />
           </div>
           <div className="ai-chatbot-magnetic-info">
             <div className="ai-chatbot-badge-row">
-              <span className="ai-chatbot-tag">🤖 SMART AI MATCH</span>
+              <span className="ai-chatbot-tag">✨ SMART AI MATCH</span>
               <span className="ai-chatbot-live-status">● ONLINE</span>
             </div>
             <h4 className="ai-chatbot-magnetic-title">Match with AI Assistant</h4>
