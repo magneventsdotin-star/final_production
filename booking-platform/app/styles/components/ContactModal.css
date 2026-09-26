@@ -43,6 +43,81 @@
   z-index: -1;
 }
 
+.lux-modal-top-actions {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 100;
+}
+
+.lux-modal-top-actions .lux-modal-close {
+  position: static;
+  top: auto;
+  right: auto;
+}
+
+.lux-modal-ai-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, rgba(236, 72, 153, 0.2), rgba(168, 85, 247, 0.25), rgba(59, 130, 246, 0.2));
+  border: 1px solid rgba(236, 72, 153, 0.45);
+  color: #fff;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 0 16px rgba(236, 72, 153, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(8px);
+}
+
+.lux-modal-ai-btn:hover {
+  background: linear-gradient(135deg, rgba(236, 72, 153, 0.35), rgba(168, 85, 247, 0.4), rgba(59, 130, 246, 0.3));
+  border-color: rgba(244, 114, 182, 0.85);
+  box-shadow: 0 0 24px rgba(236, 72, 153, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  transform: translateY(-1px) scale(1.04);
+}
+
+.lux-modal-ai-btn:active {
+  transform: scale(0.96);
+}
+
+.lux-modal-ai-btn .lux-modal-ai-sparkle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ec4899 0%, #a855f7 50%, #3b82f6 100%);
+  color: #ffffff;
+  box-shadow: 0 0 10px rgba(236, 72, 153, 0.6);
+  flex-shrink: 0;
+}
+
+.lux-modal-ai-btn .lux-modal-ai-text {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  background: linear-gradient(90deg, #ffffff, #fbcfe8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.lux-modal-ai-btn .lux-modal-ai-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 8px #10b981;
+  animation: pulse-dot 1.8s infinite;
+}
+
 .lux-modal-close {
   position: absolute;
   top: 20px;

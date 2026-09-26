@@ -15,18 +15,7 @@ export default function LeadCaptureModal() {
     window.addEventListener('open-lead-capture', handleOpenModal);
 
     if (typeof window !== 'undefined') {
-      const hash = window.location.hash.toLowerCase();
-      const search = window.location.search.toLowerCase();
-      if (
-        hash === '#offers' ||
-        hash === '#lead-capture' ||
-        hash === '#quote' ||
-        hash === '#instant-quote' ||
-        hash === '#instant-form' ||
-        search.includes('open=offers') ||
-        search.includes('quote=true') ||
-        search.includes('instant=true')
-      ) {
+      if (window.location.hash === '#offers' || window.location.hash === '#lead-capture' || window.location.search.includes('open=offers')) {
         setIsOpen(true);
       }
     }
@@ -87,9 +76,29 @@ export default function LeadCaptureModal() {
             <div className="modal-glow-bg" />
             <div className="ai-modal-top-accent-line" />
 
-            <button className="lux-modal-close" onClick={onClose} aria-label="Close modal">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg>
-            </button>
+            <div className="lux-modal-top-actions">
+              <button
+                type="button"
+                className="lux-modal-ai-btn"
+                onClick={() => {
+                  onClose();
+                  if (typeof window !== 'undefined') {
+                    window.dispatchEvent(new CustomEvent('open-ai-chatbot'));
+                  }
+                }}
+                title="Chat with AI Assistant"
+                aria-label="Chat with AI Assistant"
+              >
+                <span className="lux-modal-ai-sparkle">
+                  <AIIcon size={14} />
+                </span>
+                <span className="lux-modal-ai-text">AI Chat</span>
+                <span className="lux-modal-ai-dot" />
+              </button>
+              <button className="lux-modal-close" onClick={onClose} aria-label="Close modal">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg>
+              </button>
+            </div>
 
             <div className="lux-modal-header lead-header" style={{ marginBottom: '16px' }}>
               <div className="ai-lead-pill-badge">
