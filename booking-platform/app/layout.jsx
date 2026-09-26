@@ -14,6 +14,7 @@ const ContactModal = dynamic(() => import('@/app/components/common/ContactModal'
 const RegisterModal = dynamic(() => import('@/app/components/common/RegisterModal'), { ssr: false })
 const QuickBookingModal = dynamic(() => import('@/app/components/common/QuickBookingModal'), { ssr: false })
 const FloatingWhatsApp = dynamic(() => import('@/app/components/common/FloatingWhatsApp'), { ssr: false })
+const AIAssistantModal = dynamic(() => import('@/app/components/common/AIAssistantModal'), { ssr: false })
 const PWAInstallPrompt = dynamic(() => import('@/app/components/common/PWAInstallPrompt'), { ssr: false })
 const Tracker = dynamic(() => import('@/app/components/common/Tracker'), { ssr: false })
 const LeadCaptureModal = dynamic(() => import('@/app/components/common/LeadCaptureModal'), { ssr: false })
@@ -226,6 +227,7 @@ export default function RootLayout({ children }) {
           <RegisterModal />
           <QuickBookingModal />
           <FloatingWhatsApp />
+          <AIAssistantModal />
           <LeadCaptureModal />
           <PWAInstallPrompt />
           <Tracker />

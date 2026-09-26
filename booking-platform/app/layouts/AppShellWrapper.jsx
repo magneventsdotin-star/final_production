@@ -7,8 +7,6 @@ import BottomNav from '@/app/components/layout/BottomNav';
 import Footer from '@/app/components/common/Footer';
 import { useMouseGlow } from '@/app/hooks/useMouseGlow';
 
-import AIAssistantModal from '@/app/components/common/AIAssistantModal';
-
 const HIDE_CHROME_ON = ['/checkout', '/confirmed', '/login', '/signup', '/onboarding', '/chat', '/f/'];
 
 export function AppShellWrapper({ children }) {
@@ -42,7 +40,6 @@ export function AppShellWrapper({ children }) {
 
       {!hideChrome && (
         <>
-          <AIAssistantModal />
           <BottomNav />
         </>
       )}
