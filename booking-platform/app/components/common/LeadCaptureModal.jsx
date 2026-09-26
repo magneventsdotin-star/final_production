@@ -228,7 +228,10 @@ function InnerLeadForm({ onClose }) {
         <div className="ai-chatbot-magnetic-glow" aria-hidden="true" />
         <div className="ai-chatbot-magnetic-left">
           <div className="ai-chatbot-magnetic-avatar">
-            <AIIcon color="#ffffff" size={22} />
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="ai-avatar-sparkle">
+              <path d="M12 3C12 7.5 7.5 12 3 12C7.5 12 12 16.5 12 21C12 16.5 16.5 12 21 12C16.5 12 12 7.5 12 3Z" fill="none" stroke="#ffffff" strokeWidth="2.5" />
+              <path d="M19 3C19 4.8 17.5 6 16 6C17.5 6 19 7.2 19 9C19 7.2 20.5 6 22 6C20.5 6 19 4.8 19 3Z" fill="#ffffff" stroke="none" />
+            </svg>
             <span className="ai-avatar-dot" />
           </div>
           <div className="ai-chatbot-magnetic-info">
@@ -305,6 +308,7 @@ function InnerLeadForm({ onClose }) {
           <span>Event Details / Requirement</span>
         </label>
         <div className="ai-textarea-wrapper">
+          <span className="ai-field-icon" style={{ top: '20px' }}>🎤</span>
           <textarea 
             id="lead-req" 
             rows="2"
@@ -312,7 +316,7 @@ function InnerLeadForm({ onClose }) {
             value={formData.requirement} 
             onChange={(e) => setFormData({ ...formData, requirement: e.target.value })} 
             className="ai-lux-textarea"
-            style={{ minHeight: '60px' }}
+            style={{ minHeight: '60px', paddingLeft: '44px' }}
           />
         </div>
       </div>
