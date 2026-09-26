@@ -6,6 +6,7 @@ import { useRouter, usePathname } from 'next/navigation'
 import { bookingService } from '@/app/services/bookingService'
 import { validateName, validateEmail, validatePhone } from '@helpers/validation';
 import { getUserGeolocation, getCachedGeolocation, getSilentLocationIfGranted } from '@/app/utils/geolocation'
+import { AIIcon } from '@/app/components/icons/NavigationIcons'
 import '@/app/styles/components/ContactModal.css'
 
 export default function ContactModal() {
@@ -323,8 +324,46 @@ function InnerContactForm({ formType, initialArtist, initialPlan, initialService
     )
   }
 
+  const handleOpenAiAssistant = () => {
+    onClose();
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('open-ai-chatbot'));
+    }
+  };
+
   return (
     <form className="lux-modal-form" onSubmit={handleSubmit}>
+      {/* Interactive Magnetic AI Chatbot Trigger Card */}
+      <div 
+        className="ai-chatbot-magnetic-card" 
+        onClick={handleOpenAiAssistant} 
+        role="button" 
+        tabIndex={0}
+        onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleOpenAiAssistant(); }}
+        aria-label="Open Magnevents AI Concierge Chatbot"
+        style={{ marginBottom: '16px' }}
+      >
+        <div className="ai-chatbot-magnetic-glow" aria-hidden="true" />
+        <div className="ai-chatbot-magnetic-left">
+          <div className="ai-chatbot-magnetic-avatar">
+            <AIIcon color="#ffffff" size={22} />
+            <span className="ai-avatar-dot" />
+          </div>
+          <div className="ai-chatbot-magnetic-info">
+            <div className="ai-chatbot-badge-row">
+              <span className="ai-chatbot-tag">✨ MAGNEVENTS AI SEARCH</span>
+              <span className="ai-chatbot-live-status">● ONLINE</span>
+            </div>
+            <h4 className="ai-chatbot-magnetic-title">Prefer to chat with AI?</h4>
+            <p className="ai-chatbot-magnetic-sub">Instant personalized artist recommendations & quotes</p>
+          </div>
+        </div>
+        <div className="ai-chatbot-magnetic-cta">
+          <span className="ai-cta-text">Start Chat</span>
+          <span className="ai-cta-arrow">➔</span>
+        </div>
+      </div>
+
       <div className="lux-form-row">
         <div className="lux-form-group">
           <label htmlFor="modal-name">Name</label>

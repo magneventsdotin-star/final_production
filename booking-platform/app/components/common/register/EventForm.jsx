@@ -3,6 +3,7 @@ import { useRouter } from 'next/navigation';
 import { bookingService } from '@/app/services/bookingService';
 import { validateName, validateEmail, validatePhone } from '@helpers/validation';
 import { getUserGeolocation, getCachedGeolocation, getSilentLocationIfGranted } from '@/app/utils/geolocation';
+import { AIIcon } from '@/app/components/icons/NavigationIcons';
 
 export default function EventForm({ copyToClipboard, setSubmitted }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -96,6 +97,12 @@ export default function EventForm({ copyToClipboard, setSubmitted }) {
     }
   };
 
+  const handleOpenAiAssistant = () => {
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('open-ai-chatbot'));
+    }
+  };
+
   return (
     <>
       <div className="lux-modal-header" style={{ marginBottom: '16px', position: 'relative', paddingTop: '32px' }}>
@@ -117,6 +124,37 @@ export default function EventForm({ copyToClipboard, setSubmitted }) {
       </div>
 
       <form className="lux-modal-form" onSubmit={handleEventSubmit}>
+        {/* Interactive Magnetic AI Chatbot Trigger Card */}
+        <div 
+          className="ai-chatbot-magnetic-card" 
+          onClick={handleOpenAiAssistant} 
+          role="button" 
+          tabIndex={0}
+          onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleOpenAiAssistant(); }}
+          aria-label="Open Magnevents AI Concierge Chatbot"
+          style={{ marginBottom: '16px' }}
+        >
+          <div className="ai-chatbot-magnetic-glow" aria-hidden="true" />
+          <div className="ai-chatbot-magnetic-left">
+            <div className="ai-chatbot-magnetic-avatar">
+              <AIIcon color="#ffffff" size={22} />
+              <span className="ai-avatar-dot" />
+            </div>
+            <div className="ai-chatbot-magnetic-info">
+              <div className="ai-chatbot-badge-row">
+                <span className="ai-chatbot-tag">✨ MAGNEVENTS AI SEARCH</span>
+                <span className="ai-chatbot-live-status">● ONLINE</span>
+              </div>
+              <h4 className="ai-chatbot-magnetic-title">Prefer to chat with AI?</h4>
+              <p className="ai-chatbot-magnetic-sub">Instant personalized artist recommendations & quotes</p>
+            </div>
+          </div>
+          <div className="ai-chatbot-magnetic-cta">
+            <span className="ai-cta-text">Start Chat</span>
+            <span className="ai-cta-arrow">➔</span>
+          </div>
+        </div>
+
         {formError && (
           <div style={{ color: '#ff4d4f', background: 'rgba(255, 77, 79, 0.1)', padding: '10px 14px', borderRadius: '8px', marginBottom: '16px', fontSize: '14px', border: '1px solid rgba(255, 77, 79, 0.2)' }} role="alert">
             {formError}

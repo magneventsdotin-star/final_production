@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import BrandMark from '@/app/components/common/BrandMark'
-import { AIIcon } from '@/app/components/icons/NavigationIcons'
 import { NAV_LINKS } from '@/app/constants'
 
 export default function MobilePanel({ isOpen, onClose, isLight, pathname, onOpenContactModal }) {
@@ -165,36 +164,7 @@ export default function MobilePanel({ isOpen, onClose, isLight, pathname, onOpen
           })}
         </nav>
 
-        <div className="lux-mobile-actions" style={{ marginTop: '24px', display: 'flex', flexDirection: 'column', gap: '12px', position: 'relative' }}>
-          <button
-            type="button"
-            onClick={() => {
-              onClose();
-              setTimeout(() => {
-                window.dispatchEvent(new CustomEvent('open-ai-chatbot'));
-              }, 300);
-            }}
-            className="lux-mobile-cta"
-            style={{
-              background: 'linear-gradient(135deg, #8B5CF6 0%, #EC4899 100%)',
-              color: '#ffffff',
-              fontWeight: '800',
-              border: 'none',
-              letterSpacing: '0.04em',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '8px',
-              padding: '14px',
-              borderRadius: '12px',
-              cursor: 'pointer',
-              boxShadow: '0 8px 22px rgba(139, 92, 246, 0.35)'
-            }}
-          >
-            <AIIcon color="#ffffff" size={20} />
-            <span>AI Concierge Chat</span>
-          </button>
-
+        <div className="lux-mobile-actions" style={{ marginTop: '36px', display: 'flex', flexDirection: 'column', gap: '16px', position: 'relative' }}>
           <button
             onClick={() => {
               onOpenContactModal('contact');
