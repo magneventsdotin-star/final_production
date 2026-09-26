@@ -505,35 +505,69 @@
     overflow: visible !important;
     border-radius: 20px !important;
   }
+  .lux-modal-top-actions {
+    top: 12px !important;
+    right: 12px !important;
+    gap: 6px !important;
+  }
+  .lux-modal-top-actions .lux-modal-close {
+    padding: 7px 8px !important;
+    border-radius: 10px !important;
+  }
+  .lux-modal-top-actions .lux-modal-close svg {
+    width: 16px !important;
+    height: 16px !important;
+  }
+  .lux-modal-ai-btn {
+    padding: 5px 10px !important;
+    font-size: 11px !important;
+    gap: 5px !important;
+  }
+  .lux-modal-ai-btn .lux-modal-ai-sparkle {
+    width: 18px !important;
+    height: 18px !important;
+  }
+  .lux-modal-ai-btn .lux-modal-ai-text {
+    font-size: 11px !important;
+  }
   .lux-modal-header {
-    margin-bottom: 14px !important;
-    padding-top: 4px !important;
+    margin-bottom: 12px !important;
+    padding-top: 36px !important;
   }
   .lux-modal-header.lead-header {
-    padding-top: 6px;
+    padding-top: 34px !important;
+    margin-bottom: 12px !important;
+    text-align: center !important;
+  }
+  .ai-lead-pill-badge {
+    margin-bottom: 8px !important;
+    font-size: 10px !important;
+    padding: 4px 10px !important;
   }
   .lux-modal-header h3 {
-    font-size: 24px !important;
+    font-size: 22px !important;
     font-weight: 800 !important;
     color: #FFFFFF !important;
     margin-top: 4px !important;
-    margin-bottom: 6px !important;
+    margin-bottom: 4px !important;
     background: none !important;
     -webkit-text-fill-color: #FFFFFF !important;
     letter-spacing: -0.01em !important;
   }
-  .lux-modal-header h3.lead-title {
-    font-size: 22px !important;
+  .lux-modal-header h3.lead-title,
+  .ai-gradient-title {
+    font-size: 20px !important;
     margin-top: 4px !important;
-    margin-bottom: 6px !important;
+    margin-bottom: 4px !important;
+    line-height: 1.25 !important;
   }
   .lux-modal-header p,
   .lux-modal-header p.lead-subtitle {
-    font-size: 13px !important;
+    font-size: 12px !important;
     color: rgba(255, 255, 255, 0.8) !important;
-    margin-bottom: 6px !important;
+    margin-bottom: 4px !important;
     margin-top: 2px !important;
-    line-height: 1.4 !important;
+    line-height: 1.35 !important;
   }
   .lux-modal-form,
   .lux-modal-header,
@@ -1472,23 +1506,30 @@
 
 @media (max-width: 520px) {
   .ai-chatbot-magnetic-card {
-    padding: 12px 14px;
-    gap: 10px;
+    padding: 10px 12px;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  .ai-chatbot-magnetic-left {
+    gap: 8px;
+    min-width: 0;
   }
   .ai-chatbot-magnetic-avatar {
-    width: 38px;
-    height: 38px;
-    font-size: 18px;
+    width: 34px;
+    height: 34px;
+    font-size: 15px;
   }
   .ai-chatbot-magnetic-title {
-    font-size: 13.5px;
+    font-size: 12px;
   }
   .ai-chatbot-magnetic-sub {
-    font-size: 10.5px;
+    font-size: 10px;
   }
   .ai-chatbot-magnetic-cta {
-    padding: 7px 11px;
-    font-size: 11px;
+    padding: 6px 10px;
+    font-size: 10.5px;
+    border-radius: 8px;
   }
 }
+
 

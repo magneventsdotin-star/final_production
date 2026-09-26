@@ -100,15 +100,15 @@ export default function LeadCaptureModal() {
               </button>
             </div>
 
-            <div className="lux-modal-header lead-header" style={{ marginBottom: '16px' }}>
+            <div className="lux-modal-header lead-header">
               <div className="ai-lead-pill-badge">
                 <span className="sparkle-rot">✨</span>
                 <span>AI ARTIST MATCHING</span>
               </div>
-              <h3 className="lead-title ai-gradient-title" style={{ fontSize: '26px', margin: '6px 0' }}>
+              <h3 className="lead-title ai-gradient-title">
                 Find Your Perfect Artist
               </h3>
-              <p className="lead-subtitle" style={{ fontSize: '13px', margin: 0 }}>
+              <p className="lead-subtitle">
                 Receive instant transparent quotes directly from verified live artists.
               </p>
             </div>
