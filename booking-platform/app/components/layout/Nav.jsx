@@ -103,15 +103,14 @@ export default function Nav() {
 
                   {/* AI Search button in the middle of desktop navigation */}
                   {isArtists && (
-                    <button
-                      type="button"
-                      onClick={() => window.dispatchEvent(new CustomEvent('open-ai-chatbot'))}
-                      className="lux-nav-ai-btn"
-                      aria-label="Open AI Search Chatbot"
+                    <Link
+                      href="/ai-search"
+                      className={`lux-nav-ai-btn ${pathname === '/ai-search' ? 'is-active' : ''}`}
+                      aria-label="Open Full AI Search Page"
                     >
                       <AIIcon color="#FFE032" size={16} />
                       <span>AI Search</span>
-                    </button>
+                    </Link>
                   )}
                 </React.Fragment>
               );
