@@ -255,7 +255,7 @@ export default function AIAssistantModal() {
         aria-label="Open AI Search Chatbot"
       >
         <span className="lux-ai-trigger-icon">
-          <AIIcon size={24} color="#ffffff" />
+          <AIIcon color="#ffffff" size={22} />
         </span>
         <span className="label-text">AI Search</span>
         <span className="lux-ai-pulse-dot" />
