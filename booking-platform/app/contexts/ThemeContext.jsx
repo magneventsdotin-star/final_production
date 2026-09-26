@@ -7,49 +7,24 @@ const ThemeContext = createContext(null)
 const STORAGE_KEY = 'haat_theme'
 
 function resolveTheme(pref) {
-  if (typeof window === 'undefined') return 'dark'
-  if (pref === 'system') {
-    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
-  }
-  return pref
+  return 'dark'
 }
 
 export function ThemeProvider({ children }) {
   const [theme, setThemeState] = useState('dark')
 
   useEffect(() => {
-    try {
-      const saved = localStorage.getItem(STORAGE_KEY)
-      if (saved) setThemeState(saved)
-    } catch {}
+    document.documentElement.setAttribute('data-theme', 'dark')
   }, [])
 
-
-  useEffect(() => {
-    document.documentElement.setAttribute('data-theme', resolveTheme(theme))
-    try { localStorage.setItem(STORAGE_KEY, theme) } catch {}
-  }, [theme])
-
-
-  useEffect(() => {
-    if (theme !== 'system') return
-    const mq = window.matchMedia('(prefers-color-scheme: dark)')
-    const handler = (e) => {
-      document.documentElement.setAttribute('data-theme', e.matches ? 'dark' : 'light')
-    }
-    mq.addEventListener('change', handler)
-    return () => mq.removeEventListener('change', handler)
-  }, [theme])
-
   function setTheme(pref) {
-    setThemeState(pref)
+    setThemeState('dark')
   }
 
-
-  const resolvedTheme = resolveTheme(theme)
+  const resolvedTheme = 'dark'
 
   return (
-    <ThemeContext.Provider value={{ theme, resolvedTheme, setTheme }}>
+    <ThemeContext.Provider value={{ theme: 'dark', resolvedTheme: 'dark', setTheme }}>
       {children}
     </ThemeContext.Provider>
   )

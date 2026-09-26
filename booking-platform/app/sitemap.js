@@ -6,6 +6,7 @@ export default async function sitemap() {
 
   const staticRoutes = [
     '',
+    '/ai-search',
     '/dashboard',
     '/dashboard/requests',
     '/artists',

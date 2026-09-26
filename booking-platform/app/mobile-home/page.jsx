@@ -5,6 +5,7 @@ import MobileHero from '@/components/mobile/Hero';
 import MobileTopPerformer from '@/components/mobile/TopPerformer';
 import MobileCategories from '@/components/mobile/Categories';
 import MobileFeaturedArtists from '@/components/mobile/FeaturedArtists';
+import PromotionalOfferSection from '@/app/components/home/PromotionalOfferSection';
 import MobileWhyChoose from '@/components/mobile/WhyChoose';
 import MobileHowToBook from '@/components/mobile/HowToBook';
 import MobileContact from '@/components/mobile/Contact';
@@ -31,6 +32,7 @@ export default function MobileHomePage() {
       <div className="mobile-hp">
         <MobileHero />
         <MobileTopPerformer />
+        <PromotionalOfferSection />
         <MobileCategories />
         <MobileFeaturedArtists />
         <MobileWhyChoose />

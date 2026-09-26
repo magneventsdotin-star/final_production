@@ -36,7 +36,7 @@ export default function Nav() {
   const searchRef = useRef(null);
   const scrolled = useScrolled(20);
   const scrollDirection = useScrollDirection();
-  const isLight = resolvedTheme === 'light';
+  const isLight = false;
   const isHidden = scrollDirection === 'down' && scrolled;
 
   useEffect(() => {
@@ -75,36 +75,57 @@ export default function Nav() {
           </Link>
 
           <div className="lux-nav-center">
-            {NAV_LINKS.map(link => (
-              <div key={link.label} className={`lux-nav-dropdown-wrap ${link.isMega ? 'is-mega' : ''}`}>
-                <Link
-                  href={link.path || '#'}
-                  className={`lux-nav-link ${pathname === link.path ? 'is-active' : ''}`}
-                >
-                  {link.label} {link.children && <span className="lux-dropdown-icon">▾</span>}
-                </Link>
+            {NAV_LINKS.map(link => {
+              if (link.path === '/ai-search') {
+                return (
+                  <Link
+                    key={link.label}
+                    href="/ai-search"
+                    className="lux-nav-ai-btn"
+                    title="AI Search"
+                  >
+                    <span className="ai-sparkle-dot">✨</span>
+                    <span>AI Search</span>
+                  </Link>
+                );
+              }
+              return (
+                <div key={link.label} className={`lux-nav-dropdown-wrap ${link.isMega ? 'is-mega' : ''}`}>
+                  <Link
+                    href={link.path || '#'}
+                    className={`lux-nav-link ${pathname === link.path ? 'is-active' : ''}`}
+                  >
+                    {link.label} {link.children && <span className="lux-dropdown-icon">▾</span>}
+                  </Link>
 
-                {link.children && (
-                  <div className={`lux-nav-dropdown ${link.isMega ? 'lux-mega-menu' : ''}`}>
-                    <div className="lux-dropdown-grid">
-                      {link.children.map(child => (
-                        <Link key={child.path} href={child.path} className="lux-nav-dropdown-link">
-                          <span>{child.label}</span>
-                        </Link>
-                      ))}
+                  {link.children && (
+                    <div className={`lux-nav-dropdown ${link.isMega ? 'lux-mega-menu' : ''}`}>
+                      <div className="lux-dropdown-grid">
+                        {link.children.map(child => (
+                          <Link key={child.path} href={child.path} className="lux-nav-dropdown-link">
+                            <span>{child.label}</span>
+                          </Link>
+                        ))}
+                      </div>
                     </div>
-                  </div>
-                )}
-              </div>
-            ))}
+                  )}
+                </div>
+              );
+            })}
           </div>
 
           <div className="lux-nav-right">
             <button onClick={() => openContactModal('contact')} className="lux-nav-cta">
               Contact Us
             </button>
-            <button onClick={() => window.dispatchEvent(new CustomEvent('open-register-modal'))} className="lux-nav-register-btn">
-              Register
+            <button
+              type="button"
+              className="lux-nav-register-ai-btn"
+              onClick={() => window.dispatchEvent(new CustomEvent('open-ai-chatbot'))}
+              aria-label="Open AI Search Chatbot"
+            >
+              <span className="lux-nav-ai-sparkle">✨</span>
+              <span>AI Search</span>
             </button>
 
             <button aria-label="Toggle navigation menu" className={`lux-hamburger ${menuOpen ? 'is-open' : ''}`} onClick={() => setMenuOpen(!menuOpen)}>

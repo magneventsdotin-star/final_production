@@ -16,6 +16,13 @@ export default function QuickBookingModal() {
   useEffect(() => {
     const handleOpen = () => setIsOpen(true)
     window.addEventListener('open-quick-booking', handleOpen)
+
+    if (typeof window !== 'undefined') {
+      if (window.location.hash === '#quick-contact' || window.location.search.includes('quick-booking')) {
+        setIsOpen(true)
+      }
+    }
+
     return () => window.removeEventListener('open-quick-booking', handleOpen)
   }, [])
 
@@ -144,6 +151,7 @@ function InnerQuickBookingForm({ onClose }) {
         type: 'call_request',
         formType: 'quick_booking',
         formName: 'Quick Contact Modal',
+        formLink: typeof window !== 'undefined' ? `${window.location.origin}${window.location.pathname}${window.location.search || ''}#quick-contact` : '',
         latitude: geoData.latitude,
         longitude: geoData.longitude,
         detectedLocation: geoData.detectedLocation

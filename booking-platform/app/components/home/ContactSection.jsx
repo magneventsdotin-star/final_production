@@ -44,7 +44,16 @@ export default function ContactSection() {
       fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...submissionData, name: submissionData.name, type: 'call_request', deviceType, formName: 'Homepage Contact Section' }),
+        body: JSON.stringify({ 
+          ...submissionData, 
+          name: submissionData.name, 
+          type: 'call_request', 
+          deviceType, 
+          formName: 'Homepage Contact Section',
+          formLink: typeof window !== 'undefined' ? `${window.location.origin}${window.location.pathname}#contact` : '',
+          pageUrl: typeof window !== 'undefined' ? window.location.href : '',
+          pagePath: typeof window !== 'undefined' ? window.location.pathname : '',
+        }),
         keepalive: true,
       }).catch(error => {
         console.error("Failed to send contact inquiry:", error);

@@ -39,8 +39,18 @@ export const buildEmailTemplate = (data, isRegister, isCallRequest, dbArtistInfo
     );
     contentSections += buildSection('🎵 Portfolio & Socials', row('Portfolio', data.portfolio, true, data.portfolio));
     
-    if ((data.formName || data.formNumber)) {
-      contentSections += buildSection('📋 Source Form', row('Form Name', (data.formName || data.formNumber)));
+    const formUrl = data.formLink || data.pageUrl || '';
+    if (formUrl || data.formName || data.formNumber) {
+      if (formUrl) {
+        const extraLabel = data.formName ? `<div style="margin-top: 4px; font-size: 12px; color: #94a3b8; font-weight: 400;">(${data.formName})</div>` : '';
+        const linkDisplay = `<a href="${formUrl}" target="_blank" style="color: #fbbf24; text-decoration: underline; font-weight: 600; word-break: break-all;">${formUrl} ↗</a>${extraLabel}`;
+        contentSections += buildSection('📋 Source Form', `<tr>
+          <td style="padding: 16px 0; width: 35%; max-width: 140px; color: #94a3b8; font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; vertical-align: top; border-bottom: 1px solid rgba(255,255,255,0.05);">Form Link</td>
+          <td style="padding: 16px 0; vertical-align: top; border-bottom: 1px solid rgba(255,255,255,0.05);">${linkDisplay}</td>
+        </tr>`);
+      } else {
+        contentSections += buildSection('📋 Source Form', row('Form Link', (data.formName || data.formNumber)));
+      }
     }
 
     contentSections += buildSection('🎭 Bio & Experience', `<tr><td style="padding: 8px 0; color: #fbbf24;">${data.bio || 'No bio provided.'}</td></tr>`);
@@ -60,16 +70,41 @@ export const buildEmailTemplate = (data, isRegister, isCallRequest, dbArtistInfo
       row('Budget', data.budget)
     );
 
-    if (data.latitude || data.longitude || data.detectedLocation || data.location) {
-      let geoHtml = '';
-      if (data.location) geoHtml += row('Submitted City', data.location);
-      if (data.detectedLocation) geoHtml += row('Detected Address', data.detectedLocation);
-      if (data.latitude && data.longitude) {
-        geoHtml += row('Coordinates', `${data.latitude}, ${data.longitude}`);
-        const mapsUrl = `https://www.google.com/maps?q=${data.latitude},${data.longitude}`;
-        geoHtml += row('Google Maps', 'View on Google Maps 🗺️', true, mapsUrl);
-      }
-      if (data.ipAddress) geoHtml += row('Client IP', data.ipAddress);
+    // 🌐 User Endpoint & Search Context
+    let contextHtml = '';
+    if (data.pageUrl) {
+      contextHtml += row('Page URL / Endpoint', data.pageUrl, true, data.pageUrl);
+    } else if (data.pagePath) {
+      contextHtml += row('Page Endpoint', data.pagePath);
+    }
+    if (data.keywords) {
+      const kwFormatted = `<span style="display: inline-block; background: rgba(251, 191, 36, 0.15); color: #fbbf24; padding: 4px 12px; border-radius: 20px; font-weight: 700; font-size: 13px; border: 1px solid rgba(251, 191, 36, 0.35); letter-spacing: 0.5px;">🔍 ${data.keywords}</span>`;
+      contextHtml += `<tr>
+        <td style="padding: 16px 0; width: 35%; max-width: 140px; color: #94a3b8; font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; vertical-align: top; border-bottom: 1px solid rgba(255,255,255,0.05);">Keywords Used</td>
+        <td style="padding: 16px 0; vertical-align: top; border-bottom: 1px solid rgba(255,255,255,0.05);">${kwFormatted}</td>
+      </tr>`;
+    }
+    if (data.referrer) {
+      contextHtml += row('Traffic Source', data.referrer);
+    }
+    if (contextHtml) {
+      contentSections += buildSection('🌐 User Endpoint & Search Context', contextHtml);
+    }
+
+    // 📍 User Location & Geolocation (Silent IP-Based, No Permission Prompt)
+    let geoHtml = '';
+    if (data.detectedLocation) geoHtml += row('Detected Location', data.detectedLocation);
+    if (data.city) geoHtml += row('City', data.city);
+    if (data.region || data.state) geoHtml += row('State / Region', data.region || data.state);
+    if (data.country) geoHtml += row('Country', data.country);
+    if (data.isp) geoHtml += row('ISP / Network', data.isp);
+    if (data.ipAddress) geoHtml += row('Client IP', data.ipAddress);
+    if (data.latitude && data.longitude) {
+      geoHtml += row('Coordinates', `${data.latitude}, ${data.longitude}`);
+      const mapsUrl = `https://www.google.com/maps?q=${data.latitude},${data.longitude}`;
+      geoHtml += row('Google Maps', 'View on Google Maps 🗺️', true, mapsUrl);
+    }
+    if (geoHtml) {
       contentSections += buildSection('📍 User Location & Geolocation', geoHtml);
     }
 
@@ -77,8 +112,18 @@ export const buildEmailTemplate = (data, isRegister, isCallRequest, dbArtistInfo
       contentSections += coverPhotoHtml;
     }
 
-    if ((data.formName || data.formNumber)) {
-      contentSections += buildSection('📋 Source Form', row('Form Name', (data.formName || data.formNumber)));
+    const formUrl = data.formLink || data.pageUrl || '';
+    if (formUrl || data.formName || data.formNumber) {
+      if (formUrl) {
+        const extraLabel = data.formName ? `<div style="margin-top: 4px; font-size: 12px; color: #94a3b8; font-weight: 400;">(${data.formName})</div>` : '';
+        const linkDisplay = `<a href="${formUrl}" target="_blank" style="color: #fbbf24; text-decoration: underline; font-weight: 600; word-break: break-all;">${formUrl} ↗</a>${extraLabel}`;
+        contentSections += buildSection('📋 Source Form', `<tr>
+          <td style="padding: 16px 0; width: 35%; max-width: 140px; color: #94a3b8; font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; vertical-align: top; border-bottom: 1px solid rgba(255,255,255,0.05);">Form Link</td>
+          <td style="padding: 16px 0; vertical-align: top; border-bottom: 1px solid rgba(255,255,255,0.05);">${linkDisplay}</td>
+        </tr>`);
+      } else {
+        contentSections += buildSection('📋 Source Form', row('Form Link', (data.formName || data.formNumber)));
+      }
     }
 
     contentSections += buildSection('📝 Additional Message', `<tr><td style="padding: 16px; background-color: #f8fafc; border-radius: 8px; font-style: italic; color: #475569; border: 1px solid #e2e8f0;">"${data.message || 'No additional message provided.'}"</td></tr>`);

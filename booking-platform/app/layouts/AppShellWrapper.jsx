@@ -7,7 +7,7 @@ import BottomNav from '@/app/components/layout/BottomNav';
 import Footer from '@/app/components/common/Footer';
 import { useMouseGlow } from '@/app/hooks/useMouseGlow';
 
-import TopAdBar from '@/app/components/layout/TopAdBar';
+import AIAssistantModal from '@/app/components/common/AIAssistantModal';
 
 const HIDE_CHROME_ON = ['/checkout', '/confirmed', '/login', '/signup', '/onboarding', '/chat', '/f/'];
 
@@ -29,19 +29,23 @@ export function AppShellWrapper({ children }) {
       
       {!hideChrome && (
         <div id="unified-header" className="unified-header-container">
-          <TopAdBar />
           <Nav />
         </div>
       )}
 
-      <div className={`page-enter ${routeTransitionClass}`} style={{ minHeight: '100vh', paddingTop: (hideChrome || pathname === '/' || pathname === '/how-to-book') ? '0px' : 'calc(72px + var(--top-ad-offset, 0px))' }}>
+      <div className={`page-enter ${routeTransitionClass}`} style={{ minHeight: '100vh', paddingTop: (hideChrome || pathname === '/' || pathname === '/how-to-book') ? '0px' : '72px' }}>
         <div className="flow-unify-page-wrap">
           {children}
         </div>
         {!hideChrome && <Footer />}
       </div>
 
-      {!hideChrome && <BottomNav />}
+      {!hideChrome && (
+        <>
+          <AIAssistantModal />
+          <BottomNav />
+        </>
+      )}
     </div>
   );
 }

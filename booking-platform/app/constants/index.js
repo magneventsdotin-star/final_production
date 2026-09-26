@@ -34,6 +34,11 @@ export const BOOKING_STEPS = [
 
 export const WHY_POINTS = [
   {
+    icon: '✨',
+    title: 'AI-Powered Artist Search',
+    desc: 'Instantly find the perfect verified singer, band, or live musician using our cutting-edge AI matching system tailored to your exact budget, genre, language, and event date.',
+  },
+  {
     icon: '🎯',
     title: 'Handpicked for You',
     desc: 'When you book a singer for a house party, hire Sufi singers in Delhi, or need a live band for weddings, our artist experts help you choose the right talent. Every singer and band is carefully selected to match your unique event style and budget every single time.',
@@ -134,7 +139,6 @@ export const NAV_LINKS = [
     ],
   },
   { label: 'Pricing', path: '/pricing' },
-  // { label: 'Services', path: '/services' },
   { label: 'Blog Post', path: '/blog-post' },
 ]
 

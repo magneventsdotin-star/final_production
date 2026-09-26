@@ -78,14 +78,27 @@ export async function POST(req) {
 
       let evType = data.eventType || 'N/A';
       let notesArray = [];
+      let pageUrl = data.pageUrl || '';
+      let pagePath = data.pagePath || '';
+      let referrer = data.referrer || req.headers.get('referer') || 'Direct';
+      let keywords = data.keywords || '';
+
+      if (!pageUrl) {
+        pageUrl = req.headers.get('referer') || '';
+      }
+      let formLink = data.formLink || pageUrl || '';
+
       if (data.message) notesArray.push(`Message: ${data.message}`);
+      if (keywords) notesArray.push(`Keywords Used: ${keywords}`);
+      if (formLink) notesArray.push(`Form Link: ${formLink}`);
+      if (pageUrl || pagePath) notesArray.push(`Page Endpoint: ${pageUrl || pagePath}`);
+      if (referrer) notesArray.push(`Traffic Source: ${referrer}`);
       if (data.artistType && data.artistType.length > 0) {
         const typesStr = Array.isArray(data.artistType) ? data.artistType.join(', ') : data.artistType;
         notesArray.push(`Requested Types: ${typesStr}`);
       }
       if (data.formName || data.formType) notesArray.push(`Source Form: ${data.formName || data.formType}`);
       if (data.deviceType) notesArray.push(`Device: ${data.deviceType}`);
-      let extraNotes = notesArray.join('\n') || 'No additional notes.';
 
       if (isRegister) {
         evType = 'Artist Registration';
@@ -98,16 +111,21 @@ export async function POST(req) {
         req.headers.get('cf-connecting-ip') ||
         req.headers.get('x-real-ip') ||
         req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
+        data.ip ||
         '';
 
       let latitude = data.latitude ? parseFloat(data.latitude) : null;
       let longitude = data.longitude ? parseFloat(data.longitude) : null;
       let detectedLocation = data.detectedLocation || data.detected_location || '';
+      let city = data.city || '';
+      let region = data.region || '';
+      let country = data.country || '';
+      let isp = data.isp || '';
 
-      if (!latitude || !longitude || !detectedLocation) {
+      if (!latitude || !longitude || !detectedLocation || !isp) {
         const isLocal = !clientIp || clientIp === '127.0.0.1' || clientIp === '::1' || clientIp === 'localhost';
 
-        // 1. Primary HTTPS Provider: ipwho.is
+        // 1. Primary HTTPS Provider: ipwho.is (Silent, Zero Permission Prompt)
         try {
           const url = isLocal ? 'https://ipwho.is/' : `https://ipwho.is/${clientIp}`;
           const res = await fetch(url, { cache: 'no-store' });
@@ -116,9 +134,15 @@ export async function POST(req) {
             if (geo && geo.success) {
               if (!latitude && geo.latitude) latitude = parseFloat(geo.latitude);
               if (!longitude && geo.longitude) longitude = parseFloat(geo.longitude);
+              if (!city && geo.city) city = geo.city;
+              if (!region && geo.region) region = geo.region;
+              if (!country && geo.country) country = geo.country;
+              if (!isp && (geo.connection?.isp || geo.connection?.org)) {
+                isp = geo.connection?.isp || geo.connection?.org;
+              }
               if (!detectedLocation) {
                 const parts = [geo.city, geo.region, geo.country].filter(Boolean);
-                detectedLocation = parts.join(', ') + ' (IP-based)';
+                detectedLocation = parts.join(', ');
               }
               if (!clientIp && geo.ip) clientIp = geo.ip;
             }
@@ -131,17 +155,21 @@ export async function POST(req) {
         if (!latitude || !longitude || !detectedLocation) {
           try {
             const url = isLocal
-              ? 'http://ip-api.com/json/?fields=status,country,regionName,city,lat,lon,query'
-              : `http://ip-api.com/json/${clientIp}?fields=status,country,regionName,city,lat,lon,query`;
+              ? 'http://ip-api.com/json/?fields=status,country,regionName,city,lat,lon,query,isp'
+              : `http://ip-api.com/json/${clientIp}?fields=status,country,regionName,city,lat,lon,query,isp`;
             const res = await fetch(url, { cache: 'no-store' });
             if (res.ok) {
               const geo = await res.json();
               if (geo && geo.status === 'success') {
                 if (!latitude && geo.lat) latitude = parseFloat(geo.lat);
                 if (!longitude && geo.lon) longitude = parseFloat(geo.lon);
+                if (!city && geo.city) city = geo.city;
+                if (!region && geo.regionName) region = geo.regionName;
+                if (!country && geo.country) country = geo.country;
+                if (!isp && geo.isp) isp = geo.isp;
                 if (!detectedLocation) {
                   const parts = [geo.city, geo.regionName, geo.country].filter(Boolean);
-                  detectedLocation = parts.join(', ') + ' (IP-based)';
+                  detectedLocation = parts.join(', ');
                 }
                 if (!clientIp && geo.query) clientIp = geo.query;
               }
@@ -152,11 +180,24 @@ export async function POST(req) {
         }
       }
 
-      // Mutate data object so email template & DB get updated location
+      if (detectedLocation) notesArray.push(`Detected Location: ${detectedLocation}`);
+      if (isp) notesArray.push(`Network / ISP: ${isp}`);
+      let extraNotes = notesArray.join('\n') || 'No additional notes.';
+
+      // Mutate data object so email template & DB get updated location and tracking
       data.latitude = latitude;
       data.longitude = longitude;
       data.detectedLocation = detectedLocation;
+      data.city = city;
+      data.region = region;
+      data.country = country;
+      data.isp = isp;
       data.ipAddress = clientIp || 'unknown';
+      data.pageUrl = pageUrl;
+      data.pagePath = pagePath;
+      data.formLink = formLink;
+      data.referrer = referrer;
+      data.keywords = keywords;
 
       const bookingData = {
         client_name: data.name || 'Unknown',
@@ -172,7 +213,10 @@ export async function POST(req) {
         latitude: latitude,
         longitude: longitude,
         detected_location: detectedLocation,
-        ip_address: clientIp || 'unknown'
+        ip_address: clientIp || 'unknown',
+        page_url: pageUrl || pagePath || null,
+        keywords: keywords || null,
+        referrer: referrer || null
       };
 
       if (data.selectedArtist && data.selectedArtist.id) {
@@ -187,9 +231,19 @@ export async function POST(req) {
         }
       }
 
-      const { data: insertedData, error } = await supabase.from('bookings').insert([bookingData]).select().single();
+      let { data: insertedData, error } = await supabase.from('bookings').insert([bookingData]).select().single();
       if (error) {
-        console.error("Supabase insert error:", error);
+        console.warn("Supabase insert error, retrying without optional tracking columns:", error.message);
+        delete bookingData.page_url;
+        delete bookingData.keywords;
+        delete bookingData.referrer;
+        const retryRes = await supabase.from('bookings').insert([bookingData]).select().single();
+        if (retryRes.error) {
+          console.error("Supabase insert error on retry:", retryRes.error);
+        } else {
+          console.log("Successfully saved booking to Supabase on retry");
+          bookingId = retryRes.data.id;
+        }
       } else {
         console.log("Successfully saved booking to Supabase");
         bookingId = insertedData.id;
@@ -406,10 +460,14 @@ export async function POST(req) {
 
     let emailStatus = 'sent';
     try {
-      await transporter.sendMail(mailOptions);
+      const emailPromise = transporter.sendMail(mailOptions);
+      const timeoutPromise = new Promise((_, reject) => 
+        setTimeout(() => reject(new Error('SMTP dispatch timeout')), 2500)
+      );
+      await Promise.race([emailPromise, timeoutPromise]);
       console.log("Email dispatched successfully.");
     } catch (err) {
-      console.error("Email sending error:", err);
+      console.warn("Email sending notification:", err.message);
       emailStatus = 'failed';
     }
     

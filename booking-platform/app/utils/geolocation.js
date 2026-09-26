@@ -102,6 +102,7 @@ export async function getSilentLocationIfGranted() {
   const cached = getCachedGeolocation();
   if (cached) return cached;
 
+  // 1. If GPS permission was ALREADY granted previously by user, use it without prompting
   try {
     if (navigator.permissions && navigator.permissions.query) {
       const status = await navigator.permissions.query({ name: 'geolocation' });
@@ -112,5 +113,32 @@ export async function getSilentLocationIfGranted() {
     }
   } catch (e) {}
 
+  // 2. Silent IP Geolocation Fallback (ZERO permission prompts to user)
+  try {
+    const res = await fetch('https://ipwho.is/', { cache: 'no-store' });
+    if (res.ok) {
+      const geo = await res.json();
+      if (geo && geo.success) {
+        const parts = [geo.city, geo.region, geo.country].filter(Boolean);
+        const locationData = {
+          success: true,
+          latitude: geo.latitude,
+          longitude: geo.longitude,
+          detectedLocation: parts.join(', '),
+          city: geo.city || '',
+          region: geo.region || '',
+          country: geo.country || '',
+          isp: geo.connection?.isp || geo.connection?.org || '',
+          ip: geo.ip || ''
+        };
+        try {
+          sessionStorage.setItem('magnevents_user_location', JSON.stringify(locationData));
+        } catch (e) {}
+        return locationData;
+      }
+    }
+  } catch (e) {}
+
   return null;
 }
+

@@ -1,0 +1,946 @@
+/* ==========================================================================
+   AISearch.css — Magnevents AI Search · Premium Redesign
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap');
+
+/* ── Page Shell ── */
+.lux-ai-search-page {
+  min-height: 100vh;
+  background: #07060d;
+  color: #ffffff;
+  padding: 0 0 120px;
+  position: relative;
+  overflow: hidden;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+/* ── Layered Background ── */
+.lux-ai-ambient-glow-1 {
+  position: absolute;
+  top: -220px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1100px;
+  height: 600px;
+  background: radial-gradient(ellipse at center,
+    rgba(139, 92, 246, 0.30) 0%,
+    rgba(255, 46, 147, 0.18) 38%,
+    transparent 70%
+  );
+  pointer-events: none;
+  filter: blur(70px);
+  z-index: 0;
+}
+
+.lux-ai-ambient-glow-2 {
+  position: absolute;
+  top: 350px;
+  right: -180px;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle,
+    rgba(255, 224, 50, 0.10) 0%,
+    transparent 68%
+  );
+  pointer-events: none;
+  filter: blur(90px);
+  z-index: 0;
+}
+
+/* Dot-grid overlay */
+.lux-ai-search-page::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(255,255,255,0.045) 1px, transparent 1px);
+  background-size: 32px 32px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Container ── */
+.lux-ai-container {
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 0 20px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ════════════════════════════════════════
+   HERO
+   ════════════════════════════════════════ */
+.lux-ai-hero {
+  text-align: center;
+  padding: 72px 16px 48px;
+  max-width: 820px;
+  margin: 0 auto;
+}
+
+/* Live badge */
+.lux-ai-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(139, 92, 246, 0.12);
+  border: 1px solid rgba(139, 92, 246, 0.40);
+  color: #d4aaff;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 7px 18px;
+  border-radius: 999px;
+  margin-bottom: 28px;
+  text-transform: uppercase;
+  letter-spacing: 0.10em;
+  box-shadow: 0 0 24px rgba(139, 92, 246, 0.22), inset 0 1px 0 rgba(255,255,255,0.08);
+  backdrop-filter: blur(10px);
+}
+
+.lux-ai-badge-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 10px #22c55e, 0 0 20px rgba(34,197,94,0.4);
+  animation: aiPulse 1.8s infinite;
+  flex-shrink: 0;
+}
+
+@keyframes aiPulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50%       { transform: scale(1.4); opacity: 0.6; }
+}
+
+/* Headline */
+.lux-ai-title {
+  font-size: clamp(36px, 6vw, 62px);
+  font-weight: 900;
+  line-height: 1.10;
+  letter-spacing: -0.03em;
+  margin: 0 0 18px;
+  color: #ffffff;
+}
+
+.lux-ai-title-highlight {
+  background: linear-gradient(120deg, #FFE032 0%, #FF6B35 40%, #FF2E93 75%, #a78bfa 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Subtitle */
+.lux-ai-subtitle {
+  font-size: clamp(15px, 2vw, 18px);
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.62);
+  margin: 0 auto 36px;
+  max-width: 640px;
+}
+
+/* ════════════════════════════════════════
+   SEARCH CARD
+   ════════════════════════════════════════ */
+.lux-ai-searchbox-card {
+  background: rgba(18, 15, 28, 0.80);
+  backdrop-filter: blur(28px) saturate(160%);
+  -webkit-backdrop-filter: blur(28px) saturate(160%);
+  border: 1px solid rgba(255, 224, 50, 0.22);
+  border-radius: 28px;
+  padding: 28px;
+  box-shadow:
+    0 24px 60px rgba(0, 0, 0, 0.85),
+    0 0 0 1px rgba(255,255,255,0.04) inset,
+    0 0 40px rgba(139, 92, 246, 0.12);
+  margin-bottom: 40px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Thin top shimmer line */
+.lux-ai-searchbox-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 10%; right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,224,50,0.5) 40%, rgba(255,46,147,0.4) 60%, transparent);
+  border-radius: 999px;
+}
+
+/* Input row */
+.lux-ai-input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(8, 7, 14, 0.80);
+  border: 1.5px solid rgba(255, 255, 255, 0.10);
+  border-radius: 18px;
+  padding: 8px 8px 8px 20px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.lux-ai-input-wrapper:focus-within {
+  border-color: rgba(255, 224, 50, 0.65);
+  box-shadow: 0 0 0 4px rgba(255, 224, 50, 0.08), 0 0 30px rgba(255,224,50,0.18);
+}
+
+.lux-ai-search-icon {
+  font-size: 22px;
+  flex-shrink: 0;
+  filter: drop-shadow(0 0 8px rgba(255,224,50,0.6));
+}
+
+.lux-ai-textarea {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  font-size: 16px;
+  font-family: inherit;
+  outline: none;
+  resize: none;
+  min-height: 52px;
+  line-height: 1.55;
+  padding: 10px 0;
+}
+
+.lux-ai-textarea::placeholder {
+  color: rgba(255, 255, 255, 0.32);
+}
+
+/* Submit button */
+.lux-ai-search-submit-btn {
+  background: linear-gradient(135deg, #FFE032 0%, #FF8A00 100%);
+  color: #0b0b0d;
+  font-weight: 900;
+  font-size: 14px;
+  padding: 14px 26px;
+  border-radius: 14px;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 6px 22px rgba(255, 224, 50, 0.40);
+  letter-spacing: 0.01em;
+  flex-shrink: 0;
+}
+
+.lux-ai-search-submit-btn:hover:not(:disabled) {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 10px 30px rgba(255, 224, 50, 0.55);
+  background: linear-gradient(135deg, #fff 0%, #ffe57a 100%);
+}
+
+.lux-ai-search-submit-btn:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.lux-ai-search-submit-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* ── Filter Row ── */
+.lux-ai-filters-row {
+  display: flex;
+  gap: 12px;
+  margin-top: 18px;
+  flex-wrap: wrap;
+}
+
+.lux-ai-select {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  color: #e5e5e5;
+  padding: 10px 16px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-family: inherit;
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23888' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 34px;
+}
+
+.lux-ai-select:focus {
+  border-color: rgba(255, 224, 50, 0.55);
+  background-color: rgba(255, 224, 50, 0.06);
+}
+
+/* ── Quick Prompt Chips ── */
+.lux-ai-chips-wrap {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.lux-ai-chips-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.40);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  flex-shrink: 0;
+}
+
+.lux-ai-prompt-chip {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  color: rgba(255,255,255,0.75);
+  font-size: 12.5px;
+  font-family: inherit;
+  padding: 7px 15px;
+  border-radius: 22px;
+  cursor: pointer;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  white-space: nowrap;
+  backdrop-filter: blur(6px);
+}
+
+.lux-ai-prompt-chip:hover {
+  background: rgba(255, 224, 50, 0.13);
+  border-color: rgba(255, 224, 50, 0.55);
+  color: #FFE032;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(255,224,50,0.18);
+}
+
+/* ════════════════════════════════════════
+   LOADING / THINKING STATE
+   ════════════════════════════════════════ */
+.lux-ai-thinking-card {
+  background: linear-gradient(135deg, rgba(28, 20, 46, 0.95) 0%, rgba(16, 13, 26, 0.95) 100%);
+  border: 1px solid rgba(139, 92, 246, 0.38);
+  border-radius: 24px;
+  padding: 48px 28px;
+  text-align: center;
+  margin: 32px 0;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.65), 0 0 40px rgba(139,92,246,0.12);
+  animation: fadeInUp 0.35s ease;
+}
+
+.lux-ai-thinking-spinner {
+  width: 56px;
+  height: 56px;
+  border: 3px solid rgba(139, 92, 246, 0.18);
+  border-top-color: #FFE032;
+  border-right-color: #8B5CF6;
+  border-bottom-color: #FF2E93;
+  border-radius: 50%;
+  margin: 0 auto 24px;
+  animation: spin 0.85s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.lux-ai-thinking-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0 0 10px;
+  letter-spacing: -0.02em;
+}
+
+.lux-ai-thinking-desc {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.58);
+  margin: 0 0 24px;
+  max-width: 520px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.lux-ai-steps-list {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.lux-ai-step-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #c084fc;
+  background: rgba(139, 92, 246, 0.10);
+  padding: 7px 14px;
+  border-radius: 22px;
+  border: 1px solid rgba(139, 92, 246, 0.22);
+  letter-spacing: 0.02em;
+}
+
+/* ════════════════════════════════════════
+   RESULTS
+   ════════════════════════════════════════ */
+.lux-ai-results-section {
+  animation: fadeInUp 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Strategy Card ── */
+.lux-ai-strategy-card {
+  background: linear-gradient(145deg, rgba(30, 22, 48, 0.96) 0%, rgba(16, 13, 24, 0.96) 100%);
+  border: 1px solid rgba(255, 224, 50, 0.25);
+  border-radius: 28px;
+  padding: 32px;
+  margin-bottom: 36px;
+  box-shadow:
+    0 20px 50px rgba(0, 0, 0, 0.70),
+    0 0 40px rgba(255, 224, 50, 0.07),
+    inset 0 1px 0 rgba(255,255,255,0.06);
+  position: relative;
+  overflow: hidden;
+}
+
+.lux-ai-strategy-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 5%; right: 5%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,224,50,0.45), transparent);
+}
+
+.lux-ai-strategy-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  padding-bottom: 20px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.lux-ai-strategy-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 19px;
+  font-weight: 900;
+  color: #FFE032;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.lux-ai-event-meta-badge {
+  background: rgba(255, 224, 50, 0.12);
+  border: 1px solid rgba(255, 224, 50, 0.32);
+  color: #FFE032;
+  font-size: 11.5px;
+  font-weight: 700;
+  padding: 5px 14px;
+  border-radius: 22px;
+  letter-spacing: 0.02em;
+}
+
+.lux-ai-strategy-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+}
+
+.lux-ai-strategy-block {
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 18px;
+  padding: 20px;
+  transition: border-color 0.25s, background 0.25s;
+}
+
+.lux-ai-strategy-block:hover {
+  background: rgba(255, 255, 255, 0.045);
+  border-color: rgba(255,224,50,0.15);
+}
+
+.lux-ai-strategy-block h4 {
+  margin: 0 0 10px;
+  font-size: 13.5px;
+  font-weight: 800;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.lux-ai-strategy-block p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.68);
+}
+
+/* ── Promo Banner ── */
+.lux-ai-promo-banner {
+  background: linear-gradient(120deg,
+    rgba(255, 46, 147, 0.14) 0%,
+    rgba(139, 92, 246, 0.12) 50%,
+    rgba(255, 224, 50, 0.12) 100%
+  );
+  border: 1px solid rgba(255, 224, 50, 0.35);
+  border-radius: 22px;
+  padding: 20px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+  gap: 18px;
+  box-shadow: 0 8px 30px rgba(255,46,147,0.10);
+  position: relative;
+  overflow: hidden;
+}
+
+.lux-ai-promo-banner::after {
+  content: '60%';
+  position: absolute;
+  right: 140px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 100px;
+  font-weight: 900;
+  color: rgba(255,224,50,0.04);
+  letter-spacing: -4px;
+  pointer-events: none;
+  user-select: none;
+}
+
+.lux-ai-promo-text {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex: 1;
+}
+
+.lux-ai-promo-icon {
+  font-size: 34px;
+  flex-shrink: 0;
+}
+
+.lux-ai-promo-title {
+  font-size: 16px;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0 0 4px;
+  letter-spacing: -0.01em;
+}
+
+.lux-ai-promo-subtitle {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.65);
+  margin: 0;
+}
+
+.lux-ai-claim-offer-btn {
+  background: linear-gradient(135deg, #FFE032 0%, #FF8A00 100%);
+  color: #0b0b0d;
+  font-weight: 900;
+  font-size: 13.5px;
+  padding: 12px 24px;
+  border-radius: 14px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 6px 20px rgba(255, 224, 50, 0.38);
+  white-space: nowrap;
+  letter-spacing: 0.01em;
+  flex-shrink: 0;
+}
+
+.lux-ai-claim-offer-btn:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 10px 28px rgba(255, 224, 50, 0.55);
+  background: linear-gradient(135deg, #fff 0%, #ffe57a 100%);
+}
+
+/* ── Artists Section Header ── */
+.lux-ai-artists-header {
+  margin-bottom: 24px;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+
+.lux-ai-artists-header h3 {
+  font-size: 22px;
+  font-weight: 900;
+  color: #ffffff;
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+.lux-ai-artists-header p {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.50);
+  margin: 0;
+}
+
+/* ════════════════════════════════════════
+   ARTIST CARDS
+   ════════════════════════════════════════ */
+.lux-ai-artists-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 22px;
+  margin-bottom: 56px;
+}
+
+.lux-ai-artist-card {
+  background: linear-gradient(180deg, #16121f 0%, #0f0d18 100%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 22px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.3s ease,
+              box-shadow 0.3s ease;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.55);
+}
+
+.lux-ai-artist-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(255, 224, 50, 0.35);
+  box-shadow:
+    0 20px 50px rgba(0, 0, 0, 0.80),
+    0 0 30px rgba(255, 224, 50, 0.12);
+}
+
+.lux-ai-artist-thumb-wrap {
+  position: relative;
+  width: 100%;
+  height: 210px;
+  background: #1a1625;
+  overflow: hidden;
+}
+
+.lux-ai-artist-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.55s ease;
+}
+
+.lux-ai-artist-card:hover .lux-ai-artist-img {
+  transform: scale(1.07);
+}
+
+/* Gradient overlay on image */
+.lux-ai-artist-thumb-wrap::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(15,13,24,0.65) 0%, transparent 55%);
+  pointer-events: none;
+}
+
+.lux-ai-artist-badge-row {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  right: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 1;
+}
+
+.lux-ai-verified-tag {
+  background: rgba(10, 8, 18, 0.78);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(74, 222, 128, 0.40);
+  color: #4ade80;
+  font-size: 10.5px;
+  font-weight: 800;
+  padding: 5px 12px;
+  border-radius: 22px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  letter-spacing: 0.02em;
+}
+
+.lux-ai-rating-tag {
+  background: rgba(10, 8, 18, 0.78);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 224, 50, 0.42);
+  color: #FFE032;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 5px 12px;
+  border-radius: 22px;
+  letter-spacing: 0.02em;
+}
+
+/* Card Body */
+.lux-ai-artist-card-body {
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.lux-ai-artist-name {
+  font-size: 18px;
+  font-weight: 900;
+  color: #ffffff;
+  margin: 0 0 8px;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.lux-ai-artist-category-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12.5px;
+  color: rgba(255, 255, 255, 0.55);
+  margin-bottom: 12px;
+}
+
+.lux-ai-artist-city {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: #a78bfa;
+}
+
+.lux-ai-artist-genres {
+  font-size: 12.5px;
+  color: rgba(255, 255, 255, 0.45);
+  margin: 0 0 18px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-height: 1.5;
+}
+
+/* Price Box */
+.lux-ai-artist-pricing-box {
+  margin-top: auto;
+  padding: 14px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.lux-ai-price-label {
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: rgba(255, 255, 255, 0.38);
+  font-weight: 700;
+}
+
+.lux-ai-price-value {
+  font-size: 18px;
+  font-weight: 900;
+  color: #FFE032;
+  letter-spacing: -0.02em;
+}
+
+/* Action Buttons */
+.lux-ai-artist-card-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.lux-ai-card-btn {
+  padding: 11px 10px;
+  border-radius: 12px;
+  font-size: 12.5px;
+  font-weight: 800;
+  font-family: inherit;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  text-decoration: none;
+  letter-spacing: 0.01em;
+}
+
+.lux-ai-card-btn.primary {
+  background: linear-gradient(135deg, #FFE032 0%, #FF8A00 100%);
+  color: #0b0b0d;
+  border: none;
+  box-shadow: 0 4px 14px rgba(255,224,50,0.28);
+}
+
+.lux-ai-card-btn.primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(255,224,50,0.45);
+  background: linear-gradient(135deg, #fff 0%, #ffe57a 100%);
+}
+
+.lux-ai-card-btn.secondary {
+  background: rgba(37, 211, 102, 0.10);
+  border: 1px solid rgba(37, 211, 102, 0.32);
+  color: #4ade80;
+}
+
+.lux-ai-card-btn.secondary:hover {
+  background: #25D366;
+  border-color: #25D366;
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+/* ════════════════════════════════════════
+   FAQ
+   ════════════════════════════════════════ */
+.lux-ai-faq-box {
+  background: rgba(16, 13, 24, 0.65);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 24px;
+  padding: 36px 32px;
+  margin-top: 64px;
+}
+
+.lux-ai-faq-title {
+  font-size: 22px;
+  font-weight: 900;
+  color: #ffffff;
+  margin: 0 0 24px;
+  text-align: center;
+  letter-spacing: -0.02em;
+}
+
+.lux-ai-faq-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+.lux-ai-faq-item {
+  background: rgba(255,255,255,0.025);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 16px;
+  padding: 20px;
+  transition: border-color 0.25s, background 0.25s;
+}
+
+.lux-ai-faq-item:hover {
+  border-color: rgba(255,224,50,0.15);
+  background: rgba(255,255,255,0.04);
+}
+
+.lux-ai-faq-item h5 {
+  font-size: 14px;
+  font-weight: 800;
+  color: #FFE032;
+  margin: 0 0 8px;
+  line-height: 1.4;
+}
+
+.lux-ai-faq-item p {
+  font-size: 13px;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.65);
+  margin: 0;
+}
+
+/* ════════════════════════════════════════
+   RESPONSIVE
+   ════════════════════════════════════════ */
+@media (max-width: 768px) {
+  .lux-ai-hero {
+    padding: 48px 0 36px;
+  }
+
+  .lux-ai-searchbox-card {
+    padding: 18px 16px;
+    border-radius: 22px;
+  }
+
+  .lux-ai-input-wrapper {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 14px;
+    gap: 10px;
+  }
+
+  .lux-ai-search-submit-btn {
+    width: 100%;
+    justify-content: center;
+    padding: 14px;
+  }
+
+  .lux-ai-artists-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .lux-ai-strategy-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .lux-ai-promo-banner {
+    flex-direction: column;
+    text-align: center;
+    padding: 20px 18px;
+  }
+
+  .lux-ai-promo-banner::after {
+    display: none;
+  }
+
+  .lux-ai-promo-text {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .lux-ai-claim-offer-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .lux-ai-artists-header {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .lux-ai-faq-box {
+    padding: 24px 16px;
+  }
+
+  .lux-ai-faq-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .lux-ai-chips-wrap {
+    gap: 7px;
+  }
+
+  .lux-ai-prompt-chip {
+    font-size: 12px;
+    padding: 6px 12px;
+  }
+}

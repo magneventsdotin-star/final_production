@@ -1,0 +1,462 @@
+/* ==========================================================================
+   AISingerBookingCard.css — Fancy AI Singer Booking Widget
+   ========================================================================== */
+
+.lux-fancy-ai-card {
+  position: relative;
+  background: linear-gradient(135deg, rgba(32, 22, 50, 0.92) 0%, rgba(16, 14, 22, 0.95) 100%);
+  border: 1px solid rgba(255, 224, 50, 0.35);
+  border-radius: 22px;
+  padding: 24px;
+  margin: 0;
+  width: 100%;
+  box-shadow: 
+    0 18px 45px rgba(0, 0, 0, 0.75),
+    0 0 30px rgba(139, 92, 246, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  overflow: hidden;
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  text-align: left;
+}
+
+.lux-fancy-ai-glow {
+  position: absolute;
+  top: -60px;
+  right: -60px;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 224, 50, 0.25) 0%, rgba(255, 46, 147, 0.15) 50%, transparent 70%);
+  pointer-events: none;
+  filter: blur(35px);
+}
+
+/* ── MAJOR AREA: WHY CHOOSE MAGNEVENTS ── */
+.lux-why-major-area {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.lux-why-header-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 4px;
+}
+
+.lux-why-mic-badge {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(255, 224, 50, 0.2), rgba(255, 46, 147, 0.2));
+  border: 1px solid rgba(255, 224, 50, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+  box-shadow: 0 4px 14px rgba(255, 224, 50, 0.2);
+}
+
+.lux-why-header-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.lux-why-title {
+  font-size: 19px;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0;
+  line-height: 1.25;
+}
+
+.lux-why-sub {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.6);
+  letter-spacing: 0.02em;
+}
+
+.lux-why-bullets {
+  list-style: none;
+  padding: 0;
+  margin: 6px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+}
+
+.lux-why-bullets li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding-bottom: 9px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.lux-why-bullets li:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.lux-why-gold-check {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: rgba(255, 224, 50, 0.15);
+  border: 1.5px solid #FFE032;
+  color: #FFE032;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 900;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.lux-why-item-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.lux-why-item-content strong {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.2;
+}
+
+.lux-why-item-content span {
+  font-size: 11.5px;
+  color: rgba(255, 255, 255, 0.65);
+  line-height: 1.35;
+}
+
+/* ── MINOR AREA: COMPACT AI SEARCH MATCHER ── */
+.lux-ai-minor-area {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.lux-ai-minor-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.lux-ai-minor-tag {
+  font-size: 10px;
+  font-weight: 800;
+  color: #c084fc;
+  letter-spacing: 0.06em;
+}
+
+.lux-ai-minor-chat-btn {
+  background: rgba(139, 92, 246, 0.15);
+  border: 1px solid rgba(139, 92, 246, 0.35);
+  color: #e9d5ff;
+  font-size: 10.5px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.lux-ai-minor-chat-btn:hover {
+  background: rgba(139, 92, 246, 0.35);
+  color: #fff;
+}
+
+.lux-ai-minor-form {
+  width: 100%;
+}
+
+.lux-ai-minor-input-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(255, 224, 50, 0.3);
+  border-radius: 12px;
+  padding: 4px 5px 4px 10px;
+  transition: all 0.2s ease;
+}
+
+.lux-ai-minor-input-wrap:focus-within {
+  border-color: #FFE032;
+  box-shadow: 0 0 14px rgba(255, 224, 50, 0.25);
+  background: rgba(0, 0, 0, 0.65);
+}
+
+.lux-ai-minor-icon {
+  font-size: 13px;
+  color: #FFE032;
+}
+
+.lux-ai-minor-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 12px;
+  outline: none;
+  font-family: inherit;
+  min-width: 0;
+}
+
+.lux-ai-minor-input::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.lux-ai-minor-btn {
+  background: linear-gradient(135deg, #FFE032 0%, #F5C518 100%);
+  color: #0b0b0d;
+  font-weight: 800;
+  font-size: 11px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.lux-ai-minor-btn:hover {
+  background: #fff;
+  transform: translateY(-1px);
+}
+
+.lux-fancy-ai-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.lux-fancy-ai-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(139, 92, 246, 0.2);
+  border: 1px solid rgba(139, 92, 246, 0.4);
+  color: #c084fc;
+  font-size: 10.5px;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: 999px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.lux-fancy-ai-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 6px #22c55e;
+  animation: fancyAiPulse 1.6s infinite;
+}
+
+@keyframes fancyAiPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(1.4); }
+}
+
+.lux-fancy-ai-chat-link {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #FFE032;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.lux-fancy-ai-chat-link:hover {
+  background: rgba(255, 224, 50, 0.15);
+  border-color: #FFE032;
+}
+
+.lux-fancy-ai-title {
+  font-size: clamp(20px, 2.5vw, 26px);
+  font-weight: 900;
+  color: #ffffff;
+  margin: 0 0 6px;
+  line-height: 1.25;
+}
+
+.lux-fancy-ai-grad {
+  background: linear-gradient(135deg, #FFE032 0%, #FF2E93 60%, #8B5CF6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.lux-fancy-ai-sub {
+  font-size: 13.5px;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.5;
+  margin: 0 0 16px;
+}
+
+/* Input Form */
+.lux-fancy-ai-form {
+  margin-bottom: 14px;
+}
+
+.lux-fancy-ai-input-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(10, 9, 14, 0.85);
+  border: 1px solid rgba(255, 224, 50, 0.3);
+  border-radius: 14px;
+  padding: 5px 6px 5px 14px;
+  transition: all 0.25s ease;
+}
+
+.lux-fancy-ai-input-wrap:focus-within {
+  border-color: #FFE032;
+  box-shadow: 0 0 20px rgba(255, 224, 50, 0.35);
+  background: rgba(15, 13, 20, 0.95);
+}
+
+.lux-fancy-ai-icon {
+  font-size: 16px;
+  color: #FFE032;
+  flex-shrink: 0;
+}
+
+.lux-fancy-ai-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  font-size: 13.5px;
+  font-family: inherit;
+  outline: none;
+  padding: 8px 0;
+  min-width: 0;
+}
+
+.lux-fancy-ai-input::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.lux-fancy-ai-btn {
+  background: linear-gradient(135deg, #FFE032 0%, #F5C518 100%);
+  color: #0b0b0d;
+  font-weight: 800;
+  font-size: 13px;
+  padding: 10px 18px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 15px rgba(255, 224, 50, 0.3);
+  flex-shrink: 0;
+}
+
+.lux-fancy-ai-btn:hover {
+  transform: translateY(-1px);
+  background: #ffffff;
+  box-shadow: 0 6px 20px rgba(255, 224, 50, 0.5);
+}
+
+/* Quick Chips */
+.lux-fancy-ai-chips {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 2px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.lux-fancy-ai-chips-tag {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.45);
+  letter-spacing: 0.05em;
+  flex-shrink: 0;
+}
+
+.lux-fancy-ai-chip {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #e5e7eb;
+  font-size: 11.5px;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.lux-fancy-ai-chip:hover {
+  background: rgba(255, 224, 50, 0.15);
+  border-color: #FFE032;
+  color: #FFE032;
+  transform: translateY(-1px);
+}
+
+.lux-fancy-ai-trust {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  font-size: 11px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.6);
+  letter-spacing: 0.02em;
+}
+
+@media (max-width: 600px) {
+  .lux-fancy-ai-card {
+    padding: 18px 16px;
+    border-radius: 18px;
+    margin: 14px 0;
+  }
+  .lux-fancy-ai-input-wrap {
+    flex-wrap: wrap;
+    padding: 8px 10px;
+  }
+  .lux-fancy-ai-btn {
+    width: 100%;
+    justify-content: center;
+    padding: 10px;
+  }
+  .lux-fancy-ai-trust {
+    flex-wrap: wrap;
+    gap: 6px;
+    font-size: 10px;
+  }
+}
+

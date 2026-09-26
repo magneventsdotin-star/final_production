@@ -42,6 +42,15 @@ export default function SEOLandingHero({
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [imageErrors, setImageErrors] = useState({});
 
+  // Quick 1-step phone modal for pricing tier check availability
+  const [tierModalOpen, setTierModalOpen] = useState(false);
+  const [activeTier, setActiveTier] = useState(null);
+  const [quickPhone, setQuickPhone] = useState("");
+  const [quickPhoneError, setQuickPhoneError] = useState("");
+  const [quickSubmitting, setQuickSubmitting] = useState(false);
+  const [quickSubmitted, setQuickSubmitted] = useState(false);
+  const quickPhoneRef = useRef(null);
+
   const eventTypes = useMemo(() => [
     "Wedding / Reception",
     "Ghazal / Sufi Mehfil",
@@ -109,6 +118,7 @@ export default function SEOLandingHero({
         city: city,
         service: `${category} in ${city}`,
         formName: `SEO Instant Lead Engine - ${category} in ${city}`,
+        formLink: typeof window !== 'undefined' ? `${window.location.origin}${window.location.pathname}#instant-lead` : '',
         formType: 'booking',
         message: `Direct SEO Lead for ${category} in ${city}. Event: ${selectedEventType} on ${eventDate}. Budget: ${selectedBudget}.${selectedArtist ? ` Preferred Performer: ${selectedArtist.name}.` : ''}`
       });
@@ -133,15 +143,58 @@ export default function SEOLandingHero({
     }, 400);
   };
 
-  // Select a tier and focus phone input
+  // Select a tier and open 1-step quick phone modal
   const handleSelectTier = (tier) => {
+    setActiveTier(tier);
     setSelectedBudget(`${tier.title} (${tier.price})`);
-    if (formRef.current) {
-      formRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
+    setQuickPhone(phone || "");
+    setQuickPhoneError("");
+    setQuickSubmitted(false);
+    setTierModalOpen(true);
     setTimeout(() => {
-      if (phoneInputRef.current) phoneInputRef.current.focus();
-    }, 400);
+      if (quickPhoneRef.current) quickPhoneRef.current.focus();
+    }, 150);
+  };
+
+  const handleQuickTierSubmit = async (e) => {
+    e.preventDefault();
+    setQuickPhoneError("");
+
+    const clean = (quickPhone || '').replace(/[^0-9]/g, '');
+    if (clean.length < 10) {
+      setQuickPhoneError("Please enter a valid 10-digit mobile number");
+      return;
+    }
+
+    setQuickSubmitting(true);
+    try {
+      await bookingService.submitRequest({
+        name: name.trim() || 'Event Host',
+        phone: quickPhone,
+        eventType: `${activeTier?.title || category} Booking`,
+        budget: activeTier?.price || 'TBD',
+        selectedPlan: activeTier ? {
+          name: activeTier.title,
+          price: activeTier.price,
+          tagline: activeTier.desc,
+          features: activeTier.features
+        } : null,
+        category: category,
+        city: city,
+        keywords: `${category}, ${activeTier?.title || ''}, ${city}`,
+        formName: `Pricing Tier Quick Check - ${activeTier?.title || 'Package'} in ${city}`,
+        formLink: typeof window !== 'undefined' ? `${window.location.origin}${window.location.pathname}#pricing` : '',
+        formType: 'booking',
+        message: `Package Inquiry for ${activeTier?.title} (${activeTier?.price}) in ${city}. Features: ${activeTier?.features?.join(', ')}. Checking live artist availability.`
+      });
+
+      setQuickSubmitted(true);
+    } catch (err) {
+      console.error("Quick tier submission error:", err);
+      setQuickSubmitted(true);
+    } finally {
+      setQuickSubmitting(false);
+    }
   };
 
   const handleImageError = (artistId) => {
@@ -627,6 +680,158 @@ export default function SEOLandingHero({
           <span>💬 WhatsApp Rates</span>
         </button>
       </div>
+
+      {/* ==========================================================================
+         7. Quick Tier Availability Modal (1-Step Phone Only Form)
+         ========================================================================== */}
+      <AnimatePresence>
+        {tierModalOpen && activeTier && (
+          <motion.div
+            className="seo-tier-modal-overlay"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setTierModalOpen(false)}
+          >
+            <motion.div
+              className="seo-tier-modal-card"
+              initial={{ scale: 0.92, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.92, opacity: 0, y: 20 }}
+              transition={{ type: "spring", damping: 25, stiffness: 300 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button
+                type="button"
+                className="seo-tier-modal-close"
+                onClick={() => setTierModalOpen(false)}
+                aria-label="Close dialog"
+              >
+                ✕
+              </button>
+
+              {!quickSubmitted ? (
+                <form onSubmit={handleQuickTierSubmit}>
+                  <div className="seo-tier-modal-tag">
+                    <span>⚡ INSTANT AVAILABILITY CHECK</span>
+                  </div>
+
+                  <h3 className="seo-tier-modal-title">
+                    Check Live Availability
+                  </h3>
+                  <p className="seo-tier-modal-sub">
+                    Direct artist pricing with 0% middleman fees. Enter your phone number to receive instant quote & live availability in {city}.
+                  </p>
+
+                  <div className="seo-tier-selected-box">
+                    <div className="seo-tier-selected-left">
+                      <h5>{activeTier.title}</h5>
+                      <span>📍 {city} • {category}</span>
+                    </div>
+                    <div className="seo-tier-selected-price">
+                      {activeTier.price}
+                    </div>
+                  </div>
+
+                  <label className="seo-tier-phone-label" htmlFor="seo-quick-phone">
+                    Your Mobile Number (For Instant WhatsApp Quotes) *
+                  </label>
+
+                  <div className="seo-tier-phone-wrap">
+                    <div className="seo-tier-phone-flag">
+                      <span>🇮🇳</span>
+                      <span>+91</span>
+                    </div>
+                    <input
+                      ref={quickPhoneRef}
+                      id="seo-quick-phone"
+                      type="tel"
+                      value={quickPhone}
+                      onChange={(e) => {
+                        setQuickPhone(e.target.value);
+                        if (quickPhoneError) setQuickPhoneError("");
+                      }}
+                      placeholder="e.g. 98765 43210"
+                      className="seo-tier-phone-input"
+                      maxLength={14}
+                      autoFocus
+                    />
+                  </div>
+
+                  {quickPhoneError && (
+                    <span className="seo-tier-phone-err">{quickPhoneError}</span>
+                  )}
+
+                  <button
+                    type="submit"
+                    disabled={quickSubmitting}
+                    className="seo-tier-submit-btn"
+                  >
+                    {quickSubmitting ? (
+                      <span>⏳ Checking Live Availability...</span>
+                    ) : (
+                      <>
+                        <span>Check Availability & Send Quotes</span>
+                        <span>→</span>
+                      </>
+                    )}
+                  </button>
+
+                  <div className="seo-tier-guarantee-note">
+                    <span>🔒 100% Free Service</span>
+                    <span>•</span>
+                    <span>⚡ Reply in 6 Mins</span>
+                    <span>•</span>
+                    <span>🛡️ Direct Artist Fees</span>
+                  </div>
+                </form>
+              ) : (
+                <div className="seo-tier-success-box">
+                  <div className="seo-tier-success-icon">✓</div>
+                  <h3 className="seo-tier-modal-title" style={{ color: '#10b981' }}>
+                    Availability Request Sent!
+                  </h3>
+                  <p className="seo-tier-modal-sub">
+                    We received your check for <strong>{activeTier.title}</strong> ({activeTier.price}) in <strong>{city}</strong>. Our artist coordinator will WhatsApp verified singer availability and video clips to <strong>{quickPhone}</strong> within 6 minutes.
+                  </p>
+
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginTop: '20px' }}>
+                    <a
+                      href={`https://wa.me/918076515257?text=${encodeURIComponent(`Hi Magnevents, I just requested availability for ${activeTier.title} (${activeTier.price}) in ${city}. Please share available artists.`)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="seo-btn-whatsapp"
+                      style={{ width: '100%', justifyContent: 'center' }}
+                    >
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.513 2.262 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.458L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.725 1.451 5.437 0 9.857-4.403 9.86-9.809.001-2.618-1.01-5.08-2.858-6.93C16.528 2.015 14.07 1.006 11.453 1.006c-5.434 0-9.852 4.403-9.855 9.81-.001 2.062.54 4.079 1.566 5.86l-.99 3.613 3.712-.977zm11.304-6.816c-.302-.15-1.788-.882-2.066-.983-.277-.101-.478-.15-.678.15-.2.3-.775.983-.95 1.185-.175.201-.35.227-.652.076-.302-.15-1.274-.469-2.427-1.498-.897-.8-1.502-1.788-1.678-2.09-.175-.302-.019-.465.132-.615.136-.135.302-.35.454-.526.15-.176.2-.302.302-.503.101-.2.05-.376-.026-.526-.075-.15-.678-1.636-.93-2.243-.244-.59-.493-.51-.678-.518-.176-.008-.377-.01-.578-.01-.2 0-.527.075-.803.376-.277.301-1.055 1.031-1.055 2.516 0 1.485 1.079 2.921 1.229 3.122.15.2 2.125 3.245 5.148 4.549.719.311 1.28.497 1.717.637.722.23 1.38.197 1.901.12.58-.087 1.788-.73 2.04-1.435.252-.703.252-1.306.176-1.435-.076-.13-.277-.201-.578-.352z"/>
+                      </svg>
+                      <span>Fast-Track on WhatsApp</span>
+                    </a>
+
+                    <button
+                      type="button"
+                      onClick={() => setTierModalOpen(false)}
+                      style={{
+                        background: 'transparent',
+                        border: '1px solid rgba(255,255,255,0.2)',
+                        color: '#cbd5e1',
+                        padding: '12px 20px',
+                        borderRadius: '12px',
+                        cursor: 'pointer',
+                        fontSize: '13px',
+                        fontWeight: 600
+                      }}
+                    >
+                      Done / Close
+                    </button>
+                  </div>
+                </div>
+              )}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }
