@@ -162,56 +162,54 @@
 .lux-ai-chat-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.55);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   z-index: 100010;
   display: flex;
-  align-items: flex-end;
-  justify-content: flex-end;
-  padding: 24px 24px;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
 }
 
 @media (max-width: 640px) {
   .lux-ai-chat-overlay {
-    padding: 0;
-    align-items: flex-end;
+    padding: 10px;
+    align-items: center;
     justify-content: center;
   }
 }
 
 /* Window */
 .lux-ai-chat-window {
-  width: 460px;
+  width: 520px;
   max-width: 100%;
-  height: 660px;
-  max-height: calc(100vh - 48px);
-  background: linear-gradient(180deg, #12101a 0%, #0d0c13 100%);
-  border: 1px solid rgba(139, 92, 246, 0.22);
-  border-radius: 28px;
+  height: 600px;
+  max-height: calc(100vh - 36px);
+  background: linear-gradient(180deg, #13101c 0%, #0d0c13 100%);
+  border: 1px solid rgba(255, 224, 50, 0.35);
+  border-radius: 22px;
   box-shadow:
-    0 40px 80px rgba(0, 0, 0, 0.85),
-    0 0 0 1px rgba(255, 255, 255, 0.04) inset,
-    0 0 60px rgba(139, 92, 246, 0.12);
+    0 40px 80px rgba(0, 0, 0, 0.9),
+    0 0 0 1px rgba(255, 255, 255, 0.06) inset,
+    0 0 40px rgba(139, 92, 246, 0.2);
   display: flex;
   flex-direction: column;
   overflow: hidden;
   position: relative;
-  animation: chatWindowIn 0.38s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: chatWindowIn 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @media (max-width: 640px) {
   .lux-ai-chat-window {
     width: 100%;
-    height: 92vh;
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
-    border-bottom: none;
+    height: 85vh;
+    border-radius: 20px;
   }
 }
 
 @keyframes chatWindowIn {
-  from { opacity: 0; transform: translateY(28px) scale(0.96); }
+  from { opacity: 0; transform: translateY(20px) scale(0.96); }
   to   { opacity: 1; transform: translateY(0)    scale(1); }
 }
 
