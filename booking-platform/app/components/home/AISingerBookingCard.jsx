@@ -4,13 +4,17 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import '@/app/styles/components/AISingerBookingCard.css';
 
-export default function AISingerBookingCard({ className = "" }) {
+export default function AISingerBookingCard({ className = "", city = "", category = "Live Singer" }) {
   const router = useRouter();
   const [aiPrompt, setAiPrompt] = useState("");
 
+  const placeholderText = city 
+    ? `e.g. Ghazal or Sufi singer in ${city} under ₹25k...` 
+    : "e.g. Ghazal singer in Delhi under 25k...";
+
   const handleAISubmit = (e) => {
     e?.preventDefault();
-    const q = aiPrompt.trim() || "Top verified live singer for event";
+    const q = aiPrompt.trim() || (city ? `Top verified ${category} in ${city} for event` : "Top verified live singer for event");
     router.push(`/ai-search?q=${encodeURIComponent(q)}`);
   };
 
@@ -35,7 +39,7 @@ export default function AISingerBookingCard({ className = "" }) {
           <div className="lux-why-mic-badge">🎤</div>
           <div className="lux-why-header-text">
             <h3 className="lux-why-title">Why Choose Magnevents?</h3>
-            <span className="lux-why-sub">India's 1st AI-Powered Live Music Network</span>
+            <span className="lux-why-sub">{city ? `India's 1st AI Music Network · ${city}` : "India's 1st AI-Powered Live Music Network"}</span>
           </div>
         </div>
 
@@ -105,7 +109,7 @@ export default function AISingerBookingCard({ className = "" }) {
               type="text"
               value={aiPrompt}
               onChange={(e) => setAiPrompt(e.target.value)}
-              placeholder="e.g. Ghazal singer in Delhi under 25k..."
+              placeholder={placeholderText}
               className="lux-ai-minor-input"
               aria-label="Search with AI"
             />

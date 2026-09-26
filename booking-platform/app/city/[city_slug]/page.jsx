@@ -137,13 +137,19 @@ export default async function CityLandingPage({ params }) {
             </div>
 
             <div className="city-hero-right">
-              <AISingerBookingCard />
+              <AISingerBookingCard city={city.name} />
             </div>
           </div>
         </div>
 
         <div className="city-content-container">
           <div className="city-main-content">
+            {/* 1. Verified Live Artists in this City */}
+            <div className="city-artists-section" style={{ marginBottom: '50px' }}>
+              <SEOArtistsGrid category="All" city={city.name} />
+            </div>
+
+            {/* 2. SEO In-Depth Content */}
             {city.content ? (
               <div 
                 className="seo-content"
@@ -167,11 +173,12 @@ export default async function CityLandingPage({ params }) {
                 </ul>
                 
                 <p>
-                  Ready to make your event unforgettable? <Link href="/artists" style={{ color: 'var(--brand-primary, #FFE032)', textDecoration: 'underline', fontWeight: 'bold' }}>Explore our top artists</Link> and book the perfect live singer in {city.name} today.
+                  Ready to make your event unforgettable? <Link href={`/ai-search?q=${encodeURIComponent(`Top singer in ${city.name} for event`)}`} style={{ color: 'var(--brand-primary, #FFE032)', textDecoration: 'underline', fontWeight: 'bold' }}>Run AI Matcher for {city.name}</Link> or explore verified artists above.
                 </p>
               </div>
             )}
 
+            {/* 3. Blogs & Entertainment Guides for this City */}
             <div className="blogs-section">
               <h2>Top Music & Entertainment Guides in {city.name}</h2>
               {blogs && blogs.length > 0 ? (
@@ -195,17 +202,12 @@ export default async function CityLandingPage({ params }) {
                   ))}
                 </div>
               ) : (
-                <p className="no-blogs">More exciting content coming soon!</p>
+                <p className="no-blogs">More exciting guides for {city.name} coming soon!</p>
               )}
-            </div>
-
-            <div style={{ marginTop: '40px' }}>
-              <SEOArtistsGrid category="All" city={city.name} />
             </div>
           </div>
         </div>
       </div>
-
     </>
   );
 }

@@ -3,15 +3,15 @@
 /* City Landing Page */
 .city-landing-page {
   min-height: 100vh;
-  background: #000;
+  background: #07060d;
   color: #fff;
-  padding-top: 80px;
+  padding-top: 0;
 }
 .city-hero {
   text-align: left;
-  padding: 80px 24px 60px;
-  background: radial-gradient(circle at 30% 0%, rgba(99, 102, 241, 0.18) 0%, rgba(255, 46, 147, 0.08) 40%, #000 80%);
-  border-bottom: 1px solid rgba(255,255,255,0.06);
+  padding: 110px 24px 60px;
+  background: radial-gradient(ellipse 120% 100% at 50% 0%, rgba(99, 102, 241, 0.22) 0%, rgba(255, 46, 147, 0.12) 35%, rgba(12, 10, 18, 0.98) 75%, #07060d 100%);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
   position: relative;
   overflow: hidden;
 }
@@ -19,8 +19,8 @@
 .city-hero::before {
   content: '';
   position: absolute;
-  top: 0; left: 0; right: 0; height: 1.5px;
-  background: linear-gradient(90deg, transparent, rgba(255,224,50,0.5) 30%, rgba(168,85,247,0.5) 70%, transparent);
+  top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(255,224,50,0.6) 30%, rgba(168,85,247,0.6) 70%, transparent);
 }
 
 .city-hero-inner {
