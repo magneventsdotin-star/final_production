@@ -5,67 +5,56 @@ import { bookingService } from '@/app/services/bookingService';
 import { AIIcon } from '@/app/components/icons/NavigationIcons';
 import '@/app/styles/components/AIAssistantModal.css';
 
-// ─── Conversational lead capture steps ────────────────────────────────────────
-const BOT_SCRIPT = {
-  welcome:
-    "👋 Hi! I'm your **AI Search Concierge** for Magnevents.\n\nTell me about your event or required artist — e.g. _\"Ghazal singer for a 50-guest wedding in Delhi under ₹25k\"_.\n\n💬 Include your **Name & WhatsApp number** so I can find you the best verified artists & send instant 0% commission quotes!",
-  need_phone: (name) =>
-    `Got it, **${name || 'there'}**! 🎶 I have verified artist matches ready for your event.\n\nPlease share your **10-digit WhatsApp number** so our specialists can send you direct artist profiles & verified quotes:`,
-  need_requirement: (name) =>
-    `Thanks, **${name || 'there'}**! 🎉 I've saved your contact.\n\nNow tell me what kind of artist or event you need — or tap one of the popular categories below:`,
-  submitting: '⚡ Finding verified artist matches & sending request to artist backend...',
-  done: (name, phone) =>
-    `🎊 Request Received, **${name || 'Friend'}**!\n\nYour inquiry has been submitted to our artist backend. Verified artist quotes & profiles will be sent directly to **${phone ? '+91 ' + phone.replace(/^\+91/, '') : 'your WhatsApp'}** within **15–30 minutes**.\n\n🎁 Use code **FIRSTEVENT60** for up to 60% OFF!`,
-  error: "Sorry, something went wrong. Please try again or chat with us directly on WhatsApp.",
-};
-
 const QUICK_VIBES = [
-  "💍 Wedding Singer",
-  "🎉 House Party DJ",
-  "🏢 Corporate Live Band",
-  "🕌 Ghazal / Sufi Artist",
-  "🎂 Birthday Singer",
-  "☕ Cafe / Acoustic Singer",
-  "🎸 Rock & Pop Band",
-  "🪘 Punjabi & Dhol Artist",
+  "🌹 Ghazal & Sufi Singer",
+  "💍 Bollywood Wedding Band",
+  "🎧 Corporate Party DJ",
+  "🎸 Acoustic Duo for House Party",
+  "🎂 Birthday Live Performer",
+  "💰 Pricing in my city",
 ];
+
+const BOT_INTRO = 
+  "👋 Hi there! I'm your **Magnevents AI Event Concierge**.\n\nTell me about your event — e.g. *\"Looking for a Ghazal singer in Varanasi under ₹25k\"* or *\"Bollywood live band for a wedding in Delhi\"*.\n\nI'll find verified artists, check pricing, and help you get direct 0% commission quotes!";
 
 export default function AIAssistantModal() {
   const [isOpen, setIsOpen] = useState(false);
   const [inputVal, setInputVal] = useState('');
   const [isTyping, setIsTyping] = useState(false);
-  const [lead, setLead] = useState({ name: '', phone: '', requirement: '' });
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [lead, setLead] = useState({ name: '', phone: '', requirement: '', city: '' });
+  const [messages, setMessages] = useState([]);
 
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
-  const [messages, setMessages] = useState([]);
 
-  // Listen for navbar/trigger button event
+  // Listen for open events from anywhere on the page
   useEffect(() => {
-    const handler = () => {
+    const handler = (e) => {
       setIsOpen(true);
+      if (e?.detail?.prompt) {
+        setTimeout(() => handleSend(e.detail.prompt), 400);
+      }
     };
     window.addEventListener('open-ai-chatbot', handler);
     return () => window.removeEventListener('open-ai-chatbot', handler);
   }, []);
 
-  // Auto-scroll
+  // Auto-scroll to bottom of messages
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, isTyping]);
 
-  // Focus input when open
+  // Focus input when opened
   useEffect(() => {
     if (isOpen) {
-      setTimeout(() => inputRef.current?.focus(), 300);
+      setTimeout(() => inputRef.current?.focus(), 250);
     }
   }, [isOpen]);
 
-  // Start conversation when modal opens
+  // Welcome message when opened the first time
   useEffect(() => {
     if (isOpen && messages.length === 0) {
-      addBotMessage(BOT_SCRIPT.welcome, { showVibes: true });
+      addBotMessage(BOT_INTRO, { showVibes: true });
     }
   }, [isOpen]);
 
@@ -90,28 +79,13 @@ export default function AIAssistantModal() {
     setMessages(prev => [...prev, msg]);
   };
 
-  const showTyping = (ms = 700) =>
-    new Promise(res => {
-      setIsTyping(true);
-      setTimeout(() => {
-        setIsTyping(false);
-        res();
-      }, ms);
-    });
-
   // Smart extractors
   const extractPhone = (text) => {
     if (!text) return null;
     const tenDigit = text.match(/(?:\+91|0)?[\s\-]?([6-9]\d{9})/);
     if (tenDigit) return tenDigit[1];
-
-    const anyDigits = text.match(/\b\d{6,12}\b/);
-    if (anyDigits) return anyDigits[0];
-
     const stripped = text.replace(/\D/g, '');
     if (stripped.length >= 10) return stripped.slice(-10);
-    if (stripped.length >= 6) return stripped;
-
     return null;
   };
 
@@ -121,17 +95,11 @@ export default function AIAssistantModal() {
     if (match && match[1].trim().length >= 2) {
       return match[1].trim();
     }
-
-    const trimmed = text.trim();
-    if (/^[a-zA-Z\s]{2,25}$/.test(trimmed) && !/(hi|hello|hey|singer|dj|band|price|quote|booking|need|want|wedding|party)/i.test(trimmed)) {
-      return trimmed;
-    }
-
     return null;
   };
 
-  // Persist directly to backend in artist requests
-  const submitToBackend = async (currentLead, note = 'AI Search Chat Request') => {
+  // Submit lead to backend
+  const submitToBackend = async (currentLead, note) => {
     try {
       const cleanPhone = currentLead.phone ? (currentLead.phone.startsWith('+91') ? currentLead.phone : `+91${currentLead.phone.replace(/^\+91/, '')}`) : '+910000000000';
       const eventType = (currentLead.requirement || '').toLowerCase().includes('singer') ? 'Singer Booking' 
@@ -142,17 +110,16 @@ export default function AIAssistantModal() {
       await bookingService.submitRequest({
         name: currentLead.name || 'AI Chat Visitor',
         phone: cleanPhone,
-        message: currentLead.requirement || note,
+        message: currentLead.requirement || note || 'AI Chat Lead',
         eventType,
-        formName: 'AI Search Chatbot (Conversational Lead)',
+        formName: 'AI Search Bottom-Right Bar (Conversational Lead)',
         formType: 'lead',
-        keywords: currentLead.requirement ? currentLead.requirement.slice(0, 80) : 'AI Search Artist Match',
+        keywords: currentLead.requirement ? currentLead.requirement.slice(0, 80) : 'AI Concierge Inquiry',
         pageUrl: typeof window !== 'undefined' ? window.location.href : '',
         pagePath: typeof window !== 'undefined' ? window.location.pathname : '',
         referrer: typeof document !== 'undefined' ? (document.referrer || 'Direct') : '',
       });
 
-      // Track conversion
       if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
         window.gtag('event', 'conversion', {
           send_to: 'AW-16657289873/9sBzCMry1eocEJGl6IY-',
@@ -161,29 +128,24 @@ export default function AIAssistantModal() {
         });
       }
     } catch (err) {
-      console.warn('Backend submission warning:', err);
+      console.warn('Backend submission error:', err);
     }
   };
 
-  // Handle Chat Input Send
   const handleSend = async (text = null) => {
-    const value = (text || inputVal).trim();
-    if (!value || isSubmitted) return;
+    const rawVal = (text || inputVal).trim();
+    if (!rawVal || isTyping) return;
 
-    addUserMessage(value);
+    addUserMessage(rawVal);
     setInputVal('');
+    setIsTyping(true);
 
-    // Extract any new name, phone, or requirement info
-    const detectedPhone = extractPhone(value);
-    const detectedName = extractName(value);
-    
-    // Determine requirement text (if it's not purely a phone number or name)
-    const isJustPhone = /^(?:\+91|0)?\s*\d{10}$/.test(value.trim());
-    const isJustName = detectedName && detectedName.toLowerCase() === value.trim().toLowerCase();
-    
+    const detectedPhone = extractPhone(rawVal);
+    const detectedName = extractName(rawVal);
+
     const newName = detectedName || lead.name;
-    const newPhone = (detectedPhone && detectedPhone.length >= 10 ? detectedPhone.slice(-10) : detectedPhone) || lead.phone;
-    const newRequirement = (!isJustPhone && !isJustName) ? (lead.requirement ? `${lead.requirement} | ${value}` : value) : lead.requirement;
+    const newPhone = detectedPhone || lead.phone;
+    const newRequirement = lead.requirement ? `${lead.requirement} | ${rawVal}` : rawVal;
 
     const updatedLead = {
       name: newName,
@@ -192,96 +154,118 @@ export default function AIAssistantModal() {
     };
     setLead(updatedLead);
 
-    // Save whatever we got to DB immediately!
-    submitToBackend(updatedLead, value);
+    // Save lead data in background
+    submitToBackend(updatedLead, rawVal);
 
-    await showTyping(700);
+    try {
+      const res = await fetch('/api/ai-chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          message: rawVal,
+          history: messages.slice(-6).map(m => ({ sender: m.sender, text: m.text })),
+        }),
+      });
 
-    // Flow Logic:
-    // 1. If we have BOTH a valid 10-digit phone and a requirement: Complete and show verified matches!
-    if (newPhone && newPhone.replace(/\D/g, '').length === 10 && newRequirement) {
-      setIsSubmitted(true);
-      await showTyping(800);
-      addBotMessage(BOT_SCRIPT.done(newName, newPhone), { isDone: true });
-      return;
+      const data = await res.json().catch(() => ({}));
+      setIsTyping(false);
+
+      if (data && data.reply) {
+        let replyText = data.reply;
+        if (!newPhone && !replyText.toLowerCase().includes('whatsapp') && !replyText.toLowerCase().includes('phone')) {
+          replyText += `\n\n📱 *Share your WhatsApp number below to get matching artist profiles & 0% markup quotes sent directly to your phone!*`;
+        }
+
+        addBotMessage(replyText, {
+          actionType: data.actionType || (newPhone ? 'whatsapp' : 'booking'),
+          actionLabel: data.actionLabel || (newPhone ? '💬 Connect on WhatsApp' : '⚡ Get Verified Artist Quotes'),
+          phone: newPhone,
+          name: newName,
+        });
+      } else {
+        // Fallback friendly reply
+        addBotMessage(
+          `Got it! I found verified artist profiles matching your requirement. Share your 10-digit WhatsApp number to receive direct video samples and exact pricing with 0% middleman fees! 🎶`,
+          {
+            actionType: 'whatsapp',
+            actionLabel: '💬 Chat with Specialist on WhatsApp',
+            phone: newPhone,
+            name: newName,
+          }
+        );
+      }
+    } catch (err) {
+      setIsTyping(false);
+      addBotMessage(
+        "I've noted your request! Magnevents has verified live singers, bands, and DJs ready for your date. You can also chat directly with our specialist on WhatsApp for instant confirmation.",
+        {
+          actionType: 'whatsapp',
+          actionLabel: '💬 WhatsApp Booking Specialist',
+          phone: newPhone,
+          name: newName,
+        }
+      );
     }
-
-    // 2. If we have a requirement but NO phone number: Ask for WhatsApp number
-    if (newRequirement && (!newPhone || newPhone.replace(/\D/g, '').length < 10)) {
-      addBotMessage(BOT_SCRIPT.need_phone(newName));
-      return;
-    }
-
-    // 3. If we have a phone number but NO requirement: Ask for event requirement & show vibes
-    if (newPhone && newPhone.replace(/\D/g, '').length === 10 && !newRequirement) {
-      addBotMessage(BOT_SCRIPT.need_requirement(newName), { showVibes: true });
-      return;
-    }
-
-    // 4. If partial number (e.g. 7-9 digits):
-    if (detectedPhone && detectedPhone.length < 10) {
-      addBotMessage(`Thanks ${newName || 'there'}! I noted partial number (${detectedPhone}). Please share your complete **10-digit WhatsApp number** so artists can send quotes:`);
-      return;
-    }
-
-    // Default friendly follow-up
-    addBotMessage(`Got it, **${newName || 'there'}**! What's your **10-digit WhatsApp number** so we can send matching artist quotes? 📱`);
   };
 
   const handleClose = () => {
     setIsOpen(false);
-    setTimeout(() => {
-      setMessages([]);
-      setLead({ name: '', phone: '', requirement: '' });
-      setIsSubmitted(false);
-      setInputVal('');
-    }, 400);
   };
 
-  const getPlaceholder = () => {
-    if (isSubmitted) return 'Inquiry sent! 🚀';
-    if (!lead.requirement) return 'e.g. Sufi singer in Delhi under 25k, Rahul 9876543210...';
-    if (!lead.phone) return 'Type your 10-digit WhatsApp number...';
-    return 'Type any additional event details...';
+  const toggleOpen = () => {
+    setIsOpen(prev => !prev);
   };
 
   return (
     <>
-      {/* Floating trigger button */}
+      {/* Floating trigger button (Bottom Right) */}
       <button
         type="button"
-        onClick={() => setIsOpen(true)}
-        className="lux-ai-trigger-btn"
-        aria-label="Open AI Search Chatbot"
+        onClick={toggleOpen}
+        className={`lux-ai-trigger-btn ${isOpen ? 'is-active' : ''}`}
+        aria-label={isOpen ? "Close AI Search Bar" : "Open AI Search Bar"}
+        title="Open Magnevents AI Concierge"
       >
         <span className="lux-ai-trigger-icon">
-          <AIIcon color="#ffffff" size={22} />
+          {isOpen ? (
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+              <path d="M18 6L6 18M6 6l12 12" />
+            </svg>
+          ) : (
+            <AIIcon color="#ffffff" size={24} />
+          )}
         </span>
         <span className="label-text">AI Search</span>
         <span className="lux-ai-pulse-dot" />
       </button>
 
-      {/* Chat Modal */}
+      {/* AI Bar / Drawer in Bottom Right */}
       {isOpen && (
-        <div className="lux-ai-chat-overlay" onClick={handleClose}>
+        <>
+          {/* Subtle click-outside backdrop */}
+          <div 
+            className="lux-ai-chat-backdrop" 
+            onClick={handleClose} 
+            aria-hidden="true"
+          />
+
           <div
-            className="lux-ai-chat-window"
-            onClick={e => e.stopPropagation()}
+            className="lux-ai-chat-drawer"
             role="dialog"
             aria-modal="true"
-            aria-label="AI Search Chatbot"
+            aria-label="AI Search Assistant"
           >
             {/* Header */}
             <div className="lux-ai-chat-header">
               <div className="lux-ai-header-info">
                 <div className="lux-ai-avatar-wrap">
-                  <AIIcon color="#ffffff" size={24} />
+                  <AIIcon color="#ffffff" size={22} />
                 </div>
                 <div className="lux-ai-header-text">
-                  <h3><span>AI Search Concierge</span></h3>
+                  <h3>AI Search Concierge</h3>
                   <div className="lux-ai-status-row">
                     <span className="lux-ai-status-dot" />
-                    <span>⚡ Live · Verified 0% Commission Quotes</span>
+                    <span>Live AI · 0% Markup Guarantee</span>
                   </div>
                 </div>
               </div>
@@ -290,55 +274,70 @@ export default function AIAssistantModal() {
                   type="button"
                   onClick={handleClose}
                   className="lux-ai-icon-btn"
-                  aria-label="Close"
-                >✕</button>
+                  aria-label="Close AI Bar"
+                  title="Close"
+                >
+                  ✕
+                </button>
               </div>
             </div>
 
-            {/* Sub-header helper indicator */}
-            <div className="lux-ai-progress-bar">
-              <div className="lux-ai-quick-tip">
-                <span>💬 Tell me your requirement, name &amp; phone in one message to get instant matches</span>
-              </div>
+            {/* Sub-header Trust Signals */}
+            <div className="lux-ai-drawer-trust-bar">
+              <span className="trust-pill">🛡️ 100% Arrival Guarantee</span>
+              <span className="trust-pill">⚡ Direct Artist Rates</span>
             </div>
 
             {/* Chat Body */}
             <div className="lux-ai-chat-body">
-              {messages.map(msg => (
+              {messages.map((msg) => (
                 <div key={msg.id} className={`lux-ai-msg-row ${msg.sender}`}>
                   <div className="lux-ai-msg-bubble">
                     <p style={{ margin: 0, whiteSpace: 'pre-line' }}>
                       {msg.text.replace(/\*\*(.*?)\*\*/g, '$1')}
                     </p>
 
-                    {/* Vibe & Artist Category Chips */}
+                    {/* Vibe / Prompt Chips */}
                     {msg.showVibes && (
                       <div className="lux-ai-vibe-chips">
-                        {QUICK_VIBES.map(v => (
+                        {QUICK_VIBES.map((v) => (
                           <button
                             key={v}
                             type="button"
                             className="lux-ai-vibe-chip"
                             onClick={() => handleSend(v)}
-                          >{v}</button>
+                          >
+                            {v}
+                          </button>
                         ))}
                       </div>
                     )}
 
-                    {/* Done State Action CTA */}
-                    {msg.isDone && (
-                      <div className="lux-ai-done-actions">
-                        <a
-                          href={`https://wa.me/918076515257?text=Hi%20Magnevents!%20I%20requested%20an%20AI%20artist%20match.%20Name:%20${encodeURIComponent(lead.name || 'Client')}%20|%20Requirement:%20${encodeURIComponent(lead.requirement || 'Live Artist')}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="lux-ai-action-btn wa"
-                        >💬 Instant WhatsApp Specialist Chat</a>
-                        <button
-                          type="button"
-                          className="lux-ai-action-btn"
-                          onClick={() => { handleClose(); window.location.href = '/ai-search'; }}
-                        >🚀 Explore All Verified Artists</button>
+                    {/* Action CTA Button */}
+                    {msg.actionLabel && (
+                      <div className="lux-ai-action-buttons">
+                        {msg.actionType === 'whatsapp' ? (
+                          <a
+                            href={`https://wa.me/918076515257?text=Hi%20Magnevents!%20I'm%20inquiring%20about%20booking%20an%20artist.%20My%20requirement:%20${encodeURIComponent(lead.requirement || 'Live Singer')}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="lux-ai-action-btn wa"
+                          >
+                            <span>💬</span>
+                            <span>{msg.actionLabel}</span>
+                          </a>
+                        ) : (
+                          <button
+                            type="button"
+                            className="lux-ai-action-btn"
+                            onClick={() => {
+                              window.location.href = `/ai-search?q=${encodeURIComponent(lead.requirement || 'Top live singers')}`;
+                            }}
+                          >
+                            <span>⚡</span>
+                            <span>{msg.actionLabel}</span>
+                          </button>
+                        )}
                       </div>
                     )}
                   </div>
@@ -360,43 +359,49 @@ export default function AIAssistantModal() {
 
             {/* Input Bar */}
             <form
-              onSubmit={e => { e.preventDefault(); handleSend(); }}
+              onSubmit={(e) => {
+                e.preventDefault();
+                handleSend();
+              }}
               className="lux-ai-chat-input-bar"
             >
-              <input
-                ref={inputRef}
-                type="text"
-                value={inputVal}
-                onChange={e => setInputVal(e.target.value)}
-                placeholder={getPlaceholder()}
-                className="lux-ai-input"
-                disabled={isSubmitted}
-                maxLength={400}
-              />
-              <button
-                type="submit"
-                disabled={!inputVal.trim() || isSubmitted || isTyping}
-                className="lux-ai-send-btn"
-                aria-label="Send"
-              >
-                {isTyping ? (
-                  <span style={{ width: 16, height: 16, border: '2px solid rgba(255,255,255,0.3)', borderTopColor: '#fff', borderRadius: '50%', display: 'inline-block', animation: 'spin 0.7s linear infinite' }} />
-                ) : (
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                    <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" />
-                  </svg>
-                )}
-              </button>
+              <div className="lux-ai-input-container">
+                <span className="lux-ai-sparkle-prefix">✨</span>
+                <input
+                  ref={inputRef}
+                  type="text"
+                  value={inputVal}
+                  onChange={(e) => setInputVal(e.target.value)}
+                  placeholder={lead.phone ? "Ask anything about artists, songs, sound..." : "e.g. Sufi singer in Varanasi, or 9876543210..."}
+                  className="lux-ai-input"
+                  maxLength={400}
+                />
+                <button
+                  type="submit"
+                  disabled={!inputVal.trim() || isTyping}
+                  className="lux-ai-send-btn"
+                  aria-label="Send message"
+                >
+                  {isTyping ? (
+                    <span className="lux-send-spinner" />
+                  ) : (
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                      <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" />
+                    </svg>
+                  )}
+                </button>
+              </div>
             </form>
 
-            <p style={{ textAlign: 'center', fontSize: '10.5px', color: 'rgba(255,255,255,0.28)', margin: '8px 0 0', paddingBottom: '4px' }}>
-              🔒 100% verified artists · 0% commission direct quotes
-            </p>
+            <div className="lux-ai-drawer-footer">
+              <span>🔒 100% Verified Artists · 0% Middleman Commission</span>
+            </div>
           </div>
-        </div>
+        </>
       )}
     </>
   );
 }
+
 
 

@@ -20,12 +20,9 @@ export default function AISingerBookingCard({ className = "", city = "", categor
 
   const handleOpenConcierge = () => {
     if (typeof window !== 'undefined') {
-      const trigger = document.querySelector('.lux-ai-trigger-btn');
-      if (trigger) {
-        trigger.click();
-      } else {
-        window.dispatchEvent(new CustomEvent('open-ai-chatbot'));
-      }
+      window.dispatchEvent(new CustomEvent('open-ai-chatbot', { 
+        detail: { prompt: aiPrompt.trim() || (city ? `Find top verified artists in ${city}` : '') } 
+      }));
     }
   };
 

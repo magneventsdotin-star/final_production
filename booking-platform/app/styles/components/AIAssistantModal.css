@@ -1,19 +1,18 @@
 /* ==========================================================================
-   AIAssistantModal.css - In-Memory AI Event Concierge Chat Widget
+   AIAssistantModal.css — Magnevents Premium Bottom-Right AI Search Bar Widget
    ========================================================================== */
 
-/* ── Floating Trigger Button ── */
-/* DESKTOP: circular icon button sitting left of WhatsApp at bottom-right */
+/* ── 1. Floating Trigger Button (Bottom Right) ── */
 .lux-ai-trigger-btn {
   position: fixed;
   bottom: 30px;
-  right: 102px;          /* WhatsApp is at right:30px (60px wide) + 12px gap */
+  right: 102px; /* WhatsApp is at right:30px (60px wide) + 12px gap */
   z-index: 999;
   width: 60px;
   height: 60px;
   border-radius: 50%;
   border: none;
-  background: linear-gradient(135deg, #8B5CF6 0%, #EC4899 60%, #FFE032 100%);
+  background: linear-gradient(135deg, #8B5CF6 0%, #EC4899 55%, #FFE032 100%);
   color: #ffffff;
   display: flex;
   align-items: center;
@@ -28,14 +27,14 @@
   overflow: visible;
 }
 
-/* Animated pulse halo (matches WhatsApp button style) */
+/* Pulse halo */
 .lux-ai-trigger-btn::before {
   content: '';
   position: absolute;
   inset: 0;
   border-radius: 50%;
   background: rgba(139, 92, 246, 0.45);
-  animation: aiHaloPulse 1.8s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+  animation: aiHaloPulse 2s cubic-bezier(0.16, 1, 0.3, 1) infinite;
   pointer-events: none;
   z-index: -1;
 }
@@ -47,20 +46,25 @@
 }
 
 .lux-ai-trigger-btn:hover {
-  transform: translateY(-4px) rotate(8deg);
+  transform: translateY(-4px) scale(1.05);
   box-shadow:
     0 15px 35px rgba(139, 92, 246, 0.65),
     0 0 28px rgba(255, 224, 50, 0.35);
 }
 
-/* Tooltip on hover (mirrors WhatsApp tooltip) */
+.lux-ai-trigger-btn.is-active {
+  background: linear-gradient(135deg, #EC4899 0%, #8B5CF6 100%);
+  transform: rotate(90deg);
+}
+
+/* Tooltip on hover */
 .lux-ai-trigger-btn::after {
   content: '✨ AI Search';
   position: absolute;
   bottom: calc(100% + 10px);
   left: 50%;
   transform: translateX(-50%) translateY(6px);
-  background: rgba(10, 10, 10, 0.88);
+  background: rgba(10, 10, 10, 0.92);
   border: 1px solid rgba(139, 92, 246, 0.35);
   color: #ffffff;
   font-size: 12px;
@@ -80,20 +84,12 @@
   transform: translateX(-50%) translateY(0);
 }
 
-/* Hide text label on desktop (icon only) */
-.lux-ai-trigger-btn span.label-text {
+.lux-ai-trigger-btn span.label-text,
+.lux-ai-trigger-btn .lux-ai-pulse-dot {
   display: none;
 }
 
-/* Pulse dot not needed (halo ring replaces it) */
-.lux-ai-pulse-dot {
-  display: none;
-}
-
-/* ── Icon inside the circle ── */
 .lux-ai-trigger-icon {
-  font-size: 26px;
-  line-height: 1;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -102,143 +98,102 @@
 
 @keyframes sparkleFloat {
   0%, 100% { transform: scale(1) rotate(0deg); }
-  50%       { transform: scale(1.15) rotate(12deg); }
+  50%       { transform: scale(1.12) rotate(8deg); }
 }
 
-/* ── MOBILE: Positioned directly above WhatsApp floating button (Upper Part) ── */
+/* Mobile trigger placement */
 @media (max-width: 768px) {
   .lux-ai-trigger-btn {
-    top: auto !important;
     bottom: calc(118px + env(safe-area-inset-bottom, 0px)) !important;
     right: 14px !important;
-    width: 44px !important;
-    height: 44px !important;
-    border-radius: 50% !important;
-    padding: 0 !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    font-size: 14px !important;
-    gap: 0 !important;
+    width: 48px !important;
+    height: 48px !important;
     box-shadow:
       0 4px 18px rgba(139, 92, 246, 0.55),
-      0 0 14px rgba(236, 72, 153, 0.4),
-      inset 0 1px 0 rgba(255, 255, 255, 0.35) !important;
+      0 0 14px rgba(236, 72, 153, 0.4) !important;
     z-index: 995 !important;
   }
-  /* Hide text label on mobile (circular icon button) */
-  .lux-ai-trigger-btn span.label-text {
-    display: none !important;
-  }
-  /* Hide pulse dot on mobile */
-  .lux-ai-pulse-dot {
-    display: none !important;
-  }
-  /* No halo on mobile */
-  .lux-ai-trigger-btn::before {
-    display: none !important;
-  }
-  /* No tooltip on mobile */
+  .lux-ai-trigger-btn::before,
   .lux-ai-trigger-btn::after {
     display: none !important;
   }
-  /* Centered icon on mobile */
-  .lux-ai-trigger-icon {
-    font-size: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    animation: sparkleFloat 2.5s ease-in-out infinite;
-  }
 }
 
-@keyframes aiPulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.5; transform: scale(1.4); }
-}
-
-/* ============================================================
-   CHAT OVERLAY & WINDOW
-   ============================================================ */
-
-/* Backdrop */
-.lux-ai-chat-overlay {
+/* ── 2. Click-outside Subtle Backdrop ── */
+.lux-ai-chat-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.75);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  z-index: 100010;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 16px;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  z-index: 100015;
+  animation: backdropFadeIn 0.25s ease;
 }
 
-@media (max-width: 768px) {
-  .lux-ai-chat-overlay {
-    padding: 0 !important;
-    align-items: stretch !important;
-    justify-content: stretch !important;
-    width: 100vw !important;
-    height: 100vh !important;
-    height: 100dvh !important;
-  }
+@keyframes backdropFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
 
-/* Window */
-.lux-ai-chat-window {
-  width: 800px;
-  max-width: min(800px, 94vw);
-  height: 780px;
-  max-height: min(820px, calc(100vh - 48px));
-  background: linear-gradient(180deg, #13101c 0%, #0d0c13 100%);
+/* ── 3. Bottom-Right AI Chat Drawer / Window ── */
+.lux-ai-chat-drawer {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 420px;
+  max-width: calc(100vw - 32px);
+  height: 620px;
+  max-height: calc(100vh - 48px);
+  background: linear-gradient(180deg, #13101e 0%, #0d0c14 100%);
   border: 1px solid rgba(255, 224, 50, 0.35);
   border-radius: 24px;
   box-shadow:
-    0 40px 90px rgba(0, 0, 0, 0.92),
-    0 0 0 1px rgba(255, 255, 255, 0.08) inset,
-    0 0 50px rgba(139, 92, 246, 0.25);
+    0 30px 80px rgba(0, 0, 0, 0.92),
+    0 0 45px rgba(139, 92, 246, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  position: relative;
-  animation: chatWindowIn 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 100025;
+  animation: drawerSlideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  font-family: inherit;
 }
 
+@keyframes drawerSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(28px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Mobile full drawer */
 @media (max-width: 768px) {
-  .lux-ai-chat-window {
+  .lux-ai-chat-drawer {
+    bottom: 0 !important;
+    right: 0 !important;
+    left: 0 !important;
     width: 100vw !important;
-    height: 100vh !important;
-    height: 100dvh !important;
-    max-height: 100vh !important;
-    max-height: 100dvh !important;
-    border-radius: 0 !important;
-    border: none !important;
-    box-shadow: none !important;
-  }
-  .lux-ai-chat-header {
-    padding: 12px 14px !important;
-    padding-top: max(12px, env(safe-area-inset-top, 12px)) !important;
-  }
-  .lux-ai-chat-input-bar {
-    padding-bottom: max(14px, env(safe-area-inset-bottom, 14px)) !important;
-  }
-  .lux-ai-chat-body {
-    padding: 14px 12px !important;
+    max-width: 100vw !important;
+    height: 90vh !important;
+    height: 90dvh !important;
+    max-height: 90vh !important;
+    max-height: 90dvh !important;
+    border-radius: 24px 24px 0 0 !important;
+    border-bottom: none !important;
+    border-left: none !important;
+    border-right: none !important;
   }
 }
 
-@keyframes chatWindowIn {
-  from { opacity: 0; transform: translateY(20px) scale(0.96); }
-  to   { opacity: 1; transform: translateY(0)    scale(1); }
-}
-
-/* ── HEADER ── */
+/* ── 4. Header ── */
 .lux-ai-chat-header {
-  padding: 16px 18px;
-  background: linear-gradient(135deg, #1a1525 0%, #130f1e 100%);
-  border-bottom: 1px solid rgba(139, 92, 246, 0.18);
+  padding: 14px 18px;
+  background: linear-gradient(135deg, #1d182b 0%, #130f1e 100%);
+  border-bottom: 1px solid rgba(139, 92, 246, 0.20);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -247,15 +202,14 @@
   overflow: hidden;
 }
 
-/* Ambient top-left glow inside header */
 .lux-ai-chat-header::before {
   content: '';
   position: absolute;
   top: -20px;
   left: -20px;
-  width: 120px;
-  height: 80px;
-  background: radial-gradient(ellipse, rgba(139,92,246,0.3) 0%, transparent 70%);
+  width: 140px;
+  height: 90px;
+  background: radial-gradient(ellipse, rgba(139, 92, 246, 0.35) 0%, transparent 70%);
   pointer-events: none;
 }
 
@@ -267,25 +221,23 @@
   z-index: 1;
 }
 
-/* Rounded square avatar */
 .lux-ai-avatar-wrap {
-  width: 46px;
-  height: 46px;
-  border-radius: 14px;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
   background: linear-gradient(135deg, #8B5CF6 0%, #EC4899 55%, #FFE032 100%);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 24px;
   box-shadow:
-    0 4px 18px rgba(139, 92, 246, 0.5),
-    0 0 0 2px rgba(255,255,255,0.10) inset;
+    0 4px 16px rgba(139, 92, 246, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
   flex-shrink: 0;
 }
 
 .lux-ai-header-text h3 {
-  margin: 0 0 3px;
-  font-size: 15.5px;
+  margin: 0 0 2px;
+  font-size: 15px;
   font-weight: 800;
   color: #ffffff;
   letter-spacing: -0.01em;
@@ -294,9 +246,9 @@
 .lux-ai-status-row {
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 6px;
   font-size: 11px;
-  color: rgba(255,255,255,0.55);
+  color: #c4b5fd;
   font-weight: 600;
 }
 
@@ -306,12 +258,12 @@
   border-radius: 50%;
   background: #22c55e;
   box-shadow: 0 0 8px #22c55e;
-  animation: statusPulse 2s ease-in-out infinite;
+  animation: aiStatusPulse 2s infinite ease-in-out;
 }
 
-@keyframes statusPulse {
-  0%, 100% { opacity: 1; }
-  50%       { opacity: 0.55; }
+@keyframes aiStatusPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.6; transform: scale(1.3); }
 }
 
 .lux-ai-header-actions {
@@ -323,407 +275,186 @@
 }
 
 .lux-ai-icon-btn {
-  background: rgba(255, 255, 255, 0.07);
-  border: 1px solid rgba(255, 255, 255, 0.10);
-  color: rgba(255, 255, 255, 0.65);
-  width: 34px;
-  height: 34px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.7);
+  width: 32px;
+  height: 32px;
   border-radius: 10px;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 14px;
+  font-size: 13px;
+  font-weight: 700;
   transition: all 0.2s ease;
 }
 
 .lux-ai-icon-btn:hover {
-  background: rgba(255, 255, 255, 0.15);
-  border-color: rgba(255,255,255,0.2);
+  background: rgba(255, 255, 255, 0.18);
   color: #ffffff;
-  transform: scale(1.05);
+  transform: scale(1.06);
 }
 
-/* ── HELPER BAR ── */
-.lux-ai-progress-bar {
+/* ── 5. Trust Signals Sub-Header ── */
+.lux-ai-drawer-trust-bar {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 10px 18px;
+  gap: 12px;
+  padding: 8px 14px;
   background: rgba(139, 92, 246, 0.08);
-  border-bottom: 1px solid rgba(139, 92, 246, 0.15);
+  border-bottom: 1px solid rgba(139, 92, 246, 0.14);
   flex-shrink: 0;
 }
 
-.lux-ai-quick-tip {
-  font-size: 11px;
-  color: #c4b5fd;
-  font-weight: 600;
-  text-align: center;
-  line-height: 1.4;
-  letter-spacing: 0.01em;
-}
-
-.lux-ai-progress-step {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  flex-shrink: 0;
-}
-
-.lux-ai-progress-dot {
-  width: 26px;
-  height: 26px;
-  border-radius: 50%;
-  border: 2px solid rgba(255,255,255,0.12);
-  color: rgba(255,255,255,0.28);
-  font-size: 10px;
-  font-weight: 800;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.35s cubic-bezier(0.16,1,0.3,1);
-  background: rgba(255,255,255,0.04);
-}
-
-.lux-ai-progress-step.active .lux-ai-progress-dot {
-  background: linear-gradient(135deg, #8B5CF6, #EC4899);
-  border-color: transparent;
-  color: #fff;
-  box-shadow: 0 0 14px rgba(139,92,246,0.6), 0 2px 6px rgba(0,0,0,0.4);
-}
-
-.lux-ai-progress-step span {
-  font-size: 9px;
+.trust-pill {
+  font-size: 10.5px;
   font-weight: 700;
-  color: rgba(255,255,255,0.25);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  white-space: nowrap;
+  color: #e9d5ff;
+  letter-spacing: 0.02em;
 }
 
-.lux-ai-progress-step.active span {
-  color: #c084fc;
-}
-
-.lux-ai-progress-line {
-  flex: 1;
-  height: 2px;
-  background: rgba(255,255,255,0.07);
-  margin: 0 6px;
-  margin-bottom: 14px;
-  border-radius: 999px;
-  transition: background 0.4s ease;
-}
-
-.lux-ai-progress-line.active {
-  background: linear-gradient(90deg, #8B5CF6, #EC4899);
-  box-shadow: 0 0 6px rgba(139,92,246,0.4);
-}
-
-/* ── CHAT BODY ── */
+/* ── 6. Chat Body ── */
 .lux-ai-chat-body {
   flex: 1;
   overflow-y: auto;
-  padding: 20px 18px;
+  padding: 16px;
   display: flex;
   flex-direction: column;
   gap: 14px;
   scroll-behavior: smooth;
   background:
-    radial-gradient(ellipse 60% 40% at 50% 0%, rgba(139,92,246,0.06) 0%, transparent 70%),
-    #0d0c13;
+    radial-gradient(ellipse 70% 50% at 50% 0%, rgba(139, 92, 246, 0.07) 0%, transparent 70%),
+    #0d0c14;
 }
 
-/* Custom scrollbar */
 .lux-ai-chat-body::-webkit-scrollbar { width: 4px; }
 .lux-ai-chat-body::-webkit-scrollbar-track { background: transparent; }
-.lux-ai-chat-body::-webkit-scrollbar-thumb { background: rgba(139,92,246,0.35); border-radius: 4px; }
+.lux-ai-chat-body::-webkit-scrollbar-thumb { background: rgba(139, 92, 246, 0.35); border-radius: 4px; }
 
-/* ── MESSAGE ROWS ── */
 .lux-ai-msg-row {
   display: flex;
   flex-direction: column;
   gap: 4px;
-  max-width: 86%;
-  animation: msgFadeIn 0.28s cubic-bezier(0.16,1,0.3,1);
+  max-width: 88%;
+  animation: msgFadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @keyframes msgFadeIn {
-  from { opacity: 0; transform: translateY(10px); }
+  from { opacity: 0; transform: translateY(8px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
 .lux-ai-msg-row.bot  { align-self: flex-start; }
 .lux-ai-msg-row.user { align-self: flex-end; }
 
-/* BOT bubble */
-.lux-ai-msg-row.bot .lux-ai-msg-bubble {
-  background: rgba(255,255,255,0.055);
-  border: 1px solid rgba(255,255,255,0.08);
-  color: #e8e8f0;
-  border-radius: 18px 18px 18px 4px;
-  padding: 13px 16px;
+.lux-ai-msg-bubble {
+  padding: 12px 15px;
   font-size: 13.5px;
-  line-height: 1.6;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+  line-height: 1.55;
 }
 
-/* USER bubble */
+.lux-ai-msg-row.bot .lux-ai-msg-bubble {
+  background: rgba(255, 255, 255, 0.055);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  color: #ececf1;
+  border-radius: 16px 16px 16px 4px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.25);
+}
+
 .lux-ai-msg-row.user .lux-ai-msg-bubble {
   background: linear-gradient(135deg, #8B5CF6 0%, #EC4899 100%);
   color: #ffffff;
-  border-radius: 18px 18px 4px 18px;
-  padding: 13px 16px;
-  font-size: 13.5px;
-  line-height: 1.6;
+  border-radius: 16px 16px 4px 16px;
   font-weight: 600;
   box-shadow:
-    0 4px 18px rgba(139,92,246,0.35),
-    0 0 0 1px rgba(255,255,255,0.1) inset;
+    0 4px 16px rgba(139, 92, 246, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
 }
 
 .lux-ai-msg-time {
-  font-size: 10px;
-  color: rgba(255,255,255,0.30);
-  padding: 0 6px;
-  letter-spacing: 0.02em;
+  font-size: 9.5px;
+  color: rgba(255, 255, 255, 0.32);
+  padding: 0 4px;
 }
 
 .lux-ai-msg-row.user .lux-ai-msg-time { text-align: right; }
 
-/* ── STEP 1: MANDATORY CONTACT CARD ── */
-.lux-ai-contact-card {
-  margin-top: 14px;
-  background: linear-gradient(145deg, rgba(26, 21, 37, 0.95), rgba(18, 14, 28, 0.95));
-  border: 1.5px solid rgba(139, 92, 246, 0.35);
-  border-radius: 18px;
-  padding: 16px 16px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), 0 0 16px rgba(139, 92, 246, 0.15);
+/* ── 7. Vibe Prompt Chips ── */
+.lux-ai-vibe-chips {
   display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.lux-ai-card-badge {
-  display: inline-flex;
-  align-self: flex-start;
-  background: linear-gradient(90deg, rgba(139, 92, 246, 0.25), rgba(236, 72, 153, 0.25));
-  border: 1px solid rgba(139, 92, 246, 0.4);
-  padding: 4px 10px;
-  border-radius: 999px;
-  font-size: 9.5px;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  color: #e9d5ff;
-}
-
-.lux-ai-contact-form {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.lux-ai-field-group {
-  display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
   gap: 6px;
+  margin-top: 10px;
 }
 
-.lux-ai-label {
-  font-size: 11px;
-  font-weight: 700;
-  color: rgba(255, 255, 255, 0.85);
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.lux-ai-label .req {
-  color: #f43f5e;
-  font-weight: 900;
-}
-
-.lux-ai-phone-wrap {
-  display: flex;
-  align-items: center;
-  background: rgba(0, 0, 0, 0.35);
-  border: 1.5px solid rgba(139, 92, 246, 0.3);
-  border-radius: 12px;
-  overflow: hidden;
-  transition: all 0.2s ease;
-}
-
-.lux-ai-phone-wrap:focus-within {
-  border-color: #8B5CF6;
-  box-shadow: 0 0 14px rgba(139, 92, 246, 0.35);
-}
-
-.lux-ai-phone-prefix {
-  padding: 0 10px 0 12px;
-  font-size: 13px;
-  font-weight: 700;
-  color: #c4b5fd;
-  border-right: 1px solid rgba(255, 255, 255, 0.12);
-  user-select: none;
-}
-
-.lux-ai-card-input {
-  width: 100%;
-  background: rgba(0, 0, 0, 0.35);
-  border: 1.5px solid rgba(255, 255, 255, 0.12);
-  border-radius: 12px;
-  color: #fff;
-  font-size: 13.5px;
-  font-weight: 500;
-  padding: 10px 14px;
-  outline: none;
-  font-family: inherit;
-  transition: all 0.2s ease;
-}
-
-.lux-ai-card-input.phone {
-  background: transparent;
-  border: none;
-  border-radius: 0;
-}
-
-.lux-ai-card-input:focus {
-  border-color: #8B5CF6;
-  box-shadow: 0 0 14px rgba(139, 92, 246, 0.3);
-  background: rgba(0, 0, 0, 0.5);
-}
-
-.lux-ai-card-input::placeholder {
-  color: rgba(255, 255, 255, 0.32);
-}
-
-.lux-ai-error-banner {
-  background: rgba(244, 63, 94, 0.15);
-  border: 1px solid rgba(244, 63, 94, 0.4);
-  color: #fca5a5;
+.lux-ai-vibe-chip {
+  background: rgba(139, 92, 246, 0.12);
+  border: 1px solid rgba(139, 92, 246, 0.30);
+  color: #d4aaff;
   font-size: 11.5px;
   font-weight: 600;
-  padding: 8px 12px;
-  border-radius: 10px;
-  animation: shakeError 0.3s ease-in-out;
-}
-
-@keyframes shakeError {
-  0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(-4px); }
-  75% { transform: translateX(4px); }
-}
-
-.lux-ai-submit-lead-btn {
-  background: linear-gradient(135deg, #8B5CF6 0%, #EC4899 100%);
-  color: #fff;
-  border: none;
-  border-radius: 12px;
-  padding: 11px 16px;
-  font-size: 13px;
-  font-weight: 800;
-  letter-spacing: 0.02em;
+  padding: 6px 12px;
+  border-radius: 20px;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  box-shadow: 0 4px 18px rgba(139, 92, 246, 0.45);
-  transition: all 0.22s ease;
+  transition: all 0.2s ease;
   font-family: inherit;
-  margin-top: 4px;
 }
 
-.lux-ai-submit-lead-btn:hover:not(:disabled) {
+.lux-ai-vibe-chip:hover {
+  background: rgba(139, 92, 246, 0.30);
+  border-color: #8B5CF6;
+  color: #ffffff;
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(139, 92, 246, 0.6);
-  filter: brightness(1.08);
+  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
 }
 
-.lux-ai-submit-lead-btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-  transform: none;
-}
-
-/* ── IN-BUBBLE ACTION BUTTONS & DONE ACTIONS ── */
-.lux-ai-action-buttons,
-.lux-ai-done-actions {
+/* ── 8. Action CTA Buttons ── */
+.lux-ai-action-buttons {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  margin-top: 12px;
+  margin-top: 10px;
 }
 
 .lux-ai-action-btn {
-  background: rgba(255,224,50,0.10);
-  border: 1px solid rgba(255,224,50,0.30);
+  background: rgba(255, 224, 50, 0.12);
+  border: 1px solid rgba(255, 224, 50, 0.35);
   color: #FFE032;
   font-size: 12px;
   font-weight: 700;
-  padding: 8px 16px;
+  padding: 8px 14px;
   border-radius: 12px;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  transition: all 0.22s ease;
+  transition: all 0.2s ease;
   text-decoration: none;
   font-family: inherit;
 }
 
 .lux-ai-action-btn:hover {
   background: #FFE032;
-  color: #000;
+  color: #0b0b0d;
   transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(255,224,50,0.3);
+  box-shadow: 0 6px 16px rgba(255, 224, 50, 0.35);
 }
 
 .lux-ai-action-btn.wa {
-  background: rgba(37,211,102,0.10);
-  border-color: rgba(37,211,102,0.35);
+  background: rgba(37, 211, 102, 0.14);
+  border-color: rgba(37, 211, 102, 0.40);
   color: #4ade80;
 }
 
 .lux-ai-action-btn.wa:hover {
   background: #25D366;
-  color: #fff;
-  box-shadow: 0 6px 18px rgba(37,211,102,0.35);
+  color: #ffffff;
+  box-shadow: 0 6px 16px rgba(37, 211, 102, 0.40);
 }
 
-/* ── VIBE CHIPS (quick event type selection) ── */
-.lux-ai-vibe-chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 7px;
-  margin-top: 12px;
-}
-
-.lux-ai-vibe-chip {
-  background: rgba(139,92,246,0.10);
-  border: 1px solid rgba(139,92,246,0.28);
-  color: #c4b5fd;
-  font-size: 12px;
-  font-weight: 600;
-  padding: 7px 14px;
-  border-radius: 20px;
-  cursor: pointer;
-  transition: all 0.22s ease;
-  font-family: inherit;
-  white-space: nowrap;
-}
-
-.lux-ai-vibe-chip:hover {
-  background: rgba(139,92,246,0.25);
-  border-color: #8B5CF6;
-  color: #fff;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 14px rgba(139,92,246,0.25);
-}
-
-/* ── TYPING INDICATOR ── */
+/* ── 9. Typing Animation ── */
 .lux-ai-typing {
   display: flex;
   align-items: center;
@@ -735,7 +466,6 @@
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: #8B5CF6;
   animation: typingBounce 1.4s infinite ease-in-out both;
 }
 
@@ -745,67 +475,75 @@
 
 @keyframes typingBounce {
   0%, 80%, 100% { transform: scale(0.5); opacity: 0.5; }
-  40%           { transform: scale(1.1); opacity: 1; }
+  40%           { transform: scale(1.15); opacity: 1; }
 }
 
-/* ── INPUT BAR ── */
+/* ── 10. Input Bar ── */
 .lux-ai-chat-input-bar {
-  padding: 12px 16px;
-  background: rgba(255,255,255,0.03);
-  border-top: 1px solid rgba(255,255,255,0.07);
+  padding: 12px 14px;
+  background: rgba(255, 255, 255, 0.025);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  flex-shrink: 0;
+}
+
+.lux-ai-input-container {
   display: flex;
   align-items: center;
-  gap: 10px;
-  flex-shrink: 0;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1.5px solid rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
+  padding: 4px 6px 4px 12px;
+  transition: all 0.25s ease;
+}
+
+.lux-ai-input-container:focus-within {
+  border-color: rgba(139, 92, 246, 0.65);
+  background: rgba(139, 92, 246, 0.08);
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.15), 0 0 16px rgba(139, 92, 246, 0.2);
+}
+
+.lux-ai-sparkle-prefix {
+  font-size: 14px;
+  margin-right: 6px;
+  opacity: 0.8;
 }
 
 .lux-ai-input {
   flex: 1;
-  background: rgba(255,255,255,0.07);
-  border: 1.5px solid rgba(255,255,255,0.10);
-  border-radius: 14px;
-  padding: 12px 16px;
-  color: #fff;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #ffffff;
   font-size: 13.5px;
   font-family: inherit;
-  outline: none;
-  transition: all 0.25s ease;
-  min-height: 46px;
+  padding: 8px 4px;
+  min-height: 38px;
 }
 
-.lux-ai-input:focus {
-  border-color: rgba(139,92,246,0.6);
-  background: rgba(139,92,246,0.06);
-  box-shadow: 0 0 0 3px rgba(139,92,246,0.15), 0 0 20px rgba(139,92,246,0.12);
+.lux-ai-input::placeholder {
+  color: rgba(255, 255, 255, 0.35);
+  font-size: 12.5px;
 }
 
-.lux-ai-input::placeholder { color: rgba(255,255,255,0.35); }
-
-.lux-ai-input:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
-}
-
-/* Send button */
 .lux-ai-send-btn {
   background: linear-gradient(135deg, #8B5CF6 0%, #EC4899 100%);
-  color: #fff;
-  width: 46px;
-  height: 46px;
-  border-radius: 14px;
+  color: #ffffff;
+  width: 38px;
+  height: 38px;
+  border-radius: 11px;
   border: none;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.25s cubic-bezier(0.16,1,0.3,1);
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
   flex-shrink: 0;
-  box-shadow: 0 4px 14px rgba(139,92,246,0.35);
+  box-shadow: 0 4px 14px rgba(139, 92, 246, 0.4);
 }
 
 .lux-ai-send-btn:hover:not(:disabled) {
-  transform: scale(1.08) translateY(-1px);
-  box-shadow: 0 6px 20px rgba(139,92,246,0.55);
+  transform: scale(1.08);
+  box-shadow: 0 6px 20px rgba(139, 92, 246, 0.6);
 }
 
 .lux-ai-send-btn:disabled {
@@ -814,468 +552,26 @@
   box-shadow: none;
 }
 
-/* ── SPIN (loading state) ── */
-@keyframes spin { to { transform: rotate(360deg); } }
-
-
-@media (max-width: 640px) {
-  .lux-ai-chat-overlay {
-    padding: 0;
-    align-items: flex-end;
-  }
-}
-
-.lux-ai-chat-window {
-  width: 440px;
-  max-width: 100%;
-  height: 640px;
-  max-height: calc(100vh - 60px);
-  background: #0f0e13;
-  border: 1px solid rgba(255, 224, 50, 0.25);
-  border-radius: 24px;
-  box-shadow: 
-    0 25px 60px rgba(0, 0, 0, 0.9),
-    0 0 35px rgba(139, 92, 246, 0.15),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  position: relative;
-  animation: chatWindowIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-@media (max-width: 640px) {
-  .lux-ai-chat-window {
-    width: 100%;
-    height: 85vh;
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
-  }
-}
-
-@keyframes chatWindowIn {
-  from {
-    opacity: 0;
-    transform: translateY(30px) scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-/* Chat Header */
-.lux-ai-chat-header {
-  padding: 18px 20px;
-  background: linear-gradient(135deg, rgba(30, 25, 45, 0.95) 0%, rgba(18, 16, 24, 0.95) 100%);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.lux-ai-header-info {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.lux-ai-avatar-wrap {
-  width: 42px;
-  height: 42px;
-  border-radius: 12px;
-  background: linear-gradient(135deg, #8B5CF6 0%, #EC4899 50%, #FFE032 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 22px;
-  box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
-}
-
-.lux-ai-header-text h3 {
-  margin: 0;
-  font-size: 15px;
-  font-weight: 800;
-  color: #ffffff;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.lux-ai-status-row {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 11px;
-  color: #4ade80;
-  font-weight: 600;
-}
-
-.lux-ai-status-dot {
-  width: 7px;
-  height: 7px;
+.lux-send-spinner {
+  width: 15px;
+  height: 15px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #ffffff;
   border-radius: 50%;
-  background: #22c55e;
-  box-shadow: 0 0 6px #22c55e;
+  animation: spin 0.7s linear infinite;
+  display: inline-block;
 }
 
-.lux-ai-header-actions {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.lux-ai-icon-btn {
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: rgba(255, 255, 255, 0.7);
-  width: 32px;
-  height: 32px;
-  border-radius: 8px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s ease;
-}
-
-.lux-ai-icon-btn:hover {
-  background: rgba(255, 255, 255, 0.15);
-  color: #ffffff;
-}
-
-/* Chat Body / Messages Scroll Area */
-.lux-ai-chat-body {
-  flex: 1;
-  overflow-y: auto;
-  padding: 18px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  background: radial-gradient(circle at 50% 0%, rgba(139, 92, 246, 0.05) 0%, transparent 60%), #0d0c11;
-  scroll-behavior: smooth;
-}
-
-/* Individual Message Bubbles */
-.lux-ai-msg-row {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  max-width: 90%;
-  animation: msgFadeIn 0.25s ease;
-}
-
-@keyframes msgFadeIn {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.lux-ai-msg-row.bot {
-  align-self: flex-start;
-}
-
-.lux-ai-msg-row.user {
-  align-self: flex-end;
-}
-
-.lux-ai-msg-bubble {
-  padding: 12px 16px;
-  border-radius: 16px;
-  font-size: 13.5px;
-  line-height: 1.55;
-}
-
-.lux-ai-msg-row.bot .lux-ai-msg-bubble {
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.09);
-  color: #e5e5e5;
-  border-bottom-left-radius: 4px;
-}
-
-.lux-ai-msg-row.user .lux-ai-msg-bubble {
-  background: linear-gradient(135deg, #8B5CF6 0%, #7C3AED 50%, #EC4899 100%);
-  color: #ffffff !important;
-  font-weight: 600;
-  border-bottom-right-radius: 4px;
-  box-shadow: 0 4px 18px rgba(139, 92, 246, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.15);
-}
-
-.lux-ai-msg-row.user .lux-ai-msg-bubble p {
-  color: #ffffff !important;
-}
-
-.lux-ai-msg-time {
-  font-size: 10px;
-  color: rgba(255, 255, 255, 0.4);
-  padding: 0 4px;
-}
-
-.lux-ai-msg-row.user .lux-ai-msg-time {
-  text-align: right;
-}
-
-/* In-message Action Buttons */
-.lux-ai-action-buttons {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 6px;
-}
-
-.lux-ai-action-btn {
-  background: rgba(255, 224, 50, 0.12);
-  border: 1px solid rgba(255, 224, 50, 0.35);
-  color: #FFE032;
-  font-size: 12px;
-  font-weight: 700;
-  padding: 7px 14px;
-  border-radius: 10px;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  transition: all 0.2s ease;
-}
-
-.lux-ai-action-btn:hover {
-  background: #FFE032;
-  color: #000;
-  transform: translateY(-1px);
-}
-
-.lux-ai-action-btn.wa {
-  background: rgba(37, 211, 102, 0.15);
-  border-color: rgba(37, 211, 102, 0.4);
-  color: #25D366;
-}
-
-.lux-ai-action-btn.wa:hover {
-  background: #25D366;
-  color: #fff;
-}
-
-/* Quick Question Suggestion Chips */
-.lux-ai-quick-chips-box {
-  padding: 10px 14px;
-  background: rgba(255, 255, 255, 0.02);
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
-}
-
-.lux-ai-quick-label {
-  font-size: 11px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: rgba(255, 255, 255, 0.5);
-  margin-bottom: 8px;
-  display: block;
-}
-
-.lux-ai-chips-scroll {
-  display: flex;
-  gap: 8px;
-  overflow-x: auto;
-  padding-bottom: 4px;
-  -webkit-overflow-scrolling: touch;
-}
-
-.lux-ai-chip {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  color: #d1d5db;
-  font-size: 11.5px;
-  font-weight: 500;
-  padding: 6px 12px;
-  border-radius: 20px;
-  white-space: nowrap;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  flex-shrink: 0;
-}
-
-.lux-ai-chip:hover {
-  background: rgba(255, 224, 50, 0.12);
-  border-color: rgba(255, 224, 50, 0.35);
-  color: #FFE032;
-  transform: translateY(-1px);
-}
-
-/* Chat Input Bar */
-.lux-ai-chat-input-bar {
-  padding: 14px 18px;
-  background: #121017;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.lux-ai-input {
-  flex: 1;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 12px;
-  padding: 11px 14px;
-  color: #fff;
-  font-size: 13.5px;
-  outline: none;
-  transition: all 0.2s ease;
-}
-
-.lux-ai-input:focus {
-  border-color: #FFE032;
-  background: rgba(255, 224, 50, 0.04);
-  box-shadow: 0 0 15px rgba(255, 224, 50, 0.2);
-}
-
-.lux-ai-input::placeholder {
-  color: rgba(255, 255, 255, 0.4);
-}
-
-.lux-ai-send-btn {
-  background: linear-gradient(135deg, #FFE032 0%, #F5C518 100%);
-  color: #0b0b0d;
-  width: 40px;
-  height: 40px;
-  border-radius: 12px;
-  border: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s ease;
-  flex-shrink: 0;
-}
-
-.lux-ai-send-btn:hover:not(:disabled) {
-  transform: scale(1.05);
-  box-shadow: 0 4px 15px rgba(255, 224, 50, 0.4);
-}
-
-.lux-ai-send-btn:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
-}
-
-/* Typing indicator */
-.lux-ai-typing {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  padding: 8px 12px;
-}
-
-.lux-ai-typing-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #FFE032;
-  animation: typingBounce 1.4s infinite ease-in-out both;
-}
-
-.lux-ai-typing-dot:nth-child(1) { animation-delay: -0.32s; }
-.lux-ai-typing-dot:nth-child(2) { animation-delay: -0.16s; }
-
-@keyframes typingBounce {
-  0%, 80%, 100% { transform: scale(0); }
-  40% { transform: scale(1); }
-}
-
-/* -- Spin animation for submit loader -- */
 @keyframes spin {
   to { transform: rotate(360deg); }
 }
 
-/* -- Progress bar -- */
-.lux-ai-progress-bar {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0;
-  padding: 10px 20px;
-  background: rgba(255,255,255,0.03);
-  border-bottom: 1px solid rgba(255,255,255,0.06);
-}
-
-.lux-ai-progress-step {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 3px;
-  flex-shrink: 0;
-}
-
-.lux-ai-progress-dot {
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  border: 2px solid rgba(255,255,255,0.15);
-  color: rgba(255,255,255,0.35);
-  font-size: 10px;
-  font-weight: 800;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
-}
-
-.lux-ai-progress-step.active .lux-ai-progress-dot {
-  background: linear-gradient(135deg, #8B5CF6, #EC4899);
-  border-color: transparent;
-  color: #fff;
-  box-shadow: 0 0 12px rgba(139,92,246,0.5);
-}
-
-.lux-ai-progress-step span {
-  font-size: 9px;
-  font-weight: 700;
-  color: rgba(255,255,255,0.30);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-.lux-ai-progress-step.active span {
-  color: #c084fc;
-}
-
-.lux-ai-progress-line {
-  flex: 1;
-  height: 2px;
-  background: rgba(255,255,255,0.08);
-  margin: 0 4px;
-  margin-bottom: 12px;
-  border-radius: 999px;
-  transition: background 0.3s ease;
-}
-
-.lux-ai-progress-line.active {
-  background: linear-gradient(90deg, #8B5CF6, #EC4899);
-}
-
-/* -- Vibe chips -- */
-.lux-ai-vibe-chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-top: 10px;
-}
-
-.lux-ai-vibe-chip {
-  background: rgba(139,92,246,0.12);
-  border: 1px solid rgba(139,92,246,0.30);
-  color: #d4aaff;
-  font-size: 12px;
-  font-weight: 600;
-  padding: 6px 12px;
-  border-radius: 20px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  font-family: inherit;
-}
-
-.lux-ai-vibe-chip:hover {
-  background: rgba(139,92,246,0.25);
-  border-color: #8B5CF6;
-  color: #fff;
-  transform: translateY(-1px);
+/* ── 11. Footer ── */
+.lux-ai-drawer-footer {
+  padding: 6px 14px 10px;
+  text-align: center;
+  font-size: 10.5px;
+  color: rgba(255, 255, 255, 0.32);
+  letter-spacing: 0.02em;
+  background: #0d0c14;
 }
