@@ -118,6 +118,17 @@ export default function Nav() {
           </div>
 
           <div className="lux-nav-right">
+            <button
+              type="button"
+              className="lux-nav-ai-chat-btn"
+              onClick={() => window.dispatchEvent(new CustomEvent('open-ai-chatbot'))}
+              title="Open AI Concierge Chat"
+              aria-label="Open AI Concierge Chat"
+            >
+              <AIIcon color="#FFE032" size={16} />
+              <span>AI Chat</span>
+            </button>
+
             <button onClick={() => openContactModal('contact')} className="lux-nav-cta">
               Contact Us
             </button>
