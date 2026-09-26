@@ -54,8 +54,10 @@
   display: flex;
   align-items: center;
   gap: var(--spacing-2);
-  z-index: 2;
+  z-index: 10;
   flex-shrink: 0;
+  text-decoration: none;
+  cursor: pointer;
 }
 
 .lux-nav-center {

@@ -85,10 +85,10 @@ export default function Footer() {
 
         <section className="lux-footer-grid reveal-child">
           <div className="lux-footer-brand-col">
-            <div className="lux-footer-brand-wrap">
+            <Link href="/" aria-label="Magnevents Home" className="lux-footer-brand-wrap" style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'center' }}>
               <BrandMark size="sm" light={false} hideText={true} />
               <span className="lux-footer-brand-name">Magnevents</span>
-            </div>
+            </Link>
             <p>Connecting event hosts with world-class singers, bands, and production teams across India.</p>
             <div className="lux-footer-social-row">
               <SocialLink

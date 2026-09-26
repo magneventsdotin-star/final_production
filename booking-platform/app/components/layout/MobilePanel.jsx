@@ -69,7 +69,9 @@ export default function MobilePanel({ isOpen, onClose, isLight, pathname, onOpen
     <>
       <aside className={`lux-mobile-panel ${isOpen ? 'open' : ''} ${isLight ? 'is-light' : 'is-dark'}`}>
         <div className="lux-mobile-panel-head">
-          <BrandMark size="sm" light={false} />
+          <Link href="/" onClick={onClose} aria-label="Magnevents Home" style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'center' }}>
+            <BrandMark size="sm" light={false} />
+          </Link>
           <button
             type="button"
             className="lux-mobile-close"
