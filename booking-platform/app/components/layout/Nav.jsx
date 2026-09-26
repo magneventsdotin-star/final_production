@@ -1,12 +1,13 @@
 "use client";
 
 import dynamic from 'next/dynamic';
-import { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useTheme } from '@/app/contexts/ThemeContext';
 import { useScrollDirection } from '@/app/hooks/useScrollDirection';
 import BrandMark from '@/app/components/common/BrandMark';
+import { AIIcon } from '@/app/components/icons/NavigationIcons';
 import { NAV_LINKS } from '@/app/constants';
 import '@/app/styles/components/Nav.css';
 
@@ -76,40 +77,43 @@ export default function Nav() {
 
           <div className="lux-nav-center">
             {NAV_LINKS.map(link => {
-              if (link.path === '/ai-search') {
-                return (
-                  <Link
-                    key={link.label}
-                    href="/ai-search"
-                    className="lux-nav-ai-btn"
-                    title="AI Search"
-                  >
-                    <span className="ai-sparkle-dot">✨</span>
-                    <span>AI Search</span>
-                  </Link>
-                );
-              }
+              const isArtists = link.label.toLowerCase() === 'artists';
               return (
-                <div key={link.label} className={`lux-nav-dropdown-wrap ${link.isMega ? 'is-mega' : ''}`}>
-                  <Link
-                    href={link.path || '#'}
-                    className={`lux-nav-link ${pathname === link.path ? 'is-active' : ''}`}
-                  >
-                    {link.label} {link.children && <span className="lux-dropdown-icon">▾</span>}
-                  </Link>
+                <React.Fragment key={link.label}>
+                  <div className={`lux-nav-dropdown-wrap ${link.isMega ? 'is-mega' : ''}`}>
+                    <Link
+                      href={link.path || '#'}
+                      className={`lux-nav-link ${pathname === link.path ? 'is-active' : ''}`}
+                    >
+                      {link.label} {link.children && <span className="lux-dropdown-icon">▾</span>}
+                    </Link>
 
-                  {link.children && (
-                    <div className={`lux-nav-dropdown ${link.isMega ? 'lux-mega-menu' : ''}`}>
-                      <div className="lux-dropdown-grid">
-                        {link.children.map(child => (
-                          <Link key={child.path} href={child.path} className="lux-nav-dropdown-link">
-                            <span>{child.label}</span>
-                          </Link>
-                        ))}
+                    {link.children && (
+                      <div className={`lux-nav-dropdown ${link.isMega ? 'lux-mega-menu' : ''}`}>
+                        <div className="lux-dropdown-grid">
+                          {link.children.map(child => (
+                            <Link key={child.path} href={child.path} className="lux-nav-dropdown-link">
+                              <span>{child.label}</span>
+                            </Link>
+                          ))}
+                        </div>
                       </div>
-                    </div>
+                    )}
+                  </div>
+
+                  {/* AI Search button in the middle of desktop navigation */}
+                  {isArtists && (
+                    <button
+                      type="button"
+                      onClick={() => window.dispatchEvent(new CustomEvent('open-ai-chatbot'))}
+                      className="lux-nav-ai-btn"
+                      aria-label="Open AI Search Chatbot"
+                    >
+                      <AIIcon color="#FFE032" size={16} />
+                      <span>AI Search</span>
+                    </button>
                   )}
-                </div>
+                </React.Fragment>
               );
             })}
           </div>
@@ -120,12 +124,11 @@ export default function Nav() {
             </button>
             <button
               type="button"
-              className="lux-nav-register-ai-btn"
-              onClick={() => window.dispatchEvent(new CustomEvent('open-ai-chatbot'))}
-              aria-label="Open AI Search Chatbot"
+              className="lux-nav-register-btn"
+              onClick={() => openContactModal('register')}
+              aria-label="Register as an Artist"
             >
-              <span className="lux-nav-ai-sparkle">✨</span>
-              <span>AI Search</span>
+              Register
             </button>
 
             <button aria-label="Toggle navigation menu" className={`lux-hamburger ${menuOpen ? 'is-open' : ''}`} onClick={() => setMenuOpen(!menuOpen)}>
