@@ -247,14 +247,16 @@ export default function AIAssistantModal() {
 
   return (
     <>
-      {/* Floating trigger button (top-right) */}
+      {/* Floating trigger button */}
       <button
         type="button"
         onClick={() => setIsOpen(true)}
         className="lux-ai-trigger-btn"
         aria-label="Open AI Search Chatbot"
       >
-        <span className="lux-ai-trigger-icon">✨</span>
+        <span className="lux-ai-trigger-icon">
+          <AIIcon size={24} color="#ffffff" />
+        </span>
         <span className="label-text">AI Search</span>
         <span className="lux-ai-pulse-dot" />
       </button>
