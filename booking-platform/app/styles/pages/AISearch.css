@@ -944,3 +944,227 @@
     padding: 6px 12px;
   }
 }
+
+/* ════════════════════════════════════════
+   ALL CITIES DIRECTORY SECTION
+   ════════════════════════════════════════ */
+.lux-ai-cities-section {
+  margin: 56px 0 36px;
+  padding: 36px 28px;
+  background: radial-gradient(ellipse at 50% 0%, rgba(35, 25, 55, 0.7) 0%, rgba(12, 10, 18, 0.95) 100%);
+  border: 1px solid rgba(255, 224, 50, 0.25);
+  border-radius: 24px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  position: relative;
+  overflow: hidden;
+}
+
+.lux-ai-cities-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 10%;
+  right: 10%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(255, 224, 50, 0.6) 30%, rgba(168, 85, 247, 0.6) 70%, transparent);
+}
+
+.lux-ai-cities-header {
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto 32px;
+}
+
+.lux-ai-cities-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 224, 50, 0.08);
+  border: 1px solid rgba(255, 224, 50, 0.3);
+  padding: 5px 14px;
+  border-radius: 999px;
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: #FFE032;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.lux-ai-cities-title {
+  font-size: clamp(24px, 3.5vw, 36px);
+  font-weight: 900;
+  color: #ffffff;
+  margin: 0 0 10px;
+  letter-spacing: -0.02em;
+}
+
+.lux-ai-cities-subtitle {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.65);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.lux-ai-cities-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px;
+}
+
+.lux-ai-city-card {
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 14px;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+}
+
+.lux-ai-city-card:hover {
+  background: rgba(255, 224, 50, 0.05);
+  border-color: rgba(255, 224, 50, 0.4);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 224, 50, 0.15);
+}
+
+.lux-ai-city-card-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  position: relative;
+}
+
+.lux-ai-city-icon {
+  font-size: 20px;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.lux-ai-city-meta {
+  flex: 1;
+  min-width: 0;
+}
+
+.lux-ai-city-name {
+  font-size: 15px;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0 0 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.lux-ai-city-tag {
+  font-size: 11.5px;
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: 600;
+  display: block;
+}
+
+.lux-ai-city-badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: linear-gradient(135deg, rgba(255, 46, 147, 0.2), rgba(168, 85, 247, 0.2));
+  border: 1px solid rgba(255, 46, 147, 0.4);
+  color: #f472b6;
+  font-size: 9.5px;
+  font-weight: 800;
+  padding: 2px 7px;
+  border-radius: 999px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.lux-ai-city-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.lux-ai-city-action-btn {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  font-size: 11.5px;
+  font-weight: 800;
+  cursor: pointer;
+  text-decoration: none;
+  border: none;
+  font-family: inherit;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.lux-ai-city-action-btn.primary {
+  background: linear-gradient(135deg, #FFE032 0%, #FFA500 100%);
+  color: #0b0914;
+  box-shadow: 0 4px 12px rgba(255, 224, 50, 0.25);
+}
+
+.lux-ai-city-action-btn.primary:hover {
+  background: #ffffff;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(255, 224, 50, 0.4);
+}
+
+.lux-ai-city-action-btn.secondary {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.lux-ai-city-action-btn.secondary:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+@media (max-width: 680px) {
+  .lux-ai-cities-section {
+    padding: 24px 14px;
+    margin: 36px 0 24px;
+  }
+  .lux-ai-cities-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 10px;
+  }
+  .lux-ai-city-card {
+    padding: 12px 10px;
+    gap: 10px;
+  }
+  .lux-ai-city-icon {
+    width: 30px;
+    height: 30px;
+    font-size: 16px;
+  }
+  .lux-ai-city-name {
+    font-size: 13.5px;
+  }
+  .lux-ai-city-tag {
+    font-size: 10px;
+  }
+  .lux-ai-city-action-btn {
+    font-size: 10.5px;
+    padding: 6px 8px;
+  }
+}
