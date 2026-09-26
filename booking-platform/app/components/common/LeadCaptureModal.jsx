@@ -15,7 +15,18 @@ export default function LeadCaptureModal() {
     window.addEventListener('open-lead-capture', handleOpenModal);
 
     if (typeof window !== 'undefined') {
-      if (window.location.hash === '#offers' || window.location.hash === '#lead-capture' || window.location.search.includes('open=offers')) {
+      const hash = window.location.hash.toLowerCase();
+      const search = window.location.search.toLowerCase();
+      if (
+        hash === '#offers' ||
+        hash === '#lead-capture' ||
+        hash === '#quote' ||
+        hash === '#instant-quote' ||
+        hash === '#instant-form' ||
+        search.includes('open=offers') ||
+        search.includes('quote=true') ||
+        search.includes('instant=true')
+      ) {
         setIsOpen(true);
       }
     }
