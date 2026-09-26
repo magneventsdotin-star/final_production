@@ -172,11 +172,14 @@
   padding: 16px;
 }
 
-@media (max-width: 640px) {
+@media (max-width: 768px) {
   .lux-ai-chat-overlay {
-    padding: 10px;
-    align-items: center;
-    justify-content: center;
+    padding: 0 !important;
+    align-items: stretch !important;
+    justify-content: stretch !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    height: 100dvh !important;
   }
 }
 
@@ -200,11 +203,26 @@
   animation: chatWindowIn 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-@media (max-width: 640px) {
+@media (max-width: 768px) {
   .lux-ai-chat-window {
-    width: 100%;
-    height: 85vh;
-    border-radius: 20px;
+    width: 100vw !important;
+    height: 100vh !important;
+    height: 100dvh !important;
+    max-height: 100vh !important;
+    max-height: 100dvh !important;
+    border-radius: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+  .lux-ai-chat-header {
+    padding: 12px 14px !important;
+    padding-top: max(12px, env(safe-area-inset-top, 12px)) !important;
+  }
+  .lux-ai-chat-input-bar {
+    padding-bottom: max(14px, env(safe-area-inset-bottom, 14px)) !important;
+  }
+  .lux-ai-chat-body {
+    padding: 14px 12px !important;
   }
 }
 
