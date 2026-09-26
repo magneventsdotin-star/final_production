@@ -401,34 +401,34 @@ function InnerLeadForm({ onClose, offerHeading, offerSubheading, isOfferEnabled 
         </div>
       )}
 
-      {/* AI Chatbot Fast-Switch Button */}
-      <div style={{ marginBottom: '14px', width: '100%' }}>
-        <button
-          type="button"
-          onClick={handleOpenAiAssistant}
-          style={{
-            width: '100%',
-            padding: '10px 14px',
-            borderRadius: '12px',
-            background: 'linear-gradient(135deg, rgba(139, 92, 246, 0.18) 0%, rgba(255, 46, 147, 0.14) 100%)',
-            border: '1px solid rgba(192, 132, 252, 0.4)',
-            color: '#e9d5ff',
-            fontSize: '12.5px',
-            fontWeight: '700',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            cursor: 'pointer',
-            transition: 'all 0.2s ease',
-            fontFamily: 'inherit'
-          }}
-        >
-          <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-            <span>✨</span>
-            <span>Prefer a quick conversation? <strong>Chat with AI</strong></span>
-          </span>
-          <span style={{ color: '#FFE032' }}>➔</span>
-        </button>
+      {/* Magnetic AI Chatbot Call-to-Action Card */}
+      <div 
+        className="ai-chatbot-magnetic-card" 
+        onClick={handleOpenAiAssistant} 
+        role="button" 
+        tabIndex={0}
+        onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleOpenAiAssistant(); }}
+        aria-label="Open Magnevents AI Concierge Chatbot"
+      >
+        <div className="ai-chatbot-magnetic-glow" aria-hidden="true" />
+        <div className="ai-chatbot-magnetic-left">
+          <div className="ai-chatbot-magnetic-avatar">
+            <span className="ai-avatar-sparkle">✨</span>
+            <span className="ai-avatar-dot" />
+          </div>
+          <div className="ai-chatbot-magnetic-info">
+            <div className="ai-chatbot-badge-row">
+              <span className="ai-chatbot-tag">🤖 MAGNEVENTS AI SEARCH</span>
+              <span className="ai-chatbot-live-status">● ONLINE</span>
+            </div>
+            <h4 className="ai-chatbot-magnetic-title">Match Verified Artists with AI</h4>
+            <p className="ai-chatbot-magnetic-sub">Tell AI your budget & event vibe — instant match</p>
+          </div>
+        </div>
+        <div className="ai-chatbot-magnetic-cta">
+          <span className="ai-cta-text">Start Chat</span>
+          <span className="ai-cta-arrow">➔</span>
+        </div>
       </div>
 
       {/* Name Input */}

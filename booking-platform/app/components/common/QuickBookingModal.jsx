@@ -187,8 +187,46 @@ function InnerQuickBookingForm({ onClose }) {
     )
   }
 
+  const handleOpenAiAssistant = () => {
+    onClose();
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('open-ai-chatbot'));
+    }
+  };
+
   return (
-    <form onSubmit={handleSubmit} className="lux-modal-form" style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+    <form onSubmit={handleSubmit} className="lux-modal-form" style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+      {/* Magnetic AI Chatbot Call-to-Action Card */}
+      <div 
+        className="ai-chatbot-magnetic-card" 
+        onClick={handleOpenAiAssistant} 
+        role="button" 
+        tabIndex={0}
+        onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleOpenAiAssistant(); }}
+        aria-label="Open Magnevents AI Concierge Chatbot"
+        style={{ marginBottom: '4px' }}
+      >
+        <div className="ai-chatbot-magnetic-glow" aria-hidden="true" />
+        <div className="ai-chatbot-magnetic-left">
+          <div className="ai-chatbot-magnetic-avatar">
+            <span className="ai-avatar-sparkle">✨</span>
+            <span className="ai-avatar-dot" />
+          </div>
+          <div className="ai-chatbot-magnetic-info">
+            <div className="ai-chatbot-badge-row">
+              <span className="ai-chatbot-tag">🤖 SMART AI MATCH</span>
+              <span className="ai-chatbot-live-status">● ONLINE</span>
+            </div>
+            <h4 className="ai-chatbot-magnetic-title">Match with AI Assistant</h4>
+            <p className="ai-chatbot-magnetic-sub">Get instant verified quotes tailored to your budget</p>
+          </div>
+        </div>
+        <div className="ai-chatbot-magnetic-cta">
+          <span className="ai-cta-text">Start Chat</span>
+          <span className="ai-cta-arrow">➔</span>
+        </div>
+      </div>
+
       <div className="lux-form-group">
         <label style={{ display: 'block', color: 'rgba(255, 255, 255, 0.8)', fontSize: '13px', fontWeight: '600', marginBottom: '6px' }}>Full Name *</label>
         <input 
