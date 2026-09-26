@@ -5,6 +5,7 @@ import { Mic2 } from 'lucide-react';
 import SEOArtistsGrid from '@/app/components/common/SEOArtistsGrid';
 import AISingerBookingCard from '@/app/components/home/AISingerBookingCard';
 import AllCitiesSection from '@/app/components/common/AllCitiesSection';
+import CityAISearchBox from '@/app/components/common/CityAISearchBox';
 import '../../seo-pages.css';
 import '@/app/styles/pages/AISearch.css';
 
@@ -146,6 +147,9 @@ export default async function CityLandingPage({ params }) {
 
         <div className="city-content-container">
           <div className="city-main-content">
+            {/* 0. AI Search Artist Matcher Section for this City */}
+            <CityAISearchBox city={city.name} />
+
             {/* 1. Verified Live Artists in this City */}
             <div className="city-artists-section" style={{ marginBottom: '50px' }}>
               <SEOArtistsGrid category="All" city={city.name} />
