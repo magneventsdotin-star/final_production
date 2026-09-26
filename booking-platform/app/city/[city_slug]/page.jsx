@@ -4,7 +4,9 @@ import Link from 'next/link';
 import { Mic2 } from 'lucide-react';
 import SEOArtistsGrid from '@/app/components/common/SEOArtistsGrid';
 import AISingerBookingCard from '@/app/components/home/AISingerBookingCard';
+import AllCitiesSection from '@/app/components/common/AllCitiesSection';
 import '../../seo-pages.css';
+import '@/app/styles/pages/AISearch.css';
 
 function slugToName(slug) {
   return slug.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
@@ -179,7 +181,7 @@ export default async function CityLandingPage({ params }) {
             )}
 
             {/* 3. Blogs & Entertainment Guides for this City */}
-            <div className="blogs-section">
+            <div className="blogs-section" style={{ marginBottom: '50px' }}>
               <h2>Top Music & Entertainment Guides in {city.name}</h2>
               {blogs && blogs.length > 0 ? (
                 <div className="blogs-grid">
@@ -205,6 +207,9 @@ export default async function CityLandingPage({ params }) {
                 <p className="no-blogs">More exciting guides for {city.name} coming soon!</p>
               )}
             </div>
+
+            {/* 4. Nationwide All Cities Directory Section */}
+            <AllCitiesSection currentCity={city.name} />
           </div>
         </div>
       </div>
