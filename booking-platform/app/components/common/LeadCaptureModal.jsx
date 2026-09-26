@@ -377,29 +377,59 @@ function InnerLeadForm({ onClose, offerHeading, offerSubheading, isOfferEnabled 
     )
   }
 
+  const handleOpenAiAssistant = () => {
+    onClose();
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('open-ai-chatbot'));
+    }
+  };
+
   return (
     <form className="lux-modal-form ai-styled-lead-form" onSubmit={handleSubmit}>
       {isOfferEnabled && (
-        <div className="lux-form-group full-width elegant-promo-box ai-promo-glow">
-          <div className="ai-promo-left">
-            <div className="ai-gift-3d-box">
-              <span>🎁</span>
-            </div>
-            <div className="ai-promo-text-wrap">
-              <span className="rakhi-highlight">
-                {offerHeading || '🔥 SPECIAL OFFER – UP TO 60% OFF'}
-              </span>
-              <span className="ai-promo-sub">
-                {offerSubheading ? offerSubheading : 'Flat 60% OFF with Code: FIRSTEVENT60'}
-              </span>
-            </div>
+        <div className="ai-modern-offer-strip">
+          <div className="ai-offer-strip-left">
+            <span className="ai-offer-badge">🎁 60% OFF CODE</span>
+            <span className="ai-offer-desc">
+              <strong>FIRSTEVENT60</strong> — {offerSubheading || 'Applied on Instant Quotes'}
+            </span>
           </div>
           
-          <div className="ai-promo-timer-wrap">
+          <div className="ai-offer-strip-right">
             <CountdownTimer />
           </div>
         </div>
       )}
+
+      {/* AI Chatbot Fast-Switch Button */}
+      <div style={{ marginBottom: '14px', width: '100%' }}>
+        <button
+          type="button"
+          onClick={handleOpenAiAssistant}
+          style={{
+            width: '100%',
+            padding: '10px 14px',
+            borderRadius: '12px',
+            background: 'linear-gradient(135deg, rgba(139, 92, 246, 0.18) 0%, rgba(255, 46, 147, 0.14) 100%)',
+            border: '1px solid rgba(192, 132, 252, 0.4)',
+            color: '#e9d5ff',
+            fontSize: '12.5px',
+            fontWeight: '700',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            cursor: 'pointer',
+            transition: 'all 0.2s ease',
+            fontFamily: 'inherit'
+          }}
+        >
+          <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <span>✨</span>
+            <span>Prefer a quick conversation? <strong>Chat with AI</strong></span>
+          </span>
+          <span style={{ color: '#FFE032' }}>➔</span>
+        </button>
+      </div>
 
       {/* Name Input */}
       <div className="lux-form-group full-width">
