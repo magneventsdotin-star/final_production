@@ -5428,8 +5428,8 @@
 /* Keep content 100% sharp above background blur */
 .hp-hero-wrapper .hp-desktop-hero,
 .hp-hero {
-  padding-top: 25px !important;
-  padding-bottom: 15px !important;
+  padding-top: 80px !important;
+  padding-bottom: 25px !important;
   min-height: auto !important;
 }
 .hp-hero-content,
@@ -5437,7 +5437,7 @@
 .hp-hero-right {
   position: relative !important;
   z-index: 100 !important;
-  padding: 8px 0 5px !important;
+  padding: 12px 0 10px !important;
 }
 .hp-hero-bg img {
   /* Consistent cinematic exposure & color balance for all slides */
